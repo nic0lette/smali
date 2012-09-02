@@ -31,23 +31,16 @@
 
 package org.jf.smalidea;
 
-import com.intellij.lang.Language;
-import com.intellij.openapi.fileTypes.SingleLazyInstanceSyntaxHighlighterFactory;
-import com.intellij.openapi.fileTypes.SyntaxHighlighter;
-import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.openapi.editor.colors.TextAttributesKey;
+import com.intellij.psi.tree.IElementType;
 
-public class SmaliLanguage extends Language {
-    public static final SmaliLanguage INSTANCE = new SmaliLanguage();
+public class SmaliElementType extends IElementType {
+    public final int tokenId;
+    public final TextAttributesKey[] textAttributesKeys;
 
-    private SmaliLanguage() {
-        super("smali");
-        SyntaxHighlighterFactory.LANGUAGE_FACTORY.addExplicitExtension(this,
-                new SingleLazyInstanceSyntaxHighlighterFactory() {
-                    @NotNull
-                    protected SyntaxHighlighter createHighlighter() {
-                        return new SmaliHighlighter();
-                    }
-                });
+    protected SmaliElementType(int tokenId, String tokenName, TextAttributesKey textAttributesKey) {
+        super(tokenName, SmaliLanguage.INSTANCE);
+        this.tokenId = tokenId;
+        this.textAttributesKeys = new TextAttributesKey[] {textAttributesKey};
     }
 }

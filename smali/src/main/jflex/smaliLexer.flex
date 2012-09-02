@@ -49,6 +49,20 @@ import static org.jf.smali.smaliParser.*;
         }
     }
 
+    public void reset(CharSequence charSequence, int start, int end, int initialState) {
+        zzReader = BlankReader.INSTANCE;
+        zzBuffer = new char[charSequence.length()];
+        for (int i=0; i<charSequence.length(); i++) {
+            zzBuffer[i] = charSequence.charAt(i);
+        }
+
+        yychar = zzCurrentPos = zzMarkedPos = zzStartRead = start;
+        zzEndRead = end;
+        zzAtBOL = true;
+        zzAtEOF = false;
+        yybegin(initialState);
+    }
+
     public void setLine(int line) {
         this.yyline = line-1;
     }

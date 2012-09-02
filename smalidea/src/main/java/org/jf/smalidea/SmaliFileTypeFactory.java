@@ -34,7 +34,7 @@ public class SmaliFileTypeFactory extends FileTypeFactory {
         }
 
         public Icon getIcon() {
-            return org.jf.smalidea.SmaliIcons.SmaliIcon;
+            return SmaliIcons.SmaliIcon;
         }
     }
 

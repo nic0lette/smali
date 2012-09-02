@@ -39,5 +39,6 @@
 
   <extensions defaultExtensionNs="com.intellij">
       <fileTypeFactory implementation="org.jf.smalidea.SmaliFileTypeFactory"/>
+      <colorSettingsPage implementation="org.jf.smalidea.SmaliColorsPage"/>
   </extensions>
 </idea-plugin>
