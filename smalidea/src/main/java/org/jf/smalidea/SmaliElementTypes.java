@@ -31,13 +31,9 @@
 
 package org.jf.smalidea;
 
-import com.intellij.openapi.fileTypes.FileTypeConsumer;
-import com.intellij.openapi.fileTypes.FileTypeFactory;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.tree.IElementType;
 
-public class SmaliFileTypeFactory extends FileTypeFactory {
-    @Override
-    public void createFileTypes(@NotNull FileTypeConsumer consumer) {
-        consumer.consume(SmaliFileType.INSTANCE, SmaliFileType.DEFAULT_EXTENSION);
-    }
+public class SmaliElementTypes {
+    public static final IElementType CLASS_DECLARATION = new IElementType("class declaration", SmaliLanguage.INSTANCE);
+    public static final IElementType CLASS_DESCRIPTOR = new IElementType("class descriptor", SmaliLanguage.INSTANCE);
 }

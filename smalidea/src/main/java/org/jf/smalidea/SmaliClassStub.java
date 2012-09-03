@@ -31,13 +31,26 @@
 
 package org.jf.smalidea;
 
-import com.intellij.openapi.fileTypes.FileTypeConsumer;
-import com.intellij.openapi.fileTypes.FileTypeFactory;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.stubs.IStubElementType;
+import com.intellij.psi.stubs.NamedStub;
+import com.intellij.psi.stubs.StubBase;
+import com.intellij.psi.stubs.StubElement;
 
-public class SmaliFileTypeFactory extends FileTypeFactory {
-    @Override
-    public void createFileTypes(@NotNull FileTypeConsumer consumer) {
-        consumer.consume(SmaliFileType.INSTANCE, SmaliFileType.DEFAULT_EXTENSION);
+public class SmaliClassStub extends StubBase<SmaliClass> implements NamedStub<SmaliClass> {
+    private String qualifiedName;
+    private String shortName;
+
+    public SmaliClassStub(StubElement parent, IStubElementType elementType, String qualifiedName) {
+        super(parent, elementType);
+        this.qualifiedName = qualifiedName;
+        this.shortName = SmaliClassImpl.shortNameFromQualifiedName(qualifiedName);
+    }
+
+    public String getQualifiedName() {
+        return qualifiedName;
+    }
+
+    public String getName() {
+        return shortName;
     }
 }

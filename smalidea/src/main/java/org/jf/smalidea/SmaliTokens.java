@@ -69,12 +69,9 @@ public class SmaliTokens {
                 "NUMBER", HighlighterColors.TEXT.getDefaultAttributes());
         public static final TextAttributesKey ODEX_REFERENCE = TextAttributesKey.createTextAttributesKey(
                 "ODEX_REFERENCE", HighlighterColors.TEXT.getDefaultAttributes());
-        public static final TextAttributesKey OFFSET = TextAttributesKey.createTextAttributesKey(
-                "OFFSET", HighlighterColors.TEXT.getDefaultAttributes());
-        public static final TextAttributesKey PARENS = TextAttributesKey.createTextAttributesKey(
-                "PARENS", HighlighterColors.TEXT.getDefaultAttributes());
-        public static final TextAttributesKey REGISTER = TextAttributesKey.createTextAttributesKey(
-                "REGISTER", HighlighterColors.TEXT.getDefaultAttributes());
+        public static final TextAttributesKey OFFSET = TextAttributesKey.createTextAttributesKey("OFFSET", HighlighterColors.TEXT.getDefaultAttributes());
+        public static final TextAttributesKey PARENS = TextAttributesKey.createTextAttributesKey("PARENS", HighlighterColors.TEXT.getDefaultAttributes());
+        public static final TextAttributesKey REGISTER = TextAttributesKey.createTextAttributesKey("REGISTER", HighlighterColors.TEXT.getDefaultAttributes());
         public static final TextAttributesKey STRING = TextAttributesKey.createTextAttributesKey(
                 "STRING", HighlighterColors.TEXT.getDefaultAttributes());
         public static final TextAttributesKey TYPE = TextAttributesKey.createTextAttributesKey(
@@ -107,9 +104,14 @@ public class SmaliTokens {
     }
 
     private static final IElementType[] ELEMENT_TYPES;
+    private static final HashMap<Short, Integer> TOKEN_ID_BY_ELEMENT = new HashMap<Short, Integer>();
 
     public static IElementType getElementType(int tokenType) {
         return ELEMENT_TYPES[tokenType];
+    }
+
+    public static int getTokenId(IElementType elementType) {
+        return TOKEN_ID_BY_ELEMENT.get(elementType.getIndex());
     }
 
     static {
@@ -128,6 +130,7 @@ public class SmaliTokens {
                 int tokenId = tokenIdsByName.get(tokenName);
                 SmaliElementType smaliElementType = new SmaliElementType(tokenId, tokenName, textAttributesKey);
                 ELEMENT_TYPES[tokenId] = smaliElementType;
+                TOKEN_ID_BY_ELEMENT.put(smaliElementType.getIndex(), tokenId);
                 return smaliElementType;
             }
         }
@@ -169,6 +172,7 @@ public class SmaliTokens {
         tokenRegisterer.register("POSITIVE_INTEGER_LITERAL", Attributes.NUMBER);
         tokenRegisterer.register("NEGATIVE_INTEGER_LITERAL", Attributes.NUMBER);
         tokenRegisterer.register("INTEGER_LITERAL", Attributes.NUMBER);
+
         tokenRegisterer.register("LONG_LITERAL", Attributes.NUMBER);
         tokenRegisterer.register("SHORT_LITERAL", Attributes.NUMBER);
         tokenRegisterer.register("BYTE_LITERAL", Attributes.NUMBER);

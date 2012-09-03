@@ -31,13 +31,18 @@
 
 package org.jf.smalidea;
 
-import com.intellij.openapi.fileTypes.FileTypeConsumer;
-import com.intellij.openapi.fileTypes.FileTypeFactory;
+import com.intellij.extapi.psi.PsiFileBase;
+import com.intellij.openapi.fileTypes.FileType;
+import com.intellij.psi.FileViewProvider;
 import org.jetbrains.annotations.NotNull;
 
-public class SmaliFileTypeFactory extends FileTypeFactory {
-    @Override
-    public void createFileTypes(@NotNull FileTypeConsumer consumer) {
-        consumer.consume(SmaliFileType.INSTANCE, SmaliFileType.DEFAULT_EXTENSION);
+public class SmaliFile extends PsiFileBase {
+    public SmaliFile(FileViewProvider viewProvider) {
+        super(viewProvider, SmaliLanguage.INSTANCE);
+    }
+
+    @NotNull
+    public FileType getFileType() {
+        return SmaliFileType.INSTANCE;
     }
 }

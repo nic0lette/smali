@@ -130,4 +130,8 @@ public class SmaliLexer extends LexerBase {
             state = lexer.yystate();
         }
     }
+
+    protected smaliFlexLexer getLexer() {
+        return lexer;
+    }
 }

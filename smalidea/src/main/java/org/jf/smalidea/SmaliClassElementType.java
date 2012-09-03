@@ -31,13 +31,52 @@
 
 package org.jf.smalidea;
 
-import com.intellij.openapi.fileTypes.FileTypeConsumer;
-import com.intellij.openapi.fileTypes.FileTypeFactory;
+import com.intellij.lang.Language;
+import com.intellij.psi.impl.java.stubs.index.JavaStubIndexKeys;
+import com.intellij.psi.stubs.*;
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class SmaliFileTypeFactory extends FileTypeFactory {
+import java.io.IOException;
+
+public class SmaliClassElementType extends IStubElementType<SmaliClassStub, SmaliClass> {
+    public static final SmaliClassElementType INSTANCE = new SmaliClassElementType();
+
+    public SmaliClassElementType() {
+        super("smali class", SmaliLanguage.INSTANCE);
+    }
+
     @Override
-    public void createFileTypes(@NotNull FileTypeConsumer consumer) {
-        consumer.consume(SmaliFileType.INSTANCE, SmaliFileType.DEFAULT_EXTENSION);
+    public SmaliClass createPsi(@NotNull SmaliClassStub stub) {
+        return new SmaliClassImpl(stub, this);
+    }
+
+    @Override
+    public SmaliClassStub createStub(@NotNull SmaliClass psi, StubElement parentStub) {
+        return new SmaliClassStub(parentStub, this, psi.getQualifiedName());
+    }
+
+    @Override
+    public String getId(SmaliClassStub stub) {
+        return stub.getName();
+    }
+
+    public String getExternalId() {
+        return "smali.class";
+    }
+
+    public void serialize(SmaliClassStub stub, StubOutputStream dataStream) throws IOException {
+        dataStream.writeName(stub.getQualifiedName());
+    }
+
+    public SmaliClassStub deserialize(StubInputStream dataStream, StubElement parentStub) throws IOException {
+        String name = dataStream.readName().getString();
+        return new SmaliClassStub(parentStub, this, name);
+    }
+
+    public void indexStub(SmaliClassStub stub, IndexSink sink) {
+        sink.occurrence(SmaliShortClassNameIndex.KEY, stub.getName());
     }
 }

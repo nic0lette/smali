@@ -31,13 +31,37 @@
 
 package org.jf.smalidea;
 
-import com.intellij.openapi.fileTypes.FileTypeConsumer;
-import com.intellij.openapi.fileTypes.FileTypeFactory;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.StubBuilder;
+import com.intellij.psi.stubs.DefaultStubBuilder;
+import com.intellij.psi.stubs.IndexSink;
+import com.intellij.psi.stubs.PsiFileStub;
+import com.intellij.psi.stubs.StubElement;
+import com.intellij.psi.tree.IStubFileElementType;
 import org.jetbrains.annotations.NotNull;
 
-public class SmaliFileTypeFactory extends FileTypeFactory {
+public class SmaliFileStubElementType extends IStubFileElementType<SmaliFileStub> {
+    public static final SmaliFileStubElementType INSTANCE = new SmaliFileStubElementType();
+
+    public SmaliFileStubElementType() {
+        super("smali", SmaliLanguage.INSTANCE);
+    }
+
     @Override
-    public void createFileTypes(@NotNull FileTypeConsumer consumer) {
-        consumer.consume(SmaliFileType.INSTANCE, SmaliFileType.DEFAULT_EXTENSION);
+    public StubBuilder getBuilder() {
+        return new DefaultStubBuilder() {
+            @Override
+            protected StubElement createStubForFile(@NotNull PsiFile file) {
+                if (file instanceof SmaliFile) {
+                    return new SmaliFileStub((SmaliFile)file);
+                }
+                return super.createStubForFile(file);
+            }
+        };
+    }
+
+    @Override
+    public void indexStub(PsiFileStub stub, IndexSink sink) {
+        super.indexStub(stub, sink);
     }
 }

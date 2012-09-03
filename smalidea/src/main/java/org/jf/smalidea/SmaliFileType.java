@@ -31,13 +31,43 @@
 
 package org.jf.smalidea;
 
-import com.intellij.openapi.fileTypes.FileTypeConsumer;
-import com.intellij.openapi.fileTypes.FileTypeFactory;
+import com.intellij.openapi.fileTypes.LanguageFileType;
+import com.intellij.psi.tree.IFileElementType;
 import org.jetbrains.annotations.NotNull;
 
-public class SmaliFileTypeFactory extends FileTypeFactory {
+import javax.swing.*;
+
+public class SmaliFileType extends LanguageFileType {
+    public static final SmaliFileType INSTANCE = new SmaliFileType();
+    public static final String DEFAULT_EXTENSION = "smali";
+
+    public static IFileElementType FILE_ELEMENT_TYPE = new IFileElementType(SmaliLanguage.INSTANCE);
+
+    private SmaliFileType() {
+        super(SmaliLanguage.INSTANCE);
+    }
+
+    @NotNull
+    public String getName() {
+        return "smali";
+    }
+
+    @NotNull
+    public String getDescription() {
+        return "smali files";
+    }
+
+    @NotNull
+    public String getDefaultExtension() {
+        return DEFAULT_EXTENSION;
+    }
+
+    public Icon getIcon() {
+        return SmaliIcons.SmaliIcon;
+    }
+
     @Override
-    public void createFileTypes(@NotNull FileTypeConsumer consumer) {
-        consumer.consume(SmaliFileType.INSTANCE, SmaliFileType.DEFAULT_EXTENSION);
+    public boolean isJVMDebuggingSupported() {
+        return true;
     }
 }

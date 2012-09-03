@@ -31,13 +31,19 @@
 
 package org.jf.smalidea;
 
-import com.intellij.openapi.fileTypes.FileTypeConsumer;
-import com.intellij.openapi.fileTypes.FileTypeFactory;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.stubs.StringStubIndexExtension;
+import com.intellij.psi.stubs.StubIndexKey;
 import org.jetbrains.annotations.NotNull;
 
-public class SmaliFileTypeFactory extends FileTypeFactory {
-    @Override
-    public void createFileTypes(@NotNull FileTypeConsumer consumer) {
-        consumer.consume(SmaliFileType.INSTANCE, SmaliFileType.DEFAULT_EXTENSION);
+public class SmaliShortClassNameIndex extends StringStubIndexExtension<PsiClass> {
+    public static final StubIndexKey<String, PsiClass> KEY =
+            StubIndexKey.createIndexKey("smali.class.shortname");
+
+    public static final SmaliShortClassNameIndex INSTANCE = new SmaliShortClassNameIndex();
+
+    @NotNull
+    public StubIndexKey<String, PsiClass> getKey() {
+        return KEY;
     }
 }
