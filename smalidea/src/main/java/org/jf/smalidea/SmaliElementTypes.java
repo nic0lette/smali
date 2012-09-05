@@ -36,4 +36,23 @@ import com.intellij.psi.tree.IElementType;
 public class SmaliElementTypes {
     public static final IElementType CLASS_DECLARATION = new IElementType("class declaration", SmaliLanguage.INSTANCE);
     public static final IElementType CLASS_DESCRIPTOR = new IElementType("class descriptor", SmaliLanguage.INSTANCE);
+
+    public static final IElementType SMALI_FILE = new IElementType("smali file", SmaliLanguage.INSTANCE);
+    public static final IElementType CLASS_SPEC = new IElementType("class spec", SmaliLanguage.INSTANCE);
+    public static final IElementType SUPER_SPEC = new IElementType("super spec", SmaliLanguage.INSTANCE);
+    public static final IElementType IMPLEMENTS_SPEC = new IElementType("implements spec", SmaliLanguage.INSTANCE);
+    public static final IElementType SOURCE_SPEC = new IElementType("source spec", SmaliLanguage.INSTANCE);
+    public static final IElementType ACCESS_LIST = new IElementType("access list", SmaliLanguage.INSTANCE);
+    public static final IElementType FIELD = new IElementType("field", SmaliLanguage.INSTANCE);
+    public static final IElementType FIELD_ANNOTATIONS = new IElementType("field annotations", SmaliLanguage.INSTANCE);
+    public static final IElementType CLASS_ANNOTATIONS = new IElementType("class annotations", SmaliLanguage.INSTANCE);
+    public static final IElementType ANNOTATION = new IElementType("annotation", SmaliLanguage.INSTANCE);
+    public static final IElementType METHOD = new IElementType("method", SmaliLanguage.INSTANCE);
+
+    public static final IElementType METHOD_BODY = new IElementType("method body", SmaliLanguage.INSTANCE);
+    public static final IElementType REGISTERS_SPEC = new IElementType("registers spec", SmaliLanguage.INSTANCE);
+    public static final IElementType SIMPLE_NAME = new IElementType("simple name", SmaliLanguage.INSTANCE);
+    public static final IElementType METHOD_NAME = new IElementType("method name", SmaliLanguage.INSTANCE);
+    public static final IElementType METHOD_PROTOTYPE = new IElementType("method prototype", SmaliLanguage.INSTANCE);
+    public static final IElementType INSTRUCTION = new IElementType("instruction", SmaliLanguage.INSTANCE);
 }

@@ -35,45 +35,29 @@ package org.jf.smalidea;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiParser;
+import com.intellij.lang.impl.PsiBuilderImpl;
 import com.intellij.psi.tree.IElementType;
+import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.TokenSource;
 import org.jetbrains.annotations.NotNull;
 import org.jf.smali.smaliParser;
 
 public class SmaliParser implements PsiParser {
     @NotNull
     public ASTNode parse(IElementType root, PsiBuilder builder) {
+        builder.setDebugMode(true);
+
         PsiBuilder.Marker rootMarker = builder.mark();
-        PsiBuilder.Marker classMarker = builder.mark();
 
         boolean classDefFound = false;
 
-        while (!builder.eof()) {
-            if (builder.getTokenType() == SmaliTokens.getElementType(smaliParser.CLASS_DIRECTIVE)) {
-                PsiBuilder.Marker classDefMarker = builder.mark();
-
-                builder.advanceLexer();
-                while (builder.getTokenType() == SmaliTokens.getElementType(smaliParser.ACCESS_SPEC)) {
-                    builder.advanceLexer();
-                }
-                if (builder.getTokenType() == SmaliTokens.getElementType(smaliParser.CLASS_DESCRIPTOR)) {
-                    PsiBuilder.Marker classDescMarker = builder.mark();
-                    builder.advanceLexer();
-                    classDescMarker.done(SmaliElementTypes.CLASS_DESCRIPTOR);
-                    classDefMarker.done(SmaliElementTypes.CLASS_DECLARATION);
-                    classDefFound = true;
-                } else {
-                    classDefMarker.drop();
-                    builder.advanceLexer();
-                }
-            } else {
-                builder.advanceLexer();
-            }
-        }
-
-        if (classDefFound) {
-            classMarker.done(SmaliClassElementType.INSTANCE);
-        } else {
-            classMarker.drop();
+        PsiBuilderTokenStream tokenStream = new PsiBuilderTokenStream(builder);
+        smaliIdeaParser parser = new smaliIdeaParser(tokenStream);
+        parser.setPsiBuilder(builder);
+        try {
+            parser.smali_file();
+        } catch (RecognitionException ex) {
+            ex.printStackTrace();
         }
 
         rootMarker.done(root);
