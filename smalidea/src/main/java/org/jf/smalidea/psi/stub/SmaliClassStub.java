@@ -29,9 +29,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea;
+package org.jf.smalidea.psi.stub;
 
-import com.intellij.psi.PsiClass;
+import com.intellij.psi.stubs.IStubElementType;
+import com.intellij.psi.stubs.NamedStub;
+import com.intellij.psi.stubs.StubBase;
+import com.intellij.psi.stubs.StubElement;
+import org.jf.smalidea.psi.iface.SmaliClass;
+import org.jf.smalidea.psi.impl.SmaliClassImpl;
 
-public interface SmaliClass extends PsiClass {
+public class SmaliClassStub extends StubBase<SmaliClass> implements NamedStub<SmaliClass> {
+    private String qualifiedName;
+    private String shortName;
+
+    public SmaliClassStub(StubElement parent, IStubElementType elementType, String qualifiedName) {
+        super(parent, elementType);
+        this.qualifiedName = qualifiedName;
+        this.shortName = SmaliClassImpl.shortNameFromQualifiedName(qualifiedName);
+    }
+
+    public String getQualifiedName() {
+        return qualifiedName;
+    }
+
+    public String getName() {
+        return shortName;
+    }
 }

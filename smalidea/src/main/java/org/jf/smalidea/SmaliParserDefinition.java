@@ -45,6 +45,12 @@ import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.jf.smali.smaliParser;
+import org.jf.smalidea.psi.ElementTypes;
+import org.jf.smalidea.psi.impl.SmaliFileImpl;
+import org.jf.smalidea.psi.impl.SmaliMethodImpl;
+import org.jf.smalidea.psi.stub.element.SmaliClassElementType;
+import org.jf.smalidea.psi.impl.SmaliClassImpl;
+import org.jf.smalidea.psi.stub.element.SmaliFileElementType;
 
 public class SmaliParserDefinition implements ParserDefinition {
     @NotNull
@@ -57,7 +63,7 @@ public class SmaliParserDefinition implements ParserDefinition {
     }
 
     public IFileElementType getFileNodeType() {
-        return SmaliFileStubElementType.INSTANCE;
+        return SmaliFileElementType.INSTANCE;
     }
 
     private static final TokenSet WHITESPACE = TokenSet.create(TokenType.WHITE_SPACE);
@@ -66,13 +72,15 @@ public class SmaliParserDefinition implements ParserDefinition {
         return WHITESPACE;
     }
 
-    private static final TokenSet COMMENT = TokenSet.create(SmaliTokens.getElementType(smaliParser.LINE_COMMENT));
+
+
+    private static final TokenSet COMMENT = TokenSet.create(SmaliTokens.LINE_COMMENT);
     @NotNull
     public TokenSet getCommentTokens() {
         return COMMENT;
     }
 
-    private static final TokenSet STRING_LITERAL = TokenSet.create(SmaliTokens.getElementType(smaliParser.STRING_LITERAL));
+    private static final TokenSet STRING_LITERAL = TokenSet.create(SmaliTokens.STRING_LITERAL);
     @NotNull
     public TokenSet getStringLiteralElements() {
         return STRING_LITERAL;
@@ -80,14 +88,16 @@ public class SmaliParserDefinition implements ParserDefinition {
 
     @NotNull
     public PsiElement createElement(ASTNode node) {
-        if (node.getElementType() == SmaliClassElementType.INSTANCE) {
+        if (node.getElementType() == ElementTypes.SMALI_CLASS) {
             return new SmaliClassImpl(node);
+        } else if (node.getElementType() == ElementTypes.METHOD) {
+            return new SmaliMethodImpl(node);
         }
         return new ASTWrapperPsiElement(node);
     }
 
     public PsiFile createFile(FileViewProvider viewProvider) {
-        return new SmaliFile(viewProvider);
+        return new SmaliFileImpl(viewProvider);
     }
 
     public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {

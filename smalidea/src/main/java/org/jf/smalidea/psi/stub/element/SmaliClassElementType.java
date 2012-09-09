@@ -29,22 +29,22 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea;
+package org.jf.smalidea.psi.stub.element;
 
-import com.intellij.lang.Language;
-import com.intellij.psi.impl.java.stubs.index.JavaStubIndexKeys;
 import com.intellij.psi.stubs.*;
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jf.smalidea.psi.iface.SmaliClass;
+import org.jf.smalidea.SmaliLanguage;
+import org.jf.smalidea.SmaliShortClassNameIndex;
+import org.jf.smalidea.psi.impl.SmaliClassImpl;
+import org.jf.smalidea.psi.stub.SmaliClassStub;
 
 import java.io.IOException;
 
 public class SmaliClassElementType extends IStubElementType<SmaliClassStub, SmaliClass> {
     public static final SmaliClassElementType INSTANCE = new SmaliClassElementType();
 
-    public SmaliClassElementType() {
+    private SmaliClassElementType() {
         super("smali class", SmaliLanguage.INSTANCE);
     }
 

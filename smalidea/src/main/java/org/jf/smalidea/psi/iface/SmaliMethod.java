@@ -29,28 +29,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea;
+package org.jf.smalidea.psi.iface;
 
-import com.intellij.psi.stubs.IStubElementType;
-import com.intellij.psi.stubs.NamedStub;
-import com.intellij.psi.stubs.StubBase;
-import com.intellij.psi.stubs.StubElement;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiMethod;
 
-public class SmaliClassStub extends StubBase<SmaliClass> implements NamedStub<SmaliClass> {
-    private String qualifiedName;
-    private String shortName;
-
-    public SmaliClassStub(StubElement parent, IStubElementType elementType, String qualifiedName) {
-        super(parent, elementType);
-        this.qualifiedName = qualifiedName;
-        this.shortName = SmaliClassImpl.shortNameFromQualifiedName(qualifiedName);
-    }
-
-    public String getQualifiedName() {
-        return qualifiedName;
-    }
-
-    public String getName() {
-        return shortName;
-    }
+public interface SmaliMethod extends PsiElement {
+    String getMethodNameAndProto();
 }

@@ -29,15 +29,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea;
+package org.jf.smalidea.psi;
 
 import com.intellij.psi.tree.IElementType;
+import org.jf.smalidea.SmaliLanguage;
+import org.jf.smalidea.psi.stub.element.SmaliClassElementType;
+import org.jf.smalidea.psi.stub.element.SmaliFileElementType;
+import org.jf.smalidea.psi.stub.element.SmaliMethodElementType;
 
-public class SmaliElementTypes {
-    public static final IElementType CLASS_DECLARATION = new IElementType("class declaration", SmaliLanguage.INSTANCE);
-    public static final IElementType CLASS_DESCRIPTOR = new IElementType("class descriptor", SmaliLanguage.INSTANCE);
+public class ElementTypes {
+    public static final IElementType SMALI_FILE = SmaliFileElementType.INSTANCE;
+    public static final IElementType SMALI_CLASS = SmaliClassElementType.INSTANCE;
 
-    public static final IElementType SMALI_FILE = new IElementType("smali file", SmaliLanguage.INSTANCE);
     public static final IElementType CLASS_SPEC = new IElementType("class spec", SmaliLanguage.INSTANCE);
     public static final IElementType SUPER_SPEC = new IElementType("super spec", SmaliLanguage.INSTANCE);
     public static final IElementType IMPLEMENTS_SPEC = new IElementType("implements spec", SmaliLanguage.INSTANCE);
@@ -47,7 +50,7 @@ public class SmaliElementTypes {
     public static final IElementType FIELD_ANNOTATIONS = new IElementType("field annotations", SmaliLanguage.INSTANCE);
     public static final IElementType CLASS_ANNOTATIONS = new IElementType("class annotations", SmaliLanguage.INSTANCE);
     public static final IElementType ANNOTATION = new IElementType("annotation", SmaliLanguage.INSTANCE);
-    public static final IElementType METHOD = new IElementType("method", SmaliLanguage.INSTANCE);
+    public static final IElementType METHOD = SmaliMethodElementType.INSTANCE;
 
     public static final IElementType METHOD_BODY = new IElementType("method body", SmaliLanguage.INSTANCE);
     public static final IElementType REGISTERS_SPEC = new IElementType("registers spec", SmaliLanguage.INSTANCE);

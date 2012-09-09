@@ -29,41 +29,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea;
+package org.jf.smalidea.psi.iface;
 
+import com.intellij.psi.PsiClass;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.PsiParser;
-import com.intellij.lang.impl.PsiBuilderImpl;
-import com.intellij.psi.tree.IElementType;
-import org.antlr.runtime.RecognitionException;
-import org.antlr.runtime.TokenSource;
-import org.jetbrains.annotations.NotNull;
-import org.jf.smali.smaliParser;
-import org.jf.smalidea.psi.ElementTypes;
-
-public class SmaliParser implements PsiParser {
-    @NotNull
-    public ASTNode parse(IElementType root, PsiBuilder builder) {
-        builder.setDebugMode(true);
-
-        PsiBuilder.Marker rootMarker = builder.mark();
-        PsiBuilder.Marker classMarker = builder.mark();
-
-        boolean classDefFound = false;
-
-        PsiBuilderTokenStream tokenStream = new PsiBuilderTokenStream(builder);
-        smaliIdeaParser parser = new smaliIdeaParser(tokenStream);
-        parser.setPsiBuilder(builder);
-        try {
-            parser.smali_file();
-        } catch (RecognitionException ex) {
-            ex.printStackTrace();
-        }
-
-        classMarker.done(ElementTypes.SMALI_CLASS);
-        rootMarker.done(root);
-        return builder.getTreeBuilt();
-    }
+public interface SmaliClass extends PsiClass {
 }

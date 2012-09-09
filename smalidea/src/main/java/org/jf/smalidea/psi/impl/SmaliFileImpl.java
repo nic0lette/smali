@@ -29,15 +29,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea;
+package org.jf.smalidea.psi.impl;
 
 import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.FileViewProvider;
 import org.jetbrains.annotations.NotNull;
+import org.jf.smalidea.SmaliFileType;
+import org.jf.smalidea.SmaliLanguage;
 
-public class SmaliFile extends PsiFileBase {
-    public SmaliFile(FileViewProvider viewProvider) {
+public class SmaliFileImpl extends PsiFileBase {
+    public SmaliFileImpl(FileViewProvider viewProvider) {
         super(viewProvider, SmaliLanguage.INSTANCE);
     }
 

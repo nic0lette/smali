@@ -86,8 +86,8 @@ public class PsiBuilderTokenStream implements TokenStream {
     private void buildCurrentToken() {
         IElementType element = psiBuilder.getTokenType();
         if (element != null) {
-            if (element instanceof  SmaliElementType) {
-                SmaliElementType elementType = (SmaliElementType)element;
+            if (element instanceof SmaliLexicalElementType) {
+                SmaliLexicalElementType elementType = (SmaliLexicalElementType)element;
                 currentToken = new CommonToken(elementType.tokenId, psiBuilder.getTokenText());
             } else if (element == TokenType.BAD_CHARACTER) {
                 currentToken = new InvalidToken("", psiBuilder.getTokenText());
@@ -103,8 +103,8 @@ public class PsiBuilderTokenStream implements TokenStream {
         IElementType elementType = psiBuilder.lookAhead(i-1);
         if (elementType == null) {
             return -1;
-        } else if (elementType instanceof  SmaliElementType) {
-            return ((SmaliElementType)elementType).tokenId;
+        } else if (elementType instanceof SmaliLexicalElementType) {
+            return ((SmaliLexicalElementType)elementType).tokenId;
         } else if (elementType == TokenType.BAD_CHARACTER) {
             return smaliParser.INVALID_TOKEN;
         }
@@ -124,8 +124,8 @@ public class PsiBuilderTokenStream implements TokenStream {
     public void rewind(int markerIndex) {
         PsiBuilder.Marker marker = markers.get(markerIndex);
         marker.rollbackTo();
-        while (markerIndex <= markers.size() - 1) {
-            markers.remove(markers.size()-1);
+        while (markerIndex < markers.size()) {
+            markers.remove(markerIndex);
         }
     }
 
@@ -133,8 +133,10 @@ public class PsiBuilderTokenStream implements TokenStream {
         rewind(markers.size()-1);
     }
 
-    public void release(int marker) {
-        throw new UnsupportedOperationException();
+    public void release(int markerIndex) {
+        while (markerIndex < markers.size()) {
+            markers.remove(markerIndex).drop();
+        }
     }
 
     public void seek(int index) {

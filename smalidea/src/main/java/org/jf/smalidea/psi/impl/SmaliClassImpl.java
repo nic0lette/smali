@@ -29,7 +29,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea;
+package org.jf.smalidea.psi.impl;
 
 import com.intellij.extapi.psi.StubBasedPsiElementBase;
 import com.intellij.lang.ASTNode;
@@ -38,11 +38,14 @@ import com.intellij.openapi.util.Pair;
 import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.stubs.IStubElementType;
-import com.intellij.psi.stubs.StubElement;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jf.smalidea.SmaliTokens;
+import org.jf.smalidea.psi.iface.SmaliClass;
+import org.jf.smalidea.psi.ElementTypes;
+import org.jf.smalidea.psi.stub.SmaliClassStub;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -57,8 +60,9 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
 
     public SmaliClassImpl(@NotNull ASTNode node) {
         super(node);
-        String dalvikName = node.findChildByType(SmaliElementTypes.CLASS_DECLARATION).findChildByType(
-                SmaliElementTypes.CLASS_DESCRIPTOR).getText();
+        ASTNode classDeclNode = node.findChildByType(ElementTypes.CLASS_SPEC);
+        ASTNode classDescNode = classDeclNode.findChildByType(SmaliTokens.CLASS_DESCRIPTOR);
+        String dalvikName = classDescNode.getText();
         qualifiedName = dalvikName.substring(1, dalvikName.length()-1).replace('/', '.');
         shortName = shortNameFromQualifiedName(qualifiedName);
     }

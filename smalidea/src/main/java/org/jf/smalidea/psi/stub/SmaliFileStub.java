@@ -29,12 +29,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea;
+package org.jf.smalidea.psi.stub;
 
 import com.intellij.psi.stubs.PsiFileStubImpl;
+import org.jf.smalidea.psi.impl.SmaliFileImpl;
 
-public class SmaliFileStub extends PsiFileStubImpl<SmaliFile> {
-    public SmaliFileStub(SmaliFile file) {
+public class SmaliFileStub extends PsiFileStubImpl<SmaliFileImpl> {
+    public SmaliFileStub(SmaliFileImpl file) {
         super(file);
     }
 }

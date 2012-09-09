@@ -29,39 +29,23 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea;
+package org.jf.smalidea.psi.stub;
 
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.StubBuilder;
-import com.intellij.psi.stubs.DefaultStubBuilder;
-import com.intellij.psi.stubs.IndexSink;
-import com.intellij.psi.stubs.PsiFileStub;
+import com.intellij.psi.stubs.IStubElementType;
+import com.intellij.psi.stubs.NamedStub;
+import com.intellij.psi.stubs.StubBase;
 import com.intellij.psi.stubs.StubElement;
-import com.intellij.psi.tree.IStubFileElementType;
-import org.jetbrains.annotations.NotNull;
+import org.jf.smalidea.psi.iface.SmaliMethod;
 
-public class SmaliFileStubElementType extends IStubFileElementType<SmaliFileStub> {
-    public static final SmaliFileStubElementType INSTANCE = new SmaliFileStubElementType();
+public class SmaliMethodStub extends StubBase<SmaliMethod> {
+    private String methodNameAndProto;
 
-    public SmaliFileStubElementType() {
-        super("smali", SmaliLanguage.INSTANCE);
+    public SmaliMethodStub(StubElement parent, IStubElementType elementType, String methodNameAndProto) {
+        super(parent, elementType);
+        this.methodNameAndProto = methodNameAndProto;
     }
 
-    @Override
-    public StubBuilder getBuilder() {
-        return new DefaultStubBuilder() {
-            @Override
-            protected StubElement createStubForFile(@NotNull PsiFile file) {
-                if (file instanceof SmaliFile) {
-                    return new SmaliFileStub((SmaliFile)file);
-                }
-                return super.createStubForFile(file);
-            }
-        };
-    }
-
-    @Override
-    public void indexStub(PsiFileStub stub, IndexSink sink) {
-        super.indexStub(stub, sink);
+    public String getNameAndProto() {
+        return methodNameAndProto;
     }
 }

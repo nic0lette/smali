@@ -38,17 +38,13 @@ options {
 @header {
 package org.jf.smalidea;
 
-import org.jf.smalidea.SmaliElementTypes;
+import org.jf.smalidea.psi.ElementTypes;
 import com.intellij.lang.PsiBuilder;
 import static com.intellij.lang.PsiBuilder.Marker;
 }
 
 
 @members {
-	private boolean verboseErrors = false;
-	private boolean allowOdex = false;
-	private int apiLevel;
-
 	private PsiBuilder psiBuilder;
 
 	public void setPsiBuilder(PsiBuilder psiBuilder) {
@@ -59,124 +55,127 @@ import static com.intellij.lang.PsiBuilder.Marker;
 	    return psiBuilder.mark();
 	}
 
-	public void setVerboseErrors(boolean verboseErrors) {
-		this.verboseErrors = verboseErrors;
-	}
+    protected void syncToFollows(boolean acceptEof)
+    {
+        BitSet follow = computeErrorRecoverySet();
+        int mark = input.mark();
+        Marker marker = null;
+        try {
+            int token = input.LA(1);
+            while (!follow.member(token)) {
+                if (token == Token.EOF) {
+                    if (acceptEof) {
+                        break;
+                    }
+                    input.rewind();
+                    mark = -1;
+                    marker = null;
+                    return;
+                }
+                if (marker == null) {
+                    marker = mark();
+                }
+                input.consume();
+                token = input.LA(1);
+            }
+        } finally {
+            if  (mark != -1) {
+                input.release(mark);
+            }
+            if (marker != null) {
+                marker.error("Unexpected tokens");
+            }
+        }
+    }
 
-	public void setAllowOdex(boolean allowOdex) {
-	    this.allowOdex = allowOdex;
-	}
+    @Override
+    public void recover(IntStream input, RecognitionException re) {
+        Marker mark = mark();
+        super.recover(input, re);
+        mark.error(getErrorMessage(re, tokenNames));
+    }
 
-	public void setApiLevel(int apiLevel) {
-	    this.apiLevel = apiLevel;
-	}
-
-	public String getErrorMessage(RecognitionException e,
-		String[] tokenNames) {
-
-		if (verboseErrors) {
-			List stack = getRuleInvocationStack(e, this.getClass().getName());
-			String msg = null;
-
-			if (e instanceof NoViableAltException) {
-				NoViableAltException nvae = (NoViableAltException)e;
-				msg = " no viable alt; token="+getTokenErrorDisplay(e.token)+
-				" (decision="+nvae.decisionNumber+
-				" state "+nvae.stateNumber+")"+
-				" decision=<<"+nvae.grammarDecisionDescription+">>";
-			} else {
-				msg = super.getErrorMessage(e, tokenNames);
-			}
-
-			return stack + " " + msg;
-		} else {
-			return super.getErrorMessage(e, tokenNames);
-		}
-	}
-
-	public String getTokenErrorDisplay(Token t) {
-		if (!verboseErrors) {
-			String s = t.getText();
-			if ( s==null ) {
-				if ( t.getType()==Token.EOF ) {
-					s = "<EOF>";
-				}
-				else {
-					s = "<"+tokenNames[t.getType()]+">";
-				}
-			}
-			s = s.replaceAll("\n","\\\\n");
-			s = s.replaceAll("\r","\\\\r");
-			s = s.replaceAll("\t","\\\\t");
-			return "'"+s+"'";
-		}
-
-		CommonToken ct = (CommonToken)t;
-
-		String channelStr = "";
-		if (t.getChannel()>0) {
-			channelStr=",channel="+t.getChannel();
-		}
-		String txt = t.getText();
-		if ( txt!=null ) {
-			txt = txt.replaceAll("\n","\\\\n");
-			txt = txt.replaceAll("\r","\\\\r");
-			txt = txt.replaceAll("\t","\\\\t");
-		}
-		else {
-			txt = "<no text>";
-		}
-		return "[@"+t.getTokenIndex()+","+ct.getStartIndex()+":"+ct.getStopIndex()+"='"+txt+"',<"+tokenNames[t.getType()]+">"+channelStr+","+t.getLine()+":"+t.getCharPositionInLine()+"]";
-	}
-
-	public String getErrorHeader(RecognitionException e) {
-		return getSourceName()+"["+ e.line+","+e.charPositionInLine+"]";
-	}
+    @Override
+    protected Object recoverFromMismatchedToken(IntStream input, int ttype, BitSet follow)
+            throws RecognitionException
+    {
+        RecognitionException e = null;
+        // if next token is what we are looking for then "delete" this token
+        if ( mismatchIsUnwantedToken(input, ttype) ) {
+            e = new UnwantedTokenException(ttype, input);
+            /*
+               System.err.println("recoverFromMismatchedToken deleting "+
+                                  ((TokenStream)input).LT(1)+
+                                  " since "+((TokenStream)input).LT(2)+" is what we want");
+                */
+            beginResync();
+            Marker mark = mark();
+            input.consume(); // simply delete extra token
+            mark.error(getErrorMessage(e, tokenNames));
+            endResync();
+            reportError(e);  // report after consuming so AW sees the token in the exception
+            // we want to return the token we're actually matching
+            Object matchedSymbol = getCurrentInputSymbol(input);
+            input.consume(); // move past ttype token as if all were ok
+            return matchedSymbol;
+        }
+        // can't recover with single token deletion, try insertion
+        if ( mismatchIsMissingToken(input, follow) ) {
+            Object inserted = getMissingSymbol(input, e, ttype, follow);
+            e = new MissingTokenException(ttype, input, inserted);
+            reportError(e);  // report after inserting so AW sees the token in the exception
+            return inserted;
+        }
+        // even that didn't work; must throw the exception
+        e = new MismatchedTokenException(ttype, input);
+        throw e;
+    }
 }
 
+sync[boolean toEof]
+    @init { syncToFollows($toEof); }
+    : /*epsilon*/;
+
+
 smali_file
-	@init { Marker marker = mark(); }
-	@after { marker.done(SmaliElementTypes.SMALI_FILE); }
 	:
-	(class_spec
+	(class_element sync[true])+
+	EOF;
+
+class_element
+    :
+    (   class_spec
     |	super_spec
     |	implements_spec
     |	source_spec
     |	method
     |	field
-    |	annotation)+
-	EOF;
-	catch [RecognitionException ex] { marker.error(getErrorMessage(ex, tokenNames)); recover(input,ex); }
+    |	annotation);
 
 class_spec
     @init { Marker marker = mark(); }
-    @after { marker.done(SmaliElementTypes.CLASS_SPEC); }
 	:	CLASS_DIRECTIVE access_list CLASS_DESCRIPTOR;
-	catch [RecognitionException ex] { marker.error(getErrorMessage(ex, tokenNames)); recover(input,ex); }
+	finally { marker.done(ElementTypes.CLASS_SPEC); }
 
 super_spec
     @init { Marker marker = mark(); }
-    @after { marker.done(SmaliElementTypes.SUPER_SPEC); }
 	:	SUPER_DIRECTIVE CLASS_DESCRIPTOR;
-	catch [RecognitionException ex] { marker.error(getErrorMessage(ex, tokenNames)); recover(input,ex); }
+    finally { marker.done(ElementTypes.SUPER_SPEC); }
 
 implements_spec
     @init { Marker marker = mark(); }
-    @after { marker.done(SmaliElementTypes.IMPLEMENTS_SPEC); }
 	:	IMPLEMENTS_DIRECTIVE CLASS_DESCRIPTOR;
-	catch [RecognitionException ex] { marker.error(getErrorMessage(ex, tokenNames)); recover(input,ex); }
+    finally { marker.done(ElementTypes.IMPLEMENTS_SPEC); }
 
 source_spec
     @init { Marker marker = mark(); }
-    @after { marker.done(SmaliElementTypes.SOURCE_SPEC); }
 	:	SOURCE_DIRECTIVE STRING_LITERAL;
-	catch [RecognitionException ex] { marker.error(getErrorMessage(ex, tokenNames)); recover(input,ex); }
+	finally { marker.done(ElementTypes.SOURCE_SPEC); }
 
 access_list
     @init { Marker marker = mark(); }
-    @after { marker.done(SmaliElementTypes.ACCESS_LIST); }
 	:	ACCESS_SPEC*;
-	catch [RecognitionException ex] { marker.error(getErrorMessage(ex, tokenNames)); recover(input,ex); }
+    finally { marker.done(ElementTypes.ACCESS_LIST); }
 
 
 /*When there are annotations immediately after a field definition, we don't know whether they are field annotations
@@ -191,42 +190,36 @@ field
 	    Marker annotationsMarker = null;
     }
 	:	FIELD_DIRECTIVE access_list simple_name COLON nonvoid_type_descriptor (EQUAL literal)?
-		(	({input.LA(1) == ANNOTATION_DIRECTIVE}? { annotationsMarker = mark(); } annotation)*
+		(   ((ANNOTATION_DIRECTIVE)=>  {annotationsMarker = mark();})?
+		    ((ANNOTATION_DIRECTIVE)=> annotation)*
 
-		    (   {annotationsMarker.done(SmaliElementTypes.FIELD_ANNOTATIONS); annotationsDone = true;}
-		        END_FIELD_DIRECTIVE
-		        { marker.done(SmaliElementTypes.FIELD); markerDone = true;}
-		    |   /*epsilon*/ { marker.doneBefore(SmaliElementTypes.FIELD, annotationsMarker); annotationsMarker.done(SmaliElementTypes.CLASS_ANNOTATIONS); }
+		    (
+		        ({input.LA(1) != END_FIELD_DIRECTIVE}?=>
+		         { marker.doneBefore(ElementTypes.FIELD, annotationsMarker); markerDone = true;
+		           annotationsMarker.done(ElementTypes.CLASS_ANNOTATIONS); annotationsDone = true; })
+
+		        ({ annotationsMarker.done(ElementTypes.FIELD_ANNOTATIONS); annotationsDone = true; }
+		         END_FIELD_DIRECTIVE
+		         { marker.done(ElementTypes.FIELD); markerDone = true;})?
 		    )
 		);
-	catch [RecognitionException ex] {
-	    String error = getErrorMessage(ex, tokenNames);
-	    if (annotationsMarker != null){
+	finally {
+	        if (annotationsMarker != null && !annotationsDone) {
+                annotationsMarker.done(ElementTypes.FIELD_ANNOTATIONS);
+            }
 	        if (!markerDone) {
-	            marker.errorBefore(error, annotationsMarker);
+	            marker.done(ElementTypes.FIELD);
 	        }
-	        if (!annotationsDone) {
-	            annotationsMarker.error(error);
-	        }
-	    } else {
-	        if (!markerDone) {
-	            marker.error(error);
-	        }
-	    }
-	    recover(input,ex);
 	}
-
 
 method
     @init { Marker marker = mark(); }
-    @after { marker.done(SmaliElementTypes.METHOD); }
 	:	METHOD_DIRECTIVE access_list method_name method_prototype statements_and_directives END_METHOD_DIRECTIVE;
-	catch [RecognitionException ex] { marker.error(getErrorMessage(ex, tokenNames)); recover(input,ex); }
+	finally { marker.done(ElementTypes.METHOD); }
 
 statements_and_directives
     @init { Marker marker = mark(); }
-    @after { marker.done(SmaliElementTypes.METHOD_BODY); }
-	:	(	instruction
+	:	((	instruction
 		|	registers_directive
 		|	label
 		|	catch_directive
@@ -234,23 +227,22 @@ statements_and_directives
 		|	parameter_directive
 		|	ordered_debug_directive
 		|	annotation
-		)*;
-	catch [RecognitionException ex] { marker.error(getErrorMessage(ex, tokenNames)); recover(input,ex); }
+		) sync[false])*;
+	finally { marker.done(ElementTypes.METHOD_BODY); }
 
 registers_directive
     @init { Marker marker = mark(); }
-    @after { marker.done(SmaliElementTypes.REGISTERS_SPEC); }
 	:	(
 			REGISTERS_DIRECTIVE integral_literal
 		|	LOCALS_DIRECTIVE integral_literal
 		);
-	catch [RecognitionException ex] { marker.error(getErrorMessage(ex, tokenNames)); recover(input,ex); }
+    finally { marker.done(ElementTypes.REGISTERS_SPEC); }
 
 /*identifiers are much more general than most languages. Any of the below can either be
 the indicated type OR an identifier, depending on the context*/
 simple_name
     @init { Marker marker = mark(); }
-    @after { marker.done(SmaliElementTypes.SIMPLE_NAME); }
+    @after { marker.done(ElementTypes.SIMPLE_NAME); }
 	:	SIMPLE_NAME
 	|	ACCESS_SPEC
 	|	VERIFICATION_ERROR_TYPE
@@ -295,16 +287,14 @@ simple_name
 
 method_name
     @init { Marker marker = mark(); }
-    @after { marker.done(SmaliElementTypes.METHOD_NAME); }
 	:	simple_name
 	|	METHOD_NAME;
-	catch [RecognitionException ex] { marker.error(getErrorMessage(ex, tokenNames)); recover(input,ex); }
+    finally { marker.done(ElementTypes.METHOD_NAME); }
 
 method_prototype
     @init { Marker marker = mark(); }
-    @after { marker.done(SmaliElementTypes.METHOD_PROTOTYPE); }
 	:	OPEN_PAREN param_list CLOSE_PAREN type_descriptor;
-	catch [RecognitionException ex] { marker.error(getErrorMessage(ex, tokenNames)); recover(input,ex); }
+	finally { marker.done(ElementTypes.METHOD_PROTOTYPE); }
 
 param_list
 	:	PARAM_LIST
@@ -390,10 +380,9 @@ annotation_element
 
 annotation
     @init { Marker marker = mark(); }
-    @after { marker.done(SmaliElementTypes.ANNOTATION); }
 	:	ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY CLASS_DESCRIPTOR
 		annotation_element* END_ANNOTATION_DIRECTIVE;
-	catch [RecognitionException ex] { marker.error(getErrorMessage(ex, tokenNames)); recover(input,ex); }
+	finally { marker.done(ElementTypes.ANNOTATION); }
 
 subannotation
 	:	SUBANNOTATION_DIRECTIVE CLASS_DESCRIPTOR annotation_element* END_SUBANNOTATION_DIRECTIVE;
@@ -495,7 +484,6 @@ instruction_format31i
 
 instruction
     @init { Marker marker = mark(); }
-    @after { marker.done(SmaliElementTypes.INSTRUCTION); }
 	:	//e.g. goto endloop:
 		//e.g. goto +3
 		INSTRUCTION_FORMAT10t label_ref_or_offset
@@ -598,4 +586,4 @@ instruction
 	|   ARRAY_DATA_DIRECTIVE integral_literal fixed_literal* END_ARRAY_DATA_DIRECTIVE
 	|   PACKED_SWITCH_DIRECTIVE fixed_32bit_literal label_ref_or_offset* END_PACKED_SWITCH_DIRECTIVE
 	|   SPARSE_SWITCH_DIRECTIVE (fixed_32bit_literal ARROW label_ref_or_offset)* END_SPARSE_SWITCH_DIRECTIVE;
-	catch [RecognitionException ex] { marker.error(getErrorMessage(ex, tokenNames)); recover(input,ex); }
+	finally { marker.done(ElementTypes.INSTRUCTION); }

@@ -31,39 +31,16 @@
 
 package org.jf.smalidea;
 
-
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.PsiParser;
-import com.intellij.lang.impl.PsiBuilderImpl;
+import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.psi.tree.IElementType;
-import org.antlr.runtime.RecognitionException;
-import org.antlr.runtime.TokenSource;
-import org.jetbrains.annotations.NotNull;
-import org.jf.smali.smaliParser;
-import org.jf.smalidea.psi.ElementTypes;
 
-public class SmaliParser implements PsiParser {
-    @NotNull
-    public ASTNode parse(IElementType root, PsiBuilder builder) {
-        builder.setDebugMode(true);
+public class SmaliLexicalElementType extends IElementType {
+    public final int tokenId;
+    public final TextAttributesKey[] textAttributesKeys;
 
-        PsiBuilder.Marker rootMarker = builder.mark();
-        PsiBuilder.Marker classMarker = builder.mark();
-
-        boolean classDefFound = false;
-
-        PsiBuilderTokenStream tokenStream = new PsiBuilderTokenStream(builder);
-        smaliIdeaParser parser = new smaliIdeaParser(tokenStream);
-        parser.setPsiBuilder(builder);
-        try {
-            parser.smali_file();
-        } catch (RecognitionException ex) {
-            ex.printStackTrace();
-        }
-
-        classMarker.done(ElementTypes.SMALI_CLASS);
-        rootMarker.done(root);
-        return builder.getTreeBuilt();
+    protected SmaliLexicalElementType(int tokenId, String tokenName, TextAttributesKey textAttributesKey) {
+        super(tokenName, SmaliLanguage.INSTANCE);
+        this.tokenId = tokenId;
+        this.textAttributesKeys = new TextAttributesKey[] {textAttributesKey};
     }
 }

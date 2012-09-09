@@ -29,41 +29,42 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea;
+package org.jf.smalidea.psi.stub.element;
 
-
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.PsiParser;
-import com.intellij.lang.impl.PsiBuilderImpl;
-import com.intellij.psi.tree.IElementType;
-import org.antlr.runtime.RecognitionException;
-import org.antlr.runtime.TokenSource;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.StubBuilder;
+import com.intellij.psi.stubs.DefaultStubBuilder;
+import com.intellij.psi.stubs.IndexSink;
+import com.intellij.psi.stubs.PsiFileStub;
+import com.intellij.psi.stubs.StubElement;
+import com.intellij.psi.tree.IStubFileElementType;
 import org.jetbrains.annotations.NotNull;
-import org.jf.smali.smaliParser;
-import org.jf.smalidea.psi.ElementTypes;
+import org.jf.smalidea.psi.impl.SmaliFileImpl;
+import org.jf.smalidea.psi.stub.SmaliFileStub;
+import org.jf.smalidea.SmaliLanguage;
 
-public class SmaliParser implements PsiParser {
-    @NotNull
-    public ASTNode parse(IElementType root, PsiBuilder builder) {
-        builder.setDebugMode(true);
+public class SmaliFileElementType extends IStubFileElementType<SmaliFileStub> {
+    public static final SmaliFileElementType INSTANCE = new SmaliFileElementType();
 
-        PsiBuilder.Marker rootMarker = builder.mark();
-        PsiBuilder.Marker classMarker = builder.mark();
+    private SmaliFileElementType() {
+        super("smali", SmaliLanguage.INSTANCE);
+    }
 
-        boolean classDefFound = false;
+    @Override
+    public StubBuilder getBuilder() {
+        return new DefaultStubBuilder() {
+            @Override
+            protected StubElement createStubForFile(@NotNull PsiFile file) {
+                if (file instanceof SmaliFileImpl) {
+                    return new SmaliFileStub((SmaliFileImpl)file);
+                }
+                return super.createStubForFile(file);
+            }
+        };
+    }
 
-        PsiBuilderTokenStream tokenStream = new PsiBuilderTokenStream(builder);
-        smaliIdeaParser parser = new smaliIdeaParser(tokenStream);
-        parser.setPsiBuilder(builder);
-        try {
-            parser.smali_file();
-        } catch (RecognitionException ex) {
-            ex.printStackTrace();
-        }
-
-        classMarker.done(ElementTypes.SMALI_CLASS);
-        rootMarker.done(root);
-        return builder.getTreeBuilt();
+    @Override
+    public void indexStub(PsiFileStub stub, IndexSink sink) {
+        super.indexStub(stub, sink);
     }
 }

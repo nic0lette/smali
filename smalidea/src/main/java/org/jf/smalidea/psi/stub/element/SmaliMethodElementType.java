@@ -29,26 +29,51 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea;
+package org.jf.smalidea.psi.stub.element;
 
-import com.intellij.lexer.Lexer;
-import com.intellij.openapi.editor.colors.TextAttributesKey;
-import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
-import com.intellij.psi.tree.IElementType;
+import com.intellij.lang.Language;
+import com.intellij.psi.stubs.*;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jf.smalidea.SmaliLanguage;
+import org.jf.smalidea.psi.iface.SmaliMethod;
+import org.jf.smalidea.psi.impl.SmaliMethodImpl;
+import org.jf.smalidea.psi.stub.SmaliClassStub;
+import org.jf.smalidea.psi.stub.SmaliMethodStub;
 
+import java.io.IOException;
 
-public class SmaliHighlighter extends SyntaxHighlighterBase {
-    @NotNull
-    public Lexer getHighlightingLexer() {
-        return new SmaliLexer();
+public class SmaliMethodElementType extends IStubElementType<SmaliMethodStub, SmaliMethod> {
+    public static final SmaliMethodElementType INSTANCE = new SmaliMethodElementType();
+
+    private SmaliMethodElementType() {
+        super("smali method", SmaliLanguage.INSTANCE);
     }
 
-    @NotNull
-    public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
-        if (tokenType instanceof SmaliLexicalElementType) {
-            return ((SmaliLexicalElementType) tokenType).textAttributesKeys;
-        }
-        return new TextAttributesKey[] {};
+    @Override
+    public SmaliMethod createPsi(@NotNull SmaliMethodStub stub) {
+        return new SmaliMethodImpl(stub, this);
+    }
+
+    @Override
+    public SmaliMethodStub createStub(@NotNull SmaliMethod psi, StubElement parentStub) {
+        return new SmaliMethodStub(parentStub, this, psi.getMethodNameAndProto());
+    }
+
+    public String getExternalId() {
+        return "smali.method";
+    }
+
+    public void serialize(SmaliMethodStub stub, StubOutputStream dataStream) throws IOException {
+        dataStream.writeName(stub.getNameAndProto());
+    }
+
+    public SmaliMethodStub deserialize(StubInputStream dataStream, StubElement parentStub) throws IOException {
+        String nameAndProto = dataStream.readName().getString();
+        return new SmaliMethodStub(parentStub, this, nameAndProto);
+    }
+
+    public void indexStub(SmaliMethodStub stub, IndexSink sink) {
     }
 }
