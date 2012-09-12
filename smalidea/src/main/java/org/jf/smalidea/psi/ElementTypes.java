@@ -47,15 +47,14 @@ public class ElementTypes {
     public static final IElementType SOURCE_SPEC = new IElementType("source spec", SmaliLanguage.INSTANCE);
     public static final IElementType ACCESS_LIST = new IElementType("access list", SmaliLanguage.INSTANCE);
     public static final IElementType FIELD = new IElementType("field", SmaliLanguage.INSTANCE);
-    public static final IElementType FIELD_ANNOTATIONS = new IElementType("field annotations", SmaliLanguage.INSTANCE);
-    public static final IElementType CLASS_ANNOTATIONS = new IElementType("class annotations", SmaliLanguage.INSTANCE);
     public static final IElementType ANNOTATION = new IElementType("annotation", SmaliLanguage.INSTANCE);
     public static final IElementType METHOD = SmaliMethodElementType.INSTANCE;
 
-    public static final IElementType METHOD_BODY = new IElementType("method body", SmaliLanguage.INSTANCE);
     public static final IElementType REGISTERS_SPEC = new IElementType("registers spec", SmaliLanguage.INSTANCE);
     public static final IElementType SIMPLE_NAME = new IElementType("simple name", SmaliLanguage.INSTANCE);
     public static final IElementType METHOD_NAME = new IElementType("method name", SmaliLanguage.INSTANCE);
     public static final IElementType METHOD_PROTOTYPE = new IElementType("method prototype", SmaliLanguage.INSTANCE);
     public static final IElementType INSTRUCTION = new IElementType("instruction", SmaliLanguage.INSTANCE);
+
+    public static final IElementType LITERAL = new IElementType("literal", SmaliLanguage.INSTANCE);
 }

@@ -31,11 +31,11 @@
 
 package org.jf.smalidea.psi.iface;
 
-import com.intellij.debugger.SourcePosition;
-import com.intellij.psi.PsiClass;
-import com.sun.jdi.Location;
-import com.sun.jdi.ReferenceType;
+import com.intellij.psi.PsiElement;
 
-public interface SmaliClass extends PsiClass {
-    Location getLocationForSourcePosition(ReferenceType type, SourcePosition position);
+public interface SmaliRegistersSpec extends PsiElement {
+    boolean isLocals();
+    int getRegistersCount();
 }
+
+

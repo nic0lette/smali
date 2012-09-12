@@ -31,9 +31,14 @@
 
 package org.jf.smalidea.psi.impl;
 
+import com.intellij.debugger.SourcePosition;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.extapi.psi.StubBasedPsiElementBase;
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.application.Application;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.util.Computable;
 import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.stubs.IStubElementType;
@@ -43,28 +48,91 @@ import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jf.smalidea.psi.ElementTypes;
+import org.jf.smalidea.psi.iface.SmaliInstruction;
 import org.jf.smalidea.psi.iface.SmaliMethod;
+import org.jf.smalidea.psi.iface.SmaliRegistersSpec;
 import org.jf.smalidea.psi.stub.SmaliMethodStub;
 
 import java.util.List;
 
 public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
         implements SmaliMethod, StubBasedPsiElement<SmaliMethodStub> {
-    private String nameAndProto;
-
     public SmaliMethodImpl(@NotNull ASTNode node) {
         super(node);
-        ASTNode nameElement = node.findChildByType(ElementTypes.METHOD_NAME);
-        ASTNode protoElement = node.findChildByType(ElementTypes.METHOD_PROTOTYPE);
-        this.nameAndProto = nameElement.getText() + protoElement.getText();
     }
 
     public SmaliMethodImpl(@NotNull SmaliMethodStub stub, @NotNull IStubElementType nodeType) {
         super(stub, nodeType);
-        this.nameAndProto = stub.getNameAndProto();
     }
 
     public String getMethodNameAndProto() {
-        return nameAndProto;
+        String name = getName();
+        String proto = getProto();
+        if (name != null && proto != null) {
+           return name + proto;
+        }
+        return null;
+    }
+
+    public String getName() {
+        ASTNode nameElement = getNode().findChildByType(ElementTypes.METHOD_NAME);
+        if (nameElement != null) {
+            return nameElement.getText();
+        }
+        return null;
+    }
+
+    public String getProto() {
+        ASTNode protoElement = getNode().findChildByType(ElementTypes.METHOD_PROTOTYPE);
+        if (protoElement != null) {
+            return protoElement.getText();
+        }
+        return null;
+    }
+
+
+    public int getRegisters() {
+        PsiElement element = findChildByType(ElementTypes.REGISTERS_SPEC);
+        if (element != null) {
+            return ((SmaliRegistersSpec)element).getRegistersCount();
+            //TODO: correctly process .locals directive
+        }
+        return -1;
+    }
+
+    public SourcePosition getSourcePositionForAddress(int address) {
+        SmaliInstruction[] instructions = findChildrenByType(ElementTypes.INSTRUCTION, SmaliInstruction.class);
+
+        address *= 2;
+
+        int curAddress = 0;
+        for (SmaliInstruction instruction: instructions) {
+            if (curAddress >= address) {
+                return SourcePosition.createFromElement(instruction);
+            }
+            curAddress += instruction.getOpcode().format.size;
+            //TODO: add support for variable size instructions
+        }
+        return null;
+    }
+
+    public int getAddressForLine(int line) {
+        SmaliInstruction[] instructions = findChildrenByType(ElementTypes.INSTRUCTION, SmaliInstruction.class);
+        PsiDocumentManager documentManager = PsiDocumentManager.getInstance(getProject());
+        final Document document = documentManager.getDocument(getContainingFile());
+
+        int curAddress = 0;
+        int prevAddress = 0;
+        for (final SmaliInstruction instruction: instructions) {
+            prevAddress = curAddress;
+            curAddress += instruction.getOpcode().format.size;
+
+            int curLine = document.getLineNumber(instruction.getTextOffset());
+            if (curLine >= line) {
+                return prevAddress;
+            }
+            //TODO: add support for variable size instructions
+        }
+        return -1;
     }
 }

@@ -183,34 +183,32 @@ or class annotations until we determine if there is an .end field directive. In 
 the annotations. If it turns out that they are field annotations, we include them in the I_FIELD AST. Otherwise, we
 add them to the $smali_file::classAnnotations list*/
 field
-	@init {
-	    boolean markerDone = false;
-	    Marker marker = mark();
-	    boolean annotationsDone = false;
-	    Marker annotationsMarker = null;
+    @init {
+        Marker marker = mark();
+        Marker annotationsMarker = null;
+        boolean classAnnotations = true;
     }
-	:	FIELD_DIRECTIVE access_list simple_name COLON nonvoid_type_descriptor (EQUAL literal)?
-		(   ((ANNOTATION_DIRECTIVE)=>  {annotationsMarker = mark();})?
-		    ((ANNOTATION_DIRECTIVE)=> annotation)*
+    :   FIELD_DIRECTIVE access_list simple_name COLON nonvoid_type_descriptor (EQUAL literal)?
+        (   END_FIELD_DIRECTIVE
+        |   (ANNOTATION_DIRECTIVE)=> ( {annotationsMarker = mark();} ((ANNOTATION_DIRECTIVE)=> annotation)+
+                                       (END_FIELD_DIRECTIVE {classAnnotations = false;})?
+                                     )
+        |    /*epsilon*/
+        );
+    finally {
+            if (annotationsMarker != null) {
+                if (classAnnotations) {
+                    marker.doneBefore(ElementTypes.FIELD, annotationsMarker);
+                    annotationsMarker.drop();
+                } else {
+                    annotationsMarker.drop();
+                    marker.done(ElementTypes.FIELD);
+                }
 
-		    (
-		        ({input.LA(1) != END_FIELD_DIRECTIVE}?=>
-		         { marker.doneBefore(ElementTypes.FIELD, annotationsMarker); markerDone = true;
-		           annotationsMarker.done(ElementTypes.CLASS_ANNOTATIONS); annotationsDone = true; })
-
-		        ({ annotationsMarker.done(ElementTypes.FIELD_ANNOTATIONS); annotationsDone = true; }
-		         END_FIELD_DIRECTIVE
-		         { marker.done(ElementTypes.FIELD); markerDone = true;})?
-		    )
-		);
-	finally {
-	        if (annotationsMarker != null && !annotationsDone) {
-                annotationsMarker.done(ElementTypes.FIELD_ANNOTATIONS);
+            } else {
+                marker.done(ElementTypes.FIELD);
             }
-	        if (!markerDone) {
-	            marker.done(ElementTypes.FIELD);
-	        }
-	}
+    }
 
 method
     @init { Marker marker = mark(); }
@@ -218,7 +216,6 @@ method
 	finally { marker.done(ElementTypes.METHOD); }
 
 statements_and_directives
-    @init { Marker marker = mark(); }
 	:	((	instruction
 		|	registers_directive
 		|	label
@@ -228,7 +225,6 @@ statements_and_directives
 		|	ordered_debug_directive
 		|	annotation
 		) sync[false])*;
-	finally { marker.done(ElementTypes.METHOD_BODY); }
 
 registers_directive
     @init { Marker marker = mark(); }
@@ -330,6 +326,7 @@ double_literal
 	|	DOUBLE_LITERAL;
 
 literal
+    @init { Marker marker = mark(); }
 	:	LONG_LITERAL
 	|	integer_literal
 	|	SHORT_LITERAL
@@ -344,13 +341,16 @@ literal
 	|	subannotation
 	|	type_field_method_literal
 	|	enum_literal;
+	finally { marker.done(ElementTypes.LITERAL); }
 
 integral_literal
+    @init { Marker marker = mark(); }
 	:	LONG_LITERAL
 	|	integer_literal
 	|	SHORT_LITERAL
 	|	CHAR_LITERAL
 	|	BYTE_LITERAL;
+	finally { marker.done(ElementTypes.LITERAL); }
 
 fixed_32bit_literal
 	:	LONG_LITERAL
@@ -396,6 +396,7 @@ type_field_method_literal
 			(	simple_name COLON nonvoid_type_descriptor
 			|	method_name method_prototype
 			)
+		|   /*epsilon*/
 		)
 	|	PRIMITIVE_TYPE
 	|	VOID_TYPE;

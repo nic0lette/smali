@@ -41,6 +41,7 @@ import org.jf.smalidea.psi.iface.SmaliMethod;
 import org.jf.smalidea.psi.impl.SmaliMethodImpl;
 import org.jf.smalidea.psi.stub.SmaliClassStub;
 import org.jf.smalidea.psi.stub.SmaliMethodStub;
+import org.jf.smalidea.psi.index.SmaliMethodNameAndProtoIndex;
 
 import java.io.IOException;
 
@@ -75,5 +76,6 @@ public class SmaliMethodElementType extends IStubElementType<SmaliMethodStub, Sm
     }
 
     public void indexStub(SmaliMethodStub stub, IndexSink sink) {
+        sink.occurrence(SmaliMethodNameAndProtoIndex.KEY, stub.getNameAndProto());
     }
 }

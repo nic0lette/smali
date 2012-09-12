@@ -29,13 +29,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea.psi.iface;
+package org.jf.smalidea.psi.impl;
 
-import com.intellij.debugger.SourcePosition;
-import com.intellij.psi.PsiClass;
-import com.sun.jdi.Location;
-import com.sun.jdi.ReferenceType;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
+import org.jetbrains.annotations.NotNull;
+import org.jf.smalidea.SmaliTokens;
+import org.jf.smalidea.psi.ElementTypes;
+import org.jf.smalidea.psi.iface.SmaliLiteral;
+import org.jf.smalidea.psi.iface.SmaliRegistersSpec;
 
-public interface SmaliClass extends PsiClass {
-    Location getLocationForSourcePosition(ReferenceType type, SourcePosition position);
+public class SmaliRegistersSpecImpl extends ASTWrapperPsiElement implements SmaliRegistersSpec {
+    public SmaliRegistersSpecImpl(@NotNull ASTNode node) {
+        super(node);
+    }
+
+    public boolean isLocals() {
+        ASTNode dirNode = getNode().findChildByType(SmaliTokens.REGISTERS_DIRECTIVE);
+        return dirNode == null;
+    }
+
+    public int getRegistersCount() {
+        PsiElement element = findChildByType(ElementTypes.LITERAL);
+        if (element != null) {
+            return (Integer)((SmaliLiteral)element).getValue();
+        }
+        return -1;
+    }
 }

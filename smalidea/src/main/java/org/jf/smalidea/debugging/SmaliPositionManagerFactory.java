@@ -29,21 +29,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea;
+package org.jf.smalidea.debugging;
 
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.stubs.StringStubIndexExtension;
-import com.intellij.psi.stubs.StubIndexKey;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.debugger.PositionManager;
+import com.intellij.debugger.PositionManagerFactory;
+import com.intellij.debugger.engine.DebugProcess;
 
-public class SmaliShortClassNameIndex extends StringStubIndexExtension<PsiClass> {
-    public static final StubIndexKey<String, PsiClass> KEY =
-            StubIndexKey.createIndexKey("smali.class.shortname");
-
-    public static final SmaliShortClassNameIndex INSTANCE = new SmaliShortClassNameIndex();
-
-    @NotNull
-    public StubIndexKey<String, PsiClass> getKey() {
-        return KEY;
+public class SmaliPositionManagerFactory extends PositionManagerFactory {
+    @Override
+    public PositionManager createPositionManager(DebugProcess process) {
+        return new SmaliPositionManager(process);
     }
 }

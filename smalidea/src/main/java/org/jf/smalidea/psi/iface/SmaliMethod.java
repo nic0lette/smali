@@ -31,9 +31,15 @@
 
 package org.jf.smalidea.psi.iface;
 
+import com.intellij.debugger.SourcePosition;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
+import com.sun.jdi.Location;
 
 public interface SmaliMethod extends PsiElement {
     String getMethodNameAndProto();
+    String getName();
+    String getProto();
+    SourcePosition getSourcePositionForAddress(int address);
+    int getAddressForLine(int line);
 }

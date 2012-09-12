@@ -43,6 +43,8 @@
       <lang.parserDefinition language="smali" implementationClass="org.jf.smalidea.SmaliParserDefinition"/>
       <stubElementTypeHolder class="org.jf.smalidea.psi.ElementTypes"/>
       <java.shortNamesCache implementation="org.jf.smalidea.SmaliShortClassNameCache"/>
-      <stubIndex implementation="org.jf.smalidea.SmaliShortClassNameIndex"/>
+      <stubIndex implementation="org.jf.smalidea.psi.index.SmaliClassNameIndex"/>
+      <stubIndex implementation="org.jf.smalidea.psi.index.SmaliMethodNameAndProtoIndex"/>
+      <debugger.positionManagerFactory id="groovyPositionManager" implementation="org.jf.smalidea.debugging.SmaliPositionManagerFactory"/>
   </extensions>
 </idea-plugin>

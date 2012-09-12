@@ -35,9 +35,9 @@ import com.intellij.psi.stubs.*;
 import org.jetbrains.annotations.NotNull;
 import org.jf.smalidea.psi.iface.SmaliClass;
 import org.jf.smalidea.SmaliLanguage;
-import org.jf.smalidea.SmaliShortClassNameIndex;
 import org.jf.smalidea.psi.impl.SmaliClassImpl;
 import org.jf.smalidea.psi.stub.SmaliClassStub;
+import org.jf.smalidea.psi.index.SmaliClassNameIndex;
 
 import java.io.IOException;
 
@@ -55,7 +55,7 @@ public class SmaliClassElementType extends IStubElementType<SmaliClassStub, Smal
 
     @Override
     public SmaliClassStub createStub(@NotNull SmaliClass psi, StubElement parentStub) {
-        return new SmaliClassStub(parentStub, this, psi.getQualifiedName());
+        return new SmaliClassStub(parentStub, this, psi.getName());
     }
 
     @Override
@@ -77,6 +77,6 @@ public class SmaliClassElementType extends IStubElementType<SmaliClassStub, Smal
     }
 
     public void indexStub(SmaliClassStub stub, IndexSink sink) {
-        sink.occurrence(SmaliShortClassNameIndex.KEY, stub.getName());
+        sink.occurrence(SmaliClassNameIndex.KEY, stub.getName());
     }
 }

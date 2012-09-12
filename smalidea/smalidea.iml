@@ -14,6 +14,7 @@
     <orderEntry type="module" module-name="smali" />
     <orderEntry type="module" module-name="util" />
     <orderEntry type="library" name="Maven: org.antlr:antlr-runtime:3.2" level="project" />
+    <orderEntry type="module" module-name="dexlib" />
   </component>
 </module>
 

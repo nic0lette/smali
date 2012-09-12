@@ -29,13 +29,29 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea.psi.iface;
+package org.jf.smalidea.psi.impl;
 
-import com.intellij.debugger.SourcePosition;
-import com.intellij.psi.PsiClass;
-import com.sun.jdi.Location;
-import com.sun.jdi.ReferenceType;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.intellij.lang.ASTNode;
+import org.eclipse.jdt.core.util.OpcodeStringValues;
+import org.jetbrains.annotations.NotNull;
+import org.jf.dexlib.Code.Opcode;
+import org.jf.smalidea.SmaliTokens;
+import org.jf.smalidea.psi.iface.SmaliInstruction;
 
-public interface SmaliClass extends PsiClass {
-    Location getLocationForSourcePosition(ReferenceType type, SourcePosition position);
+public class SmaliInstructionImpl extends ASTWrapperPsiElement implements SmaliInstruction {
+    private Opcode opcode = null;
+
+    public SmaliInstructionImpl(@NotNull ASTNode node) {
+        super(node);
+
+        ASTNode instrNode = node.findChildByType(SmaliTokens.INSTRUCTION_TOKENS);
+        if (instrNode != null) {
+            opcode = Opcode.getOpcodeByName(instrNode.getText());
+        }
+    }
+
+    public Opcode getOpcode() {
+        return opcode;
+    }
 }

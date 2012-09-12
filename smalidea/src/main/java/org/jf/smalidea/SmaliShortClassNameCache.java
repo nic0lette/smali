@@ -35,7 +35,6 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.impl.PsiManagerEx;
-import com.intellij.psi.impl.java.stubs.index.JavaShortClassNameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.PsiShortNamesCache;
 import com.intellij.util.ArrayUtil;
@@ -43,6 +42,8 @@ import com.intellij.util.Processor;
 import com.intellij.util.containers.HashSet;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+import org.jf.smalidea.psi.iface.SmaliClass;
+import org.jf.smalidea.psi.index.SmaliClassNameIndex;
 
 import java.util.Collection;
 
@@ -56,7 +57,7 @@ public class SmaliShortClassNameCache extends PsiShortNamesCache {
     @NotNull
     @Override
     public PsiClass[] getClassesByName(@NotNull @NonNls String name, @NotNull GlobalSearchScope scope) {
-        Collection<PsiClass> classes = SmaliShortClassNameIndex.INSTANCE.get(name, manager.getProject(), scope);
+        Collection<SmaliClass> classes = SmaliClassNameIndex.INSTANCE.get(name, manager.getProject(), scope);
         PsiClass[] classesArray = new PsiClass[classes.size()];
         return classes.toArray(classesArray);
     }
@@ -64,13 +65,13 @@ public class SmaliShortClassNameCache extends PsiShortNamesCache {
     @NotNull
     @Override
     public String[] getAllClassNames() {
-        final Collection<String> names = SmaliShortClassNameIndex.INSTANCE.getAllKeys(manager.getProject());
+        final Collection<String> names = SmaliClassNameIndex.INSTANCE.getAllKeys(manager.getProject());
         return ArrayUtil.toStringArray(names);
     }
 
     @Override
     public void getAllClassNames(@NotNull HashSet<String> dest) {
-        dest.addAll(SmaliShortClassNameIndex.INSTANCE.getAllKeys(manager.getProject()));
+        dest.addAll(SmaliClassNameIndex.INSTANCE.getAllKeys(manager.getProject()));
     }
 
     @NotNull

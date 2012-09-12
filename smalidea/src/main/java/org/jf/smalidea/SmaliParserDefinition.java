@@ -46,10 +46,10 @@ import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.jf.smali.smaliParser;
 import org.jf.smalidea.psi.ElementTypes;
-import org.jf.smalidea.psi.impl.SmaliFileImpl;
-import org.jf.smalidea.psi.impl.SmaliMethodImpl;
+import org.jf.smalidea.psi.iface.SmaliLiteral;
+import org.jf.smalidea.psi.iface.SmaliRegistersSpec;
+import org.jf.smalidea.psi.impl.*;
 import org.jf.smalidea.psi.stub.element.SmaliClassElementType;
-import org.jf.smalidea.psi.impl.SmaliClassImpl;
 import org.jf.smalidea.psi.stub.element.SmaliFileElementType;
 
 public class SmaliParserDefinition implements ParserDefinition {
@@ -72,8 +72,6 @@ public class SmaliParserDefinition implements ParserDefinition {
         return WHITESPACE;
     }
 
-
-
     private static final TokenSet COMMENT = TokenSet.create(SmaliTokens.LINE_COMMENT);
     @NotNull
     public TokenSet getCommentTokens() {
@@ -92,6 +90,12 @@ public class SmaliParserDefinition implements ParserDefinition {
             return new SmaliClassImpl(node);
         } else if (node.getElementType() == ElementTypes.METHOD) {
             return new SmaliMethodImpl(node);
+        } else if (node.getElementType() == ElementTypes.INSTRUCTION) {
+            return new SmaliInstructionImpl(node);
+        } else if (node.getElementType() == ElementTypes.LITERAL) {
+            return new SmaliLiteralImpl(node);
+        } else if (node.getElementType() == ElementTypes.REGISTERS_SPEC) {
+            return new SmaliRegistersSpecImpl(node);
         }
         return new ASTWrapperPsiElement(node);
     }

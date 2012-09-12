@@ -712,7 +712,7 @@ type_field_method_literal
       ( simple_name COLON nonvoid_type_descriptor -> ^(I_ENCODED_FIELD reference_type_descriptor simple_name nonvoid_type_descriptor)
       | method_name method_prototype -> ^(I_ENCODED_METHOD reference_type_descriptor method_name method_prototype)
       )
-    | -> reference_type_descriptor
+    | /*epsilon*/ -> reference_type_descriptor
     )
   | PRIMITIVE_TYPE
   | VOID_TYPE;

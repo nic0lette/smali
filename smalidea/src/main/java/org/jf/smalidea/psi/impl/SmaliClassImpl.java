@@ -31,6 +31,7 @@
 
 package org.jf.smalidea.psi.impl;
 
+import com.intellij.debugger.SourcePosition;
 import com.intellij.extapi.psi.StubBasedPsiElementBase;
 import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
@@ -39,12 +40,16 @@ import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.stubs.IStubElementType;
 import com.intellij.util.IncorrectOperationException;
+import com.sun.jdi.Location;
+import com.sun.jdi.Method;
+import com.sun.jdi.ReferenceType;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jf.smalidea.SmaliTokens;
 import org.jf.smalidea.psi.iface.SmaliClass;
 import org.jf.smalidea.psi.ElementTypes;
+import org.jf.smalidea.psi.iface.SmaliMethod;
 import org.jf.smalidea.psi.stub.SmaliClassStub;
 
 import javax.swing.*;
@@ -54,23 +59,19 @@ import java.util.List;
 
 public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
         implements SmaliClass, StubBasedPsiElement<SmaliClassStub>, ItemPresentation {
-    private String qualifiedName;
-    private String shortName;
+    private String name;
 
 
     public SmaliClassImpl(@NotNull ASTNode node) {
         super(node);
         ASTNode classDeclNode = node.findChildByType(ElementTypes.CLASS_SPEC);
         ASTNode classDescNode = classDeclNode.findChildByType(SmaliTokens.CLASS_DESCRIPTOR);
-        String dalvikName = classDescNode.getText();
-        qualifiedName = dalvikName.substring(1, dalvikName.length()-1).replace('/', '.');
-        shortName = shortNameFromQualifiedName(qualifiedName);
+        name = classDescNode.getText();
     }
 
     public SmaliClassImpl(@NotNull SmaliClassStub stub, @NotNull IStubElementType nodeType) {
         super(stub, nodeType);
-        qualifiedName = stub.getQualifiedName();
-        shortName = shortNameFromQualifiedName(qualifiedName);
+        name = stub.getName();
     }
 
     public static String shortNameFromQualifiedName(String qualifiedName) {
@@ -81,8 +82,20 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
         return qualifiedName.substring(index+1);
     }
 
-    public String getQualifiedName() {
-        return qualifiedName;
+    public Location getLocationForSourcePosition(ReferenceType type, SourcePosition position) {
+        SmaliMethod[] smaliMethods = findChildrenByType(ElementTypes.METHOD, SmaliMethod.class);
+
+        for (SmaliMethod smaliMethod: smaliMethods) {
+            //TODO: check the start line+end line of the method
+            int address = smaliMethod.getAddressForLine(position.getLine());
+            if (address != -1) {
+                List<Method> methods = type.methodsByName(smaliMethod.getName(), smaliMethod.getProto());
+                if (methods.size() > 0) {
+                    return methods.get(0).locationOfCodeIndex(address/2);
+                }
+            }
+        }
+        return null;
     }
 
     @Override
@@ -91,7 +104,11 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
     }
 
     public String getName() {
-        return shortName;
+        return name;
+    }
+
+    public String getQualifiedName() {
+        return name;
     }
 
     public boolean isInterface() {

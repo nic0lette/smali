@@ -95,7 +95,7 @@ public class PsiBuilderTokenStream implements TokenStream {
                 throw new UnsupportedOperationException();
             }
         } else {
-            currentToken = null;
+            currentToken = new CommonToken(Token.EOF);
         }
     }
 

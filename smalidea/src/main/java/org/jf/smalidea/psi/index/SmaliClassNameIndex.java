@@ -29,13 +29,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea.psi.iface;
+package org.jf.smalidea.psi.index;
 
-import com.intellij.debugger.SourcePosition;
 import com.intellij.psi.PsiClass;
-import com.sun.jdi.Location;
-import com.sun.jdi.ReferenceType;
+import com.intellij.psi.stubs.StringStubIndexExtension;
+import com.intellij.psi.stubs.StubIndexKey;
+import org.jetbrains.annotations.NotNull;
+import org.jf.smalidea.psi.iface.SmaliClass;
 
-public interface SmaliClass extends PsiClass {
-    Location getLocationForSourcePosition(ReferenceType type, SourcePosition position);
+public class SmaliClassNameIndex extends StringStubIndexExtension<SmaliClass> {
+    public static final StubIndexKey<String, SmaliClass> KEY =
+            StubIndexKey.createIndexKey("smali.class.name");
+
+    public static final SmaliClassNameIndex INSTANCE = new SmaliClassNameIndex();
+
+    private SmaliClassNameIndex() {
+    }
+
+    @NotNull
+    public StubIndexKey<String, SmaliClass> getKey() {
+        return KEY;
+    }
 }
