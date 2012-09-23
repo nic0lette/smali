@@ -46,5 +46,6 @@
       <stubIndex implementation="org.jf.smalidea.psi.index.SmaliClassNameIndex"/>
       <stubIndex implementation="org.jf.smalidea.psi.index.SmaliMethodNameAndProtoIndex"/>
       <debugger.positionManagerFactory id="groovyPositionManager" implementation="org.jf.smalidea.debugging.SmaliPositionManagerFactory"/>
+      <xdebugger.debuggerSupport implementation="org.jf.smalidea.debugging.SmaliDebuggerSupport" order="first"/>
   </extensions>
 </idea-plugin>
