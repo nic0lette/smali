@@ -9,12 +9,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="IDEA IC-117.798" jdkType="IDEA JDK" />
+    <orderEntry type="jdk" jdkName="IDEA IC-117.798 (openjdk)" jdkType="IDEA JDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="smali" />
     <orderEntry type="module" module-name="util" />
-    <orderEntry type="library" name="Maven: org.antlr:antlr-runtime:3.2" level="project" />
     <orderEntry type="module" module-name="dexlib" />
+    <orderEntry type="module" module-name="smali-smali" />
   </component>
 </module>
 

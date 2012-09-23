@@ -1,4 +1,4 @@
-// $ANTLR 3.4 smaliIdeaParser.g 2012-09-11 21:37:39
+// $ANTLR 3.4 smaliIdeaParser.g 2012-09-23 18:41:30
 
 package org.jf.smalidea;
 
@@ -17,245 +17,239 @@ import java.util.HashMap;
 @SuppressWarnings({"all", "warnings", "unchecked"})
 public class smaliIdeaParser extends Parser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "CLASS_DIRECTIVE", "SUPER_DIRECTIVE", "IMPLEMENTS_DIRECTIVE", "SOURCE_DIRECTIVE", "FIELD_DIRECTIVE", "END_FIELD_DIRECTIVE", "SUBANNOTATION_DIRECTIVE", "END_SUBANNOTATION_DIRECTIVE", "ANNOTATION_DIRECTIVE", "END_ANNOTATION_DIRECTIVE", "ENUM_DIRECTIVE", "METHOD_DIRECTIVE", "END_METHOD_DIRECTIVE", "REGISTERS_DIRECTIVE", "LOCALS_DIRECTIVE", "ARRAY_DATA_DIRECTIVE", "END_ARRAY_DATA_DIRECTIVE", "PACKED_SWITCH_DIRECTIVE", "END_PACKED_SWITCH_DIRECTIVE", "SPARSE_SWITCH_DIRECTIVE", "END_SPARSE_SWITCH_DIRECTIVE", "CATCH_DIRECTIVE", "CATCHALL_DIRECTIVE", "LINE_DIRECTIVE", "PARAMETER_DIRECTIVE", "END_PARAMETER_DIRECTIVE", "LOCAL_DIRECTIVE", "END_LOCAL_DIRECTIVE", "RESTART_LOCAL_DIRECTIVE", "PROLOGUE_DIRECTIVE", "EPILOGUE_DIRECTIVE", "HEX_PREFIX", "HEX_DIGIT", "BASE_INTEGER", "DECIMAL_EXPONENT", "BINARY_EXPONENT", "HEX_DIGITS", "BASE_FLOAT_OR_ID", "BASE_FLOAT", "ESCAPE_SEQUENCE", "POSITIVE_INTEGER_LITERAL", "NEGATIVE_INTEGER_LITERAL", "LONG_LITERAL", "SHORT_LITERAL", "BYTE_LITERAL", "FLOAT_LITERAL_OR_ID", "DOUBLE_LITERAL_OR_ID", "FLOAT_LITERAL", "DOUBLE_LITERAL", "BOOL_LITERAL", "NULL_LITERAL", "BASE_STRING_LITERAL", "STRING_LITERAL", "BASE_CHAR_LITERAL", "CHAR_LITERAL", "REGISTER", "ANNOTATION_VISIBILITY", "ACCESS_SPEC", "VERIFICATION_ERROR_TYPE", "INLINE_INDEX", "VTABLE_INDEX", "FIELD_OFFSET", "OFFSET", "LINE_COMMENT", "INSTRUCTION_FORMAT10t", "INSTRUCTION_FORMAT10x", "INSTRUCTION_FORMAT10x_ODEX", "INSTRUCTION_FORMAT11n", "INSTRUCTION_FORMAT11x", "INSTRUCTION_FORMAT12x_OR_ID", "INSTRUCTION_FORMAT12x", "INSTRUCTION_FORMAT20bc", "INSTRUCTION_FORMAT20t", "INSTRUCTION_FORMAT21c_FIELD", "INSTRUCTION_FORMAT21c_FIELD_ODEX", "INSTRUCTION_FORMAT21c_STRING", "INSTRUCTION_FORMAT21c_TYPE", "INSTRUCTION_FORMAT21h", "INSTRUCTION_FORMAT21s", "INSTRUCTION_FORMAT21t", "INSTRUCTION_FORMAT22b", "INSTRUCTION_FORMAT22c_FIELD", "INSTRUCTION_FORMAT22c_FIELD_ODEX", "INSTRUCTION_FORMAT22c_TYPE", "INSTRUCTION_FORMAT22cs_FIELD", "INSTRUCTION_FORMAT22s_OR_ID", "INSTRUCTION_FORMAT22s", "INSTRUCTION_FORMAT22t", "INSTRUCTION_FORMAT22x", "INSTRUCTION_FORMAT23x", "INSTRUCTION_FORMAT30t", "INSTRUCTION_FORMAT31c", "INSTRUCTION_FORMAT31i_OR_ID", "INSTRUCTION_FORMAT31i", "INSTRUCTION_FORMAT31t", "INSTRUCTION_FORMAT32x", "INSTRUCTION_FORMAT35c_METHOD", "INSTRUCTION_FORMAT35c_METHOD_ODEX", "INSTRUCTION_FORMAT35c_TYPE", "INSTRUCTION_FORMAT35mi_METHOD", "INSTRUCTION_FORMAT35ms_METHOD", "INSTRUCTION_FORMAT3rc_METHOD", "INSTRUCTION_FORMAT3rc_METHOD_ODEX", "INSTRUCTION_FORMAT3rc_TYPE", "INSTRUCTION_FORMAT3rmi_METHOD", "INSTRUCTION_FORMAT3rms_METHOD", "INSTRUCTION_FORMAT41c_TYPE", "INSTRUCTION_FORMAT41c_FIELD", "INSTRUCTION_FORMAT41c_FIELD_ODEX", "INSTRUCTION_FORMAT51l", "INSTRUCTION_FORMAT52c_TYPE", "INSTRUCTION_FORMAT52c_FIELD", "INSTRUCTION_FORMAT52c_FIELD_ODEX", "INSTRUCTION_FORMAT5rc_METHOD", "INSTRUCTION_FORMAT5rc_METHOD_ODEX", "INSTRUCTION_FORMAT5rc_TYPE", "BASE_SIMPLE_NAME", "BASE_PRIMITIVE_TYPE", "BASE_CLASS_DESCRIPTOR", "BASE_ARRAY_DESCRIPTOR", "BASE_TYPE", "PRIMITIVE_TYPE", "VOID_TYPE", "CLASS_DESCRIPTOR", "ARRAY_DESCRIPTOR", "PARAM_LIST_OR_ID", "PARAM_LIST", "SIMPLE_NAME", "METHOD_NAME", "DOTDOT", "ARROW", "EQUAL", "COLON", "COMMA", "OPEN_BRACE", "CLOSE_BRACE", "OPEN_PAREN", "CLOSE_PAREN", "WHITE_SPACE", "I_CLASS_DEF", "I_SUPER", "I_IMPLEMENTS", "I_SOURCE", "I_ACCESS_LIST", "I_METHODS", "I_FIELDS", "I_FIELD", "I_FIELD_TYPE", "I_FIELD_INITIAL_VALUE", "I_METHOD", "I_METHOD_PROTOTYPE", "I_METHOD_RETURN_TYPE", "I_REGISTERS", "I_LOCALS", "I_LABELS", "I_LABEL", "I_ANNOTATIONS", "I_ANNOTATION", "I_ANNOTATION_ELEMENT", "I_SUBANNOTATION", "I_ENCODED_FIELD", "I_ENCODED_METHOD", "I_ENCODED_ENUM", "I_ENCODED_ARRAY", "I_ARRAY_ELEMENT_SIZE", "I_ARRAY_ELEMENTS", "I_PACKED_SWITCH_START_KEY", "I_PACKED_SWITCH_TARGET_COUNT", "I_PACKED_SWITCH_TARGETS", "I_PACKED_SWITCH_DECLARATION", "I_PACKED_SWITCH_DECLARATIONS", "I_SPARSE_SWITCH_KEYS", "I_SPARSE_SWITCH_TARGET_COUNT", "I_SPARSE_SWITCH_TARGETS", "I_SPARSE_SWITCH_DECLARATION", "I_SPARSE_SWITCH_DECLARATIONS", "I_ADDRESS", "I_CATCH", "I_CATCHALL", "I_CATCHES", "I_PARAMETER", "I_PARAMETERS", "I_PARAMETER_NOT_SPECIFIED", "I_ORDERED_DEBUG_DIRECTIVES", "I_LINE", "I_LOCAL", "I_END_LOCAL", "I_RESTART_LOCAL", "I_PROLOGUE", "I_EPILOGUE", "I_STATEMENTS", "I_STATEMENT_FORMAT10t", "I_STATEMENT_FORMAT10x", "I_STATEMENT_FORMAT11n", "I_STATEMENT_FORMAT11x", "I_STATEMENT_FORMAT12x", "I_STATEMENT_FORMAT20bc", "I_STATEMENT_FORMAT20t", "I_STATEMENT_FORMAT21c_TYPE", "I_STATEMENT_FORMAT21c_FIELD", "I_STATEMENT_FORMAT21c_STRING", "I_STATEMENT_FORMAT21h", "I_STATEMENT_FORMAT21s", "I_STATEMENT_FORMAT21t", "I_STATEMENT_FORMAT22b", "I_STATEMENT_FORMAT22c_FIELD", "I_STATEMENT_FORMAT22c_TYPE", "I_STATEMENT_FORMAT22s", "I_STATEMENT_FORMAT22t", "I_STATEMENT_FORMAT22x", "I_STATEMENT_FORMAT23x", "I_STATEMENT_FORMAT30t", "I_STATEMENT_FORMAT31c", "I_STATEMENT_FORMAT31i", "I_STATEMENT_FORMAT31t", "I_STATEMENT_FORMAT32x", "I_STATEMENT_FORMAT35c_METHOD", "I_STATEMENT_FORMAT35c_TYPE", "I_STATEMENT_FORMAT3rc_METHOD", "I_STATEMENT_FORMAT3rc_TYPE", "I_STATEMENT_FORMAT41c_TYPE", "I_STATEMENT_FORMAT41c_FIELD", "I_STATEMENT_FORMAT51l", "I_STATEMENT_FORMAT52c_TYPE", "I_STATEMENT_FORMAT52c_FIELD", "I_STATEMENT_FORMAT5rc_METHOD", "I_STATEMENT_FORMAT5rc_TYPE", "I_STATEMENT_ARRAY_DATA", "I_STATEMENT_PACKED_SWITCH", "I_STATEMENT_SPARSE_SWITCH", "I_REGISTER_RANGE", "I_REGISTER_LIST", "LABEL", "INTEGER_LITERAL", "INVALID_TOKEN"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ACCESS_SPEC", "ANNOTATION_DIRECTIVE", "ANNOTATION_VISIBILITY", "ARRAY_DATA_DIRECTIVE", "ARRAY_DESCRIPTOR", "ARROW", "BASE_ARRAY_DESCRIPTOR", "BASE_CHAR_LITERAL", "BASE_CLASS_DESCRIPTOR", "BASE_FLOAT", "BASE_FLOAT_OR_ID", "BASE_INTEGER", "BASE_PRIMITIVE_TYPE", "BASE_SIMPLE_NAME", "BASE_STRING_LITERAL", "BASE_TYPE", "BINARY_EXPONENT", "BOOL_LITERAL", "BYTE_LITERAL", "CATCH_DIRECTIVE", "CATCHALL_DIRECTIVE", "CHAR_LITERAL", "CLASS_DESCRIPTOR", "CLASS_DIRECTIVE", "CLOSE_BRACE", "CLOSE_PAREN", "COLON", "COMMA", "DECIMAL_EXPONENT", "DOTDOT", "DOUBLE_LITERAL", "DOUBLE_LITERAL_OR_ID", "END_ANNOTATION_DIRECTIVE", "END_ARRAY_DATA_DIRECTIVE", "END_FIELD_DIRECTIVE", "END_LOCAL_DIRECTIVE", "END_METHOD_DIRECTIVE", "END_PACKED_SWITCH_DIRECTIVE", "END_PARAMETER_DIRECTIVE", "END_SPARSE_SWITCH_DIRECTIVE", "END_SUBANNOTATION_DIRECTIVE", "ENUM_DIRECTIVE", "EPILOGUE_DIRECTIVE", "EQUAL", "ESCAPE_SEQUENCE", "FIELD_DIRECTIVE", "FIELD_OFFSET", "FLOAT_LITERAL", "FLOAT_LITERAL_OR_ID", "HEX_DIGIT", "HEX_DIGITS", "HEX_PREFIX", "IMPLEMENTS_DIRECTIVE", "INLINE_INDEX", "INSTRUCTION_FORMAT10t", "INSTRUCTION_FORMAT10x", "INSTRUCTION_FORMAT10x_ODEX", "INSTRUCTION_FORMAT11n", "INSTRUCTION_FORMAT11x", "INSTRUCTION_FORMAT12x", "INSTRUCTION_FORMAT12x_OR_ID", "INSTRUCTION_FORMAT20bc", "INSTRUCTION_FORMAT20t", "INSTRUCTION_FORMAT21c_FIELD", "INSTRUCTION_FORMAT21c_FIELD_ODEX", "INSTRUCTION_FORMAT21c_STRING", "INSTRUCTION_FORMAT21c_TYPE", "INSTRUCTION_FORMAT21h", "INSTRUCTION_FORMAT21s", "INSTRUCTION_FORMAT21t", "INSTRUCTION_FORMAT22b", "INSTRUCTION_FORMAT22c_FIELD", "INSTRUCTION_FORMAT22c_FIELD_ODEX", "INSTRUCTION_FORMAT22c_TYPE", "INSTRUCTION_FORMAT22cs_FIELD", "INSTRUCTION_FORMAT22s", "INSTRUCTION_FORMAT22s_OR_ID", "INSTRUCTION_FORMAT22t", "INSTRUCTION_FORMAT22x", "INSTRUCTION_FORMAT23x", "INSTRUCTION_FORMAT30t", "INSTRUCTION_FORMAT31c", "INSTRUCTION_FORMAT31i", "INSTRUCTION_FORMAT31i_OR_ID", "INSTRUCTION_FORMAT31t", "INSTRUCTION_FORMAT32x", "INSTRUCTION_FORMAT35c_METHOD", "INSTRUCTION_FORMAT35c_METHOD_ODEX", "INSTRUCTION_FORMAT35c_TYPE", "INSTRUCTION_FORMAT35mi_METHOD", "INSTRUCTION_FORMAT35ms_METHOD", "INSTRUCTION_FORMAT3rc_METHOD", "INSTRUCTION_FORMAT3rc_METHOD_ODEX", "INSTRUCTION_FORMAT3rc_TYPE", "INSTRUCTION_FORMAT3rmi_METHOD", "INSTRUCTION_FORMAT3rms_METHOD", "INSTRUCTION_FORMAT51l", "INVALID_TOKEN", "LINE_COMMENT", "LINE_DIRECTIVE", "LOCAL_DIRECTIVE", "LOCALS_DIRECTIVE", "LONG_LITERAL", "METHOD_DIRECTIVE", "METHOD_NAME", "NEGATIVE_INTEGER_LITERAL", "NULL_LITERAL", "OFFSET", "OPEN_BRACE", "OPEN_PAREN", "PACKED_SWITCH_DIRECTIVE", "PARAM_LIST", "PARAM_LIST_OR_ID", "PARAMETER_DIRECTIVE", "POSITIVE_INTEGER_LITERAL", "PRIMITIVE_TYPE", "PROLOGUE_DIRECTIVE", "REGISTER", "REGISTERS_DIRECTIVE", "RESTART_LOCAL_DIRECTIVE", "SHORT_LITERAL", "SIMPLE_NAME", "SOURCE_DIRECTIVE", "SPARSE_SWITCH_DIRECTIVE", "STRING_LITERAL", "SUBANNOTATION_DIRECTIVE", "SUPER_DIRECTIVE", "VERIFICATION_ERROR_TYPE", "VOID_TYPE", "VTABLE_INDEX", "WHITE_SPACE", "LABEL", "INTEGER_LITERAL", "I_CLASS_DEF", "I_SUPER", "I_IMPLEMENTS", "I_SOURCE", "I_ACCESS_LIST", "I_METHODS", "I_FIELDS", "I_FIELD", "I_FIELD_TYPE", "I_FIELD_INITIAL_VALUE", "I_METHOD", "I_METHOD_PROTOTYPE", "I_METHOD_RETURN_TYPE", "I_REGISTERS", "I_LOCALS", "I_LABELS", "I_LABEL", "I_ANNOTATIONS", "I_ANNOTATION", "I_ANNOTATION_ELEMENT", "I_SUBANNOTATION", "I_ENCODED_FIELD", "I_ENCODED_METHOD", "I_ENCODED_ENUM", "I_ENCODED_ARRAY", "I_ARRAY_ELEMENT_SIZE", "I_ARRAY_ELEMENTS", "I_PACKED_SWITCH_START_KEY", "I_PACKED_SWITCH_TARGET_COUNT", "I_PACKED_SWITCH_TARGETS", "I_PACKED_SWITCH_DECLARATION", "I_PACKED_SWITCH_DECLARATIONS", "I_SPARSE_SWITCH_KEYS", "I_SPARSE_SWITCH_TARGET_COUNT", "I_SPARSE_SWITCH_TARGETS", "I_SPARSE_SWITCH_DECLARATION", "I_SPARSE_SWITCH_DECLARATIONS", "I_ADDRESS", "I_CATCH", "I_CATCHALL", "I_CATCHES", "I_PARAMETER", "I_PARAMETERS", "I_PARAMETER_NOT_SPECIFIED", "I_ORDERED_DEBUG_DIRECTIVES", "I_LINE", "I_LOCAL", "I_END_LOCAL", "I_RESTART_LOCAL", "I_PROLOGUE", "I_EPILOGUE", "I_STATEMENTS", "I_STATEMENT_FORMAT10t", "I_STATEMENT_FORMAT10x", "I_STATEMENT_FORMAT11n", "I_STATEMENT_FORMAT11x", "I_STATEMENT_FORMAT12x", "I_STATEMENT_FORMAT20bc", "I_STATEMENT_FORMAT20t", "I_STATEMENT_FORMAT21c_TYPE", "I_STATEMENT_FORMAT21c_FIELD", "I_STATEMENT_FORMAT21c_STRING", "I_STATEMENT_FORMAT21h", "I_STATEMENT_FORMAT21s", "I_STATEMENT_FORMAT21t", "I_STATEMENT_FORMAT22b", "I_STATEMENT_FORMAT22c_FIELD", "I_STATEMENT_FORMAT22c_TYPE", "I_STATEMENT_FORMAT22s", "I_STATEMENT_FORMAT22t", "I_STATEMENT_FORMAT22x", "I_STATEMENT_FORMAT23x", "I_STATEMENT_FORMAT30t", "I_STATEMENT_FORMAT31c", "I_STATEMENT_FORMAT31i", "I_STATEMENT_FORMAT31t", "I_STATEMENT_FORMAT32x", "I_STATEMENT_FORMAT35c_METHOD", "I_STATEMENT_FORMAT35c_TYPE", "I_STATEMENT_FORMAT3rc_METHOD", "I_STATEMENT_FORMAT3rc_TYPE", "I_STATEMENT_FORMAT51l", "I_STATEMENT_ARRAY_DATA", "I_STATEMENT_PACKED_SWITCH", "I_STATEMENT_SPARSE_SWITCH", "I_REGISTER_RANGE", "I_REGISTER_LIST", "INSTRUCTION_FORMAT41c_FIELD", "INSTRUCTION_FORMAT41c_FIELD_ODEX", "INSTRUCTION_FORMAT41c_TYPE", "INSTRUCTION_FORMAT52c_FIELD", "INSTRUCTION_FORMAT52c_FIELD_ODEX", "INSTRUCTION_FORMAT52c_TYPE", "INSTRUCTION_FORMAT5rc_METHOD", "INSTRUCTION_FORMAT5rc_METHOD_ODEX", "INSTRUCTION_FORMAT5rc_TYPE"
     };
 
     public static final int EOF=-1;
-    public static final int I_REGISTER_LIST=235;
-    public static final int I_STATEMENT_FORMAT51l=226;
-    public static final int SPARSE_SWITCH_DIRECTIVE=23;
-    public static final int END_PARAMETER_DIRECTIVE=29;
-    public static final int I_ORDERED_DEBUG_DIRECTIVES=187;
-    public static final int BINARY_EXPONENT=39;
-    public static final int INSTRUCTION_FORMAT11x=72;
-    public static final int ANNOTATION_VISIBILITY=60;
-    public static final int INVALID_TOKEN=238;
-    public static final int END_SUBANNOTATION_DIRECTIVE=11;
-    public static final int HEX_PREFIX=35;
-    public static final int I_STATEMENT_FORMAT12x=199;
-    public static final int I_METHOD=153;
-    public static final int I_SUBANNOTATION=163;
-    public static final int INSTRUCTION_FORMAT11n=71;
-    public static final int I_SPARSE_SWITCH_TARGETS=177;
-    public static final int I_PACKED_SWITCH_TARGET_COUNT=171;
-    public static final int STRING_LITERAL=56;
-    public static final int I_STATEMENT_FORMAT5rc_METHOD=229;
-    public static final int SHORT_LITERAL=47;
-    public static final int I_FIELD_INITIAL_VALUE=152;
-    public static final int INSTRUCTION_FORMAT10x=69;
-    public static final int I_PACKED_SWITCH_DECLARATION=173;
-    public static final int I_STATEMENT_FORMAT11n=197;
-    public static final int I_SUPER=144;
-    public static final int INSTRUCTION_FORMAT10t=68;
-    public static final int NEGATIVE_INTEGER_LITERAL=45;
-    public static final int I_STATEMENT_FORMAT11x=198;
-    public static final int REGISTER=59;
-    public static final int INSTRUCTION_FORMAT21c_TYPE=80;
-    public static final int I_LINE=188;
-    public static final int LOCAL_DIRECTIVE=30;
-    public static final int LOCALS_DIRECTIVE=18;
-    public static final int I_CATCHALL=182;
-    public static final int INSTRUCTION_FORMAT35c_TYPE=102;
-    public static final int INSTRUCTION_FORMAT31i_OR_ID=96;
-    public static final int I_PARAMETERS=185;
-    public static final int I_METHOD_RETURN_TYPE=155;
-    public static final int INSTRUCTION_FORMAT51l=113;
-    public static final int ENUM_DIRECTIVE=14;
-    public static final int NULL_LITERAL=54;
-    public static final int REGISTERS_DIRECTIVE=17;
-    public static final int BASE_SIMPLE_NAME=120;
-    public static final int END_ARRAY_DATA_DIRECTIVE=20;
-    public static final int I_STATEMENT_FORMAT21c_FIELD=203;
-    public static final int I_METHOD_PROTOTYPE=154;
-    public static final int EPILOGUE_DIRECTIVE=34;
-    public static final int INSTRUCTION_FORMAT35mi_METHOD=103;
-    public static final int INSTRUCTION_FORMAT41c_TYPE=110;
-    public static final int I_LOCALS=157;
-    public static final int RESTART_LOCAL_DIRECTIVE=32;
-    public static final int I_ENCODED_ARRAY=167;
-    public static final int POSITIVE_INTEGER_LITERAL=44;
-    public static final int INSTRUCTION_FORMAT41c_FIELD_ODEX=112;
-    public static final int BASE_PRIMITIVE_TYPE=121;
-    public static final int CATCH_DIRECTIVE=25;
-    public static final int I_CATCH=181;
-    public static final int I_PARAMETER_NOT_SPECIFIED=186;
-    public static final int INSTRUCTION_FORMAT21h=81;
-    public static final int I_ANNOTATION=161;
-    public static final int INSTRUCTION_FORMAT21s=82;
-    public static final int INSTRUCTION_FORMAT21t=83;
-    public static final int INSTRUCTION_FORMAT41c_FIELD=111;
-    public static final int WHITE_SPACE=142;
-    public static final int INSTRUCTION_FORMAT3rmi_METHOD=108;
-    public static final int INSTRUCTION_FORMAT22b=84;
-    public static final int INSTRUCTION_FORMAT52c_FIELD_ODEX=116;
-    public static final int INSTRUCTION_FORMAT20t=76;
-    public static final int OFFSET=66;
-    public static final int FLOAT_LITERAL_OR_ID=49;
-    public static final int INSTRUCTION_FORMAT20bc=75;
-    public static final int I_PACKED_SWITCH_START_KEY=170;
-    public static final int I_ACCESS_LIST=147;
-    public static final int I_REGISTERS=156;
-    public static final int SOURCE_DIRECTIVE=7;
-    public static final int IMPLEMENTS_DIRECTIVE=6;
-    public static final int CLASS_DIRECTIVE=4;
-    public static final int BASE_CHAR_LITERAL=57;
-    public static final int I_STATEMENT_FORMAT35c_METHOD=220;
-    public static final int I_STATEMENT_SPARSE_SWITCH=233;
-    public static final int BASE_STRING_LITERAL=55;
-    public static final int INSTRUCTION_FORMAT23x=93;
-    public static final int OPEN_PAREN=140;
-    public static final int HEX_DIGIT=36;
-    public static final int END_PACKED_SWITCH_DIRECTIVE=22;
-    public static final int CLOSE_BRACE=139;
-    public static final int I_EPILOGUE=193;
-    public static final int LONG_LITERAL=46;
-    public static final int I_METHODS=148;
-    public static final int INSTRUCTION_FORMAT22c_FIELD=85;
-    public static final int END_FIELD_DIRECTIVE=9;
-    public static final int ACCESS_SPEC=61;
-    public static final int I_IMPLEMENTS=145;
-    public static final int COLON=136;
-    public static final int I_STATEMENT_FORMAT23x=214;
-    public static final int INSTRUCTION_FORMAT35ms_METHOD=104;
-    public static final int CHAR_LITERAL=58;
-    public static final int INSTRUCTION_FORMAT22s=90;
-    public static final int VOID_TYPE=126;
-    public static final int INSTRUCTION_FORMAT22t=91;
-    public static final int CLASS_DESCRIPTOR=127;
-    public static final int ARROW=134;
-    public static final int INSTRUCTION_FORMAT22x=92;
-    public static final int INSTRUCTION_FORMAT12x=74;
-    public static final int I_LOCAL=189;
-    public static final int I_REGISTER_RANGE=234;
-    public static final int INSTRUCTION_FORMAT32x=99;
-    public static final int I_STATEMENT_FORMAT22b=208;
-    public static final int ANNOTATION_DIRECTIVE=12;
-    public static final int END_ANNOTATION_DIRECTIVE=13;
-    public static final int I_SPARSE_SWITCH_TARGET_COUNT=176;
-    public static final int DOUBLE_LITERAL=52;
-    public static final int I_STATEMENT_FORMAT22s=211;
-    public static final int VTABLE_INDEX=64;
-    public static final int I_STATEMENT_FORMAT22t=212;
-    public static final int I_STATEMENT_FORMAT32x=219;
-    public static final int END_LOCAL_DIRECTIVE=31;
-    public static final int BASE_FLOAT_OR_ID=41;
-    public static final int BASE_INTEGER=37;
-    public static final int I_STATEMENT_FORMAT22x=213;
-    public static final int I_STATEMENT_FORMAT21c_STRING=204;
-    public static final int INSTRUCTION_FORMAT12x_OR_ID=73;
-    public static final int I_STATEMENT_FORMAT31c=216;
-    public static final int I_STATEMENT_FORMAT31i=217;
-    public static final int I_STATEMENT_FORMAT21h=205;
-    public static final int I_ANNOTATIONS=160;
-    public static final int PRIMITIVE_TYPE=125;
-    public static final int CATCHALL_DIRECTIVE=26;
-    public static final int I_STATEMENT_FORMAT21s=206;
-    public static final int DOUBLE_LITERAL_OR_ID=50;
-    public static final int I_STATEMENT_FORMAT31t=218;
-    public static final int I_SOURCE=146;
-    public static final int CLOSE_PAREN=141;
-    public static final int I_SPARSE_SWITCH_DECLARATIONS=179;
-    public static final int INSTRUCTION_FORMAT5rc_METHOD=117;
-    public static final int VERIFICATION_ERROR_TYPE=62;
-    public static final int ARRAY_DESCRIPTOR=128;
-    public static final int INSTRUCTION_FORMAT3rc_METHOD_ODEX=106;
-    public static final int I_ADDRESS=180;
-    public static final int I_STATEMENT_FORMAT21t=207;
-    public static final int I_STATEMENTS=194;
-    public static final int INSTRUCTION_FORMAT31c=95;
-    public static final int SUBANNOTATION_DIRECTIVE=10;
-    public static final int I_STATEMENT_FORMAT41c_FIELD=225;
-    public static final int INLINE_INDEX=63;
-    public static final int LINE_COMMENT=67;
-    public static final int I_PARAMETER=184;
-    public static final int I_ARRAY_ELEMENTS=169;
-    public static final int I_STATEMENT_FORMAT52c_FIELD=228;
-    public static final int I_SPARSE_SWITCH_DECLARATION=178;
-    public static final int I_STATEMENT_FORMAT52c_TYPE=227;
-    public static final int INSTRUCTION_FORMAT5rc_METHOD_ODEX=118;
-    public static final int INSTRUCTION_FORMAT30t=94;
-    public static final int I_STATEMENT_FORMAT21c_TYPE=202;
-    public static final int BOOL_LITERAL=53;
-    public static final int I_STATEMENT_FORMAT20t=201;
-    public static final int I_STATEMENT_FORMAT3rc_TYPE=223;
-    public static final int BASE_FLOAT=42;
-    public static final int METHOD_NAME=132;
-    public static final int I_ANNOTATION_ELEMENT=162;
-    public static final int PACKED_SWITCH_DIRECTIVE=21;
-    public static final int PARAMETER_DIRECTIVE=28;
-    public static final int ARRAY_DATA_DIRECTIVE=19;
-    public static final int DECIMAL_EXPONENT=38;
-    public static final int INTEGER_LITERAL=237;
-    public static final int PROLOGUE_DIRECTIVE=33;
-    public static final int INSTRUCTION_FORMAT52c_FIELD=115;
-    public static final int I_SPARSE_SWITCH_KEYS=175;
-    public static final int INSTRUCTION_FORMAT10x_ODEX=70;
-    public static final int INSTRUCTION_FORMAT31t=98;
-    public static final int I_RESTART_LOCAL=191;
-    public static final int INSTRUCTION_FORMAT31i=97;
-    public static final int METHOD_DIRECTIVE=15;
-    public static final int I_ENCODED_FIELD=164;
-    public static final int INSTRUCTION_FORMAT22c_TYPE=87;
-    public static final int INSTRUCTION_FORMAT35c_METHOD=100;
-    public static final int I_END_LOCAL=190;
-    public static final int INSTRUCTION_FORMAT3rc_METHOD=105;
-    public static final int BASE_ARRAY_DESCRIPTOR=123;
-    public static final int INSTRUCTION_FORMAT22s_OR_ID=89;
-    public static final int I_CATCHES=183;
-    public static final int SUPER_DIRECTIVE=5;
-    public static final int DOTDOT=133;
-    public static final int END_SPARSE_SWITCH_DIRECTIVE=24;
-    public static final int I_ENCODED_METHOD=165;
-    public static final int INSTRUCTION_FORMAT21c_FIELD=77;
-    public static final int INSTRUCTION_FORMAT35c_METHOD_ODEX=101;
-    public static final int I_ARRAY_ELEMENT_SIZE=168;
-    public static final int I_FIELDS=149;
-    public static final int I_STATEMENT_FORMAT20bc=200;
-    public static final int I_LABELS=158;
-    public static final int ESCAPE_SEQUENCE=43;
-    public static final int I_STATEMENT_FORMAT35c_TYPE=221;
-    public static final int BYTE_LITERAL=48;
-    public static final int COMMA=137;
-    public static final int I_CLASS_DEF=143;
-    public static final int EQUAL=135;
-    public static final int PARAM_LIST_OR_ID=129;
-    public static final int I_FIELD=150;
-    public static final int I_STATEMENT_PACKED_SWITCH=232;
-    public static final int INSTRUCTION_FORMAT5rc_TYPE=119;
-    public static final int I_STATEMENT_FORMAT22c_FIELD=209;
-    public static final int FIELD_OFFSET=65;
-    public static final int I_STATEMENT_FORMAT41c_TYPE=224;
-    public static final int FIELD_DIRECTIVE=8;
-    public static final int INSTRUCTION_FORMAT3rc_TYPE=107;
-    public static final int INSTRUCTION_FORMAT21c_FIELD_ODEX=78;
-    public static final int I_STATEMENT_FORMAT10x=196;
-    public static final int I_LABEL=159;
-    public static final int I_STATEMENT_ARRAY_DATA=231;
-    public static final int END_METHOD_DIRECTIVE=16;
-    public static final int I_STATEMENT_FORMAT10t=195;
-    public static final int I_PROLOGUE=192;
-    public static final int I_ENCODED_ENUM=166;
-    public static final int I_PACKED_SWITCH_DECLARATIONS=174;
-    public static final int I_STATEMENT_FORMAT30t=215;
-    public static final int I_FIELD_TYPE=151;
-    public static final int INSTRUCTION_FORMAT52c_TYPE=114;
+    public static final int I_REGISTER_LIST=223;
+    public static final int I_STATEMENT_FORMAT51l=218;
+    public static final int SPARSE_SWITCH_DIRECTIVE=127;
+    public static final int END_PARAMETER_DIRECTIVE=42;
+    public static final int I_ORDERED_DEBUG_DIRECTIVES=181;
+    public static final int BINARY_EXPONENT=20;
+    public static final int INSTRUCTION_FORMAT11x=62;
+    public static final int ANNOTATION_VISIBILITY=6;
+    public static final int INVALID_TOKEN=101;
+    public static final int HEX_PREFIX=55;
+    public static final int END_SUBANNOTATION_DIRECTIVE=44;
+    public static final int I_STATEMENT_FORMAT12x=193;
+    public static final int I_METHOD=147;
+    public static final int I_SUBANNOTATION=157;
+    public static final int INSTRUCTION_FORMAT11n=61;
+    public static final int I_SPARSE_SWITCH_TARGETS=171;
+    public static final int I_PACKED_SWITCH_TARGET_COUNT=165;
+    public static final int STRING_LITERAL=128;
+    public static final int SHORT_LITERAL=124;
+    public static final int I_FIELD_INITIAL_VALUE=146;
+    public static final int INSTRUCTION_FORMAT10x=59;
+    public static final int I_PACKED_SWITCH_DECLARATION=167;
+    public static final int I_STATEMENT_FORMAT11n=191;
+    public static final int I_SUPER=138;
+    public static final int INSTRUCTION_FORMAT10t=58;
+    public static final int NEGATIVE_INTEGER_LITERAL=109;
+    public static final int I_STATEMENT_FORMAT11x=192;
+    public static final int INSTRUCTION_FORMAT21c_TYPE=70;
+    public static final int REGISTER=121;
+    public static final int LOCAL_DIRECTIVE=104;
+    public static final int I_LINE=182;
+    public static final int LOCALS_DIRECTIVE=105;
+    public static final int I_CATCHALL=176;
+    public static final int INSTRUCTION_FORMAT35c_TYPE=92;
+    public static final int INSTRUCTION_FORMAT31i_OR_ID=87;
+    public static final int I_PARAMETERS=179;
+    public static final int I_METHOD_RETURN_TYPE=149;
+    public static final int INSTRUCTION_FORMAT51l=100;
+    public static final int ENUM_DIRECTIVE=45;
+    public static final int NULL_LITERAL=110;
+    public static final int REGISTERS_DIRECTIVE=122;
+    public static final int BASE_SIMPLE_NAME=17;
+    public static final int END_ARRAY_DATA_DIRECTIVE=37;
+    public static final int I_STATEMENT_FORMAT21c_FIELD=197;
+    public static final int I_METHOD_PROTOTYPE=148;
+    public static final int EPILOGUE_DIRECTIVE=46;
+    public static final int INSTRUCTION_FORMAT35mi_METHOD=93;
+    public static final int I_LOCALS=151;
+    public static final int RESTART_LOCAL_DIRECTIVE=123;
+    public static final int I_ENCODED_ARRAY=161;
+    public static final int POSITIVE_INTEGER_LITERAL=118;
+    public static final int BASE_PRIMITIVE_TYPE=16;
+    public static final int CATCH_DIRECTIVE=23;
+    public static final int I_CATCH=175;
+    public static final int I_PARAMETER_NOT_SPECIFIED=180;
+    public static final int INSTRUCTION_FORMAT21h=71;
+    public static final int I_ANNOTATION=155;
+    public static final int INSTRUCTION_FORMAT21s=72;
+    public static final int INSTRUCTION_FORMAT21t=73;
+    public static final int WHITE_SPACE=134;
+    public static final int INSTRUCTION_FORMAT3rmi_METHOD=98;
+    public static final int INSTRUCTION_FORMAT22b=74;
+    public static final int INSTRUCTION_FORMAT20t=66;
+    public static final int OFFSET=111;
+    public static final int FLOAT_LITERAL_OR_ID=52;
+    public static final int INSTRUCTION_FORMAT20bc=65;
+    public static final int I_PACKED_SWITCH_START_KEY=164;
+    public static final int I_ACCESS_LIST=141;
+    public static final int I_REGISTERS=150;
+    public static final int IMPLEMENTS_DIRECTIVE=56;
+    public static final int SOURCE_DIRECTIVE=126;
+    public static final int CLASS_DIRECTIVE=27;
+    public static final int BASE_CHAR_LITERAL=11;
+    public static final int I_STATEMENT_FORMAT35c_METHOD=214;
+    public static final int I_STATEMENT_SPARSE_SWITCH=221;
+    public static final int BASE_STRING_LITERAL=18;
+    public static final int INSTRUCTION_FORMAT23x=83;
+    public static final int HEX_DIGIT=53;
+    public static final int OPEN_PAREN=113;
+    public static final int END_PACKED_SWITCH_DIRECTIVE=41;
+    public static final int CLOSE_BRACE=28;
+    public static final int I_EPILOGUE=187;
+    public static final int LONG_LITERAL=106;
+    public static final int I_METHODS=142;
+    public static final int INSTRUCTION_FORMAT22c_FIELD=75;
+    public static final int ACCESS_SPEC=4;
+    public static final int END_FIELD_DIRECTIVE=38;
+    public static final int I_IMPLEMENTS=139;
+    public static final int COLON=30;
+    public static final int I_STATEMENT_FORMAT23x=208;
+    public static final int INSTRUCTION_FORMAT35ms_METHOD=94;
+    public static final int CHAR_LITERAL=25;
+    public static final int INSTRUCTION_FORMAT22s=79;
+    public static final int VOID_TYPE=132;
+    public static final int INSTRUCTION_FORMAT22t=81;
+    public static final int CLASS_DESCRIPTOR=26;
+    public static final int ARROW=9;
+    public static final int INSTRUCTION_FORMAT22x=82;
+    public static final int INSTRUCTION_FORMAT12x=63;
+    public static final int I_LOCAL=183;
+    public static final int I_REGISTER_RANGE=222;
+    public static final int INSTRUCTION_FORMAT32x=89;
+    public static final int I_STATEMENT_FORMAT22b=202;
+    public static final int ANNOTATION_DIRECTIVE=5;
+    public static final int END_ANNOTATION_DIRECTIVE=36;
+    public static final int I_SPARSE_SWITCH_TARGET_COUNT=170;
+    public static final int DOUBLE_LITERAL=34;
+    public static final int I_STATEMENT_FORMAT22s=205;
+    public static final int VTABLE_INDEX=133;
+    public static final int I_STATEMENT_FORMAT22t=206;
+    public static final int I_STATEMENT_FORMAT32x=213;
+    public static final int END_LOCAL_DIRECTIVE=39;
+    public static final int BASE_FLOAT_OR_ID=14;
+    public static final int BASE_INTEGER=15;
+    public static final int I_STATEMENT_FORMAT22x=207;
+    public static final int I_STATEMENT_FORMAT21c_STRING=198;
+    public static final int INSTRUCTION_FORMAT12x_OR_ID=64;
+    public static final int I_STATEMENT_FORMAT31c=210;
+    public static final int I_STATEMENT_FORMAT31i=211;
+    public static final int I_STATEMENT_FORMAT21h=199;
+    public static final int I_ANNOTATIONS=154;
+    public static final int CATCHALL_DIRECTIVE=24;
+    public static final int PRIMITIVE_TYPE=119;
+    public static final int I_STATEMENT_FORMAT21s=200;
+    public static final int DOUBLE_LITERAL_OR_ID=35;
+    public static final int I_STATEMENT_FORMAT31t=212;
+    public static final int I_SOURCE=140;
+    public static final int CLOSE_PAREN=29;
+    public static final int I_SPARSE_SWITCH_DECLARATIONS=173;
+    public static final int VERIFICATION_ERROR_TYPE=131;
+    public static final int ARRAY_DESCRIPTOR=8;
+    public static final int INSTRUCTION_FORMAT3rc_METHOD_ODEX=96;
+    public static final int I_ADDRESS=174;
+    public static final int I_STATEMENT_FORMAT21t=201;
+    public static final int I_STATEMENTS=188;
+    public static final int INSTRUCTION_FORMAT31c=85;
+    public static final int SUBANNOTATION_DIRECTIVE=129;
+    public static final int INLINE_INDEX=57;
+    public static final int LINE_COMMENT=102;
+    public static final int I_PARAMETER=178;
+    public static final int I_ARRAY_ELEMENTS=163;
+    public static final int I_SPARSE_SWITCH_DECLARATION=172;
+    public static final int INSTRUCTION_FORMAT30t=84;
+    public static final int I_STATEMENT_FORMAT21c_TYPE=196;
+    public static final int BOOL_LITERAL=21;
+    public static final int I_STATEMENT_FORMAT20t=195;
+    public static final int I_STATEMENT_FORMAT3rc_TYPE=217;
+    public static final int BASE_FLOAT=13;
+    public static final int METHOD_NAME=108;
+    public static final int I_ANNOTATION_ELEMENT=156;
+    public static final int PACKED_SWITCH_DIRECTIVE=114;
+    public static final int PARAMETER_DIRECTIVE=117;
+    public static final int ARRAY_DATA_DIRECTIVE=7;
+    public static final int DECIMAL_EXPONENT=32;
+    public static final int PROLOGUE_DIRECTIVE=120;
+    public static final int INTEGER_LITERAL=136;
+    public static final int I_SPARSE_SWITCH_KEYS=169;
+    public static final int INSTRUCTION_FORMAT10x_ODEX=60;
+    public static final int INSTRUCTION_FORMAT31t=88;
+    public static final int I_RESTART_LOCAL=185;
+    public static final int INSTRUCTION_FORMAT31i=86;
+    public static final int METHOD_DIRECTIVE=107;
+    public static final int I_ENCODED_FIELD=158;
+    public static final int INSTRUCTION_FORMAT22c_TYPE=77;
+    public static final int INSTRUCTION_FORMAT35c_METHOD=90;
+    public static final int I_END_LOCAL=184;
+    public static final int INSTRUCTION_FORMAT3rc_METHOD=95;
+    public static final int BASE_ARRAY_DESCRIPTOR=10;
+    public static final int INSTRUCTION_FORMAT22s_OR_ID=80;
+    public static final int I_CATCHES=177;
+    public static final int SUPER_DIRECTIVE=130;
+    public static final int DOTDOT=33;
+    public static final int END_SPARSE_SWITCH_DIRECTIVE=43;
+    public static final int I_ENCODED_METHOD=159;
+    public static final int INSTRUCTION_FORMAT21c_FIELD=67;
+    public static final int INSTRUCTION_FORMAT35c_METHOD_ODEX=91;
+    public static final int I_ARRAY_ELEMENT_SIZE=162;
+    public static final int I_FIELDS=143;
+    public static final int I_STATEMENT_FORMAT20bc=194;
+    public static final int I_LABELS=152;
+    public static final int ESCAPE_SEQUENCE=48;
+    public static final int I_STATEMENT_FORMAT35c_TYPE=215;
+    public static final int BYTE_LITERAL=22;
+    public static final int COMMA=31;
+    public static final int I_CLASS_DEF=137;
+    public static final int EQUAL=47;
+    public static final int PARAM_LIST_OR_ID=116;
+    public static final int I_FIELD=144;
+    public static final int I_STATEMENT_PACKED_SWITCH=220;
+    public static final int I_STATEMENT_FORMAT22c_FIELD=203;
+    public static final int FIELD_OFFSET=50;
+    public static final int FIELD_DIRECTIVE=49;
+    public static final int INSTRUCTION_FORMAT3rc_TYPE=97;
+    public static final int INSTRUCTION_FORMAT21c_FIELD_ODEX=68;
+    public static final int I_STATEMENT_FORMAT10x=190;
+    public static final int I_LABEL=153;
+    public static final int I_STATEMENT_ARRAY_DATA=219;
+    public static final int END_METHOD_DIRECTIVE=40;
+    public static final int I_STATEMENT_FORMAT10t=189;
+    public static final int I_PROLOGUE=186;
+    public static final int I_ENCODED_ENUM=160;
+    public static final int I_PACKED_SWITCH_DECLARATIONS=168;
+    public static final int I_STATEMENT_FORMAT30t=209;
+    public static final int I_FIELD_TYPE=145;
     public static final int FLOAT_LITERAL=51;
-    public static final int INSTRUCTION_FORMAT21c_STRING=79;
-    public static final int SIMPLE_NAME=131;
-    public static final int PARAM_LIST=130;
-    public static final int I_PACKED_SWITCH_TARGETS=172;
-    public static final int BASE_CLASS_DESCRIPTOR=122;
-    public static final int LINE_DIRECTIVE=27;
-    public static final int INSTRUCTION_FORMAT22cs_FIELD=88;
-    public static final int LABEL=236;
-    public static final int BASE_TYPE=124;
-    public static final int I_STATEMENT_FORMAT3rc_METHOD=222;
-    public static final int HEX_DIGITS=40;
-    public static final int I_STATEMENT_FORMAT5rc_TYPE=230;
-    public static final int INSTRUCTION_FORMAT22c_FIELD_ODEX=86;
-    public static final int INSTRUCTION_FORMAT3rms_METHOD=109;
-    public static final int OPEN_BRACE=138;
-    public static final int I_STATEMENT_FORMAT22c_TYPE=210;
+    public static final int INSTRUCTION_FORMAT21c_STRING=69;
+    public static final int PARAM_LIST=115;
+    public static final int SIMPLE_NAME=125;
+    public static final int I_PACKED_SWITCH_TARGETS=166;
+    public static final int BASE_CLASS_DESCRIPTOR=12;
+    public static final int LINE_DIRECTIVE=103;
+    public static final int INSTRUCTION_FORMAT22cs_FIELD=78;
+    public static final int LABEL=135;
+    public static final int BASE_TYPE=19;
+    public static final int I_STATEMENT_FORMAT3rc_METHOD=216;
+    public static final int HEX_DIGITS=54;
+    public static final int INSTRUCTION_FORMAT22c_FIELD_ODEX=76;
+    public static final int INSTRUCTION_FORMAT3rms_METHOD=99;
+    public static final int OPEN_BRACE=112;
+    public static final int I_STATEMENT_FORMAT22c_TYPE=204;
+    public static final int INSTRUCTION_FORMAT41c_FIELD=224;
+    public static final int INSTRUCTION_FORMAT41c_FIELD_ODEX=225;
+    public static final int INSTRUCTION_FORMAT41c_TYPE=226;
+    public static final int INSTRUCTION_FORMAT52c_FIELD=227;
+    public static final int INSTRUCTION_FORMAT52c_FIELD_ODEX=228;
+    public static final int INSTRUCTION_FORMAT52c_TYPE=229;
+    public static final int INSTRUCTION_FORMAT5rc_METHOD=230;
+    public static final int INSTRUCTION_FORMAT5rc_METHOD_ODEX=231;
+    public static final int INSTRUCTION_FORMAT5rc_TYPE=232;
 
     // delegates
     public Parser[] getDelegates() {
@@ -398,7 +392,7 @@ public class smaliIdeaParser extends Parser {
                 int alt1=2;
                 int LA1_0 = input.LA(1);
 
-                if ( ((LA1_0 >= CLASS_DIRECTIVE && LA1_0 <= FIELD_DIRECTIVE)||LA1_0==ANNOTATION_DIRECTIVE||LA1_0==METHOD_DIRECTIVE) ) {
+                if ( (LA1_0==ANNOTATION_DIRECTIVE||LA1_0==CLASS_DIRECTIVE||LA1_0==FIELD_DIRECTIVE||LA1_0==IMPLEMENTS_DIRECTIVE||LA1_0==METHOD_DIRECTIVE||LA1_0==SOURCE_DIRECTIVE||LA1_0==SUPER_DIRECTIVE) ) {
                     alt1=1;
                 }
 
@@ -748,7 +742,7 @@ public class smaliIdeaParser extends Parser {
                 if ( (LA3_0==ACCESS_SPEC) ) {
                     int LA3_2 = input.LA(2);
 
-                    if ( ((LA3_2 >= POSITIVE_INTEGER_LITERAL && LA3_2 <= NEGATIVE_INTEGER_LITERAL)||(LA3_2 >= FLOAT_LITERAL_OR_ID && LA3_2 <= DOUBLE_LITERAL_OR_ID)||(LA3_2 >= BOOL_LITERAL && LA3_2 <= NULL_LITERAL)||(LA3_2 >= REGISTER && LA3_2 <= VERIFICATION_ERROR_TYPE)||(LA3_2 >= INSTRUCTION_FORMAT10t && LA3_2 <= INSTRUCTION_FORMAT10x_ODEX)||(LA3_2 >= INSTRUCTION_FORMAT11x && LA3_2 <= INSTRUCTION_FORMAT12x_OR_ID)||(LA3_2 >= INSTRUCTION_FORMAT21c_FIELD && LA3_2 <= INSTRUCTION_FORMAT21c_TYPE)||LA3_2==INSTRUCTION_FORMAT21t||(LA3_2 >= INSTRUCTION_FORMAT22c_FIELD && LA3_2 <= INSTRUCTION_FORMAT22s_OR_ID)||LA3_2==INSTRUCTION_FORMAT22t||LA3_2==INSTRUCTION_FORMAT23x||LA3_2==INSTRUCTION_FORMAT31i_OR_ID||LA3_2==INSTRUCTION_FORMAT31t||(LA3_2 >= INSTRUCTION_FORMAT35c_METHOD && LA3_2 <= INSTRUCTION_FORMAT35ms_METHOD)||LA3_2==INSTRUCTION_FORMAT51l||(LA3_2 >= PRIMITIVE_TYPE && LA3_2 <= CLASS_DESCRIPTOR)||LA3_2==PARAM_LIST_OR_ID||(LA3_2 >= SIMPLE_NAME && LA3_2 <= METHOD_NAME)||LA3_2==INTEGER_LITERAL) ) {
+                    if ( (LA3_2==ACCESS_SPEC||LA3_2==ANNOTATION_VISIBILITY||LA3_2==BOOL_LITERAL||LA3_2==CLASS_DESCRIPTOR||LA3_2==DOUBLE_LITERAL_OR_ID||LA3_2==FLOAT_LITERAL_OR_ID||(LA3_2 >= INSTRUCTION_FORMAT10t && LA3_2 <= INSTRUCTION_FORMAT10x_ODEX)||LA3_2==INSTRUCTION_FORMAT11x||LA3_2==INSTRUCTION_FORMAT12x_OR_ID||(LA3_2 >= INSTRUCTION_FORMAT21c_FIELD && LA3_2 <= INSTRUCTION_FORMAT21c_TYPE)||LA3_2==INSTRUCTION_FORMAT21t||(LA3_2 >= INSTRUCTION_FORMAT22c_FIELD && LA3_2 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA3_2 >= INSTRUCTION_FORMAT22s_OR_ID && LA3_2 <= INSTRUCTION_FORMAT22t)||LA3_2==INSTRUCTION_FORMAT23x||(LA3_2 >= INSTRUCTION_FORMAT31i_OR_ID && LA3_2 <= INSTRUCTION_FORMAT31t)||(LA3_2 >= INSTRUCTION_FORMAT35c_METHOD && LA3_2 <= INSTRUCTION_FORMAT35ms_METHOD)||LA3_2==INSTRUCTION_FORMAT51l||(LA3_2 >= METHOD_NAME && LA3_2 <= NULL_LITERAL)||LA3_2==PARAM_LIST_OR_ID||(LA3_2 >= POSITIVE_INTEGER_LITERAL && LA3_2 <= PRIMITIVE_TYPE)||LA3_2==REGISTER||LA3_2==SIMPLE_NAME||(LA3_2 >= VERIFICATION_ERROR_TYPE && LA3_2 <= VOID_TYPE)||LA3_2==INTEGER_LITERAL) ) {
                         alt3=1;
                     }
 
@@ -878,11 +872,11 @@ public class smaliIdeaParser extends Parser {
                 break;
             case EOF:
             case CLASS_DIRECTIVE:
-            case SUPER_DIRECTIVE:
-            case IMPLEMENTS_DIRECTIVE:
-            case SOURCE_DIRECTIVE:
             case FIELD_DIRECTIVE:
+            case IMPLEMENTS_DIRECTIVE:
             case METHOD_DIRECTIVE:
+            case SOURCE_DIRECTIVE:
+            case SUPER_DIRECTIVE:
                 {
                 alt7=3;
                 }
@@ -1087,7 +1081,7 @@ public class smaliIdeaParser extends Parser {
                 int alt9=2;
                 int LA9_0 = input.LA(1);
 
-                if ( (LA9_0==SOURCE_DIRECTIVE||LA9_0==ANNOTATION_DIRECTIVE||(LA9_0 >= REGISTERS_DIRECTIVE && LA9_0 <= ARRAY_DATA_DIRECTIVE)||LA9_0==PACKED_SWITCH_DIRECTIVE||LA9_0==SPARSE_SWITCH_DIRECTIVE||(LA9_0 >= CATCH_DIRECTIVE && LA9_0 <= PARAMETER_DIRECTIVE)||(LA9_0 >= LOCAL_DIRECTIVE && LA9_0 <= EPILOGUE_DIRECTIVE)||(LA9_0 >= INSTRUCTION_FORMAT10t && LA9_0 <= INSTRUCTION_FORMAT5rc_TYPE)||LA9_0==COLON) ) {
+                if ( (LA9_0==ANNOTATION_DIRECTIVE||LA9_0==ARRAY_DATA_DIRECTIVE||(LA9_0 >= CATCH_DIRECTIVE && LA9_0 <= CATCHALL_DIRECTIVE)||LA9_0==COLON||LA9_0==END_LOCAL_DIRECTIVE||LA9_0==EPILOGUE_DIRECTIVE||(LA9_0 >= INSTRUCTION_FORMAT10t && LA9_0 <= INSTRUCTION_FORMAT51l)||(LA9_0 >= LINE_DIRECTIVE && LA9_0 <= LOCALS_DIRECTIVE)||LA9_0==PACKED_SWITCH_DIRECTIVE||LA9_0==PARAMETER_DIRECTIVE||LA9_0==PROLOGUE_DIRECTIVE||(LA9_0 >= REGISTERS_DIRECTIVE && LA9_0 <= RESTART_LOCAL_DIRECTIVE)||(LA9_0 >= SOURCE_DIRECTIVE && LA9_0 <= SPARSE_SWITCH_DIRECTIVE)||(LA9_0 >= INSTRUCTION_FORMAT41c_FIELD && LA9_0 <= INSTRUCTION_FORMAT5rc_TYPE)) ) {
                     alt9=1;
                 }
 
@@ -1100,15 +1094,13 @@ public class smaliIdeaParser extends Parser {
             	    int alt8=8;
             	    switch ( input.LA(1) ) {
             	    case ARRAY_DATA_DIRECTIVE:
-            	    case PACKED_SWITCH_DIRECTIVE:
-            	    case SPARSE_SWITCH_DIRECTIVE:
             	    case INSTRUCTION_FORMAT10t:
             	    case INSTRUCTION_FORMAT10x:
             	    case INSTRUCTION_FORMAT10x_ODEX:
             	    case INSTRUCTION_FORMAT11n:
             	    case INSTRUCTION_FORMAT11x:
-            	    case INSTRUCTION_FORMAT12x_OR_ID:
             	    case INSTRUCTION_FORMAT12x:
+            	    case INSTRUCTION_FORMAT12x_OR_ID:
             	    case INSTRUCTION_FORMAT20bc:
             	    case INSTRUCTION_FORMAT20t:
             	    case INSTRUCTION_FORMAT21c_FIELD:
@@ -1123,15 +1115,15 @@ public class smaliIdeaParser extends Parser {
             	    case INSTRUCTION_FORMAT22c_FIELD_ODEX:
             	    case INSTRUCTION_FORMAT22c_TYPE:
             	    case INSTRUCTION_FORMAT22cs_FIELD:
-            	    case INSTRUCTION_FORMAT22s_OR_ID:
             	    case INSTRUCTION_FORMAT22s:
+            	    case INSTRUCTION_FORMAT22s_OR_ID:
             	    case INSTRUCTION_FORMAT22t:
             	    case INSTRUCTION_FORMAT22x:
             	    case INSTRUCTION_FORMAT23x:
             	    case INSTRUCTION_FORMAT30t:
             	    case INSTRUCTION_FORMAT31c:
-            	    case INSTRUCTION_FORMAT31i_OR_ID:
             	    case INSTRUCTION_FORMAT31i:
+            	    case INSTRUCTION_FORMAT31i_OR_ID:
             	    case INSTRUCTION_FORMAT31t:
             	    case INSTRUCTION_FORMAT32x:
             	    case INSTRUCTION_FORMAT35c_METHOD:
@@ -1144,13 +1136,15 @@ public class smaliIdeaParser extends Parser {
             	    case INSTRUCTION_FORMAT3rc_TYPE:
             	    case INSTRUCTION_FORMAT3rmi_METHOD:
             	    case INSTRUCTION_FORMAT3rms_METHOD:
-            	    case INSTRUCTION_FORMAT41c_TYPE:
+            	    case INSTRUCTION_FORMAT51l:
+            	    case PACKED_SWITCH_DIRECTIVE:
+            	    case SPARSE_SWITCH_DIRECTIVE:
             	    case INSTRUCTION_FORMAT41c_FIELD:
             	    case INSTRUCTION_FORMAT41c_FIELD_ODEX:
-            	    case INSTRUCTION_FORMAT51l:
-            	    case INSTRUCTION_FORMAT52c_TYPE:
+            	    case INSTRUCTION_FORMAT41c_TYPE:
             	    case INSTRUCTION_FORMAT52c_FIELD:
             	    case INSTRUCTION_FORMAT52c_FIELD_ODEX:
+            	    case INSTRUCTION_FORMAT52c_TYPE:
             	    case INSTRUCTION_FORMAT5rc_METHOD:
             	    case INSTRUCTION_FORMAT5rc_METHOD_ODEX:
             	    case INSTRUCTION_FORMAT5rc_TYPE:
@@ -1158,8 +1152,8 @@ public class smaliIdeaParser extends Parser {
             	        alt8=1;
             	        }
             	        break;
-            	    case REGISTERS_DIRECTIVE:
             	    case LOCALS_DIRECTIVE:
+            	    case REGISTERS_DIRECTIVE:
             	        {
             	        alt8=2;
             	        }
@@ -1184,13 +1178,13 @@ public class smaliIdeaParser extends Parser {
             	        alt8=6;
             	        }
             	        break;
-            	    case SOURCE_DIRECTIVE:
+            	    case END_LOCAL_DIRECTIVE:
+            	    case EPILOGUE_DIRECTIVE:
             	    case LINE_DIRECTIVE:
             	    case LOCAL_DIRECTIVE:
-            	    case END_LOCAL_DIRECTIVE:
-            	    case RESTART_LOCAL_DIRECTIVE:
             	    case PROLOGUE_DIRECTIVE:
-            	    case EPILOGUE_DIRECTIVE:
+            	    case RESTART_LOCAL_DIRECTIVE:
+            	    case SOURCE_DIRECTIVE:
             	        {
             	        alt8=7;
             	        }
@@ -1417,7 +1411,7 @@ public class smaliIdeaParser extends Parser {
             // smaliIdeaParser.g:239:2: ( SIMPLE_NAME | ACCESS_SPEC | VERIFICATION_ERROR_TYPE | POSITIVE_INTEGER_LITERAL | NEGATIVE_INTEGER_LITERAL | INTEGER_LITERAL | FLOAT_LITERAL_OR_ID | DOUBLE_LITERAL_OR_ID | BOOL_LITERAL | NULL_LITERAL | REGISTER | PARAM_LIST_OR_ID | PRIMITIVE_TYPE | VOID_TYPE | ANNOTATION_VISIBILITY | INSTRUCTION_FORMAT10t | INSTRUCTION_FORMAT10x | INSTRUCTION_FORMAT10x_ODEX | INSTRUCTION_FORMAT11x | INSTRUCTION_FORMAT12x_OR_ID | INSTRUCTION_FORMAT21c_FIELD | INSTRUCTION_FORMAT21c_FIELD_ODEX | INSTRUCTION_FORMAT21c_STRING | INSTRUCTION_FORMAT21c_TYPE | INSTRUCTION_FORMAT21t | INSTRUCTION_FORMAT22c_FIELD | INSTRUCTION_FORMAT22c_FIELD_ODEX | INSTRUCTION_FORMAT22c_TYPE | INSTRUCTION_FORMAT22cs_FIELD | INSTRUCTION_FORMAT22s_OR_ID | INSTRUCTION_FORMAT22t | INSTRUCTION_FORMAT23x | INSTRUCTION_FORMAT31i_OR_ID | INSTRUCTION_FORMAT31t | INSTRUCTION_FORMAT35c_METHOD | INSTRUCTION_FORMAT35c_METHOD_ODEX | INSTRUCTION_FORMAT35c_TYPE | INSTRUCTION_FORMAT35mi_METHOD | INSTRUCTION_FORMAT35ms_METHOD | INSTRUCTION_FORMAT51l )
             // smaliIdeaParser.g:
             {
-            if ( (input.LA(1) >= POSITIVE_INTEGER_LITERAL && input.LA(1) <= NEGATIVE_INTEGER_LITERAL)||(input.LA(1) >= FLOAT_LITERAL_OR_ID && input.LA(1) <= DOUBLE_LITERAL_OR_ID)||(input.LA(1) >= BOOL_LITERAL && input.LA(1) <= NULL_LITERAL)||(input.LA(1) >= REGISTER && input.LA(1) <= VERIFICATION_ERROR_TYPE)||(input.LA(1) >= INSTRUCTION_FORMAT10t && input.LA(1) <= INSTRUCTION_FORMAT10x_ODEX)||(input.LA(1) >= INSTRUCTION_FORMAT11x && input.LA(1) <= INSTRUCTION_FORMAT12x_OR_ID)||(input.LA(1) >= INSTRUCTION_FORMAT21c_FIELD && input.LA(1) <= INSTRUCTION_FORMAT21c_TYPE)||input.LA(1)==INSTRUCTION_FORMAT21t||(input.LA(1) >= INSTRUCTION_FORMAT22c_FIELD && input.LA(1) <= INSTRUCTION_FORMAT22s_OR_ID)||input.LA(1)==INSTRUCTION_FORMAT22t||input.LA(1)==INSTRUCTION_FORMAT23x||input.LA(1)==INSTRUCTION_FORMAT31i_OR_ID||input.LA(1)==INSTRUCTION_FORMAT31t||(input.LA(1) >= INSTRUCTION_FORMAT35c_METHOD && input.LA(1) <= INSTRUCTION_FORMAT35ms_METHOD)||input.LA(1)==INSTRUCTION_FORMAT51l||(input.LA(1) >= PRIMITIVE_TYPE && input.LA(1) <= VOID_TYPE)||input.LA(1)==PARAM_LIST_OR_ID||input.LA(1)==SIMPLE_NAME||input.LA(1)==INTEGER_LITERAL ) {
+            if ( input.LA(1)==ACCESS_SPEC||input.LA(1)==ANNOTATION_VISIBILITY||input.LA(1)==BOOL_LITERAL||input.LA(1)==DOUBLE_LITERAL_OR_ID||input.LA(1)==FLOAT_LITERAL_OR_ID||(input.LA(1) >= INSTRUCTION_FORMAT10t && input.LA(1) <= INSTRUCTION_FORMAT10x_ODEX)||input.LA(1)==INSTRUCTION_FORMAT11x||input.LA(1)==INSTRUCTION_FORMAT12x_OR_ID||(input.LA(1) >= INSTRUCTION_FORMAT21c_FIELD && input.LA(1) <= INSTRUCTION_FORMAT21c_TYPE)||input.LA(1)==INSTRUCTION_FORMAT21t||(input.LA(1) >= INSTRUCTION_FORMAT22c_FIELD && input.LA(1) <= INSTRUCTION_FORMAT22cs_FIELD)||(input.LA(1) >= INSTRUCTION_FORMAT22s_OR_ID && input.LA(1) <= INSTRUCTION_FORMAT22t)||input.LA(1)==INSTRUCTION_FORMAT23x||(input.LA(1) >= INSTRUCTION_FORMAT31i_OR_ID && input.LA(1) <= INSTRUCTION_FORMAT31t)||(input.LA(1) >= INSTRUCTION_FORMAT35c_METHOD && input.LA(1) <= INSTRUCTION_FORMAT35ms_METHOD)||input.LA(1)==INSTRUCTION_FORMAT51l||(input.LA(1) >= NEGATIVE_INTEGER_LITERAL && input.LA(1) <= NULL_LITERAL)||input.LA(1)==PARAM_LIST_OR_ID||(input.LA(1) >= POSITIVE_INTEGER_LITERAL && input.LA(1) <= PRIMITIVE_TYPE)||input.LA(1)==REGISTER||input.LA(1)==SIMPLE_NAME||(input.LA(1) >= VERIFICATION_ERROR_TYPE && input.LA(1) <= VOID_TYPE)||input.LA(1)==INTEGER_LITERAL ) {
                 input.consume();
                 state.errorRecovery=false;
                 state.failed=false;
@@ -1455,7 +1449,7 @@ public class smaliIdeaParser extends Parser {
             int alt11=2;
             int LA11_0 = input.LA(1);
 
-            if ( ((LA11_0 >= POSITIVE_INTEGER_LITERAL && LA11_0 <= NEGATIVE_INTEGER_LITERAL)||(LA11_0 >= FLOAT_LITERAL_OR_ID && LA11_0 <= DOUBLE_LITERAL_OR_ID)||(LA11_0 >= BOOL_LITERAL && LA11_0 <= NULL_LITERAL)||(LA11_0 >= REGISTER && LA11_0 <= VERIFICATION_ERROR_TYPE)||(LA11_0 >= INSTRUCTION_FORMAT10t && LA11_0 <= INSTRUCTION_FORMAT10x_ODEX)||(LA11_0 >= INSTRUCTION_FORMAT11x && LA11_0 <= INSTRUCTION_FORMAT12x_OR_ID)||(LA11_0 >= INSTRUCTION_FORMAT21c_FIELD && LA11_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA11_0==INSTRUCTION_FORMAT21t||(LA11_0 >= INSTRUCTION_FORMAT22c_FIELD && LA11_0 <= INSTRUCTION_FORMAT22s_OR_ID)||LA11_0==INSTRUCTION_FORMAT22t||LA11_0==INSTRUCTION_FORMAT23x||LA11_0==INSTRUCTION_FORMAT31i_OR_ID||LA11_0==INSTRUCTION_FORMAT31t||(LA11_0 >= INSTRUCTION_FORMAT35c_METHOD && LA11_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA11_0==INSTRUCTION_FORMAT51l||(LA11_0 >= PRIMITIVE_TYPE && LA11_0 <= VOID_TYPE)||LA11_0==PARAM_LIST_OR_ID||LA11_0==SIMPLE_NAME||LA11_0==INTEGER_LITERAL) ) {
+            if ( (LA11_0==ACCESS_SPEC||LA11_0==ANNOTATION_VISIBILITY||LA11_0==BOOL_LITERAL||LA11_0==DOUBLE_LITERAL_OR_ID||LA11_0==FLOAT_LITERAL_OR_ID||(LA11_0 >= INSTRUCTION_FORMAT10t && LA11_0 <= INSTRUCTION_FORMAT10x_ODEX)||LA11_0==INSTRUCTION_FORMAT11x||LA11_0==INSTRUCTION_FORMAT12x_OR_ID||(LA11_0 >= INSTRUCTION_FORMAT21c_FIELD && LA11_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA11_0==INSTRUCTION_FORMAT21t||(LA11_0 >= INSTRUCTION_FORMAT22c_FIELD && LA11_0 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA11_0 >= INSTRUCTION_FORMAT22s_OR_ID && LA11_0 <= INSTRUCTION_FORMAT22t)||LA11_0==INSTRUCTION_FORMAT23x||(LA11_0 >= INSTRUCTION_FORMAT31i_OR_ID && LA11_0 <= INSTRUCTION_FORMAT31t)||(LA11_0 >= INSTRUCTION_FORMAT35c_METHOD && LA11_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA11_0==INSTRUCTION_FORMAT51l||(LA11_0 >= NEGATIVE_INTEGER_LITERAL && LA11_0 <= NULL_LITERAL)||LA11_0==PARAM_LIST_OR_ID||(LA11_0 >= POSITIVE_INTEGER_LITERAL && LA11_0 <= PRIMITIVE_TYPE)||LA11_0==REGISTER||LA11_0==SIMPLE_NAME||(LA11_0 >= VERIFICATION_ERROR_TYPE && LA11_0 <= VOID_TYPE)||LA11_0==INTEGER_LITERAL) ) {
                 alt11=1;
             }
             else if ( (LA11_0==METHOD_NAME) ) {
@@ -1565,10 +1559,10 @@ public class smaliIdeaParser extends Parser {
                 alt13=2;
                 }
                 break;
-            case PRIMITIVE_TYPE:
-            case CLASS_DESCRIPTOR:
             case ARRAY_DESCRIPTOR:
+            case CLASS_DESCRIPTOR:
             case CLOSE_PAREN:
+            case PRIMITIVE_TYPE:
                 {
                 alt13=3;
                 }
@@ -1606,7 +1600,7 @@ public class smaliIdeaParser extends Parser {
                         int alt12=2;
                         int LA12_0 = input.LA(1);
 
-                        if ( (LA12_0==PRIMITIVE_TYPE||(LA12_0 >= CLASS_DESCRIPTOR && LA12_0 <= ARRAY_DESCRIPTOR)) ) {
+                        if ( (LA12_0==ARRAY_DESCRIPTOR||LA12_0==CLASS_DESCRIPTOR||LA12_0==PRIMITIVE_TYPE) ) {
                             alt12=1;
                         }
 
@@ -1656,7 +1650,7 @@ public class smaliIdeaParser extends Parser {
             // smaliIdeaParser.g:298:2: ( VOID_TYPE | PRIMITIVE_TYPE | CLASS_DESCRIPTOR | ARRAY_DESCRIPTOR )
             // smaliIdeaParser.g:
             {
-            if ( (input.LA(1) >= PRIMITIVE_TYPE && input.LA(1) <= ARRAY_DESCRIPTOR) ) {
+            if ( input.LA(1)==ARRAY_DESCRIPTOR||input.LA(1)==CLASS_DESCRIPTOR||input.LA(1)==PRIMITIVE_TYPE||input.LA(1)==VOID_TYPE ) {
                 input.consume();
                 state.errorRecovery=false;
                 state.failed=false;
@@ -1692,7 +1686,7 @@ public class smaliIdeaParser extends Parser {
             // smaliIdeaParser.g:304:2: ( PRIMITIVE_TYPE | CLASS_DESCRIPTOR | ARRAY_DESCRIPTOR )
             // smaliIdeaParser.g:
             {
-            if ( input.LA(1)==PRIMITIVE_TYPE||(input.LA(1) >= CLASS_DESCRIPTOR && input.LA(1) <= ARRAY_DESCRIPTOR) ) {
+            if ( input.LA(1)==ARRAY_DESCRIPTOR||input.LA(1)==CLASS_DESCRIPTOR||input.LA(1)==PRIMITIVE_TYPE ) {
                 input.consume();
                 state.errorRecovery=false;
                 state.failed=false;
@@ -1728,7 +1722,7 @@ public class smaliIdeaParser extends Parser {
             // smaliIdeaParser.g:309:2: ( CLASS_DESCRIPTOR | ARRAY_DESCRIPTOR )
             // smaliIdeaParser.g:
             {
-            if ( (input.LA(1) >= CLASS_DESCRIPTOR && input.LA(1) <= ARRAY_DESCRIPTOR) ) {
+            if ( input.LA(1)==ARRAY_DESCRIPTOR||input.LA(1)==CLASS_DESCRIPTOR ) {
                 input.consume();
                 state.errorRecovery=false;
                 state.failed=false;
@@ -1764,7 +1758,7 @@ public class smaliIdeaParser extends Parser {
             // smaliIdeaParser.g:313:2: ( POSITIVE_INTEGER_LITERAL | NEGATIVE_INTEGER_LITERAL | INTEGER_LITERAL )
             // smaliIdeaParser.g:
             {
-            if ( (input.LA(1) >= POSITIVE_INTEGER_LITERAL && input.LA(1) <= NEGATIVE_INTEGER_LITERAL)||input.LA(1)==INTEGER_LITERAL ) {
+            if ( input.LA(1)==NEGATIVE_INTEGER_LITERAL||input.LA(1)==POSITIVE_INTEGER_LITERAL||input.LA(1)==INTEGER_LITERAL ) {
                 input.consume();
                 state.errorRecovery=false;
                 state.failed=false;
@@ -1800,7 +1794,7 @@ public class smaliIdeaParser extends Parser {
             // smaliIdeaParser.g:318:2: ( FLOAT_LITERAL_OR_ID | FLOAT_LITERAL )
             // smaliIdeaParser.g:
             {
-            if ( input.LA(1)==FLOAT_LITERAL_OR_ID||input.LA(1)==FLOAT_LITERAL ) {
+            if ( (input.LA(1) >= FLOAT_LITERAL && input.LA(1) <= FLOAT_LITERAL_OR_ID) ) {
                 input.consume();
                 state.errorRecovery=false;
                 state.failed=false;
@@ -1836,7 +1830,7 @@ public class smaliIdeaParser extends Parser {
             // smaliIdeaParser.g:322:2: ( DOUBLE_LITERAL_OR_ID | DOUBLE_LITERAL )
             // smaliIdeaParser.g:
             {
-            if ( input.LA(1)==DOUBLE_LITERAL_OR_ID||input.LA(1)==DOUBLE_LITERAL ) {
+            if ( (input.LA(1) >= DOUBLE_LITERAL && input.LA(1) <= DOUBLE_LITERAL_OR_ID) ) {
                 input.consume();
                 state.errorRecovery=false;
                 state.failed=false;
@@ -1878,8 +1872,8 @@ public class smaliIdeaParser extends Parser {
                 alt14=1;
                 }
                 break;
-            case POSITIVE_INTEGER_LITERAL:
             case NEGATIVE_INTEGER_LITERAL:
+            case POSITIVE_INTEGER_LITERAL:
             case INTEGER_LITERAL:
                 {
                 alt14=2;
@@ -1895,14 +1889,14 @@ public class smaliIdeaParser extends Parser {
                 alt14=4;
                 }
                 break;
-            case FLOAT_LITERAL_OR_ID:
             case FLOAT_LITERAL:
+            case FLOAT_LITERAL_OR_ID:
                 {
                 alt14=5;
                 }
                 break;
-            case DOUBLE_LITERAL_OR_ID:
             case DOUBLE_LITERAL:
+            case DOUBLE_LITERAL_OR_ID:
                 {
                 alt14=6;
                 }
@@ -1937,10 +1931,10 @@ public class smaliIdeaParser extends Parser {
                 alt14=12;
                 }
                 break;
+            case ARRAY_DESCRIPTOR:
+            case CLASS_DESCRIPTOR:
             case PRIMITIVE_TYPE:
             case VOID_TYPE:
-            case CLASS_DESCRIPTOR:
-            case ARRAY_DESCRIPTOR:
                 {
                 alt14=13;
                 }
@@ -2117,8 +2111,8 @@ public class smaliIdeaParser extends Parser {
                 alt15=1;
                 }
                 break;
-            case POSITIVE_INTEGER_LITERAL:
             case NEGATIVE_INTEGER_LITERAL:
+            case POSITIVE_INTEGER_LITERAL:
             case INTEGER_LITERAL:
                 {
                 alt15=2;
@@ -2218,8 +2212,8 @@ public class smaliIdeaParser extends Parser {
                 alt16=1;
                 }
                 break;
-            case POSITIVE_INTEGER_LITERAL:
             case NEGATIVE_INTEGER_LITERAL:
+            case POSITIVE_INTEGER_LITERAL:
             case INTEGER_LITERAL:
                 {
                 alt16=2;
@@ -2235,8 +2229,8 @@ public class smaliIdeaParser extends Parser {
                 alt16=4;
                 }
                 break;
-            case FLOAT_LITERAL_OR_ID:
             case FLOAT_LITERAL:
+            case FLOAT_LITERAL_OR_ID:
                 {
                 alt16=5;
                 }
@@ -2342,8 +2336,8 @@ public class smaliIdeaParser extends Parser {
             // smaliIdeaParser.g:362:2: ( integer_literal | LONG_LITERAL | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | BOOL_LITERAL )
             int alt17=8;
             switch ( input.LA(1) ) {
-            case POSITIVE_INTEGER_LITERAL:
             case NEGATIVE_INTEGER_LITERAL:
+            case POSITIVE_INTEGER_LITERAL:
             case INTEGER_LITERAL:
                 {
                 alt17=1;
@@ -2364,14 +2358,14 @@ public class smaliIdeaParser extends Parser {
                 alt17=4;
                 }
                 break;
-            case FLOAT_LITERAL_OR_ID:
             case FLOAT_LITERAL:
+            case FLOAT_LITERAL_OR_ID:
                 {
                 alt17=5;
                 }
                 break;
-            case DOUBLE_LITERAL_OR_ID:
             case DOUBLE_LITERAL:
+            case DOUBLE_LITERAL_OR_ID:
                 {
                 alt17=6;
                 }
@@ -2494,7 +2488,7 @@ public class smaliIdeaParser extends Parser {
             int alt19=2;
             int LA19_0 = input.LA(1);
 
-            if ( (LA19_0==SUBANNOTATION_DIRECTIVE||LA19_0==ENUM_DIRECTIVE||(LA19_0 >= POSITIVE_INTEGER_LITERAL && LA19_0 <= NULL_LITERAL)||LA19_0==STRING_LITERAL||LA19_0==CHAR_LITERAL||(LA19_0 >= PRIMITIVE_TYPE && LA19_0 <= ARRAY_DESCRIPTOR)||LA19_0==OPEN_BRACE||LA19_0==INTEGER_LITERAL) ) {
+            if ( (LA19_0==ARRAY_DESCRIPTOR||(LA19_0 >= BOOL_LITERAL && LA19_0 <= BYTE_LITERAL)||(LA19_0 >= CHAR_LITERAL && LA19_0 <= CLASS_DESCRIPTOR)||(LA19_0 >= DOUBLE_LITERAL && LA19_0 <= DOUBLE_LITERAL_OR_ID)||LA19_0==ENUM_DIRECTIVE||(LA19_0 >= FLOAT_LITERAL && LA19_0 <= FLOAT_LITERAL_OR_ID)||LA19_0==LONG_LITERAL||(LA19_0 >= NEGATIVE_INTEGER_LITERAL && LA19_0 <= NULL_LITERAL)||LA19_0==OPEN_BRACE||(LA19_0 >= POSITIVE_INTEGER_LITERAL && LA19_0 <= PRIMITIVE_TYPE)||LA19_0==SHORT_LITERAL||(LA19_0 >= STRING_LITERAL && LA19_0 <= SUBANNOTATION_DIRECTIVE)||LA19_0==VOID_TYPE||LA19_0==INTEGER_LITERAL) ) {
                 alt19=1;
             }
             else if ( (LA19_0==CLOSE_BRACE) ) {
@@ -2638,7 +2632,7 @@ public class smaliIdeaParser extends Parser {
                 int alt20=2;
                 int LA20_0 = input.LA(1);
 
-                if ( ((LA20_0 >= POSITIVE_INTEGER_LITERAL && LA20_0 <= NEGATIVE_INTEGER_LITERAL)||(LA20_0 >= FLOAT_LITERAL_OR_ID && LA20_0 <= DOUBLE_LITERAL_OR_ID)||(LA20_0 >= BOOL_LITERAL && LA20_0 <= NULL_LITERAL)||(LA20_0 >= REGISTER && LA20_0 <= VERIFICATION_ERROR_TYPE)||(LA20_0 >= INSTRUCTION_FORMAT10t && LA20_0 <= INSTRUCTION_FORMAT10x_ODEX)||(LA20_0 >= INSTRUCTION_FORMAT11x && LA20_0 <= INSTRUCTION_FORMAT12x_OR_ID)||(LA20_0 >= INSTRUCTION_FORMAT21c_FIELD && LA20_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA20_0==INSTRUCTION_FORMAT21t||(LA20_0 >= INSTRUCTION_FORMAT22c_FIELD && LA20_0 <= INSTRUCTION_FORMAT22s_OR_ID)||LA20_0==INSTRUCTION_FORMAT22t||LA20_0==INSTRUCTION_FORMAT23x||LA20_0==INSTRUCTION_FORMAT31i_OR_ID||LA20_0==INSTRUCTION_FORMAT31t||(LA20_0 >= INSTRUCTION_FORMAT35c_METHOD && LA20_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA20_0==INSTRUCTION_FORMAT51l||(LA20_0 >= PRIMITIVE_TYPE && LA20_0 <= VOID_TYPE)||LA20_0==PARAM_LIST_OR_ID||LA20_0==SIMPLE_NAME||LA20_0==INTEGER_LITERAL) ) {
+                if ( (LA20_0==ACCESS_SPEC||LA20_0==ANNOTATION_VISIBILITY||LA20_0==BOOL_LITERAL||LA20_0==DOUBLE_LITERAL_OR_ID||LA20_0==FLOAT_LITERAL_OR_ID||(LA20_0 >= INSTRUCTION_FORMAT10t && LA20_0 <= INSTRUCTION_FORMAT10x_ODEX)||LA20_0==INSTRUCTION_FORMAT11x||LA20_0==INSTRUCTION_FORMAT12x_OR_ID||(LA20_0 >= INSTRUCTION_FORMAT21c_FIELD && LA20_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA20_0==INSTRUCTION_FORMAT21t||(LA20_0 >= INSTRUCTION_FORMAT22c_FIELD && LA20_0 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA20_0 >= INSTRUCTION_FORMAT22s_OR_ID && LA20_0 <= INSTRUCTION_FORMAT22t)||LA20_0==INSTRUCTION_FORMAT23x||(LA20_0 >= INSTRUCTION_FORMAT31i_OR_ID && LA20_0 <= INSTRUCTION_FORMAT31t)||(LA20_0 >= INSTRUCTION_FORMAT35c_METHOD && LA20_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA20_0==INSTRUCTION_FORMAT51l||(LA20_0 >= NEGATIVE_INTEGER_LITERAL && LA20_0 <= NULL_LITERAL)||LA20_0==PARAM_LIST_OR_ID||(LA20_0 >= POSITIVE_INTEGER_LITERAL && LA20_0 <= PRIMITIVE_TYPE)||LA20_0==REGISTER||LA20_0==SIMPLE_NAME||(LA20_0 >= VERIFICATION_ERROR_TYPE && LA20_0 <= VOID_TYPE)||LA20_0==INTEGER_LITERAL) ) {
                     alt20=1;
                 }
 
@@ -2699,7 +2693,7 @@ public class smaliIdeaParser extends Parser {
                 int alt21=2;
                 int LA21_0 = input.LA(1);
 
-                if ( ((LA21_0 >= POSITIVE_INTEGER_LITERAL && LA21_0 <= NEGATIVE_INTEGER_LITERAL)||(LA21_0 >= FLOAT_LITERAL_OR_ID && LA21_0 <= DOUBLE_LITERAL_OR_ID)||(LA21_0 >= BOOL_LITERAL && LA21_0 <= NULL_LITERAL)||(LA21_0 >= REGISTER && LA21_0 <= VERIFICATION_ERROR_TYPE)||(LA21_0 >= INSTRUCTION_FORMAT10t && LA21_0 <= INSTRUCTION_FORMAT10x_ODEX)||(LA21_0 >= INSTRUCTION_FORMAT11x && LA21_0 <= INSTRUCTION_FORMAT12x_OR_ID)||(LA21_0 >= INSTRUCTION_FORMAT21c_FIELD && LA21_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA21_0==INSTRUCTION_FORMAT21t||(LA21_0 >= INSTRUCTION_FORMAT22c_FIELD && LA21_0 <= INSTRUCTION_FORMAT22s_OR_ID)||LA21_0==INSTRUCTION_FORMAT22t||LA21_0==INSTRUCTION_FORMAT23x||LA21_0==INSTRUCTION_FORMAT31i_OR_ID||LA21_0==INSTRUCTION_FORMAT31t||(LA21_0 >= INSTRUCTION_FORMAT35c_METHOD && LA21_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA21_0==INSTRUCTION_FORMAT51l||(LA21_0 >= PRIMITIVE_TYPE && LA21_0 <= VOID_TYPE)||LA21_0==PARAM_LIST_OR_ID||LA21_0==SIMPLE_NAME||LA21_0==INTEGER_LITERAL) ) {
+                if ( (LA21_0==ACCESS_SPEC||LA21_0==ANNOTATION_VISIBILITY||LA21_0==BOOL_LITERAL||LA21_0==DOUBLE_LITERAL_OR_ID||LA21_0==FLOAT_LITERAL_OR_ID||(LA21_0 >= INSTRUCTION_FORMAT10t && LA21_0 <= INSTRUCTION_FORMAT10x_ODEX)||LA21_0==INSTRUCTION_FORMAT11x||LA21_0==INSTRUCTION_FORMAT12x_OR_ID||(LA21_0 >= INSTRUCTION_FORMAT21c_FIELD && LA21_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA21_0==INSTRUCTION_FORMAT21t||(LA21_0 >= INSTRUCTION_FORMAT22c_FIELD && LA21_0 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA21_0 >= INSTRUCTION_FORMAT22s_OR_ID && LA21_0 <= INSTRUCTION_FORMAT22t)||LA21_0==INSTRUCTION_FORMAT23x||(LA21_0 >= INSTRUCTION_FORMAT31i_OR_ID && LA21_0 <= INSTRUCTION_FORMAT31t)||(LA21_0 >= INSTRUCTION_FORMAT35c_METHOD && LA21_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA21_0==INSTRUCTION_FORMAT51l||(LA21_0 >= NEGATIVE_INTEGER_LITERAL && LA21_0 <= NULL_LITERAL)||LA21_0==PARAM_LIST_OR_ID||(LA21_0 >= POSITIVE_INTEGER_LITERAL && LA21_0 <= PRIMITIVE_TYPE)||LA21_0==REGISTER||LA21_0==SIMPLE_NAME||(LA21_0 >= VERIFICATION_ERROR_TYPE && LA21_0 <= VOID_TYPE)||LA21_0==INTEGER_LITERAL) ) {
                     alt21=1;
                 }
 
@@ -2797,8 +2791,8 @@ public class smaliIdeaParser extends Parser {
             // smaliIdeaParser.g:391:2: ( reference_type_descriptor ( ARROW ( simple_name COLON nonvoid_type_descriptor | method_name method_prototype ) |) | PRIMITIVE_TYPE | VOID_TYPE )
             int alt24=3;
             switch ( input.LA(1) ) {
-            case CLASS_DESCRIPTOR:
             case ARRAY_DESCRIPTOR:
+            case CLASS_DESCRIPTOR:
                 {
                 alt24=1;
                 }
@@ -2839,7 +2833,7 @@ public class smaliIdeaParser extends Parser {
                     if ( (LA23_0==ARROW) ) {
                         alt23=1;
                     }
-                    else if ( (LA23_0==EOF||(LA23_0 >= CLASS_DIRECTIVE && LA23_0 <= END_FIELD_DIRECTIVE)||(LA23_0 >= END_SUBANNOTATION_DIRECTIVE && LA23_0 <= END_ANNOTATION_DIRECTIVE)||(LA23_0 >= METHOD_DIRECTIVE && LA23_0 <= ARRAY_DATA_DIRECTIVE)||LA23_0==PACKED_SWITCH_DIRECTIVE||LA23_0==SPARSE_SWITCH_DIRECTIVE||(LA23_0 >= CATCH_DIRECTIVE && LA23_0 <= PARAMETER_DIRECTIVE)||(LA23_0 >= LOCAL_DIRECTIVE && LA23_0 <= EPILOGUE_DIRECTIVE)||(LA23_0 >= POSITIVE_INTEGER_LITERAL && LA23_0 <= NEGATIVE_INTEGER_LITERAL)||(LA23_0 >= FLOAT_LITERAL_OR_ID && LA23_0 <= DOUBLE_LITERAL_OR_ID)||(LA23_0 >= BOOL_LITERAL && LA23_0 <= NULL_LITERAL)||(LA23_0 >= REGISTER && LA23_0 <= VERIFICATION_ERROR_TYPE)||(LA23_0 >= INSTRUCTION_FORMAT10t && LA23_0 <= INSTRUCTION_FORMAT5rc_TYPE)||(LA23_0 >= PRIMITIVE_TYPE && LA23_0 <= VOID_TYPE)||LA23_0==PARAM_LIST_OR_ID||LA23_0==SIMPLE_NAME||(LA23_0 >= COLON && LA23_0 <= COMMA)||LA23_0==CLOSE_BRACE||LA23_0==INTEGER_LITERAL) ) {
+                    else if ( (LA23_0==EOF||(LA23_0 >= ACCESS_SPEC && LA23_0 <= ARRAY_DATA_DIRECTIVE)||LA23_0==BOOL_LITERAL||(LA23_0 >= CATCH_DIRECTIVE && LA23_0 <= CATCHALL_DIRECTIVE)||(LA23_0 >= CLASS_DIRECTIVE && LA23_0 <= CLOSE_BRACE)||(LA23_0 >= COLON && LA23_0 <= COMMA)||(LA23_0 >= DOUBLE_LITERAL_OR_ID && LA23_0 <= END_ANNOTATION_DIRECTIVE)||(LA23_0 >= END_FIELD_DIRECTIVE && LA23_0 <= END_METHOD_DIRECTIVE)||LA23_0==END_SUBANNOTATION_DIRECTIVE||LA23_0==EPILOGUE_DIRECTIVE||LA23_0==FIELD_DIRECTIVE||LA23_0==FLOAT_LITERAL_OR_ID||LA23_0==IMPLEMENTS_DIRECTIVE||(LA23_0 >= INSTRUCTION_FORMAT10t && LA23_0 <= INSTRUCTION_FORMAT51l)||(LA23_0 >= LINE_DIRECTIVE && LA23_0 <= LOCALS_DIRECTIVE)||LA23_0==METHOD_DIRECTIVE||(LA23_0 >= NEGATIVE_INTEGER_LITERAL && LA23_0 <= NULL_LITERAL)||LA23_0==PACKED_SWITCH_DIRECTIVE||(LA23_0 >= PARAM_LIST_OR_ID && LA23_0 <= RESTART_LOCAL_DIRECTIVE)||(LA23_0 >= SIMPLE_NAME && LA23_0 <= SPARSE_SWITCH_DIRECTIVE)||(LA23_0 >= SUPER_DIRECTIVE && LA23_0 <= VOID_TYPE)||LA23_0==INTEGER_LITERAL||(LA23_0 >= INSTRUCTION_FORMAT41c_FIELD && LA23_0 <= INSTRUCTION_FORMAT5rc_TYPE)) ) {
                         alt23=2;
                     }
                     else {
@@ -2860,7 +2854,7 @@ public class smaliIdeaParser extends Parser {
                             int alt22=2;
                             int LA22_0 = input.LA(1);
 
-                            if ( ((LA22_0 >= POSITIVE_INTEGER_LITERAL && LA22_0 <= NEGATIVE_INTEGER_LITERAL)||(LA22_0 >= FLOAT_LITERAL_OR_ID && LA22_0 <= DOUBLE_LITERAL_OR_ID)||(LA22_0 >= BOOL_LITERAL && LA22_0 <= NULL_LITERAL)||(LA22_0 >= REGISTER && LA22_0 <= VERIFICATION_ERROR_TYPE)||(LA22_0 >= INSTRUCTION_FORMAT10t && LA22_0 <= INSTRUCTION_FORMAT10x_ODEX)||(LA22_0 >= INSTRUCTION_FORMAT11x && LA22_0 <= INSTRUCTION_FORMAT12x_OR_ID)||(LA22_0 >= INSTRUCTION_FORMAT21c_FIELD && LA22_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA22_0==INSTRUCTION_FORMAT21t||(LA22_0 >= INSTRUCTION_FORMAT22c_FIELD && LA22_0 <= INSTRUCTION_FORMAT22s_OR_ID)||LA22_0==INSTRUCTION_FORMAT22t||LA22_0==INSTRUCTION_FORMAT23x||LA22_0==INSTRUCTION_FORMAT31i_OR_ID||LA22_0==INSTRUCTION_FORMAT31t||(LA22_0 >= INSTRUCTION_FORMAT35c_METHOD && LA22_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA22_0==INSTRUCTION_FORMAT51l||(LA22_0 >= PRIMITIVE_TYPE && LA22_0 <= VOID_TYPE)||LA22_0==PARAM_LIST_OR_ID||LA22_0==SIMPLE_NAME||LA22_0==INTEGER_LITERAL) ) {
+                            if ( (LA22_0==ACCESS_SPEC||LA22_0==ANNOTATION_VISIBILITY||LA22_0==BOOL_LITERAL||LA22_0==DOUBLE_LITERAL_OR_ID||LA22_0==FLOAT_LITERAL_OR_ID||(LA22_0 >= INSTRUCTION_FORMAT10t && LA22_0 <= INSTRUCTION_FORMAT10x_ODEX)||LA22_0==INSTRUCTION_FORMAT11x||LA22_0==INSTRUCTION_FORMAT12x_OR_ID||(LA22_0 >= INSTRUCTION_FORMAT21c_FIELD && LA22_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA22_0==INSTRUCTION_FORMAT21t||(LA22_0 >= INSTRUCTION_FORMAT22c_FIELD && LA22_0 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA22_0 >= INSTRUCTION_FORMAT22s_OR_ID && LA22_0 <= INSTRUCTION_FORMAT22t)||LA22_0==INSTRUCTION_FORMAT23x||(LA22_0 >= INSTRUCTION_FORMAT31i_OR_ID && LA22_0 <= INSTRUCTION_FORMAT31t)||(LA22_0 >= INSTRUCTION_FORMAT35c_METHOD && LA22_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA22_0==INSTRUCTION_FORMAT51l||(LA22_0 >= NEGATIVE_INTEGER_LITERAL && LA22_0 <= NULL_LITERAL)||LA22_0==PARAM_LIST_OR_ID||(LA22_0 >= POSITIVE_INTEGER_LITERAL && LA22_0 <= PRIMITIVE_TYPE)||LA22_0==REGISTER||LA22_0==SIMPLE_NAME||(LA22_0 >= VERIFICATION_ERROR_TYPE && LA22_0 <= VOID_TYPE)||LA22_0==INTEGER_LITERAL) ) {
                                 int LA22_1 = input.LA(2);
 
                                 if ( (LA22_1==COLON) ) {
@@ -3318,13 +3312,13 @@ public class smaliIdeaParser extends Parser {
             if ( (LA30_0==CLASS_DESCRIPTOR) ) {
                 int LA30_1 = input.LA(2);
 
-                if ( (LA30_1==SOURCE_DIRECTIVE||LA30_1==ANNOTATION_DIRECTIVE||(LA30_1 >= END_METHOD_DIRECTIVE && LA30_1 <= ARRAY_DATA_DIRECTIVE)||LA30_1==PACKED_SWITCH_DIRECTIVE||LA30_1==SPARSE_SWITCH_DIRECTIVE||(LA30_1 >= CATCH_DIRECTIVE && LA30_1 <= PARAMETER_DIRECTIVE)||(LA30_1 >= LOCAL_DIRECTIVE && LA30_1 <= EPILOGUE_DIRECTIVE)||(LA30_1 >= INSTRUCTION_FORMAT10t && LA30_1 <= INSTRUCTION_FORMAT5rc_TYPE)||LA30_1==COLON) ) {
+                if ( (LA30_1==ANNOTATION_DIRECTIVE||LA30_1==ARRAY_DATA_DIRECTIVE||(LA30_1 >= CATCH_DIRECTIVE && LA30_1 <= CATCHALL_DIRECTIVE)||LA30_1==COLON||(LA30_1 >= END_LOCAL_DIRECTIVE && LA30_1 <= END_METHOD_DIRECTIVE)||LA30_1==EPILOGUE_DIRECTIVE||(LA30_1 >= INSTRUCTION_FORMAT10t && LA30_1 <= INSTRUCTION_FORMAT51l)||(LA30_1 >= LINE_DIRECTIVE && LA30_1 <= LOCALS_DIRECTIVE)||LA30_1==PACKED_SWITCH_DIRECTIVE||LA30_1==PARAMETER_DIRECTIVE||LA30_1==PROLOGUE_DIRECTIVE||(LA30_1 >= REGISTERS_DIRECTIVE && LA30_1 <= RESTART_LOCAL_DIRECTIVE)||(LA30_1 >= SOURCE_DIRECTIVE && LA30_1 <= SPARSE_SWITCH_DIRECTIVE)||(LA30_1 >= INSTRUCTION_FORMAT41c_FIELD && LA30_1 <= INSTRUCTION_FORMAT5rc_TYPE)) ) {
                     alt30=1;
                 }
                 else if ( (LA30_1==ARROW) ) {
                     int LA30_4 = input.LA(3);
 
-                    if ( ((LA30_4 >= POSITIVE_INTEGER_LITERAL && LA30_4 <= NEGATIVE_INTEGER_LITERAL)||(LA30_4 >= FLOAT_LITERAL_OR_ID && LA30_4 <= DOUBLE_LITERAL_OR_ID)||(LA30_4 >= BOOL_LITERAL && LA30_4 <= NULL_LITERAL)||(LA30_4 >= REGISTER && LA30_4 <= VERIFICATION_ERROR_TYPE)||(LA30_4 >= INSTRUCTION_FORMAT10t && LA30_4 <= INSTRUCTION_FORMAT10x_ODEX)||(LA30_4 >= INSTRUCTION_FORMAT11x && LA30_4 <= INSTRUCTION_FORMAT12x_OR_ID)||(LA30_4 >= INSTRUCTION_FORMAT21c_FIELD && LA30_4 <= INSTRUCTION_FORMAT21c_TYPE)||LA30_4==INSTRUCTION_FORMAT21t||(LA30_4 >= INSTRUCTION_FORMAT22c_FIELD && LA30_4 <= INSTRUCTION_FORMAT22s_OR_ID)||LA30_4==INSTRUCTION_FORMAT22t||LA30_4==INSTRUCTION_FORMAT23x||LA30_4==INSTRUCTION_FORMAT31i_OR_ID||LA30_4==INSTRUCTION_FORMAT31t||(LA30_4 >= INSTRUCTION_FORMAT35c_METHOD && LA30_4 <= INSTRUCTION_FORMAT35ms_METHOD)||LA30_4==INSTRUCTION_FORMAT51l||(LA30_4 >= PRIMITIVE_TYPE && LA30_4 <= VOID_TYPE)||LA30_4==PARAM_LIST_OR_ID||LA30_4==SIMPLE_NAME||LA30_4==INTEGER_LITERAL) ) {
+                    if ( (LA30_4==ACCESS_SPEC||LA30_4==ANNOTATION_VISIBILITY||LA30_4==BOOL_LITERAL||LA30_4==DOUBLE_LITERAL_OR_ID||LA30_4==FLOAT_LITERAL_OR_ID||(LA30_4 >= INSTRUCTION_FORMAT10t && LA30_4 <= INSTRUCTION_FORMAT10x_ODEX)||LA30_4==INSTRUCTION_FORMAT11x||LA30_4==INSTRUCTION_FORMAT12x_OR_ID||(LA30_4 >= INSTRUCTION_FORMAT21c_FIELD && LA30_4 <= INSTRUCTION_FORMAT21c_TYPE)||LA30_4==INSTRUCTION_FORMAT21t||(LA30_4 >= INSTRUCTION_FORMAT22c_FIELD && LA30_4 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA30_4 >= INSTRUCTION_FORMAT22s_OR_ID && LA30_4 <= INSTRUCTION_FORMAT22t)||LA30_4==INSTRUCTION_FORMAT23x||(LA30_4 >= INSTRUCTION_FORMAT31i_OR_ID && LA30_4 <= INSTRUCTION_FORMAT31t)||(LA30_4 >= INSTRUCTION_FORMAT35c_METHOD && LA30_4 <= INSTRUCTION_FORMAT35ms_METHOD)||LA30_4==INSTRUCTION_FORMAT51l||(LA30_4 >= NEGATIVE_INTEGER_LITERAL && LA30_4 <= NULL_LITERAL)||LA30_4==PARAM_LIST_OR_ID||(LA30_4 >= POSITIVE_INTEGER_LITERAL && LA30_4 <= PRIMITIVE_TYPE)||LA30_4==REGISTER||LA30_4==SIMPLE_NAME||(LA30_4 >= VERIFICATION_ERROR_TYPE && LA30_4 <= VOID_TYPE)||LA30_4==INTEGER_LITERAL) ) {
                         int LA30_5 = input.LA(4);
 
                         if ( (LA30_5==COLON) ) {
@@ -3369,7 +3363,7 @@ public class smaliIdeaParser extends Parser {
                 if ( (LA30_2==ARROW) ) {
                     int LA30_4 = input.LA(3);
 
-                    if ( ((LA30_4 >= POSITIVE_INTEGER_LITERAL && LA30_4 <= NEGATIVE_INTEGER_LITERAL)||(LA30_4 >= FLOAT_LITERAL_OR_ID && LA30_4 <= DOUBLE_LITERAL_OR_ID)||(LA30_4 >= BOOL_LITERAL && LA30_4 <= NULL_LITERAL)||(LA30_4 >= REGISTER && LA30_4 <= VERIFICATION_ERROR_TYPE)||(LA30_4 >= INSTRUCTION_FORMAT10t && LA30_4 <= INSTRUCTION_FORMAT10x_ODEX)||(LA30_4 >= INSTRUCTION_FORMAT11x && LA30_4 <= INSTRUCTION_FORMAT12x_OR_ID)||(LA30_4 >= INSTRUCTION_FORMAT21c_FIELD && LA30_4 <= INSTRUCTION_FORMAT21c_TYPE)||LA30_4==INSTRUCTION_FORMAT21t||(LA30_4 >= INSTRUCTION_FORMAT22c_FIELD && LA30_4 <= INSTRUCTION_FORMAT22s_OR_ID)||LA30_4==INSTRUCTION_FORMAT22t||LA30_4==INSTRUCTION_FORMAT23x||LA30_4==INSTRUCTION_FORMAT31i_OR_ID||LA30_4==INSTRUCTION_FORMAT31t||(LA30_4 >= INSTRUCTION_FORMAT35c_METHOD && LA30_4 <= INSTRUCTION_FORMAT35ms_METHOD)||LA30_4==INSTRUCTION_FORMAT51l||(LA30_4 >= PRIMITIVE_TYPE && LA30_4 <= VOID_TYPE)||LA30_4==PARAM_LIST_OR_ID||LA30_4==SIMPLE_NAME||LA30_4==INTEGER_LITERAL) ) {
+                    if ( (LA30_4==ACCESS_SPEC||LA30_4==ANNOTATION_VISIBILITY||LA30_4==BOOL_LITERAL||LA30_4==DOUBLE_LITERAL_OR_ID||LA30_4==FLOAT_LITERAL_OR_ID||(LA30_4 >= INSTRUCTION_FORMAT10t && LA30_4 <= INSTRUCTION_FORMAT10x_ODEX)||LA30_4==INSTRUCTION_FORMAT11x||LA30_4==INSTRUCTION_FORMAT12x_OR_ID||(LA30_4 >= INSTRUCTION_FORMAT21c_FIELD && LA30_4 <= INSTRUCTION_FORMAT21c_TYPE)||LA30_4==INSTRUCTION_FORMAT21t||(LA30_4 >= INSTRUCTION_FORMAT22c_FIELD && LA30_4 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA30_4 >= INSTRUCTION_FORMAT22s_OR_ID && LA30_4 <= INSTRUCTION_FORMAT22t)||LA30_4==INSTRUCTION_FORMAT23x||(LA30_4 >= INSTRUCTION_FORMAT31i_OR_ID && LA30_4 <= INSTRUCTION_FORMAT31t)||(LA30_4 >= INSTRUCTION_FORMAT35c_METHOD && LA30_4 <= INSTRUCTION_FORMAT35ms_METHOD)||LA30_4==INSTRUCTION_FORMAT51l||(LA30_4 >= NEGATIVE_INTEGER_LITERAL && LA30_4 <= NULL_LITERAL)||LA30_4==PARAM_LIST_OR_ID||(LA30_4 >= POSITIVE_INTEGER_LITERAL && LA30_4 <= PRIMITIVE_TYPE)||LA30_4==REGISTER||LA30_4==SIMPLE_NAME||(LA30_4 >= VERIFICATION_ERROR_TYPE && LA30_4 <= VOID_TYPE)||LA30_4==INTEGER_LITERAL) ) {
                         int LA30_5 = input.LA(4);
 
                         if ( (LA30_5==COLON) ) {
@@ -3633,7 +3627,7 @@ public class smaliIdeaParser extends Parser {
             if ( (LA33_0==END_PARAMETER_DIRECTIVE) ) {
                 alt33=1;
             }
-            else if ( (LA33_0==EOF||(LA33_0 >= CLASS_DIRECTIVE && LA33_0 <= FIELD_DIRECTIVE)||LA33_0==ANNOTATION_DIRECTIVE||(LA33_0 >= METHOD_DIRECTIVE && LA33_0 <= ARRAY_DATA_DIRECTIVE)||LA33_0==PACKED_SWITCH_DIRECTIVE||LA33_0==SPARSE_SWITCH_DIRECTIVE||(LA33_0 >= CATCH_DIRECTIVE && LA33_0 <= PARAMETER_DIRECTIVE)||(LA33_0 >= LOCAL_DIRECTIVE && LA33_0 <= EPILOGUE_DIRECTIVE)||(LA33_0 >= INSTRUCTION_FORMAT10t && LA33_0 <= INSTRUCTION_FORMAT5rc_TYPE)||LA33_0==COLON) ) {
+            else if ( (LA33_0==EOF||LA33_0==ANNOTATION_DIRECTIVE||LA33_0==ARRAY_DATA_DIRECTIVE||(LA33_0 >= CATCH_DIRECTIVE && LA33_0 <= CATCHALL_DIRECTIVE)||LA33_0==CLASS_DIRECTIVE||LA33_0==COLON||(LA33_0 >= END_LOCAL_DIRECTIVE && LA33_0 <= END_METHOD_DIRECTIVE)||LA33_0==EPILOGUE_DIRECTIVE||LA33_0==FIELD_DIRECTIVE||LA33_0==IMPLEMENTS_DIRECTIVE||(LA33_0 >= INSTRUCTION_FORMAT10t && LA33_0 <= INSTRUCTION_FORMAT51l)||(LA33_0 >= LINE_DIRECTIVE && LA33_0 <= LOCALS_DIRECTIVE)||LA33_0==METHOD_DIRECTIVE||LA33_0==PACKED_SWITCH_DIRECTIVE||LA33_0==PARAMETER_DIRECTIVE||LA33_0==PROLOGUE_DIRECTIVE||(LA33_0 >= REGISTERS_DIRECTIVE && LA33_0 <= RESTART_LOCAL_DIRECTIVE)||(LA33_0 >= SOURCE_DIRECTIVE && LA33_0 <= SPARSE_SWITCH_DIRECTIVE)||LA33_0==SUPER_DIRECTIVE||(LA33_0 >= INSTRUCTION_FORMAT41c_FIELD && LA33_0 <= INSTRUCTION_FORMAT5rc_TYPE)) ) {
                 alt33=2;
             }
             else {
@@ -4064,7 +4058,7 @@ public class smaliIdeaParser extends Parser {
             // smaliIdeaParser.g:472:2: ( INSTRUCTION_FORMAT12x | INSTRUCTION_FORMAT12x_OR_ID )
             // smaliIdeaParser.g:
             {
-            if ( (input.LA(1) >= INSTRUCTION_FORMAT12x_OR_ID && input.LA(1) <= INSTRUCTION_FORMAT12x) ) {
+            if ( (input.LA(1) >= INSTRUCTION_FORMAT12x && input.LA(1) <= INSTRUCTION_FORMAT12x_OR_ID) ) {
                 input.consume();
                 state.errorRecovery=false;
                 state.failed=false;
@@ -4100,7 +4094,7 @@ public class smaliIdeaParser extends Parser {
             // smaliIdeaParser.g:476:2: ( INSTRUCTION_FORMAT22s | INSTRUCTION_FORMAT22s_OR_ID )
             // smaliIdeaParser.g:
             {
-            if ( (input.LA(1) >= INSTRUCTION_FORMAT22s_OR_ID && input.LA(1) <= INSTRUCTION_FORMAT22s) ) {
+            if ( (input.LA(1) >= INSTRUCTION_FORMAT22s && input.LA(1) <= INSTRUCTION_FORMAT22s_OR_ID) ) {
                 input.consume();
                 state.errorRecovery=false;
                 state.failed=false;
@@ -4136,7 +4130,7 @@ public class smaliIdeaParser extends Parser {
             // smaliIdeaParser.g:480:2: ( INSTRUCTION_FORMAT31i | INSTRUCTION_FORMAT31i_OR_ID )
             // smaliIdeaParser.g:
             {
-            if ( (input.LA(1) >= INSTRUCTION_FORMAT31i_OR_ID && input.LA(1) <= INSTRUCTION_FORMAT31i) ) {
+            if ( (input.LA(1) >= INSTRUCTION_FORMAT31i && input.LA(1) <= INSTRUCTION_FORMAT31i_OR_ID) ) {
                 input.consume();
                 state.errorRecovery=false;
                 state.failed=false;
@@ -4198,8 +4192,8 @@ public class smaliIdeaParser extends Parser {
                 alt39=5;
                 }
                 break;
-            case INSTRUCTION_FORMAT12x_OR_ID:
             case INSTRUCTION_FORMAT12x:
+            case INSTRUCTION_FORMAT12x_OR_ID:
                 {
                 alt39=6;
                 }
@@ -4274,8 +4268,8 @@ public class smaliIdeaParser extends Parser {
                 alt39=20;
                 }
                 break;
-            case INSTRUCTION_FORMAT22s_OR_ID:
             case INSTRUCTION_FORMAT22s:
+            case INSTRUCTION_FORMAT22s_OR_ID:
                 {
                 alt39=21;
                 }
@@ -4305,8 +4299,8 @@ public class smaliIdeaParser extends Parser {
                 alt39=26;
                 }
                 break;
-            case INSTRUCTION_FORMAT31i_OR_ID:
             case INSTRUCTION_FORMAT31i:
+            case INSTRUCTION_FORMAT31i_OR_ID:
                 {
                 alt39=27;
                 }
@@ -5378,7 +5372,7 @@ public class smaliIdeaParser extends Parser {
                         int alt36=2;
                         int LA36_0 = input.LA(1);
 
-                        if ( ((LA36_0 >= POSITIVE_INTEGER_LITERAL && LA36_0 <= BOOL_LITERAL)||LA36_0==CHAR_LITERAL||LA36_0==INTEGER_LITERAL) ) {
+                        if ( ((LA36_0 >= BOOL_LITERAL && LA36_0 <= BYTE_LITERAL)||LA36_0==CHAR_LITERAL||(LA36_0 >= DOUBLE_LITERAL && LA36_0 <= DOUBLE_LITERAL_OR_ID)||(LA36_0 >= FLOAT_LITERAL && LA36_0 <= FLOAT_LITERAL_OR_ID)||LA36_0==LONG_LITERAL||LA36_0==NEGATIVE_INTEGER_LITERAL||LA36_0==POSITIVE_INTEGER_LITERAL||LA36_0==SHORT_LITERAL||LA36_0==INTEGER_LITERAL) ) {
                             alt36=1;
                         }
 
@@ -5423,7 +5417,7 @@ public class smaliIdeaParser extends Parser {
                         int alt37=2;
                         int LA37_0 = input.LA(1);
 
-                        if ( (LA37_0==NEGATIVE_INTEGER_LITERAL||LA37_0==OFFSET||LA37_0==COLON) ) {
+                        if ( (LA37_0==COLON||LA37_0==NEGATIVE_INTEGER_LITERAL||LA37_0==OFFSET) ) {
                             alt37=1;
                         }
 
@@ -5462,7 +5456,7 @@ public class smaliIdeaParser extends Parser {
                         int alt38=2;
                         int LA38_0 = input.LA(1);
 
-                        if ( ((LA38_0 >= POSITIVE_INTEGER_LITERAL && LA38_0 <= FLOAT_LITERAL_OR_ID)||LA38_0==FLOAT_LITERAL||LA38_0==BOOL_LITERAL||LA38_0==CHAR_LITERAL||LA38_0==INTEGER_LITERAL) ) {
+                        if ( ((LA38_0 >= BOOL_LITERAL && LA38_0 <= BYTE_LITERAL)||LA38_0==CHAR_LITERAL||(LA38_0 >= FLOAT_LITERAL && LA38_0 <= FLOAT_LITERAL_OR_ID)||LA38_0==LONG_LITERAL||LA38_0==NEGATIVE_INTEGER_LITERAL||LA38_0==POSITIVE_INTEGER_LITERAL||LA38_0==SHORT_LITERAL||LA38_0==INTEGER_LITERAL) ) {
                             alt38=1;
                         }
 
@@ -5576,16 +5570,17 @@ public class smaliIdeaParser extends Parser {
     static final String DFA32_eofS =
         "\106\uffff";
     static final String DFA32_minS =
-        "\1\7\103\uffff\1\0\1\uffff";
+        "\1\5\103\uffff\1\0\1\uffff";
     static final String DFA32_maxS =
-        "\1\u0088\103\uffff\1\0\1\uffff";
+        "\1\u00e8\103\uffff\1\0\1\uffff";
     static final String DFA32_acceptS =
         "\1\uffff\1\2\103\uffff\1\1";
     static final String DFA32_specialS =
         "\104\uffff\1\0\1\uffff}>";
     static final String[] DFA32_transitionS = {
-            "\1\1\4\uffff\1\104\3\uffff\4\1\1\uffff\1\1\1\uffff\1\1\1\uffff"+
-            "\12\1\41\uffff\64\1\20\uffff\1\1",
+            "\1\104\1\uffff\1\1\17\uffff\2\1\5\uffff\1\1\10\uffff\2\1\1\uffff"+
+            "\1\1\3\uffff\1\1\13\uffff\53\1\2\uffff\3\1\10\uffff\1\1\2\uffff"+
+            "\1\1\2\uffff\1\1\1\uffff\2\1\2\uffff\2\1\140\uffff\11\1",
             "",
             "",
             "",
@@ -5722,8 +5717,8 @@ public class smaliIdeaParser extends Parser {
     }
  
 
-    public static final BitSet FOLLOW_class_element_in_smali_file65 = new BitSet(new long[]{0x00000000000091F0L});
-    public static final BitSet FOLLOW_sync_in_smali_file67 = new BitSet(new long[]{0x00000000000091F0L});
+    public static final BitSet FOLLOW_class_element_in_smali_file65 = new BitSet(new long[]{0x0102000008000020L,0x4000080000000000L,0x0000000000000004L});
+    public static final BitSet FOLLOW_sync_in_smali_file67 = new BitSet(new long[]{0x0102000008000020L,0x4000080000000000L,0x0000000000000004L});
     public static final BitSet FOLLOW_EOF_in_smali_file73 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_class_spec_in_class_element93 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_super_spec_in_class_element101 = new BitSet(new long[]{0x0000000000000002L});
@@ -5732,54 +5727,54 @@ public class smaliIdeaParser extends Parser {
     public static final BitSet FOLLOW_method_in_class_element125 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_field_in_class_element133 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_annotation_in_class_element141 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CLASS_DIRECTIVE_in_class_spec160 = new BitSet(new long[]{0x2000000000000000L,0x8000000000000000L});
-    public static final BitSet FOLLOW_access_list_in_class_spec162 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L});
+    public static final BitSet FOLLOW_CLASS_DIRECTIVE_in_class_spec160 = new BitSet(new long[]{0x0000000004000010L});
+    public static final BitSet FOLLOW_access_list_in_class_spec162 = new BitSet(new long[]{0x0000000004000000L});
     public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_class_spec164 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_SUPER_DIRECTIVE_in_super_spec187 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L});
+    public static final BitSet FOLLOW_SUPER_DIRECTIVE_in_super_spec187 = new BitSet(new long[]{0x0000000004000000L});
     public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_super_spec189 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IMPLEMENTS_DIRECTIVE_in_implements_spec215 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L});
+    public static final BitSet FOLLOW_IMPLEMENTS_DIRECTIVE_in_implements_spec215 = new BitSet(new long[]{0x0000000004000000L});
     public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_implements_spec217 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_SOURCE_DIRECTIVE_in_source_spec243 = new BitSet(new long[]{0x0100000000000000L});
+    public static final BitSet FOLLOW_SOURCE_DIRECTIVE_in_source_spec243 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
     public static final BitSet FOLLOW_STRING_LITERAL_in_source_spec245 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ACCESS_SPEC_in_access_list268 = new BitSet(new long[]{0x2000000000000002L});
-    public static final BitSet FOLLOW_FIELD_DIRECTIVE_in_field303 = new BitSet(new long[]{0x7866300000000000L,0x600201F52BE9E370L,0x000000000000000AL,0x0000200000000000L});
-    public static final BitSet FOLLOW_access_list_in_field305 = new BitSet(new long[]{0x7866300000000000L,0x600201F52BE9E370L,0x000000000000000AL,0x0000200000000000L});
-    public static final BitSet FOLLOW_simple_name_in_field307 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000100L});
-    public static final BitSet FOLLOW_COLON_in_field309 = new BitSet(new long[]{0x0000000000000000L,0xA000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_field311 = new BitSet(new long[]{0x0000000000001202L,0x0000000000000000L,0x0000000000000080L});
-    public static final BitSet FOLLOW_EQUAL_in_field314 = new BitSet(new long[]{0x057FF00000004400L,0xE000000000000000L,0x0000000000000401L,0x0000200000000000L});
-    public static final BitSet FOLLOW_literal_in_field316 = new BitSet(new long[]{0x0000000000001202L});
+    public static final BitSet FOLLOW_ACCESS_SPEC_in_access_list268 = new BitSet(new long[]{0x0000000000000012L});
+    public static final BitSet FOLLOW_FIELD_DIRECTIVE_in_field303 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000118L});
+    public static final BitSet FOLLOW_access_list_in_field305 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000118L});
+    public static final BitSet FOLLOW_simple_name_in_field307 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_COLON_in_field309 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
+    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_field311 = new BitSet(new long[]{0x0000804000000022L});
+    public static final BitSet FOLLOW_EQUAL_in_field314 = new BitSet(new long[]{0x0018200C06600100L,0x10C1640000000000L,0x0000000000000113L});
+    public static final BitSet FOLLOW_literal_in_field316 = new BitSet(new long[]{0x0000004000000022L});
     public static final BitSet FOLLOW_END_FIELD_DIRECTIVE_in_field332 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_annotation_in_field361 = new BitSet(new long[]{0x0000000000001202L});
+    public static final BitSet FOLLOW_annotation_in_field361 = new BitSet(new long[]{0x0000004000000022L});
     public static final BitSet FOLLOW_END_FIELD_DIRECTIVE_in_field405 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_METHOD_DIRECTIVE_in_method499 = new BitSet(new long[]{0x7866300000000000L,0x600201F52BE9E370L,0x000000000000001AL,0x0000200000000000L});
-    public static final BitSet FOLLOW_access_list_in_method501 = new BitSet(new long[]{0x7866300000000000L,0x600201F52BE9E370L,0x000000000000001AL,0x0000200000000000L});
-    public static final BitSet FOLLOW_method_name_in_method503 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000001000L});
-    public static final BitSet FOLLOW_method_prototype_in_method505 = new BitSet(new long[]{0x00000007DEAF1080L,0x00FFFFFFFFFFFFF0L,0x0000000000000100L});
-    public static final BitSet FOLLOW_statements_and_directives_in_method507 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_METHOD_DIRECTIVE_in_method499 = new BitSet(new long[]{0x5C10000800200050L,0x22D070107D8B7A79L,0x0000000000000118L});
+    public static final BitSet FOLLOW_access_list_in_method501 = new BitSet(new long[]{0x5C10000800200050L,0x22D070107D8B7A79L,0x0000000000000118L});
+    public static final BitSet FOLLOW_method_name_in_method503 = new BitSet(new long[]{0x0000000000000000L,0x0002000000000000L});
+    public static final BitSet FOLLOW_method_prototype_in_method505 = new BitSet(new long[]{0xFC004180418000A0L,0xCD24039FFFFFFFFFL,0x0000000000000000L,0x000001FF00000000L});
+    public static final BitSet FOLLOW_statements_and_directives_in_method507 = new BitSet(new long[]{0x0000010000000000L});
     public static final BitSet FOLLOW_END_METHOD_DIRECTIVE_in_method509 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_instruction_in_statements_and_directives526 = new BitSet(new long[]{0x00000007DEAE1080L,0x00FFFFFFFFFFFFF0L,0x0000000000000100L});
-    public static final BitSet FOLLOW_registers_directive_in_statements_and_directives532 = new BitSet(new long[]{0x00000007DEAE1080L,0x00FFFFFFFFFFFFF0L,0x0000000000000100L});
-    public static final BitSet FOLLOW_label_in_statements_and_directives538 = new BitSet(new long[]{0x00000007DEAE1080L,0x00FFFFFFFFFFFFF0L,0x0000000000000100L});
-    public static final BitSet FOLLOW_catch_directive_in_statements_and_directives544 = new BitSet(new long[]{0x00000007DEAE1080L,0x00FFFFFFFFFFFFF0L,0x0000000000000100L});
-    public static final BitSet FOLLOW_catchall_directive_in_statements_and_directives550 = new BitSet(new long[]{0x00000007DEAE1080L,0x00FFFFFFFFFFFFF0L,0x0000000000000100L});
-    public static final BitSet FOLLOW_parameter_directive_in_statements_and_directives556 = new BitSet(new long[]{0x00000007DEAE1080L,0x00FFFFFFFFFFFFF0L,0x0000000000000100L});
-    public static final BitSet FOLLOW_ordered_debug_directive_in_statements_and_directives562 = new BitSet(new long[]{0x00000007DEAE1080L,0x00FFFFFFFFFFFFF0L,0x0000000000000100L});
-    public static final BitSet FOLLOW_annotation_in_statements_and_directives568 = new BitSet(new long[]{0x00000007DEAE1080L,0x00FFFFFFFFFFFFF0L,0x0000000000000100L});
-    public static final BitSet FOLLOW_sync_in_statements_and_directives574 = new BitSet(new long[]{0x00000007DEAE1082L,0x00FFFFFFFFFFFFF0L,0x0000000000000100L});
-    public static final BitSet FOLLOW_REGISTERS_DIRECTIVE_in_registers_directive600 = new BitSet(new long[]{0x0401F00000000000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
+    public static final BitSet FOLLOW_instruction_in_statements_and_directives526 = new BitSet(new long[]{0xFC004080418000A0L,0xCD24039FFFFFFFFFL,0x0000000000000000L,0x000001FF00000000L});
+    public static final BitSet FOLLOW_registers_directive_in_statements_and_directives532 = new BitSet(new long[]{0xFC004080418000A0L,0xCD24039FFFFFFFFFL,0x0000000000000000L,0x000001FF00000000L});
+    public static final BitSet FOLLOW_label_in_statements_and_directives538 = new BitSet(new long[]{0xFC004080418000A0L,0xCD24039FFFFFFFFFL,0x0000000000000000L,0x000001FF00000000L});
+    public static final BitSet FOLLOW_catch_directive_in_statements_and_directives544 = new BitSet(new long[]{0xFC004080418000A0L,0xCD24039FFFFFFFFFL,0x0000000000000000L,0x000001FF00000000L});
+    public static final BitSet FOLLOW_catchall_directive_in_statements_and_directives550 = new BitSet(new long[]{0xFC004080418000A0L,0xCD24039FFFFFFFFFL,0x0000000000000000L,0x000001FF00000000L});
+    public static final BitSet FOLLOW_parameter_directive_in_statements_and_directives556 = new BitSet(new long[]{0xFC004080418000A0L,0xCD24039FFFFFFFFFL,0x0000000000000000L,0x000001FF00000000L});
+    public static final BitSet FOLLOW_ordered_debug_directive_in_statements_and_directives562 = new BitSet(new long[]{0xFC004080418000A0L,0xCD24039FFFFFFFFFL,0x0000000000000000L,0x000001FF00000000L});
+    public static final BitSet FOLLOW_annotation_in_statements_and_directives568 = new BitSet(new long[]{0xFC004080418000A0L,0xCD24039FFFFFFFFFL,0x0000000000000000L,0x000001FF00000000L});
+    public static final BitSet FOLLOW_sync_in_statements_and_directives574 = new BitSet(new long[]{0xFC004080418000A2L,0xCD24039FFFFFFFFFL,0x0000000000000000L,0x000001FF00000000L});
+    public static final BitSet FOLLOW_REGISTERS_DIRECTIVE_in_registers_directive600 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L,0x0000000000000100L});
     public static final BitSet FOLLOW_integral_literal_in_registers_directive602 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LOCALS_DIRECTIVE_in_registers_directive608 = new BitSet(new long[]{0x0401F00000000000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
+    public static final BitSet FOLLOW_LOCALS_DIRECTIVE_in_registers_directive608 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L,0x0000000000000100L});
     public static final BitSet FOLLOW_integral_literal_in_registers_directive610 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_simple_name_in_method_name873 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_METHOD_NAME_in_method_name878 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_OPEN_PAREN_in_method_prototype904 = new BitSet(new long[]{0x0000000000000000L,0xA000000000000000L,0x0000000000002007L});
-    public static final BitSet FOLLOW_param_list_in_method_prototype906 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000002000L});
-    public static final BitSet FOLLOW_CLOSE_PAREN_in_method_prototype908 = new BitSet(new long[]{0x0000000000000000L,0xE000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_OPEN_PAREN_in_method_prototype904 = new BitSet(new long[]{0x0000000024000100L,0x0098000000000000L});
+    public static final BitSet FOLLOW_param_list_in_method_prototype906 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_CLOSE_PAREN_in_method_prototype908 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L,0x0000000000000010L});
     public static final BitSet FOLLOW_type_descriptor_in_method_prototype910 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_PARAM_LIST_in_param_list924 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_PARAM_LIST_OR_ID_in_param_list929 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_param_list934 = new BitSet(new long[]{0x0000000000000002L,0xA000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_param_list934 = new BitSet(new long[]{0x0000000004000102L,0x0080000000000000L});
     public static final BitSet FOLLOW_LONG_LITERAL_in_literal1059 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_integer_literal_in_literal1064 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_SHORT_LITERAL_in_literal1069 = new BitSet(new long[]{0x0000000000000002L});
@@ -5814,80 +5809,80 @@ public class smaliIdeaParser extends Parser {
     public static final BitSet FOLLOW_double_literal_in_fixed_literal1245 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_CHAR_LITERAL_in_fixed_literal1250 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_BOOL_LITERAL_in_fixed_literal1255 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_array_literal1264 = new BitSet(new long[]{0x057FF00000004400L,0xE000000000000000L,0x0000000000000C01L,0x0000200000000000L});
-    public static final BitSet FOLLOW_literal_in_array_literal1267 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000A00L});
-    public static final BitSet FOLLOW_COMMA_in_array_literal1270 = new BitSet(new long[]{0x057FF00000004400L,0xE000000000000000L,0x0000000000000401L,0x0000200000000000L});
-    public static final BitSet FOLLOW_literal_in_array_literal1272 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000A00L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_array_literal1264 = new BitSet(new long[]{0x0018200C16600100L,0x10C1640000000000L,0x0000000000000113L});
+    public static final BitSet FOLLOW_literal_in_array_literal1267 = new BitSet(new long[]{0x0000000090000000L});
+    public static final BitSet FOLLOW_COMMA_in_array_literal1270 = new BitSet(new long[]{0x0018200C06600100L,0x10C1640000000000L,0x0000000000000113L});
+    public static final BitSet FOLLOW_literal_in_array_literal1272 = new BitSet(new long[]{0x0000000090000000L});
     public static final BitSet FOLLOW_CLOSE_BRACE_in_array_literal1280 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_simple_name_in_annotation_element1289 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000080L});
-    public static final BitSet FOLLOW_EQUAL_in_annotation_element1291 = new BitSet(new long[]{0x057FF00000004400L,0xE000000000000000L,0x0000000000000401L,0x0000200000000000L});
+    public static final BitSet FOLLOW_simple_name_in_annotation_element1289 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_EQUAL_in_annotation_element1291 = new BitSet(new long[]{0x0018200C06600100L,0x10C1640000000000L,0x0000000000000113L});
     public static final BitSet FOLLOW_literal_in_annotation_element1293 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ANNOTATION_DIRECTIVE_in_annotation1312 = new BitSet(new long[]{0x1000000000000000L});
-    public static final BitSet FOLLOW_ANNOTATION_VISIBILITY_in_annotation1314 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L});
-    public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_annotation1316 = new BitSet(new long[]{0x7866300000002000L,0x600201F52BE9E370L,0x000000000000000AL,0x0000200000000000L});
-    public static final BitSet FOLLOW_annotation_element_in_annotation1320 = new BitSet(new long[]{0x7866300000002000L,0x600201F52BE9E370L,0x000000000000000AL,0x0000200000000000L});
+    public static final BitSet FOLLOW_ANNOTATION_DIRECTIVE_in_annotation1312 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_ANNOTATION_VISIBILITY_in_annotation1314 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_annotation1316 = new BitSet(new long[]{0x5C10001800200050L,0x22D060107D8B7A79L,0x0000000000000118L});
+    public static final BitSet FOLLOW_annotation_element_in_annotation1320 = new BitSet(new long[]{0x5C10001800200050L,0x22D060107D8B7A79L,0x0000000000000118L});
     public static final BitSet FOLLOW_END_ANNOTATION_DIRECTIVE_in_annotation1323 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_SUBANNOTATION_DIRECTIVE_in_subannotation1337 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L});
-    public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_subannotation1339 = new BitSet(new long[]{0x7866300000000800L,0x600201F52BE9E370L,0x000000000000000AL,0x0000200000000000L});
-    public static final BitSet FOLLOW_annotation_element_in_subannotation1341 = new BitSet(new long[]{0x7866300000000800L,0x600201F52BE9E370L,0x000000000000000AL,0x0000200000000000L});
+    public static final BitSet FOLLOW_SUBANNOTATION_DIRECTIVE_in_subannotation1337 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_subannotation1339 = new BitSet(new long[]{0x5C10100800200050L,0x22D060107D8B7A79L,0x0000000000000118L});
+    public static final BitSet FOLLOW_annotation_element_in_subannotation1341 = new BitSet(new long[]{0x5C10100800200050L,0x22D060107D8B7A79L,0x0000000000000118L});
     public static final BitSet FOLLOW_END_SUBANNOTATION_DIRECTIVE_in_subannotation1344 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ENUM_DIRECTIVE_in_enum_literal1353 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_reference_type_descriptor_in_enum_literal1355 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
-    public static final BitSet FOLLOW_ARROW_in_enum_literal1357 = new BitSet(new long[]{0x7866300000000000L,0x600201F52BE9E370L,0x000000000000000AL,0x0000200000000000L});
-    public static final BitSet FOLLOW_simple_name_in_enum_literal1359 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000100L});
-    public static final BitSet FOLLOW_COLON_in_enum_literal1361 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_ENUM_DIRECTIVE_in_enum_literal1353 = new BitSet(new long[]{0x0000000004000100L});
+    public static final BitSet FOLLOW_reference_type_descriptor_in_enum_literal1355 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_ARROW_in_enum_literal1357 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000118L});
+    public static final BitSet FOLLOW_simple_name_in_enum_literal1359 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_COLON_in_enum_literal1361 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_reference_type_descriptor_in_enum_literal1363 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_reference_type_descriptor_in_type_field_method_literal1372 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000000L,0x0000000000000040L});
-    public static final BitSet FOLLOW_ARROW_in_type_field_method_literal1378 = new BitSet(new long[]{0x7866300000000000L,0x600201F52BE9E370L,0x000000000000001AL,0x0000200000000000L});
-    public static final BitSet FOLLOW_simple_name_in_type_field_method_literal1385 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000100L});
-    public static final BitSet FOLLOW_COLON_in_type_field_method_literal1387 = new BitSet(new long[]{0x0000000000000000L,0xA000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_reference_type_descriptor_in_type_field_method_literal1372 = new BitSet(new long[]{0x0000000000000202L});
+    public static final BitSet FOLLOW_ARROW_in_type_field_method_literal1378 = new BitSet(new long[]{0x5C10000800200050L,0x22D070107D8B7A79L,0x0000000000000118L});
+    public static final BitSet FOLLOW_simple_name_in_type_field_method_literal1385 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_COLON_in_type_field_method_literal1387 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
     public static final BitSet FOLLOW_nonvoid_type_descriptor_in_type_field_method_literal1389 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_method_name_in_type_field_method_literal1396 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000001000L});
+    public static final BitSet FOLLOW_method_name_in_type_field_method_literal1396 = new BitSet(new long[]{0x0000000000000000L,0x0002000000000000L});
     public static final BitSet FOLLOW_method_prototype_in_type_field_method_literal1398 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_PRIMITIVE_TYPE_in_type_field_method_literal1420 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_VOID_TYPE_in_type_field_method_literal1425 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_reference_type_descriptor_in_fully_qualified_method1434 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
-    public static final BitSet FOLLOW_ARROW_in_fully_qualified_method1436 = new BitSet(new long[]{0x7866300000000000L,0x600201F52BE9E370L,0x000000000000001AL,0x0000200000000000L});
-    public static final BitSet FOLLOW_method_name_in_fully_qualified_method1438 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000001000L});
+    public static final BitSet FOLLOW_reference_type_descriptor_in_fully_qualified_method1434 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_ARROW_in_fully_qualified_method1436 = new BitSet(new long[]{0x5C10000800200050L,0x22D070107D8B7A79L,0x0000000000000118L});
+    public static final BitSet FOLLOW_method_name_in_fully_qualified_method1438 = new BitSet(new long[]{0x0000000000000000L,0x0002000000000000L});
     public static final BitSet FOLLOW_method_prototype_in_fully_qualified_method1440 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_reference_type_descriptor_in_fully_qualified_field1449 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
-    public static final BitSet FOLLOW_ARROW_in_fully_qualified_field1451 = new BitSet(new long[]{0x7866300000000000L,0x600201F52BE9E370L,0x000000000000000AL,0x0000200000000000L});
-    public static final BitSet FOLLOW_simple_name_in_fully_qualified_field1453 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000100L});
-    public static final BitSet FOLLOW_COLON_in_fully_qualified_field1455 = new BitSet(new long[]{0x0000000000000000L,0xA000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_reference_type_descriptor_in_fully_qualified_field1449 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_ARROW_in_fully_qualified_field1451 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000118L});
+    public static final BitSet FOLLOW_simple_name_in_fully_qualified_field1453 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_COLON_in_fully_qualified_field1455 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
     public static final BitSet FOLLOW_nonvoid_type_descriptor_in_fully_qualified_field1457 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_COLON_in_label1466 = new BitSet(new long[]{0x7866300000000000L,0x600201F52BE9E370L,0x000000000000000AL,0x0000200000000000L});
+    public static final BitSet FOLLOW_COLON_in_label1466 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000118L});
     public static final BitSet FOLLOW_simple_name_in_label1468 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_COLON_in_label_ref_or_offset1477 = new BitSet(new long[]{0x7866300000000000L,0x600201F52BE9E370L,0x000000000000000AL,0x0000200000000000L});
+    public static final BitSet FOLLOW_COLON_in_label_ref_or_offset1477 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000118L});
     public static final BitSet FOLLOW_simple_name_in_label_ref_or_offset1479 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_OFFSET_in_label_ref_or_offset1484 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_NEGATIVE_INTEGER_LITERAL_in_label_ref_or_offset1489 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_REGISTER_in_register_list1499 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_register_list1502 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_register_list1504 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_REGISTER_in_register_range1518 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000000L,0x0000000000000020L});
-    public static final BitSet FOLLOW_DOTDOT_in_register_range1521 = new BitSet(new long[]{0x0800000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_register_list1499 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_COMMA_in_register_list1502 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_register_list1504 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_REGISTER_in_register_range1518 = new BitSet(new long[]{0x0000000200000002L});
+    public static final BitSet FOLLOW_DOTDOT_in_register_range1521 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
     public static final BitSet FOLLOW_REGISTER_in_register_range1523 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_verification_error_reference1536 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_fully_qualified_field_in_verification_error_reference1540 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_fully_qualified_method_in_verification_error_reference1544 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CATCH_DIRECTIVE_in_catch_directive1553 = new BitSet(new long[]{0x0000000000000000L,0xA000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_catch_directive1555 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_catch_directive1557 = new BitSet(new long[]{0x0000200000000000L,0x0000000000000004L,0x0000000000000100L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_catch_directive1559 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000020L});
-    public static final BitSet FOLLOW_DOTDOT_in_catch_directive1561 = new BitSet(new long[]{0x0000200000000000L,0x0000000000000004L,0x0000000000000100L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_catch_directive1563 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_catch_directive1565 = new BitSet(new long[]{0x0000200000000000L,0x0000000000000004L,0x0000000000000100L});
+    public static final BitSet FOLLOW_CATCH_DIRECTIVE_in_catch_directive1553 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
+    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_catch_directive1555 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_catch_directive1557 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_catch_directive1559 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_DOTDOT_in_catch_directive1561 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_catch_directive1563 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_catch_directive1565 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
     public static final BitSet FOLLOW_label_ref_or_offset_in_catch_directive1567 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CATCHALL_DIRECTIVE_in_catchall_directive1576 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_catchall_directive1578 = new BitSet(new long[]{0x0000200000000000L,0x0000000000000004L,0x0000000000000100L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_catchall_directive1580 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000020L});
-    public static final BitSet FOLLOW_DOTDOT_in_catchall_directive1582 = new BitSet(new long[]{0x0000200000000000L,0x0000000000000004L,0x0000000000000100L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_catchall_directive1584 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_catchall_directive1586 = new BitSet(new long[]{0x0000200000000000L,0x0000000000000004L,0x0000000000000100L});
+    public static final BitSet FOLLOW_CATCHALL_DIRECTIVE_in_catchall_directive1576 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_catchall_directive1578 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_catchall_directive1580 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_DOTDOT_in_catchall_directive1582 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_catchall_directive1584 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_catchall_directive1586 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
     public static final BitSet FOLLOW_label_ref_or_offset_in_catchall_directive1588 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PARAMETER_DIRECTIVE_in_parameter_directive1599 = new BitSet(new long[]{0x0100000020001002L});
-    public static final BitSet FOLLOW_STRING_LITERAL_in_parameter_directive1601 = new BitSet(new long[]{0x0000000020001002L});
-    public static final BitSet FOLLOW_annotation_in_parameter_directive1609 = new BitSet(new long[]{0x0000000020001002L});
+    public static final BitSet FOLLOW_PARAMETER_DIRECTIVE_in_parameter_directive1599 = new BitSet(new long[]{0x0000040000000022L,0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_STRING_LITERAL_in_parameter_directive1601 = new BitSet(new long[]{0x0000040000000022L});
+    public static final BitSet FOLLOW_annotation_in_parameter_directive1609 = new BitSet(new long[]{0x0000040000000022L});
     public static final BitSet FOLLOW_END_PARAMETER_DIRECTIVE_in_parameter_directive1617 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_line_directive_in_ordered_debug_directive1636 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_local_directive_in_ordered_debug_directive1641 = new BitSet(new long[]{0x0000000000000002L});
@@ -5896,266 +5891,266 @@ public class smaliIdeaParser extends Parser {
     public static final BitSet FOLLOW_prologue_directive_in_ordered_debug_directive1656 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_epilogue_directive_in_ordered_debug_directive1661 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_source_directive_in_ordered_debug_directive1666 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LINE_DIRECTIVE_in_line_directive1675 = new BitSet(new long[]{0x0401F00000000000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
+    public static final BitSet FOLLOW_LINE_DIRECTIVE_in_line_directive1675 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L,0x0000000000000100L});
     public static final BitSet FOLLOW_integral_literal_in_line_directive1677 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LOCAL_DIRECTIVE_in_local_directive1686 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_local_directive1688 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_local_directive1690 = new BitSet(new long[]{0x7866300000000000L,0x600201F52BE9E370L,0x000000000000000AL,0x0000200000000000L});
-    public static final BitSet FOLLOW_simple_name_in_local_directive1692 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000100L});
-    public static final BitSet FOLLOW_COLON_in_local_directive1694 = new BitSet(new long[]{0x0000000000000000L,0xA000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_local_directive1696 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_local_directive1699 = new BitSet(new long[]{0x0100000000000000L});
+    public static final BitSet FOLLOW_LOCAL_DIRECTIVE_in_local_directive1686 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_local_directive1688 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_local_directive1690 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000118L});
+    public static final BitSet FOLLOW_simple_name_in_local_directive1692 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_COLON_in_local_directive1694 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
+    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_local_directive1696 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_COMMA_in_local_directive1699 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
     public static final BitSet FOLLOW_STRING_LITERAL_in_local_directive1701 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_END_LOCAL_DIRECTIVE_in_end_local_directive1712 = new BitSet(new long[]{0x0800000000000000L});
+    public static final BitSet FOLLOW_END_LOCAL_DIRECTIVE_in_end_local_directive1712 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
     public static final BitSet FOLLOW_REGISTER_in_end_local_directive1714 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RESTART_LOCAL_DIRECTIVE_in_restart_local_directive1723 = new BitSet(new long[]{0x0800000000000000L});
+    public static final BitSet FOLLOW_RESTART_LOCAL_DIRECTIVE_in_restart_local_directive1723 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
     public static final BitSet FOLLOW_REGISTER_in_restart_local_directive1725 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_PROLOGUE_DIRECTIVE_in_prologue_directive1734 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_EPILOGUE_DIRECTIVE_in_epilogue_directive1743 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_SOURCE_DIRECTIVE_in_source_directive1752 = new BitSet(new long[]{0x0100000000000000L});
+    public static final BitSet FOLLOW_SOURCE_DIRECTIVE_in_source_directive1752 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
     public static final BitSet FOLLOW_STRING_LITERAL_in_source_directive1754 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT10t_in_instruction1820 = new BitSet(new long[]{0x0000200000000000L,0x0000000000000004L,0x0000000000000100L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT10t_in_instruction1820 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
     public static final BitSet FOLLOW_label_ref_or_offset_in_instruction1822 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_INSTRUCTION_FORMAT10x_in_instruction1830 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_INSTRUCTION_FORMAT10x_ODEX_in_instruction1838 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT11n_in_instruction1846 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction1848 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction1850 = new BitSet(new long[]{0x0401F00000000000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT11n_in_instruction1846 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction1848 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction1850 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L,0x0000000000000100L});
     public static final BitSet FOLLOW_integral_literal_in_instruction1852 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT11x_in_instruction1860 = new BitSet(new long[]{0x0800000000000000L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT11x_in_instruction1860 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
     public static final BitSet FOLLOW_REGISTER_in_instruction1862 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_instruction_format12x_in_instruction1870 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction1872 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction1874 = new BitSet(new long[]{0x0800000000000000L});
+    public static final BitSet FOLLOW_instruction_format12x_in_instruction1870 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction1872 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction1874 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
     public static final BitSet FOLLOW_REGISTER_in_instruction1876 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT20bc_in_instruction1884 = new BitSet(new long[]{0x4000000000000000L});
-    public static final BitSet FOLLOW_VERIFICATION_ERROR_TYPE_in_instruction1886 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction1888 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT20bc_in_instruction1884 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
+    public static final BitSet FOLLOW_VERIFICATION_ERROR_TYPE_in_instruction1886 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction1888 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_verification_error_reference_in_instruction1890 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT20t_in_instruction1898 = new BitSet(new long[]{0x0000200000000000L,0x0000000000000004L,0x0000000000000100L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT20t_in_instruction1898 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
     public static final BitSet FOLLOW_label_ref_or_offset_in_instruction1900 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_FIELD_in_instruction1908 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction1910 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction1912 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_FIELD_in_instruction1908 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction1910 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction1912 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_fully_qualified_field_in_instruction1914 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_FIELD_ODEX_in_instruction1922 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction1924 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction1926 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_FIELD_ODEX_in_instruction1922 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction1924 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction1926 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_fully_qualified_field_in_instruction1928 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_STRING_in_instruction1936 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction1938 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction1940 = new BitSet(new long[]{0x0100000000000000L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_STRING_in_instruction1936 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction1938 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction1940 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
     public static final BitSet FOLLOW_STRING_LITERAL_in_instruction1942 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_TYPE_in_instruction1950 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction1952 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction1954 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_TYPE_in_instruction1950 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction1952 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction1954 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_reference_type_descriptor_in_instruction1956 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21h_in_instruction1964 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction1966 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction1968 = new BitSet(new long[]{0x0401F00000000000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21h_in_instruction1964 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction1966 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction1968 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L,0x0000000000000100L});
     public static final BitSet FOLLOW_integral_literal_in_instruction1970 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21s_in_instruction1978 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction1980 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction1982 = new BitSet(new long[]{0x0401F00000000000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21s_in_instruction1978 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction1980 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction1982 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L,0x0000000000000100L});
     public static final BitSet FOLLOW_integral_literal_in_instruction1984 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21t_in_instruction1992 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction1994 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction1996 = new BitSet(new long[]{0x0000200000000000L,0x0000000000000004L,0x0000000000000100L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21t_in_instruction1992 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction1994 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction1996 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
     public static final BitSet FOLLOW_label_ref_or_offset_in_instruction1999 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22b_in_instruction2008 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2010 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2012 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2014 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2016 = new BitSet(new long[]{0x0401F00000000000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22b_in_instruction2008 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2010 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2012 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2014 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2016 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L,0x0000000000000100L});
     public static final BitSet FOLLOW_integral_literal_in_instruction2018 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_FIELD_in_instruction2026 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2028 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2030 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2032 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2034 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_FIELD_in_instruction2026 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2028 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2030 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2032 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2034 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_fully_qualified_field_in_instruction2036 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_FIELD_ODEX_in_instruction2044 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2046 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2048 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2050 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2052 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_FIELD_ODEX_in_instruction2044 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2046 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2048 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2050 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2052 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_fully_qualified_field_in_instruction2054 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_TYPE_in_instruction2062 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2064 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2066 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2068 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2070 = new BitSet(new long[]{0x0000000000000000L,0xA000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_TYPE_in_instruction2062 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2064 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2066 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2068 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2070 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
     public static final BitSet FOLLOW_nonvoid_type_descriptor_in_instruction2072 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22cs_FIELD_in_instruction2080 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2082 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2084 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2086 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2088 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22cs_FIELD_in_instruction2080 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2082 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2084 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2086 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2088 = new BitSet(new long[]{0x0004000000000000L});
     public static final BitSet FOLLOW_FIELD_OFFSET_in_instruction2090 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_instruction_format22s_in_instruction2098 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2100 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2102 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2104 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2106 = new BitSet(new long[]{0x0401F00000000000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
+    public static final BitSet FOLLOW_instruction_format22s_in_instruction2098 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2100 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2102 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2104 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2106 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L,0x0000000000000100L});
     public static final BitSet FOLLOW_integral_literal_in_instruction2108 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22t_in_instruction2116 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2118 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2120 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2122 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2124 = new BitSet(new long[]{0x0000200000000000L,0x0000000000000004L,0x0000000000000100L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22t_in_instruction2116 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2118 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2120 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2122 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2124 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
     public static final BitSet FOLLOW_label_ref_or_offset_in_instruction2126 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22x_in_instruction2134 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2136 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2138 = new BitSet(new long[]{0x0800000000000000L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22x_in_instruction2134 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2136 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2138 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
     public static final BitSet FOLLOW_REGISTER_in_instruction2140 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT23x_in_instruction2148 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2150 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2152 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2154 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2156 = new BitSet(new long[]{0x0800000000000000L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT23x_in_instruction2148 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2150 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2152 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2154 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2156 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
     public static final BitSet FOLLOW_REGISTER_in_instruction2158 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT30t_in_instruction2166 = new BitSet(new long[]{0x0000200000000000L,0x0000000000000004L,0x0000000000000100L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT30t_in_instruction2166 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
     public static final BitSet FOLLOW_label_ref_or_offset_in_instruction2168 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT31c_in_instruction2176 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2178 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2180 = new BitSet(new long[]{0x0100000000000000L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT31c_in_instruction2176 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2178 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2180 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
     public static final BitSet FOLLOW_STRING_LITERAL_in_instruction2182 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_instruction_format31i_in_instruction2190 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2192 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2194 = new BitSet(new long[]{0x042BF00000000000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
+    public static final BitSet FOLLOW_instruction_format31i_in_instruction2190 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2192 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2194 = new BitSet(new long[]{0x0018000002600000L,0x1040240000000000L,0x0000000000000100L});
     public static final BitSet FOLLOW_fixed_32bit_literal_in_instruction2196 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT31t_in_instruction2204 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2206 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2208 = new BitSet(new long[]{0x0000200000000000L,0x0000000000000004L,0x0000000000000100L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT31t_in_instruction2204 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2206 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2208 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
     public static final BitSet FOLLOW_label_ref_or_offset_in_instruction2210 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT32x_in_instruction2218 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2220 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2222 = new BitSet(new long[]{0x0800000000000000L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT32x_in_instruction2218 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2220 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2222 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
     public static final BitSet FOLLOW_REGISTER_in_instruction2224 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35c_METHOD_in_instruction2232 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2234 = new BitSet(new long[]{0x0800000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_register_list_in_instruction2236 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2238 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2240 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35c_METHOD_in_instruction2232 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2234 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_list_in_instruction2236 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2238 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2240 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_fully_qualified_method_in_instruction2242 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35c_TYPE_in_instruction2250 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2252 = new BitSet(new long[]{0x0800000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_register_list_in_instruction2254 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2256 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2258 = new BitSet(new long[]{0x0000000000000000L,0xA000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35c_TYPE_in_instruction2250 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2252 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_list_in_instruction2254 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2256 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2258 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
     public static final BitSet FOLLOW_nonvoid_type_descriptor_in_instruction2260 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35c_METHOD_ODEX_in_instruction2268 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2270 = new BitSet(new long[]{0x0800000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_register_list_in_instruction2272 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2274 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2276 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35c_METHOD_ODEX_in_instruction2268 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2270 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_list_in_instruction2272 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2274 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2276 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_fully_qualified_method_in_instruction2278 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35mi_METHOD_in_instruction2286 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2288 = new BitSet(new long[]{0x0800000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_register_list_in_instruction2290 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2292 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2294 = new BitSet(new long[]{0x8000000000000000L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35mi_METHOD_in_instruction2286 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2288 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_list_in_instruction2290 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2292 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2294 = new BitSet(new long[]{0x0200000000000000L});
     public static final BitSet FOLLOW_INLINE_INDEX_in_instruction2296 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35ms_METHOD_in_instruction2304 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2306 = new BitSet(new long[]{0x0800000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_register_list_in_instruction2308 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2310 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2312 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35ms_METHOD_in_instruction2304 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2306 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_list_in_instruction2308 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2310 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2312 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000020L});
     public static final BitSet FOLLOW_VTABLE_INDEX_in_instruction2314 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rc_METHOD_in_instruction2322 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2324 = new BitSet(new long[]{0x0800000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_register_range_in_instruction2326 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2328 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2330 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rc_METHOD_in_instruction2322 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2324 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_range_in_instruction2326 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2328 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2330 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_fully_qualified_method_in_instruction2332 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rc_METHOD_ODEX_in_instruction2340 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2342 = new BitSet(new long[]{0x0800000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_register_list_in_instruction2344 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2346 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2348 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rc_METHOD_ODEX_in_instruction2340 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2342 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_list_in_instruction2344 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2346 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2348 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_fully_qualified_method_in_instruction2350 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rc_TYPE_in_instruction2358 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2360 = new BitSet(new long[]{0x0800000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_register_range_in_instruction2362 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2364 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2366 = new BitSet(new long[]{0x0000000000000000L,0xA000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rc_TYPE_in_instruction2358 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2360 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_range_in_instruction2362 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2364 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2366 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
     public static final BitSet FOLLOW_nonvoid_type_descriptor_in_instruction2368 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rmi_METHOD_in_instruction2376 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2378 = new BitSet(new long[]{0x0800000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_register_range_in_instruction2380 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2382 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2384 = new BitSet(new long[]{0x8000000000000000L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rmi_METHOD_in_instruction2376 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2378 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_range_in_instruction2380 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2382 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2384 = new BitSet(new long[]{0x0200000000000000L});
     public static final BitSet FOLLOW_INLINE_INDEX_in_instruction2386 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rms_METHOD_in_instruction2394 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2396 = new BitSet(new long[]{0x0800000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_register_range_in_instruction2398 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2400 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2402 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rms_METHOD_in_instruction2394 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2396 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_range_in_instruction2398 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2400 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2402 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000020L});
     public static final BitSet FOLLOW_VTABLE_INDEX_in_instruction2404 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT41c_TYPE_in_instruction2412 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2414 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2416 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT41c_TYPE_in_instruction2412 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2414 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2416 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_reference_type_descriptor_in_instruction2418 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT41c_FIELD_in_instruction2426 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2428 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2430 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT41c_FIELD_in_instruction2426 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2428 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2430 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_fully_qualified_field_in_instruction2432 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT41c_FIELD_ODEX_in_instruction2440 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2442 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2444 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT41c_FIELD_ODEX_in_instruction2440 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2442 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2444 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_fully_qualified_field_in_instruction2446 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT51l_in_instruction2454 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2456 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2458 = new BitSet(new long[]{0x043FF00000000000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT51l_in_instruction2454 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2456 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2458 = new BitSet(new long[]{0x0018000C02600000L,0x1040240000000000L,0x0000000000000100L});
     public static final BitSet FOLLOW_fixed_literal_in_instruction2460 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT52c_TYPE_in_instruction2468 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2470 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2472 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2474 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2476 = new BitSet(new long[]{0x0000000000000000L,0xA000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT52c_TYPE_in_instruction2468 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2470 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2472 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2474 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2476 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
     public static final BitSet FOLLOW_nonvoid_type_descriptor_in_instruction2478 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT52c_FIELD_in_instruction2486 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2488 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2490 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2492 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2494 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT52c_FIELD_in_instruction2486 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2488 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2490 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2492 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2494 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_fully_qualified_field_in_instruction2496 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT52c_FIELD_ODEX_in_instruction2504 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2506 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2508 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_instruction2510 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2512 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT52c_FIELD_ODEX_in_instruction2504 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2506 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2508 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_instruction2510 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2512 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_fully_qualified_field_in_instruction2514 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT5rc_METHOD_in_instruction2522 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2524 = new BitSet(new long[]{0x0800000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_register_range_in_instruction2526 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2528 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2530 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT5rc_METHOD_in_instruction2522 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2524 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_range_in_instruction2526 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2528 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2530 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_fully_qualified_method_in_instruction2532 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT5rc_METHOD_ODEX_in_instruction2540 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2542 = new BitSet(new long[]{0x0800000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_register_range_in_instruction2544 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2546 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2548 = new BitSet(new long[]{0x0000000000000000L,0x8000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT5rc_METHOD_ODEX_in_instruction2540 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2542 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_range_in_instruction2544 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2546 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2548 = new BitSet(new long[]{0x0000000004000100L});
     public static final BitSet FOLLOW_fully_qualified_method_in_instruction2550 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT5rc_TYPE_in_instruction2558 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2560 = new BitSet(new long[]{0x0800000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_register_range_in_instruction2562 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2564 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_COMMA_in_instruction2566 = new BitSet(new long[]{0x0000000000000000L,0xA000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT5rc_TYPE_in_instruction2558 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_instruction2560 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_range_in_instruction2562 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_instruction2564 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_instruction2566 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
     public static final BitSet FOLLOW_nonvoid_type_descriptor_in_instruction2568 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ARRAY_DATA_DIRECTIVE_in_instruction2575 = new BitSet(new long[]{0x0401F00000000000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
-    public static final BitSet FOLLOW_integral_literal_in_instruction2577 = new BitSet(new long[]{0x043FF00000100000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
-    public static final BitSet FOLLOW_fixed_literal_in_instruction2579 = new BitSet(new long[]{0x043FF00000100000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
+    public static final BitSet FOLLOW_ARRAY_DATA_DIRECTIVE_in_instruction2575 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L,0x0000000000000100L});
+    public static final BitSet FOLLOW_integral_literal_in_instruction2577 = new BitSet(new long[]{0x0018002C02600000L,0x1040240000000000L,0x0000000000000100L});
+    public static final BitSet FOLLOW_fixed_literal_in_instruction2579 = new BitSet(new long[]{0x0018002C02600000L,0x1040240000000000L,0x0000000000000100L});
     public static final BitSet FOLLOW_END_ARRAY_DATA_DIRECTIVE_in_instruction2582 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PACKED_SWITCH_DIRECTIVE_in_instruction2589 = new BitSet(new long[]{0x042BF00000000000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
-    public static final BitSet FOLLOW_fixed_32bit_literal_in_instruction2591 = new BitSet(new long[]{0x0000200000400000L,0x0000000000000004L,0x0000000000000100L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_instruction2593 = new BitSet(new long[]{0x0000200000400000L,0x0000000000000004L,0x0000000000000100L});
+    public static final BitSet FOLLOW_PACKED_SWITCH_DIRECTIVE_in_instruction2589 = new BitSet(new long[]{0x0018000002600000L,0x1040240000000000L,0x0000000000000100L});
+    public static final BitSet FOLLOW_fixed_32bit_literal_in_instruction2591 = new BitSet(new long[]{0x0000020040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_instruction2593 = new BitSet(new long[]{0x0000020040000000L,0x0000A00000000000L});
     public static final BitSet FOLLOW_END_PACKED_SWITCH_DIRECTIVE_in_instruction2596 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_SPARSE_SWITCH_DIRECTIVE_in_instruction2603 = new BitSet(new long[]{0x042BF00001000000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
-    public static final BitSet FOLLOW_fixed_32bit_literal_in_instruction2606 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000040L});
-    public static final BitSet FOLLOW_ARROW_in_instruction2608 = new BitSet(new long[]{0x0000200000000000L,0x0000000000000004L,0x0000000000000100L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_instruction2610 = new BitSet(new long[]{0x042BF00001000000L,0x0000000000000000L,0x0000000000000000L,0x0000200000000000L});
+    public static final BitSet FOLLOW_SPARSE_SWITCH_DIRECTIVE_in_instruction2603 = new BitSet(new long[]{0x0018080002600000L,0x1040240000000000L,0x0000000000000100L});
+    public static final BitSet FOLLOW_fixed_32bit_literal_in_instruction2606 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_ARROW_in_instruction2608 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_instruction2610 = new BitSet(new long[]{0x0018080002600000L,0x1040240000000000L,0x0000000000000100L});
     public static final BitSet FOLLOW_END_SPARSE_SWITCH_DIRECTIVE_in_instruction2614 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ANNOTATION_DIRECTIVE_in_synpred1_smaliIdeaParser347 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ANNOTATION_DIRECTIVE_in_synpred2_smaliIdeaParser357 = new BitSet(new long[]{0x0000000000000002L});
