@@ -74,8 +74,6 @@ public class SmaliClassTypeElementImpl extends ASTWrapperPsiElement implements S
     public PsiElement resolve() {
         JavaPsiFacade facade = JavaPsiFacade.getInstance(getProject());
         return facade.findClass(getCanonicalText(), getResolveScope());
-
-        //TODO: resolve smali classes?
     }
 
     @NotNull
