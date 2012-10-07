@@ -152,17 +152,17 @@ class_element
 
 class_spec
   @init { Marker marker = mark(); }
-  : CLASS_DIRECTIVE access_list CLASS_DESCRIPTOR;
+  : CLASS_DIRECTIVE access_list class_descriptor;
   finally { marker.done(ElementTypes.CLASS_SPEC); }
 
 super_spec
   @init { Marker marker = mark(); }
-  : SUPER_DIRECTIVE CLASS_DESCRIPTOR;
+  : SUPER_DIRECTIVE class_descriptor;
   finally { marker.done(ElementTypes.SUPER_SPEC); }
 
 implements_spec
   @init { Marker marker = mark(); }
-  : IMPLEMENTS_DIRECTIVE CLASS_DESCRIPTOR;
+  : IMPLEMENTS_DIRECTIVE class_descriptor;
   finally { marker.done(ElementTypes.IMPLEMENTS_SPEC); }
 
 source_spec
@@ -305,19 +305,24 @@ primitive_type
   : PRIMITIVE_TYPE;
   finally { marker.done(ElementTypes.PRIMITIVE_TYPE); }
 
+class_descriptor
+  @init { Marker marker = mark(); }
+  : CLASS_DESCRIPTOR;
+  finally { marker.done(ElementTypes.CLASS_TYPE); }
+
 type_descriptor
   : void_type
   | primitive_type
-  | CLASS_DESCRIPTOR
+  | class_descriptor
   | ARRAY_DESCRIPTOR;
 
 nonvoid_type_descriptor
   : primitive_type
-  | CLASS_DESCRIPTOR
+  | class_descriptor
   | ARRAY_DESCRIPTOR;
 
 reference_type_descriptor
-  : CLASS_DESCRIPTOR
+  : class_descriptor
   | ARRAY_DESCRIPTOR;
 
 integer_literal
@@ -387,12 +392,12 @@ annotation_element
 
 annotation
   @init { Marker marker = mark(); }
-  : ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY CLASS_DESCRIPTOR
+  : ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY class_descriptor
     annotation_element* END_ANNOTATION_DIRECTIVE;
   finally { marker.done(ElementTypes.ANNOTATION); }
 
 subannotation
-  : SUBANNOTATION_DIRECTIVE CLASS_DESCRIPTOR annotation_element* END_SUBANNOTATION_DIRECTIVE;
+  : SUBANNOTATION_DIRECTIVE class_descriptor annotation_element* END_SUBANNOTATION_DIRECTIVE;
 
 enum_literal
   : ENUM_DIRECTIVE reference_type_descriptor ARROW simple_name COLON reference_type_descriptor;
@@ -429,7 +434,7 @@ register_range
   : (REGISTER (DOTDOT REGISTER)?)?;
 
 verification_error_reference
-  : CLASS_DESCRIPTOR | fully_qualified_field | fully_qualified_method;
+  : class_descriptor | fully_qualified_field | fully_qualified_method;
 
 catch_directive
   : CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE label_ref_or_offset DOTDOT label_ref_or_offset CLOSE_BRACE label_ref_or_offset;

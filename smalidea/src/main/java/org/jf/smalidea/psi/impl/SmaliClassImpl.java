@@ -65,7 +65,7 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
     public SmaliClassImpl(@NotNull ASTNode node) {
         super(node);
         ASTNode classDeclNode = node.findChildByType(ElementTypes.CLASS_SPEC);
-        ASTNode classDescNode = classDeclNode.findChildByType(SmaliTokens.CLASS_DESCRIPTOR);
+        ASTNode classDescNode = classDeclNode.findChildByType(ElementTypes.CLASS_TYPE);
         name = classDescNode.getText();
     }
 

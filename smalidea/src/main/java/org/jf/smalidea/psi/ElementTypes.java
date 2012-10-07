@@ -60,4 +60,5 @@ public class ElementTypes {
 
     public static final IElementType VOID_TYPE = new IElementType("void type", SmaliLanguage.INSTANCE);
     public static final IElementType PRIMITIVE_TYPE = new IElementType("primitive type", SmaliLanguage.INSTANCE);
+    public static final IElementType CLASS_TYPE = new IElementType("class type", SmaliLanguage.INSTANCE);
 }

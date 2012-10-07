@@ -1,4 +1,4 @@
-// $ANTLR 3.4 smaliIdeaParser.g 2012-10-06 19:16:04
+// $ANTLR 3.4 smaliIdeaParser.g 2012-10-07 13:54:54
 
 package org.jf.smalidea;
 
@@ -591,12 +591,12 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "class_spec"
-    // smaliIdeaParser.g:153:1: class_spec : CLASS_DIRECTIVE access_list CLASS_DESCRIPTOR ;
+    // smaliIdeaParser.g:153:1: class_spec : CLASS_DIRECTIVE access_list class_descriptor ;
     public final void class_spec() throws RecognitionException {
          Marker marker = mark(); 
         try {
-            // smaliIdeaParser.g:155:3: ( CLASS_DIRECTIVE access_list CLASS_DESCRIPTOR )
-            // smaliIdeaParser.g:155:5: CLASS_DIRECTIVE access_list CLASS_DESCRIPTOR
+            // smaliIdeaParser.g:155:3: ( CLASS_DIRECTIVE access_list class_descriptor )
+            // smaliIdeaParser.g:155:5: CLASS_DIRECTIVE access_list class_descriptor
             {
             match(input,CLASS_DIRECTIVE,FOLLOW_CLASS_DIRECTIVE_in_class_spec137); if (state.failed) return ;
 
@@ -606,7 +606,11 @@ public class smaliIdeaParser extends Parser {
             state._fsp--;
             if (state.failed) return ;
 
-            match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_class_spec141); if (state.failed) return ;
+            pushFollow(FOLLOW_class_descriptor_in_class_spec141);
+            class_descriptor();
+
+            state._fsp--;
+            if (state.failed) return ;
 
             }
 
@@ -627,16 +631,20 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "super_spec"
-    // smaliIdeaParser.g:158:1: super_spec : SUPER_DIRECTIVE CLASS_DESCRIPTOR ;
+    // smaliIdeaParser.g:158:1: super_spec : SUPER_DIRECTIVE class_descriptor ;
     public final void super_spec() throws RecognitionException {
          Marker marker = mark(); 
         try {
-            // smaliIdeaParser.g:160:3: ( SUPER_DIRECTIVE CLASS_DESCRIPTOR )
-            // smaliIdeaParser.g:160:5: SUPER_DIRECTIVE CLASS_DESCRIPTOR
+            // smaliIdeaParser.g:160:3: ( SUPER_DIRECTIVE class_descriptor )
+            // smaliIdeaParser.g:160:5: SUPER_DIRECTIVE class_descriptor
             {
             match(input,SUPER_DIRECTIVE,FOLLOW_SUPER_DIRECTIVE_in_super_spec164); if (state.failed) return ;
 
-            match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_super_spec166); if (state.failed) return ;
+            pushFollow(FOLLOW_class_descriptor_in_super_spec166);
+            class_descriptor();
+
+            state._fsp--;
+            if (state.failed) return ;
 
             }
 
@@ -657,16 +665,20 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "implements_spec"
-    // smaliIdeaParser.g:163:1: implements_spec : IMPLEMENTS_DIRECTIVE CLASS_DESCRIPTOR ;
+    // smaliIdeaParser.g:163:1: implements_spec : IMPLEMENTS_DIRECTIVE class_descriptor ;
     public final void implements_spec() throws RecognitionException {
          Marker marker = mark(); 
         try {
-            // smaliIdeaParser.g:165:3: ( IMPLEMENTS_DIRECTIVE CLASS_DESCRIPTOR )
-            // smaliIdeaParser.g:165:5: IMPLEMENTS_DIRECTIVE CLASS_DESCRIPTOR
+            // smaliIdeaParser.g:165:3: ( IMPLEMENTS_DIRECTIVE class_descriptor )
+            // smaliIdeaParser.g:165:5: IMPLEMENTS_DIRECTIVE class_descriptor
             {
             match(input,IMPLEMENTS_DIRECTIVE,FOLLOW_IMPLEMENTS_DIRECTIVE_in_implements_spec189); if (state.failed) return ;
 
-            match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_implements_spec191); if (state.failed) return ;
+            pushFollow(FOLLOW_class_descriptor_in_implements_spec191);
+            class_descriptor();
+
+            state._fsp--;
+            if (state.failed) return ;
 
             }
 
@@ -1680,11 +1692,39 @@ public class smaliIdeaParser extends Parser {
 
 
 
+    // $ANTLR start "class_descriptor"
+    // smaliIdeaParser.g:308:1: class_descriptor : CLASS_DESCRIPTOR ;
+    public final void class_descriptor() throws RecognitionException {
+         Marker marker = mark(); 
+        try {
+            // smaliIdeaParser.g:310:3: ( CLASS_DESCRIPTOR )
+            // smaliIdeaParser.g:310:5: CLASS_DESCRIPTOR
+            {
+            match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_class_descriptor1028); if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+
+        finally {
+        	// do for sure before leaving
+             marker.done(ElementTypes.CLASS_TYPE); 
+        }
+        return ;
+    }
+    // $ANTLR end "class_descriptor"
+
+
+
     // $ANTLR start "type_descriptor"
-    // smaliIdeaParser.g:308:1: type_descriptor : ( void_type | primitive_type | CLASS_DESCRIPTOR | ARRAY_DESCRIPTOR );
+    // smaliIdeaParser.g:313:1: type_descriptor : ( void_type | primitive_type | class_descriptor | ARRAY_DESCRIPTOR );
     public final void type_descriptor() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:309:3: ( void_type | primitive_type | CLASS_DESCRIPTOR | ARRAY_DESCRIPTOR )
+            // smaliIdeaParser.g:314:3: ( void_type | primitive_type | class_descriptor | ARRAY_DESCRIPTOR )
             int alt14=4;
             switch ( input.LA(1) ) {
             case VOID_TYPE:
@@ -1718,9 +1758,9 @@ public class smaliIdeaParser extends Parser {
 
             switch (alt14) {
                 case 1 :
-                    // smaliIdeaParser.g:309:5: void_type
+                    // smaliIdeaParser.g:314:5: void_type
                     {
-                    pushFollow(FOLLOW_void_type_in_type_descriptor1021);
+                    pushFollow(FOLLOW_void_type_in_type_descriptor1044);
                     void_type();
 
                     state._fsp--;
@@ -1729,9 +1769,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // smaliIdeaParser.g:310:5: primitive_type
+                    // smaliIdeaParser.g:315:5: primitive_type
                     {
-                    pushFollow(FOLLOW_primitive_type_in_type_descriptor1027);
+                    pushFollow(FOLLOW_primitive_type_in_type_descriptor1050);
                     primitive_type();
 
                     state._fsp--;
@@ -1740,16 +1780,20 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // smaliIdeaParser.g:311:5: CLASS_DESCRIPTOR
+                    // smaliIdeaParser.g:316:5: class_descriptor
                     {
-                    match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_type_descriptor1033); if (state.failed) return ;
+                    pushFollow(FOLLOW_class_descriptor_in_type_descriptor1056);
+                    class_descriptor();
+
+                    state._fsp--;
+                    if (state.failed) return ;
 
                     }
                     break;
                 case 4 :
-                    // smaliIdeaParser.g:312:5: ARRAY_DESCRIPTOR
+                    // smaliIdeaParser.g:317:5: ARRAY_DESCRIPTOR
                     {
-                    match(input,ARRAY_DESCRIPTOR,FOLLOW_ARRAY_DESCRIPTOR_in_type_descriptor1039); if (state.failed) return ;
+                    match(input,ARRAY_DESCRIPTOR,FOLLOW_ARRAY_DESCRIPTOR_in_type_descriptor1062); if (state.failed) return ;
 
                     }
                     break;
@@ -1771,10 +1815,10 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "nonvoid_type_descriptor"
-    // smaliIdeaParser.g:314:1: nonvoid_type_descriptor : ( primitive_type | CLASS_DESCRIPTOR | ARRAY_DESCRIPTOR );
+    // smaliIdeaParser.g:319:1: nonvoid_type_descriptor : ( primitive_type | class_descriptor | ARRAY_DESCRIPTOR );
     public final void nonvoid_type_descriptor() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:315:3: ( primitive_type | CLASS_DESCRIPTOR | ARRAY_DESCRIPTOR )
+            // smaliIdeaParser.g:320:3: ( primitive_type | class_descriptor | ARRAY_DESCRIPTOR )
             int alt15=3;
             switch ( input.LA(1) ) {
             case PRIMITIVE_TYPE:
@@ -1803,9 +1847,9 @@ public class smaliIdeaParser extends Parser {
 
             switch (alt15) {
                 case 1 :
-                    // smaliIdeaParser.g:315:5: primitive_type
+                    // smaliIdeaParser.g:320:5: primitive_type
                     {
-                    pushFollow(FOLLOW_primitive_type_in_nonvoid_type_descriptor1049);
+                    pushFollow(FOLLOW_primitive_type_in_nonvoid_type_descriptor1072);
                     primitive_type();
 
                     state._fsp--;
@@ -1814,16 +1858,20 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // smaliIdeaParser.g:316:5: CLASS_DESCRIPTOR
+                    // smaliIdeaParser.g:321:5: class_descriptor
                     {
-                    match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_nonvoid_type_descriptor1055); if (state.failed) return ;
+                    pushFollow(FOLLOW_class_descriptor_in_nonvoid_type_descriptor1078);
+                    class_descriptor();
+
+                    state._fsp--;
+                    if (state.failed) return ;
 
                     }
                     break;
                 case 3 :
-                    // smaliIdeaParser.g:317:5: ARRAY_DESCRIPTOR
+                    // smaliIdeaParser.g:322:5: ARRAY_DESCRIPTOR
                     {
-                    match(input,ARRAY_DESCRIPTOR,FOLLOW_ARRAY_DESCRIPTOR_in_nonvoid_type_descriptor1061); if (state.failed) return ;
+                    match(input,ARRAY_DESCRIPTOR,FOLLOW_ARRAY_DESCRIPTOR_in_nonvoid_type_descriptor1084); if (state.failed) return ;
 
                     }
                     break;
@@ -1845,26 +1893,48 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "reference_type_descriptor"
-    // smaliIdeaParser.g:319:1: reference_type_descriptor : ( CLASS_DESCRIPTOR | ARRAY_DESCRIPTOR );
+    // smaliIdeaParser.g:324:1: reference_type_descriptor : ( class_descriptor | ARRAY_DESCRIPTOR );
     public final void reference_type_descriptor() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:320:3: ( CLASS_DESCRIPTOR | ARRAY_DESCRIPTOR )
-            // smaliIdeaParser.g:
-            {
-            if ( input.LA(1)==ARRAY_DESCRIPTOR||input.LA(1)==CLASS_DESCRIPTOR ) {
-                input.consume();
-                state.errorRecovery=false;
-                state.failed=false;
+            // smaliIdeaParser.g:325:3: ( class_descriptor | ARRAY_DESCRIPTOR )
+            int alt16=2;
+            int LA16_0 = input.LA(1);
+
+            if ( (LA16_0==CLASS_DESCRIPTOR) ) {
+                alt16=1;
+            }
+            else if ( (LA16_0==ARRAY_DESCRIPTOR) ) {
+                alt16=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return ;}
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                throw mse;
+                NoViableAltException nvae =
+                    new NoViableAltException("", 16, 0, input);
+
+                throw nvae;
+
             }
+            switch (alt16) {
+                case 1 :
+                    // smaliIdeaParser.g:325:5: class_descriptor
+                    {
+                    pushFollow(FOLLOW_class_descriptor_in_reference_type_descriptor1094);
+                    class_descriptor();
 
+                    state._fsp--;
+                    if (state.failed) return ;
+
+                    }
+                    break;
+                case 2 :
+                    // smaliIdeaParser.g:326:5: ARRAY_DESCRIPTOR
+                    {
+                    match(input,ARRAY_DESCRIPTOR,FOLLOW_ARRAY_DESCRIPTOR_in_reference_type_descriptor1100); if (state.failed) return ;
+
+                    }
+                    break;
 
             }
-
         }
         catch (RecognitionException re) {
             reportError(re);
@@ -1881,10 +1951,10 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "integer_literal"
-    // smaliIdeaParser.g:323:1: integer_literal : ( POSITIVE_INTEGER_LITERAL | NEGATIVE_INTEGER_LITERAL );
+    // smaliIdeaParser.g:328:1: integer_literal : ( POSITIVE_INTEGER_LITERAL | NEGATIVE_INTEGER_LITERAL );
     public final void integer_literal() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:324:3: ( POSITIVE_INTEGER_LITERAL | NEGATIVE_INTEGER_LITERAL )
+            // smaliIdeaParser.g:329:3: ( POSITIVE_INTEGER_LITERAL | NEGATIVE_INTEGER_LITERAL )
             // smaliIdeaParser.g:
             {
             if ( input.LA(1)==NEGATIVE_INTEGER_LITERAL||input.LA(1)==POSITIVE_INTEGER_LITERAL ) {
@@ -1917,10 +1987,10 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "float_literal"
-    // smaliIdeaParser.g:327:1: float_literal : ( FLOAT_LITERAL_OR_ID | FLOAT_LITERAL );
+    // smaliIdeaParser.g:332:1: float_literal : ( FLOAT_LITERAL_OR_ID | FLOAT_LITERAL );
     public final void float_literal() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:328:3: ( FLOAT_LITERAL_OR_ID | FLOAT_LITERAL )
+            // smaliIdeaParser.g:333:3: ( FLOAT_LITERAL_OR_ID | FLOAT_LITERAL )
             // smaliIdeaParser.g:
             {
             if ( (input.LA(1) >= FLOAT_LITERAL && input.LA(1) <= FLOAT_LITERAL_OR_ID) ) {
@@ -1953,10 +2023,10 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "double_literal"
-    // smaliIdeaParser.g:331:1: double_literal : ( DOUBLE_LITERAL_OR_ID | DOUBLE_LITERAL );
+    // smaliIdeaParser.g:336:1: double_literal : ( DOUBLE_LITERAL_OR_ID | DOUBLE_LITERAL );
     public final void double_literal() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:332:3: ( DOUBLE_LITERAL_OR_ID | DOUBLE_LITERAL )
+            // smaliIdeaParser.g:337:3: ( DOUBLE_LITERAL_OR_ID | DOUBLE_LITERAL )
             // smaliIdeaParser.g:
             {
             if ( (input.LA(1) >= DOUBLE_LITERAL && input.LA(1) <= DOUBLE_LITERAL_OR_ID) ) {
@@ -1989,74 +2059,74 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "literal"
-    // smaliIdeaParser.g:335:1: literal : ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | STRING_LITERAL | BOOL_LITERAL | NULL_LITERAL | array_literal | subannotation | type_field_method_literal | enum_literal );
+    // smaliIdeaParser.g:340:1: literal : ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | STRING_LITERAL | BOOL_LITERAL | NULL_LITERAL | array_literal | subannotation | type_field_method_literal | enum_literal );
     public final void literal() throws RecognitionException {
          Marker marker = mark(); 
         try {
-            // smaliIdeaParser.g:337:3: ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | STRING_LITERAL | BOOL_LITERAL | NULL_LITERAL | array_literal | subannotation | type_field_method_literal | enum_literal )
-            int alt16=14;
+            // smaliIdeaParser.g:342:3: ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | STRING_LITERAL | BOOL_LITERAL | NULL_LITERAL | array_literal | subannotation | type_field_method_literal | enum_literal )
+            int alt17=14;
             switch ( input.LA(1) ) {
             case LONG_LITERAL:
                 {
-                alt16=1;
+                alt17=1;
                 }
                 break;
             case NEGATIVE_INTEGER_LITERAL:
             case POSITIVE_INTEGER_LITERAL:
                 {
-                alt16=2;
+                alt17=2;
                 }
                 break;
             case SHORT_LITERAL:
                 {
-                alt16=3;
+                alt17=3;
                 }
                 break;
             case BYTE_LITERAL:
                 {
-                alt16=4;
+                alt17=4;
                 }
                 break;
             case FLOAT_LITERAL:
             case FLOAT_LITERAL_OR_ID:
                 {
-                alt16=5;
+                alt17=5;
                 }
                 break;
             case DOUBLE_LITERAL:
             case DOUBLE_LITERAL_OR_ID:
                 {
-                alt16=6;
+                alt17=6;
                 }
                 break;
             case CHAR_LITERAL:
                 {
-                alt16=7;
+                alt17=7;
                 }
                 break;
             case STRING_LITERAL:
                 {
-                alt16=8;
+                alt17=8;
                 }
                 break;
             case BOOL_LITERAL:
                 {
-                alt16=9;
+                alt17=9;
                 }
                 break;
             case NULL_LITERAL:
                 {
-                alt16=10;
+                alt17=10;
                 }
                 break;
             case OPEN_BRACE:
                 {
-                alt16=11;
+                alt17=11;
                 }
                 break;
             case SUBANNOTATION_DIRECTIVE:
                 {
-                alt16=12;
+                alt17=12;
                 }
                 break;
             case ARRAY_DESCRIPTOR:
@@ -2064,35 +2134,35 @@ public class smaliIdeaParser extends Parser {
             case PRIMITIVE_TYPE:
             case VOID_TYPE:
                 {
-                alt16=13;
+                alt17=13;
                 }
                 break;
             case ENUM_DIRECTIVE:
                 {
-                alt16=14;
+                alt17=14;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 16, 0, input);
+                    new NoViableAltException("", 17, 0, input);
 
                 throw nvae;
 
             }
 
-            switch (alt16) {
+            switch (alt17) {
                 case 1 :
-                    // smaliIdeaParser.g:337:5: LONG_LITERAL
+                    // smaliIdeaParser.g:342:5: LONG_LITERAL
                     {
-                    match(input,LONG_LITERAL,FOLLOW_LONG_LITERAL_in_literal1142); if (state.failed) return ;
+                    match(input,LONG_LITERAL,FOLLOW_LONG_LITERAL_in_literal1165); if (state.failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // smaliIdeaParser.g:338:5: integer_literal
+                    // smaliIdeaParser.g:343:5: integer_literal
                     {
-                    pushFollow(FOLLOW_integer_literal_in_literal1148);
+                    pushFollow(FOLLOW_integer_literal_in_literal1171);
                     integer_literal();
 
                     state._fsp--;
@@ -2101,23 +2171,23 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // smaliIdeaParser.g:339:5: SHORT_LITERAL
+                    // smaliIdeaParser.g:344:5: SHORT_LITERAL
                     {
-                    match(input,SHORT_LITERAL,FOLLOW_SHORT_LITERAL_in_literal1154); if (state.failed) return ;
+                    match(input,SHORT_LITERAL,FOLLOW_SHORT_LITERAL_in_literal1177); if (state.failed) return ;
 
                     }
                     break;
                 case 4 :
-                    // smaliIdeaParser.g:340:5: BYTE_LITERAL
+                    // smaliIdeaParser.g:345:5: BYTE_LITERAL
                     {
-                    match(input,BYTE_LITERAL,FOLLOW_BYTE_LITERAL_in_literal1160); if (state.failed) return ;
+                    match(input,BYTE_LITERAL,FOLLOW_BYTE_LITERAL_in_literal1183); if (state.failed) return ;
 
                     }
                     break;
                 case 5 :
-                    // smaliIdeaParser.g:341:5: float_literal
+                    // smaliIdeaParser.g:346:5: float_literal
                     {
-                    pushFollow(FOLLOW_float_literal_in_literal1166);
+                    pushFollow(FOLLOW_float_literal_in_literal1189);
                     float_literal();
 
                     state._fsp--;
@@ -2126,9 +2196,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // smaliIdeaParser.g:342:5: double_literal
+                    // smaliIdeaParser.g:347:5: double_literal
                     {
-                    pushFollow(FOLLOW_double_literal_in_literal1172);
+                    pushFollow(FOLLOW_double_literal_in_literal1195);
                     double_literal();
 
                     state._fsp--;
@@ -2137,37 +2207,37 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // smaliIdeaParser.g:343:5: CHAR_LITERAL
+                    // smaliIdeaParser.g:348:5: CHAR_LITERAL
                     {
-                    match(input,CHAR_LITERAL,FOLLOW_CHAR_LITERAL_in_literal1178); if (state.failed) return ;
+                    match(input,CHAR_LITERAL,FOLLOW_CHAR_LITERAL_in_literal1201); if (state.failed) return ;
 
                     }
                     break;
                 case 8 :
-                    // smaliIdeaParser.g:344:5: STRING_LITERAL
+                    // smaliIdeaParser.g:349:5: STRING_LITERAL
                     {
-                    match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_literal1184); if (state.failed) return ;
+                    match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_literal1207); if (state.failed) return ;
 
                     }
                     break;
                 case 9 :
-                    // smaliIdeaParser.g:345:5: BOOL_LITERAL
+                    // smaliIdeaParser.g:350:5: BOOL_LITERAL
                     {
-                    match(input,BOOL_LITERAL,FOLLOW_BOOL_LITERAL_in_literal1190); if (state.failed) return ;
+                    match(input,BOOL_LITERAL,FOLLOW_BOOL_LITERAL_in_literal1213); if (state.failed) return ;
 
                     }
                     break;
                 case 10 :
-                    // smaliIdeaParser.g:346:5: NULL_LITERAL
+                    // smaliIdeaParser.g:351:5: NULL_LITERAL
                     {
-                    match(input,NULL_LITERAL,FOLLOW_NULL_LITERAL_in_literal1196); if (state.failed) return ;
+                    match(input,NULL_LITERAL,FOLLOW_NULL_LITERAL_in_literal1219); if (state.failed) return ;
 
                     }
                     break;
                 case 11 :
-                    // smaliIdeaParser.g:347:5: array_literal
+                    // smaliIdeaParser.g:352:5: array_literal
                     {
-                    pushFollow(FOLLOW_array_literal_in_literal1202);
+                    pushFollow(FOLLOW_array_literal_in_literal1225);
                     array_literal();
 
                     state._fsp--;
@@ -2176,9 +2246,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 12 :
-                    // smaliIdeaParser.g:348:5: subannotation
+                    // smaliIdeaParser.g:353:5: subannotation
                     {
-                    pushFollow(FOLLOW_subannotation_in_literal1208);
+                    pushFollow(FOLLOW_subannotation_in_literal1231);
                     subannotation();
 
                     state._fsp--;
@@ -2187,9 +2257,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 13 :
-                    // smaliIdeaParser.g:349:5: type_field_method_literal
+                    // smaliIdeaParser.g:354:5: type_field_method_literal
                     {
-                    pushFollow(FOLLOW_type_field_method_literal_in_literal1214);
+                    pushFollow(FOLLOW_type_field_method_literal_in_literal1237);
                     type_field_method_literal();
 
                     state._fsp--;
@@ -2198,9 +2268,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 14 :
-                    // smaliIdeaParser.g:350:5: enum_literal
+                    // smaliIdeaParser.g:355:5: enum_literal
                     {
-                    pushFollow(FOLLOW_enum_literal_in_literal1220);
+                    pushFollow(FOLLOW_enum_literal_in_literal1243);
                     enum_literal();
 
                     state._fsp--;
@@ -2227,60 +2297,60 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "integral_literal"
-    // smaliIdeaParser.g:353:1: integral_literal : ( LONG_LITERAL | integer_literal | SHORT_LITERAL | CHAR_LITERAL | BYTE_LITERAL );
+    // smaliIdeaParser.g:358:1: integral_literal : ( LONG_LITERAL | integer_literal | SHORT_LITERAL | CHAR_LITERAL | BYTE_LITERAL );
     public final void integral_literal() throws RecognitionException {
          Marker marker = mark(); 
         try {
-            // smaliIdeaParser.g:355:3: ( LONG_LITERAL | integer_literal | SHORT_LITERAL | CHAR_LITERAL | BYTE_LITERAL )
-            int alt17=5;
+            // smaliIdeaParser.g:360:3: ( LONG_LITERAL | integer_literal | SHORT_LITERAL | CHAR_LITERAL | BYTE_LITERAL )
+            int alt18=5;
             switch ( input.LA(1) ) {
             case LONG_LITERAL:
                 {
-                alt17=1;
+                alt18=1;
                 }
                 break;
             case NEGATIVE_INTEGER_LITERAL:
             case POSITIVE_INTEGER_LITERAL:
                 {
-                alt17=2;
+                alt18=2;
                 }
                 break;
             case SHORT_LITERAL:
                 {
-                alt17=3;
+                alt18=3;
                 }
                 break;
             case CHAR_LITERAL:
                 {
-                alt17=4;
+                alt18=4;
                 }
                 break;
             case BYTE_LITERAL:
                 {
-                alt17=5;
+                alt18=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 17, 0, input);
+                    new NoViableAltException("", 18, 0, input);
 
                 throw nvae;
 
             }
 
-            switch (alt17) {
+            switch (alt18) {
                 case 1 :
-                    // smaliIdeaParser.g:355:5: LONG_LITERAL
+                    // smaliIdeaParser.g:360:5: LONG_LITERAL
                     {
-                    match(input,LONG_LITERAL,FOLLOW_LONG_LITERAL_in_integral_literal1243); if (state.failed) return ;
+                    match(input,LONG_LITERAL,FOLLOW_LONG_LITERAL_in_integral_literal1266); if (state.failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // smaliIdeaParser.g:356:5: integer_literal
+                    // smaliIdeaParser.g:361:5: integer_literal
                     {
-                    pushFollow(FOLLOW_integer_literal_in_integral_literal1249);
+                    pushFollow(FOLLOW_integer_literal_in_integral_literal1272);
                     integer_literal();
 
                     state._fsp--;
@@ -2289,23 +2359,23 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // smaliIdeaParser.g:357:5: SHORT_LITERAL
+                    // smaliIdeaParser.g:362:5: SHORT_LITERAL
                     {
-                    match(input,SHORT_LITERAL,FOLLOW_SHORT_LITERAL_in_integral_literal1255); if (state.failed) return ;
+                    match(input,SHORT_LITERAL,FOLLOW_SHORT_LITERAL_in_integral_literal1278); if (state.failed) return ;
 
                     }
                     break;
                 case 4 :
-                    // smaliIdeaParser.g:358:5: CHAR_LITERAL
+                    // smaliIdeaParser.g:363:5: CHAR_LITERAL
                     {
-                    match(input,CHAR_LITERAL,FOLLOW_CHAR_LITERAL_in_integral_literal1261); if (state.failed) return ;
+                    match(input,CHAR_LITERAL,FOLLOW_CHAR_LITERAL_in_integral_literal1284); if (state.failed) return ;
 
                     }
                     break;
                 case 5 :
-                    // smaliIdeaParser.g:359:5: BYTE_LITERAL
+                    // smaliIdeaParser.g:364:5: BYTE_LITERAL
                     {
-                    match(input,BYTE_LITERAL,FOLLOW_BYTE_LITERAL_in_integral_literal1267); if (state.failed) return ;
+                    match(input,BYTE_LITERAL,FOLLOW_BYTE_LITERAL_in_integral_literal1290); if (state.failed) return ;
 
                     }
                     break;
@@ -2328,70 +2398,70 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "fixed_32bit_literal"
-    // smaliIdeaParser.g:362:1: fixed_32bit_literal : ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | CHAR_LITERAL | BOOL_LITERAL );
+    // smaliIdeaParser.g:367:1: fixed_32bit_literal : ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | CHAR_LITERAL | BOOL_LITERAL );
     public final void fixed_32bit_literal() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:363:3: ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | CHAR_LITERAL | BOOL_LITERAL )
-            int alt18=7;
+            // smaliIdeaParser.g:368:3: ( LONG_LITERAL | integer_literal | SHORT_LITERAL | BYTE_LITERAL | float_literal | CHAR_LITERAL | BOOL_LITERAL )
+            int alt19=7;
             switch ( input.LA(1) ) {
             case LONG_LITERAL:
                 {
-                alt18=1;
+                alt19=1;
                 }
                 break;
             case NEGATIVE_INTEGER_LITERAL:
             case POSITIVE_INTEGER_LITERAL:
                 {
-                alt18=2;
+                alt19=2;
                 }
                 break;
             case SHORT_LITERAL:
                 {
-                alt18=3;
+                alt19=3;
                 }
                 break;
             case BYTE_LITERAL:
                 {
-                alt18=4;
+                alt19=4;
                 }
                 break;
             case FLOAT_LITERAL:
             case FLOAT_LITERAL_OR_ID:
                 {
-                alt18=5;
+                alt19=5;
                 }
                 break;
             case CHAR_LITERAL:
                 {
-                alt18=6;
+                alt19=6;
                 }
                 break;
             case BOOL_LITERAL:
                 {
-                alt18=7;
+                alt19=7;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 18, 0, input);
+                    new NoViableAltException("", 19, 0, input);
 
                 throw nvae;
 
             }
 
-            switch (alt18) {
+            switch (alt19) {
                 case 1 :
-                    // smaliIdeaParser.g:363:5: LONG_LITERAL
+                    // smaliIdeaParser.g:368:5: LONG_LITERAL
                     {
-                    match(input,LONG_LITERAL,FOLLOW_LONG_LITERAL_in_fixed_32bit_literal1283); if (state.failed) return ;
+                    match(input,LONG_LITERAL,FOLLOW_LONG_LITERAL_in_fixed_32bit_literal1306); if (state.failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // smaliIdeaParser.g:364:5: integer_literal
+                    // smaliIdeaParser.g:369:5: integer_literal
                     {
-                    pushFollow(FOLLOW_integer_literal_in_fixed_32bit_literal1289);
+                    pushFollow(FOLLOW_integer_literal_in_fixed_32bit_literal1312);
                     integer_literal();
 
                     state._fsp--;
@@ -2400,23 +2470,23 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // smaliIdeaParser.g:365:5: SHORT_LITERAL
+                    // smaliIdeaParser.g:370:5: SHORT_LITERAL
                     {
-                    match(input,SHORT_LITERAL,FOLLOW_SHORT_LITERAL_in_fixed_32bit_literal1295); if (state.failed) return ;
+                    match(input,SHORT_LITERAL,FOLLOW_SHORT_LITERAL_in_fixed_32bit_literal1318); if (state.failed) return ;
 
                     }
                     break;
                 case 4 :
-                    // smaliIdeaParser.g:366:5: BYTE_LITERAL
+                    // smaliIdeaParser.g:371:5: BYTE_LITERAL
                     {
-                    match(input,BYTE_LITERAL,FOLLOW_BYTE_LITERAL_in_fixed_32bit_literal1301); if (state.failed) return ;
+                    match(input,BYTE_LITERAL,FOLLOW_BYTE_LITERAL_in_fixed_32bit_literal1324); if (state.failed) return ;
 
                     }
                     break;
                 case 5 :
-                    // smaliIdeaParser.g:367:5: float_literal
+                    // smaliIdeaParser.g:372:5: float_literal
                     {
-                    pushFollow(FOLLOW_float_literal_in_fixed_32bit_literal1307);
+                    pushFollow(FOLLOW_float_literal_in_fixed_32bit_literal1330);
                     float_literal();
 
                     state._fsp--;
@@ -2425,16 +2495,16 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // smaliIdeaParser.g:368:5: CHAR_LITERAL
+                    // smaliIdeaParser.g:373:5: CHAR_LITERAL
                     {
-                    match(input,CHAR_LITERAL,FOLLOW_CHAR_LITERAL_in_fixed_32bit_literal1313); if (state.failed) return ;
+                    match(input,CHAR_LITERAL,FOLLOW_CHAR_LITERAL_in_fixed_32bit_literal1336); if (state.failed) return ;
 
                     }
                     break;
                 case 7 :
-                    // smaliIdeaParser.g:369:5: BOOL_LITERAL
+                    // smaliIdeaParser.g:374:5: BOOL_LITERAL
                     {
-                    match(input,BOOL_LITERAL,FOLLOW_BOOL_LITERAL_in_fixed_32bit_literal1319); if (state.failed) return ;
+                    match(input,BOOL_LITERAL,FOLLOW_BOOL_LITERAL_in_fixed_32bit_literal1342); if (state.failed) return ;
 
                     }
                     break;
@@ -2456,69 +2526,69 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "fixed_literal"
-    // smaliIdeaParser.g:371:1: fixed_literal : ( integer_literal | LONG_LITERAL | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | BOOL_LITERAL );
+    // smaliIdeaParser.g:376:1: fixed_literal : ( integer_literal | LONG_LITERAL | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | BOOL_LITERAL );
     public final void fixed_literal() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:372:3: ( integer_literal | LONG_LITERAL | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | BOOL_LITERAL )
-            int alt19=8;
+            // smaliIdeaParser.g:377:3: ( integer_literal | LONG_LITERAL | SHORT_LITERAL | BYTE_LITERAL | float_literal | double_literal | CHAR_LITERAL | BOOL_LITERAL )
+            int alt20=8;
             switch ( input.LA(1) ) {
             case NEGATIVE_INTEGER_LITERAL:
             case POSITIVE_INTEGER_LITERAL:
                 {
-                alt19=1;
+                alt20=1;
                 }
                 break;
             case LONG_LITERAL:
                 {
-                alt19=2;
+                alt20=2;
                 }
                 break;
             case SHORT_LITERAL:
                 {
-                alt19=3;
+                alt20=3;
                 }
                 break;
             case BYTE_LITERAL:
                 {
-                alt19=4;
+                alt20=4;
                 }
                 break;
             case FLOAT_LITERAL:
             case FLOAT_LITERAL_OR_ID:
                 {
-                alt19=5;
+                alt20=5;
                 }
                 break;
             case DOUBLE_LITERAL:
             case DOUBLE_LITERAL_OR_ID:
                 {
-                alt19=6;
+                alt20=6;
                 }
                 break;
             case CHAR_LITERAL:
                 {
-                alt19=7;
+                alt20=7;
                 }
                 break;
             case BOOL_LITERAL:
                 {
-                alt19=8;
+                alt20=8;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 19, 0, input);
+                    new NoViableAltException("", 20, 0, input);
 
                 throw nvae;
 
             }
 
-            switch (alt19) {
+            switch (alt20) {
                 case 1 :
-                    // smaliIdeaParser.g:372:5: integer_literal
+                    // smaliIdeaParser.g:377:5: integer_literal
                     {
-                    pushFollow(FOLLOW_integer_literal_in_fixed_literal1329);
+                    pushFollow(FOLLOW_integer_literal_in_fixed_literal1352);
                     integer_literal();
 
                     state._fsp--;
@@ -2527,30 +2597,30 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // smaliIdeaParser.g:373:5: LONG_LITERAL
+                    // smaliIdeaParser.g:378:5: LONG_LITERAL
                     {
-                    match(input,LONG_LITERAL,FOLLOW_LONG_LITERAL_in_fixed_literal1335); if (state.failed) return ;
+                    match(input,LONG_LITERAL,FOLLOW_LONG_LITERAL_in_fixed_literal1358); if (state.failed) return ;
 
                     }
                     break;
                 case 3 :
-                    // smaliIdeaParser.g:374:5: SHORT_LITERAL
+                    // smaliIdeaParser.g:379:5: SHORT_LITERAL
                     {
-                    match(input,SHORT_LITERAL,FOLLOW_SHORT_LITERAL_in_fixed_literal1341); if (state.failed) return ;
+                    match(input,SHORT_LITERAL,FOLLOW_SHORT_LITERAL_in_fixed_literal1364); if (state.failed) return ;
 
                     }
                     break;
                 case 4 :
-                    // smaliIdeaParser.g:375:5: BYTE_LITERAL
+                    // smaliIdeaParser.g:380:5: BYTE_LITERAL
                     {
-                    match(input,BYTE_LITERAL,FOLLOW_BYTE_LITERAL_in_fixed_literal1347); if (state.failed) return ;
+                    match(input,BYTE_LITERAL,FOLLOW_BYTE_LITERAL_in_fixed_literal1370); if (state.failed) return ;
 
                     }
                     break;
                 case 5 :
-                    // smaliIdeaParser.g:376:5: float_literal
+                    // smaliIdeaParser.g:381:5: float_literal
                     {
-                    pushFollow(FOLLOW_float_literal_in_fixed_literal1353);
+                    pushFollow(FOLLOW_float_literal_in_fixed_literal1376);
                     float_literal();
 
                     state._fsp--;
@@ -2559,9 +2629,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // smaliIdeaParser.g:377:5: double_literal
+                    // smaliIdeaParser.g:382:5: double_literal
                     {
-                    pushFollow(FOLLOW_double_literal_in_fixed_literal1359);
+                    pushFollow(FOLLOW_double_literal_in_fixed_literal1382);
                     double_literal();
 
                     state._fsp--;
@@ -2570,16 +2640,16 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // smaliIdeaParser.g:378:5: CHAR_LITERAL
+                    // smaliIdeaParser.g:383:5: CHAR_LITERAL
                     {
-                    match(input,CHAR_LITERAL,FOLLOW_CHAR_LITERAL_in_fixed_literal1365); if (state.failed) return ;
+                    match(input,CHAR_LITERAL,FOLLOW_CHAR_LITERAL_in_fixed_literal1388); if (state.failed) return ;
 
                     }
                     break;
                 case 8 :
-                    // smaliIdeaParser.g:379:5: BOOL_LITERAL
+                    // smaliIdeaParser.g:384:5: BOOL_LITERAL
                     {
-                    match(input,BOOL_LITERAL,FOLLOW_BOOL_LITERAL_in_fixed_literal1371); if (state.failed) return ;
+                    match(input,BOOL_LITERAL,FOLLOW_BOOL_LITERAL_in_fixed_literal1394); if (state.failed) return ;
 
                     }
                     break;
@@ -2601,60 +2671,60 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "array_literal"
-    // smaliIdeaParser.g:381:1: array_literal : OPEN_BRACE ( literal ( COMMA literal )* |) CLOSE_BRACE ;
+    // smaliIdeaParser.g:386:1: array_literal : OPEN_BRACE ( literal ( COMMA literal )* |) CLOSE_BRACE ;
     public final void array_literal() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:382:3: ( OPEN_BRACE ( literal ( COMMA literal )* |) CLOSE_BRACE )
-            // smaliIdeaParser.g:382:5: OPEN_BRACE ( literal ( COMMA literal )* |) CLOSE_BRACE
+            // smaliIdeaParser.g:387:3: ( OPEN_BRACE ( literal ( COMMA literal )* |) CLOSE_BRACE )
+            // smaliIdeaParser.g:387:5: OPEN_BRACE ( literal ( COMMA literal )* |) CLOSE_BRACE
             {
-            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_array_literal1381); if (state.failed) return ;
+            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_array_literal1404); if (state.failed) return ;
 
-            // smaliIdeaParser.g:382:16: ( literal ( COMMA literal )* |)
-            int alt21=2;
-            int LA21_0 = input.LA(1);
+            // smaliIdeaParser.g:387:16: ( literal ( COMMA literal )* |)
+            int alt22=2;
+            int LA22_0 = input.LA(1);
 
-            if ( (LA21_0==ARRAY_DESCRIPTOR||(LA21_0 >= BOOL_LITERAL && LA21_0 <= BYTE_LITERAL)||(LA21_0 >= CHAR_LITERAL && LA21_0 <= CLASS_DESCRIPTOR)||(LA21_0 >= DOUBLE_LITERAL && LA21_0 <= DOUBLE_LITERAL_OR_ID)||LA21_0==ENUM_DIRECTIVE||(LA21_0 >= FLOAT_LITERAL && LA21_0 <= FLOAT_LITERAL_OR_ID)||LA21_0==LONG_LITERAL||(LA21_0 >= NEGATIVE_INTEGER_LITERAL && LA21_0 <= NULL_LITERAL)||LA21_0==OPEN_BRACE||(LA21_0 >= POSITIVE_INTEGER_LITERAL && LA21_0 <= PRIMITIVE_TYPE)||LA21_0==SHORT_LITERAL||(LA21_0 >= STRING_LITERAL && LA21_0 <= SUBANNOTATION_DIRECTIVE)||LA21_0==VOID_TYPE) ) {
-                alt21=1;
+            if ( (LA22_0==ARRAY_DESCRIPTOR||(LA22_0 >= BOOL_LITERAL && LA22_0 <= BYTE_LITERAL)||(LA22_0 >= CHAR_LITERAL && LA22_0 <= CLASS_DESCRIPTOR)||(LA22_0 >= DOUBLE_LITERAL && LA22_0 <= DOUBLE_LITERAL_OR_ID)||LA22_0==ENUM_DIRECTIVE||(LA22_0 >= FLOAT_LITERAL && LA22_0 <= FLOAT_LITERAL_OR_ID)||LA22_0==LONG_LITERAL||(LA22_0 >= NEGATIVE_INTEGER_LITERAL && LA22_0 <= NULL_LITERAL)||LA22_0==OPEN_BRACE||(LA22_0 >= POSITIVE_INTEGER_LITERAL && LA22_0 <= PRIMITIVE_TYPE)||LA22_0==SHORT_LITERAL||(LA22_0 >= STRING_LITERAL && LA22_0 <= SUBANNOTATION_DIRECTIVE)||LA22_0==VOID_TYPE) ) {
+                alt22=1;
             }
-            else if ( (LA21_0==CLOSE_BRACE) ) {
-                alt21=2;
+            else if ( (LA22_0==CLOSE_BRACE) ) {
+                alt22=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 21, 0, input);
+                    new NoViableAltException("", 22, 0, input);
 
                 throw nvae;
 
             }
-            switch (alt21) {
+            switch (alt22) {
                 case 1 :
-                    // smaliIdeaParser.g:382:17: literal ( COMMA literal )*
+                    // smaliIdeaParser.g:387:17: literal ( COMMA literal )*
                     {
-                    pushFollow(FOLLOW_literal_in_array_literal1384);
+                    pushFollow(FOLLOW_literal_in_array_literal1407);
                     literal();
 
                     state._fsp--;
                     if (state.failed) return ;
 
-                    // smaliIdeaParser.g:382:25: ( COMMA literal )*
-                    loop20:
+                    // smaliIdeaParser.g:387:25: ( COMMA literal )*
+                    loop21:
                     do {
-                        int alt20=2;
-                        int LA20_0 = input.LA(1);
+                        int alt21=2;
+                        int LA21_0 = input.LA(1);
 
-                        if ( (LA20_0==COMMA) ) {
-                            alt20=1;
+                        if ( (LA21_0==COMMA) ) {
+                            alt21=1;
                         }
 
 
-                        switch (alt20) {
+                        switch (alt21) {
                     	case 1 :
-                    	    // smaliIdeaParser.g:382:26: COMMA literal
+                    	    // smaliIdeaParser.g:387:26: COMMA literal
                     	    {
-                    	    match(input,COMMA,FOLLOW_COMMA_in_array_literal1387); if (state.failed) return ;
+                    	    match(input,COMMA,FOLLOW_COMMA_in_array_literal1410); if (state.failed) return ;
 
-                    	    pushFollow(FOLLOW_literal_in_array_literal1389);
+                    	    pushFollow(FOLLOW_literal_in_array_literal1412);
                     	    literal();
 
                     	    state._fsp--;
@@ -2664,7 +2734,7 @@ public class smaliIdeaParser extends Parser {
                     	    break;
 
                     	default :
-                    	    break loop20;
+                    	    break loop21;
                         }
                     } while (true);
 
@@ -2672,7 +2742,7 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // smaliIdeaParser.g:382:44: 
+                    // smaliIdeaParser.g:387:44: 
                     {
                     }
                     break;
@@ -2680,7 +2750,7 @@ public class smaliIdeaParser extends Parser {
             }
 
 
-            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_array_literal1397); if (state.failed) return ;
+            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_array_literal1420); if (state.failed) return ;
 
             }
 
@@ -2700,21 +2770,21 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "annotation_element"
-    // smaliIdeaParser.g:384:1: annotation_element : simple_name EQUAL literal ;
+    // smaliIdeaParser.g:389:1: annotation_element : simple_name EQUAL literal ;
     public final void annotation_element() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:385:3: ( simple_name EQUAL literal )
-            // smaliIdeaParser.g:385:5: simple_name EQUAL literal
+            // smaliIdeaParser.g:390:3: ( simple_name EQUAL literal )
+            // smaliIdeaParser.g:390:5: simple_name EQUAL literal
             {
-            pushFollow(FOLLOW_simple_name_in_annotation_element1407);
+            pushFollow(FOLLOW_simple_name_in_annotation_element1430);
             simple_name();
 
             state._fsp--;
             if (state.failed) return ;
 
-            match(input,EQUAL,FOLLOW_EQUAL_in_annotation_element1409); if (state.failed) return ;
+            match(input,EQUAL,FOLLOW_EQUAL_in_annotation_element1432); if (state.failed) return ;
 
-            pushFollow(FOLLOW_literal_in_annotation_element1411);
+            pushFollow(FOLLOW_literal_in_annotation_element1434);
             literal();
 
             state._fsp--;
@@ -2738,35 +2808,39 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "annotation"
-    // smaliIdeaParser.g:388:1: annotation : ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY CLASS_DESCRIPTOR ( annotation_element )* END_ANNOTATION_DIRECTIVE ;
+    // smaliIdeaParser.g:393:1: annotation : ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY class_descriptor ( annotation_element )* END_ANNOTATION_DIRECTIVE ;
     public final void annotation() throws RecognitionException {
          Marker marker = mark(); 
         try {
-            // smaliIdeaParser.g:390:3: ( ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY CLASS_DESCRIPTOR ( annotation_element )* END_ANNOTATION_DIRECTIVE )
-            // smaliIdeaParser.g:390:5: ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY CLASS_DESCRIPTOR ( annotation_element )* END_ANNOTATION_DIRECTIVE
+            // smaliIdeaParser.g:395:3: ( ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY class_descriptor ( annotation_element )* END_ANNOTATION_DIRECTIVE )
+            // smaliIdeaParser.g:395:5: ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY class_descriptor ( annotation_element )* END_ANNOTATION_DIRECTIVE
             {
-            match(input,ANNOTATION_DIRECTIVE,FOLLOW_ANNOTATION_DIRECTIVE_in_annotation1429); if (state.failed) return ;
+            match(input,ANNOTATION_DIRECTIVE,FOLLOW_ANNOTATION_DIRECTIVE_in_annotation1452); if (state.failed) return ;
 
-            match(input,ANNOTATION_VISIBILITY,FOLLOW_ANNOTATION_VISIBILITY_in_annotation1431); if (state.failed) return ;
+            match(input,ANNOTATION_VISIBILITY,FOLLOW_ANNOTATION_VISIBILITY_in_annotation1454); if (state.failed) return ;
 
-            match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_annotation1433); if (state.failed) return ;
+            pushFollow(FOLLOW_class_descriptor_in_annotation1456);
+            class_descriptor();
 
-            // smaliIdeaParser.g:391:5: ( annotation_element )*
-            loop22:
+            state._fsp--;
+            if (state.failed) return ;
+
+            // smaliIdeaParser.g:396:5: ( annotation_element )*
+            loop23:
             do {
-                int alt22=2;
-                int LA22_0 = input.LA(1);
+                int alt23=2;
+                int LA23_0 = input.LA(1);
 
-                if ( (LA22_0==ACCESS_SPEC||LA22_0==ANNOTATION_VISIBILITY||LA22_0==BOOL_LITERAL||LA22_0==DOUBLE_LITERAL_OR_ID||LA22_0==FLOAT_LITERAL_OR_ID||(LA22_0 >= INSTRUCTION_FORMAT10t && LA22_0 <= INSTRUCTION_FORMAT10x_ODEX)||LA22_0==INSTRUCTION_FORMAT11x||LA22_0==INSTRUCTION_FORMAT12x_OR_ID||(LA22_0 >= INSTRUCTION_FORMAT21c_FIELD && LA22_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA22_0==INSTRUCTION_FORMAT21t||(LA22_0 >= INSTRUCTION_FORMAT22c_FIELD && LA22_0 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA22_0 >= INSTRUCTION_FORMAT22s_OR_ID && LA22_0 <= INSTRUCTION_FORMAT22t)||LA22_0==INSTRUCTION_FORMAT23x||(LA22_0 >= INSTRUCTION_FORMAT31i_OR_ID && LA22_0 <= INSTRUCTION_FORMAT31t)||(LA22_0 >= INSTRUCTION_FORMAT35c_METHOD && LA22_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA22_0==INSTRUCTION_FORMAT51l||(LA22_0 >= NEGATIVE_INTEGER_LITERAL && LA22_0 <= NULL_LITERAL)||LA22_0==PARAM_LIST_OR_ID||(LA22_0 >= POSITIVE_INTEGER_LITERAL && LA22_0 <= PRIMITIVE_TYPE)||LA22_0==REGISTER||LA22_0==SIMPLE_NAME||(LA22_0 >= VERIFICATION_ERROR_TYPE && LA22_0 <= VOID_TYPE)) ) {
-                    alt22=1;
+                if ( (LA23_0==ACCESS_SPEC||LA23_0==ANNOTATION_VISIBILITY||LA23_0==BOOL_LITERAL||LA23_0==DOUBLE_LITERAL_OR_ID||LA23_0==FLOAT_LITERAL_OR_ID||(LA23_0 >= INSTRUCTION_FORMAT10t && LA23_0 <= INSTRUCTION_FORMAT10x_ODEX)||LA23_0==INSTRUCTION_FORMAT11x||LA23_0==INSTRUCTION_FORMAT12x_OR_ID||(LA23_0 >= INSTRUCTION_FORMAT21c_FIELD && LA23_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA23_0==INSTRUCTION_FORMAT21t||(LA23_0 >= INSTRUCTION_FORMAT22c_FIELD && LA23_0 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA23_0 >= INSTRUCTION_FORMAT22s_OR_ID && LA23_0 <= INSTRUCTION_FORMAT22t)||LA23_0==INSTRUCTION_FORMAT23x||(LA23_0 >= INSTRUCTION_FORMAT31i_OR_ID && LA23_0 <= INSTRUCTION_FORMAT31t)||(LA23_0 >= INSTRUCTION_FORMAT35c_METHOD && LA23_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA23_0==INSTRUCTION_FORMAT51l||(LA23_0 >= NEGATIVE_INTEGER_LITERAL && LA23_0 <= NULL_LITERAL)||LA23_0==PARAM_LIST_OR_ID||(LA23_0 >= POSITIVE_INTEGER_LITERAL && LA23_0 <= PRIMITIVE_TYPE)||LA23_0==REGISTER||LA23_0==SIMPLE_NAME||(LA23_0 >= VERIFICATION_ERROR_TYPE && LA23_0 <= VOID_TYPE)) ) {
+                    alt23=1;
                 }
 
 
-                switch (alt22) {
+                switch (alt23) {
             	case 1 :
-            	    // smaliIdeaParser.g:391:5: annotation_element
+            	    // smaliIdeaParser.g:396:5: annotation_element
             	    {
-            	    pushFollow(FOLLOW_annotation_element_in_annotation1439);
+            	    pushFollow(FOLLOW_annotation_element_in_annotation1462);
             	    annotation_element();
 
             	    state._fsp--;
@@ -2776,12 +2850,12 @@ public class smaliIdeaParser extends Parser {
             	    break;
 
             	default :
-            	    break loop22;
+            	    break loop23;
                 }
             } while (true);
 
 
-            match(input,END_ANNOTATION_DIRECTIVE,FOLLOW_END_ANNOTATION_DIRECTIVE_in_annotation1442); if (state.failed) return ;
+            match(input,END_ANNOTATION_DIRECTIVE,FOLLOW_END_ANNOTATION_DIRECTIVE_in_annotation1465); if (state.failed) return ;
 
             }
 
@@ -2802,32 +2876,36 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "subannotation"
-    // smaliIdeaParser.g:394:1: subannotation : SUBANNOTATION_DIRECTIVE CLASS_DESCRIPTOR ( annotation_element )* END_SUBANNOTATION_DIRECTIVE ;
+    // smaliIdeaParser.g:399:1: subannotation : SUBANNOTATION_DIRECTIVE class_descriptor ( annotation_element )* END_SUBANNOTATION_DIRECTIVE ;
     public final void subannotation() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:395:3: ( SUBANNOTATION_DIRECTIVE CLASS_DESCRIPTOR ( annotation_element )* END_SUBANNOTATION_DIRECTIVE )
-            // smaliIdeaParser.g:395:5: SUBANNOTATION_DIRECTIVE CLASS_DESCRIPTOR ( annotation_element )* END_SUBANNOTATION_DIRECTIVE
+            // smaliIdeaParser.g:400:3: ( SUBANNOTATION_DIRECTIVE class_descriptor ( annotation_element )* END_SUBANNOTATION_DIRECTIVE )
+            // smaliIdeaParser.g:400:5: SUBANNOTATION_DIRECTIVE class_descriptor ( annotation_element )* END_SUBANNOTATION_DIRECTIVE
             {
-            match(input,SUBANNOTATION_DIRECTIVE,FOLLOW_SUBANNOTATION_DIRECTIVE_in_subannotation1458); if (state.failed) return ;
+            match(input,SUBANNOTATION_DIRECTIVE,FOLLOW_SUBANNOTATION_DIRECTIVE_in_subannotation1481); if (state.failed) return ;
 
-            match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_subannotation1460); if (state.failed) return ;
+            pushFollow(FOLLOW_class_descriptor_in_subannotation1483);
+            class_descriptor();
 
-            // smaliIdeaParser.g:395:46: ( annotation_element )*
-            loop23:
+            state._fsp--;
+            if (state.failed) return ;
+
+            // smaliIdeaParser.g:400:46: ( annotation_element )*
+            loop24:
             do {
-                int alt23=2;
-                int LA23_0 = input.LA(1);
+                int alt24=2;
+                int LA24_0 = input.LA(1);
 
-                if ( (LA23_0==ACCESS_SPEC||LA23_0==ANNOTATION_VISIBILITY||LA23_0==BOOL_LITERAL||LA23_0==DOUBLE_LITERAL_OR_ID||LA23_0==FLOAT_LITERAL_OR_ID||(LA23_0 >= INSTRUCTION_FORMAT10t && LA23_0 <= INSTRUCTION_FORMAT10x_ODEX)||LA23_0==INSTRUCTION_FORMAT11x||LA23_0==INSTRUCTION_FORMAT12x_OR_ID||(LA23_0 >= INSTRUCTION_FORMAT21c_FIELD && LA23_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA23_0==INSTRUCTION_FORMAT21t||(LA23_0 >= INSTRUCTION_FORMAT22c_FIELD && LA23_0 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA23_0 >= INSTRUCTION_FORMAT22s_OR_ID && LA23_0 <= INSTRUCTION_FORMAT22t)||LA23_0==INSTRUCTION_FORMAT23x||(LA23_0 >= INSTRUCTION_FORMAT31i_OR_ID && LA23_0 <= INSTRUCTION_FORMAT31t)||(LA23_0 >= INSTRUCTION_FORMAT35c_METHOD && LA23_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA23_0==INSTRUCTION_FORMAT51l||(LA23_0 >= NEGATIVE_INTEGER_LITERAL && LA23_0 <= NULL_LITERAL)||LA23_0==PARAM_LIST_OR_ID||(LA23_0 >= POSITIVE_INTEGER_LITERAL && LA23_0 <= PRIMITIVE_TYPE)||LA23_0==REGISTER||LA23_0==SIMPLE_NAME||(LA23_0 >= VERIFICATION_ERROR_TYPE && LA23_0 <= VOID_TYPE)) ) {
-                    alt23=1;
+                if ( (LA24_0==ACCESS_SPEC||LA24_0==ANNOTATION_VISIBILITY||LA24_0==BOOL_LITERAL||LA24_0==DOUBLE_LITERAL_OR_ID||LA24_0==FLOAT_LITERAL_OR_ID||(LA24_0 >= INSTRUCTION_FORMAT10t && LA24_0 <= INSTRUCTION_FORMAT10x_ODEX)||LA24_0==INSTRUCTION_FORMAT11x||LA24_0==INSTRUCTION_FORMAT12x_OR_ID||(LA24_0 >= INSTRUCTION_FORMAT21c_FIELD && LA24_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA24_0==INSTRUCTION_FORMAT21t||(LA24_0 >= INSTRUCTION_FORMAT22c_FIELD && LA24_0 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA24_0 >= INSTRUCTION_FORMAT22s_OR_ID && LA24_0 <= INSTRUCTION_FORMAT22t)||LA24_0==INSTRUCTION_FORMAT23x||(LA24_0 >= INSTRUCTION_FORMAT31i_OR_ID && LA24_0 <= INSTRUCTION_FORMAT31t)||(LA24_0 >= INSTRUCTION_FORMAT35c_METHOD && LA24_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA24_0==INSTRUCTION_FORMAT51l||(LA24_0 >= NEGATIVE_INTEGER_LITERAL && LA24_0 <= NULL_LITERAL)||LA24_0==PARAM_LIST_OR_ID||(LA24_0 >= POSITIVE_INTEGER_LITERAL && LA24_0 <= PRIMITIVE_TYPE)||LA24_0==REGISTER||LA24_0==SIMPLE_NAME||(LA24_0 >= VERIFICATION_ERROR_TYPE && LA24_0 <= VOID_TYPE)) ) {
+                    alt24=1;
                 }
 
 
-                switch (alt23) {
+                switch (alt24) {
             	case 1 :
-            	    // smaliIdeaParser.g:395:46: annotation_element
+            	    // smaliIdeaParser.g:400:46: annotation_element
             	    {
-            	    pushFollow(FOLLOW_annotation_element_in_subannotation1462);
+            	    pushFollow(FOLLOW_annotation_element_in_subannotation1485);
             	    annotation_element();
 
             	    state._fsp--;
@@ -2837,12 +2915,12 @@ public class smaliIdeaParser extends Parser {
             	    break;
 
             	default :
-            	    break loop23;
+            	    break loop24;
                 }
             } while (true);
 
 
-            match(input,END_SUBANNOTATION_DIRECTIVE,FOLLOW_END_SUBANNOTATION_DIRECTIVE_in_subannotation1465); if (state.failed) return ;
+            match(input,END_SUBANNOTATION_DIRECTIVE,FOLLOW_END_SUBANNOTATION_DIRECTIVE_in_subannotation1488); if (state.failed) return ;
 
             }
 
@@ -2862,31 +2940,31 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "enum_literal"
-    // smaliIdeaParser.g:397:1: enum_literal : ENUM_DIRECTIVE reference_type_descriptor ARROW simple_name COLON reference_type_descriptor ;
+    // smaliIdeaParser.g:402:1: enum_literal : ENUM_DIRECTIVE reference_type_descriptor ARROW simple_name COLON reference_type_descriptor ;
     public final void enum_literal() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:398:3: ( ENUM_DIRECTIVE reference_type_descriptor ARROW simple_name COLON reference_type_descriptor )
-            // smaliIdeaParser.g:398:5: ENUM_DIRECTIVE reference_type_descriptor ARROW simple_name COLON reference_type_descriptor
+            // smaliIdeaParser.g:403:3: ( ENUM_DIRECTIVE reference_type_descriptor ARROW simple_name COLON reference_type_descriptor )
+            // smaliIdeaParser.g:403:5: ENUM_DIRECTIVE reference_type_descriptor ARROW simple_name COLON reference_type_descriptor
             {
-            match(input,ENUM_DIRECTIVE,FOLLOW_ENUM_DIRECTIVE_in_enum_literal1475); if (state.failed) return ;
+            match(input,ENUM_DIRECTIVE,FOLLOW_ENUM_DIRECTIVE_in_enum_literal1498); if (state.failed) return ;
 
-            pushFollow(FOLLOW_reference_type_descriptor_in_enum_literal1477);
+            pushFollow(FOLLOW_reference_type_descriptor_in_enum_literal1500);
             reference_type_descriptor();
 
             state._fsp--;
             if (state.failed) return ;
 
-            match(input,ARROW,FOLLOW_ARROW_in_enum_literal1479); if (state.failed) return ;
+            match(input,ARROW,FOLLOW_ARROW_in_enum_literal1502); if (state.failed) return ;
 
-            pushFollow(FOLLOW_simple_name_in_enum_literal1481);
+            pushFollow(FOLLOW_simple_name_in_enum_literal1504);
             simple_name();
 
             state._fsp--;
             if (state.failed) return ;
 
-            match(input,COLON,FOLLOW_COLON_in_enum_literal1483); if (state.failed) return ;
+            match(input,COLON,FOLLOW_COLON_in_enum_literal1506); if (state.failed) return ;
 
-            pushFollow(FOLLOW_reference_type_descriptor_in_enum_literal1485);
+            pushFollow(FOLLOW_reference_type_descriptor_in_enum_literal1508);
             reference_type_descriptor();
 
             state._fsp--;
@@ -2910,117 +2988,117 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "type_field_method_literal"
-    // smaliIdeaParser.g:400:1: type_field_method_literal : ( reference_type_descriptor ( ARROW ( simple_name COLON nonvoid_type_descriptor | method_name method_prototype ) |) | primitive_type | void_type );
+    // smaliIdeaParser.g:405:1: type_field_method_literal : ( reference_type_descriptor ( ARROW ( simple_name COLON nonvoid_type_descriptor | method_name method_prototype ) |) | primitive_type | void_type );
     public final void type_field_method_literal() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:401:3: ( reference_type_descriptor ( ARROW ( simple_name COLON nonvoid_type_descriptor | method_name method_prototype ) |) | primitive_type | void_type )
-            int alt26=3;
+            // smaliIdeaParser.g:406:3: ( reference_type_descriptor ( ARROW ( simple_name COLON nonvoid_type_descriptor | method_name method_prototype ) |) | primitive_type | void_type )
+            int alt27=3;
             switch ( input.LA(1) ) {
             case ARRAY_DESCRIPTOR:
             case CLASS_DESCRIPTOR:
                 {
-                alt26=1;
+                alt27=1;
                 }
                 break;
             case PRIMITIVE_TYPE:
                 {
-                alt26=2;
+                alt27=2;
                 }
                 break;
             case VOID_TYPE:
                 {
-                alt26=3;
+                alt27=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 26, 0, input);
+                    new NoViableAltException("", 27, 0, input);
 
                 throw nvae;
 
             }
 
-            switch (alt26) {
+            switch (alt27) {
                 case 1 :
-                    // smaliIdeaParser.g:401:5: reference_type_descriptor ( ARROW ( simple_name COLON nonvoid_type_descriptor | method_name method_prototype ) |)
+                    // smaliIdeaParser.g:406:5: reference_type_descriptor ( ARROW ( simple_name COLON nonvoid_type_descriptor | method_name method_prototype ) |)
                     {
-                    pushFollow(FOLLOW_reference_type_descriptor_in_type_field_method_literal1495);
+                    pushFollow(FOLLOW_reference_type_descriptor_in_type_field_method_literal1518);
                     reference_type_descriptor();
 
                     state._fsp--;
                     if (state.failed) return ;
 
-                    // smaliIdeaParser.g:402:5: ( ARROW ( simple_name COLON nonvoid_type_descriptor | method_name method_prototype ) |)
-                    int alt25=2;
-                    int LA25_0 = input.LA(1);
+                    // smaliIdeaParser.g:407:5: ( ARROW ( simple_name COLON nonvoid_type_descriptor | method_name method_prototype ) |)
+                    int alt26=2;
+                    int LA26_0 = input.LA(1);
 
-                    if ( (LA25_0==ARROW) ) {
-                        alt25=1;
+                    if ( (LA26_0==ARROW) ) {
+                        alt26=1;
                     }
-                    else if ( (LA25_0==EOF||(LA25_0 >= ACCESS_SPEC && LA25_0 <= ARRAY_DATA_DIRECTIVE)||LA25_0==BOOL_LITERAL||(LA25_0 >= CATCH_DIRECTIVE && LA25_0 <= CATCHALL_DIRECTIVE)||(LA25_0 >= CLASS_DIRECTIVE && LA25_0 <= CLOSE_BRACE)||(LA25_0 >= COLON && LA25_0 <= COMMA)||(LA25_0 >= DOUBLE_LITERAL_OR_ID && LA25_0 <= END_ANNOTATION_DIRECTIVE)||(LA25_0 >= END_FIELD_DIRECTIVE && LA25_0 <= END_METHOD_DIRECTIVE)||LA25_0==END_SUBANNOTATION_DIRECTIVE||LA25_0==EPILOGUE_DIRECTIVE||LA25_0==FIELD_DIRECTIVE||LA25_0==FLOAT_LITERAL_OR_ID||LA25_0==IMPLEMENTS_DIRECTIVE||(LA25_0 >= INSTRUCTION_FORMAT10t && LA25_0 <= INSTRUCTION_FORMAT51l)||(LA25_0 >= LINE_DIRECTIVE && LA25_0 <= LOCALS_DIRECTIVE)||LA25_0==METHOD_DIRECTIVE||(LA25_0 >= NEGATIVE_INTEGER_LITERAL && LA25_0 <= NULL_LITERAL)||LA25_0==PACKED_SWITCH_DIRECTIVE||(LA25_0 >= PARAM_LIST_OR_ID && LA25_0 <= RESTART_LOCAL_DIRECTIVE)||(LA25_0 >= SIMPLE_NAME && LA25_0 <= SPARSE_SWITCH_DIRECTIVE)||(LA25_0 >= SUPER_DIRECTIVE && LA25_0 <= VOID_TYPE)) ) {
-                        alt25=2;
+                    else if ( (LA26_0==EOF||(LA26_0 >= ACCESS_SPEC && LA26_0 <= ARRAY_DATA_DIRECTIVE)||LA26_0==BOOL_LITERAL||(LA26_0 >= CATCH_DIRECTIVE && LA26_0 <= CATCHALL_DIRECTIVE)||(LA26_0 >= CLASS_DIRECTIVE && LA26_0 <= CLOSE_BRACE)||(LA26_0 >= COLON && LA26_0 <= COMMA)||(LA26_0 >= DOUBLE_LITERAL_OR_ID && LA26_0 <= END_ANNOTATION_DIRECTIVE)||(LA26_0 >= END_FIELD_DIRECTIVE && LA26_0 <= END_METHOD_DIRECTIVE)||LA26_0==END_SUBANNOTATION_DIRECTIVE||LA26_0==EPILOGUE_DIRECTIVE||LA26_0==FIELD_DIRECTIVE||LA26_0==FLOAT_LITERAL_OR_ID||LA26_0==IMPLEMENTS_DIRECTIVE||(LA26_0 >= INSTRUCTION_FORMAT10t && LA26_0 <= INSTRUCTION_FORMAT51l)||(LA26_0 >= LINE_DIRECTIVE && LA26_0 <= LOCALS_DIRECTIVE)||LA26_0==METHOD_DIRECTIVE||(LA26_0 >= NEGATIVE_INTEGER_LITERAL && LA26_0 <= NULL_LITERAL)||LA26_0==PACKED_SWITCH_DIRECTIVE||(LA26_0 >= PARAM_LIST_OR_ID && LA26_0 <= RESTART_LOCAL_DIRECTIVE)||(LA26_0 >= SIMPLE_NAME && LA26_0 <= SPARSE_SWITCH_DIRECTIVE)||(LA26_0 >= SUPER_DIRECTIVE && LA26_0 <= VOID_TYPE)) ) {
+                        alt26=2;
                     }
                     else {
                         if (state.backtracking>0) {state.failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("", 25, 0, input);
+                            new NoViableAltException("", 26, 0, input);
 
                         throw nvae;
 
                     }
-                    switch (alt25) {
+                    switch (alt26) {
                         case 1 :
-                            // smaliIdeaParser.g:402:7: ARROW ( simple_name COLON nonvoid_type_descriptor | method_name method_prototype )
+                            // smaliIdeaParser.g:407:7: ARROW ( simple_name COLON nonvoid_type_descriptor | method_name method_prototype )
                             {
-                            match(input,ARROW,FOLLOW_ARROW_in_type_field_method_literal1503); if (state.failed) return ;
+                            match(input,ARROW,FOLLOW_ARROW_in_type_field_method_literal1526); if (state.failed) return ;
 
-                            // smaliIdeaParser.g:403:7: ( simple_name COLON nonvoid_type_descriptor | method_name method_prototype )
-                            int alt24=2;
-                            int LA24_0 = input.LA(1);
+                            // smaliIdeaParser.g:408:7: ( simple_name COLON nonvoid_type_descriptor | method_name method_prototype )
+                            int alt25=2;
+                            int LA25_0 = input.LA(1);
 
-                            if ( (LA24_0==ACCESS_SPEC||LA24_0==ANNOTATION_VISIBILITY||LA24_0==BOOL_LITERAL||LA24_0==DOUBLE_LITERAL_OR_ID||LA24_0==FLOAT_LITERAL_OR_ID||(LA24_0 >= INSTRUCTION_FORMAT10t && LA24_0 <= INSTRUCTION_FORMAT10x_ODEX)||LA24_0==INSTRUCTION_FORMAT11x||LA24_0==INSTRUCTION_FORMAT12x_OR_ID||(LA24_0 >= INSTRUCTION_FORMAT21c_FIELD && LA24_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA24_0==INSTRUCTION_FORMAT21t||(LA24_0 >= INSTRUCTION_FORMAT22c_FIELD && LA24_0 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA24_0 >= INSTRUCTION_FORMAT22s_OR_ID && LA24_0 <= INSTRUCTION_FORMAT22t)||LA24_0==INSTRUCTION_FORMAT23x||(LA24_0 >= INSTRUCTION_FORMAT31i_OR_ID && LA24_0 <= INSTRUCTION_FORMAT31t)||(LA24_0 >= INSTRUCTION_FORMAT35c_METHOD && LA24_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA24_0==INSTRUCTION_FORMAT51l||(LA24_0 >= NEGATIVE_INTEGER_LITERAL && LA24_0 <= NULL_LITERAL)||LA24_0==PARAM_LIST_OR_ID||(LA24_0 >= POSITIVE_INTEGER_LITERAL && LA24_0 <= PRIMITIVE_TYPE)||LA24_0==REGISTER||LA24_0==SIMPLE_NAME||(LA24_0 >= VERIFICATION_ERROR_TYPE && LA24_0 <= VOID_TYPE)) ) {
-                                int LA24_1 = input.LA(2);
+                            if ( (LA25_0==ACCESS_SPEC||LA25_0==ANNOTATION_VISIBILITY||LA25_0==BOOL_LITERAL||LA25_0==DOUBLE_LITERAL_OR_ID||LA25_0==FLOAT_LITERAL_OR_ID||(LA25_0 >= INSTRUCTION_FORMAT10t && LA25_0 <= INSTRUCTION_FORMAT10x_ODEX)||LA25_0==INSTRUCTION_FORMAT11x||LA25_0==INSTRUCTION_FORMAT12x_OR_ID||(LA25_0 >= INSTRUCTION_FORMAT21c_FIELD && LA25_0 <= INSTRUCTION_FORMAT21c_TYPE)||LA25_0==INSTRUCTION_FORMAT21t||(LA25_0 >= INSTRUCTION_FORMAT22c_FIELD && LA25_0 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA25_0 >= INSTRUCTION_FORMAT22s_OR_ID && LA25_0 <= INSTRUCTION_FORMAT22t)||LA25_0==INSTRUCTION_FORMAT23x||(LA25_0 >= INSTRUCTION_FORMAT31i_OR_ID && LA25_0 <= INSTRUCTION_FORMAT31t)||(LA25_0 >= INSTRUCTION_FORMAT35c_METHOD && LA25_0 <= INSTRUCTION_FORMAT35ms_METHOD)||LA25_0==INSTRUCTION_FORMAT51l||(LA25_0 >= NEGATIVE_INTEGER_LITERAL && LA25_0 <= NULL_LITERAL)||LA25_0==PARAM_LIST_OR_ID||(LA25_0 >= POSITIVE_INTEGER_LITERAL && LA25_0 <= PRIMITIVE_TYPE)||LA25_0==REGISTER||LA25_0==SIMPLE_NAME||(LA25_0 >= VERIFICATION_ERROR_TYPE && LA25_0 <= VOID_TYPE)) ) {
+                                int LA25_1 = input.LA(2);
 
-                                if ( (LA24_1==COLON) ) {
-                                    alt24=1;
+                                if ( (LA25_1==COLON) ) {
+                                    alt25=1;
                                 }
-                                else if ( (LA24_1==OPEN_PAREN) ) {
-                                    alt24=2;
+                                else if ( (LA25_1==OPEN_PAREN) ) {
+                                    alt25=2;
                                 }
                                 else {
                                     if (state.backtracking>0) {state.failed=true; return ;}
                                     NoViableAltException nvae =
-                                        new NoViableAltException("", 24, 1, input);
+                                        new NoViableAltException("", 25, 1, input);
 
                                     throw nvae;
 
                                 }
                             }
-                            else if ( (LA24_0==METHOD_NAME) ) {
-                                alt24=2;
+                            else if ( (LA25_0==METHOD_NAME) ) {
+                                alt25=2;
                             }
                             else {
                                 if (state.backtracking>0) {state.failed=true; return ;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("", 24, 0, input);
+                                    new NoViableAltException("", 25, 0, input);
 
                                 throw nvae;
 
                             }
-                            switch (alt24) {
+                            switch (alt25) {
                                 case 1 :
-                                    // smaliIdeaParser.g:403:9: simple_name COLON nonvoid_type_descriptor
+                                    // smaliIdeaParser.g:408:9: simple_name COLON nonvoid_type_descriptor
                                     {
-                                    pushFollow(FOLLOW_simple_name_in_type_field_method_literal1513);
+                                    pushFollow(FOLLOW_simple_name_in_type_field_method_literal1536);
                                     simple_name();
 
                                     state._fsp--;
                                     if (state.failed) return ;
 
-                                    match(input,COLON,FOLLOW_COLON_in_type_field_method_literal1515); if (state.failed) return ;
+                                    match(input,COLON,FOLLOW_COLON_in_type_field_method_literal1538); if (state.failed) return ;
 
-                                    pushFollow(FOLLOW_nonvoid_type_descriptor_in_type_field_method_literal1517);
+                                    pushFollow(FOLLOW_nonvoid_type_descriptor_in_type_field_method_literal1540);
                                     nonvoid_type_descriptor();
 
                                     state._fsp--;
@@ -3029,15 +3107,15 @@ public class smaliIdeaParser extends Parser {
                                     }
                                     break;
                                 case 2 :
-                                    // smaliIdeaParser.g:404:9: method_name method_prototype
+                                    // smaliIdeaParser.g:409:9: method_name method_prototype
                                     {
-                                    pushFollow(FOLLOW_method_name_in_type_field_method_literal1527);
+                                    pushFollow(FOLLOW_method_name_in_type_field_method_literal1550);
                                     method_name();
 
                                     state._fsp--;
                                     if (state.failed) return ;
 
-                                    pushFollow(FOLLOW_method_prototype_in_type_field_method_literal1529);
+                                    pushFollow(FOLLOW_method_prototype_in_type_field_method_literal1552);
                                     method_prototype();
 
                                     state._fsp--;
@@ -3052,7 +3130,7 @@ public class smaliIdeaParser extends Parser {
                             }
                             break;
                         case 2 :
-                            // smaliIdeaParser.g:407:5: 
+                            // smaliIdeaParser.g:412:5: 
                             {
                             }
                             break;
@@ -3063,9 +3141,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // smaliIdeaParser.g:408:5: primitive_type
+                    // smaliIdeaParser.g:413:5: primitive_type
                     {
-                    pushFollow(FOLLOW_primitive_type_in_type_field_method_literal1559);
+                    pushFollow(FOLLOW_primitive_type_in_type_field_method_literal1582);
                     primitive_type();
 
                     state._fsp--;
@@ -3074,9 +3152,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // smaliIdeaParser.g:409:5: void_type
+                    // smaliIdeaParser.g:414:5: void_type
                     {
-                    pushFollow(FOLLOW_void_type_in_type_field_method_literal1565);
+                    pushFollow(FOLLOW_void_type_in_type_field_method_literal1588);
                     void_type();
 
                     state._fsp--;
@@ -3102,27 +3180,27 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "fully_qualified_method"
-    // smaliIdeaParser.g:411:1: fully_qualified_method : reference_type_descriptor ARROW method_name method_prototype ;
+    // smaliIdeaParser.g:416:1: fully_qualified_method : reference_type_descriptor ARROW method_name method_prototype ;
     public final void fully_qualified_method() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:412:3: ( reference_type_descriptor ARROW method_name method_prototype )
-            // smaliIdeaParser.g:412:5: reference_type_descriptor ARROW method_name method_prototype
+            // smaliIdeaParser.g:417:3: ( reference_type_descriptor ARROW method_name method_prototype )
+            // smaliIdeaParser.g:417:5: reference_type_descriptor ARROW method_name method_prototype
             {
-            pushFollow(FOLLOW_reference_type_descriptor_in_fully_qualified_method1575);
+            pushFollow(FOLLOW_reference_type_descriptor_in_fully_qualified_method1598);
             reference_type_descriptor();
 
             state._fsp--;
             if (state.failed) return ;
 
-            match(input,ARROW,FOLLOW_ARROW_in_fully_qualified_method1577); if (state.failed) return ;
+            match(input,ARROW,FOLLOW_ARROW_in_fully_qualified_method1600); if (state.failed) return ;
 
-            pushFollow(FOLLOW_method_name_in_fully_qualified_method1579);
+            pushFollow(FOLLOW_method_name_in_fully_qualified_method1602);
             method_name();
 
             state._fsp--;
             if (state.failed) return ;
 
-            pushFollow(FOLLOW_method_prototype_in_fully_qualified_method1581);
+            pushFollow(FOLLOW_method_prototype_in_fully_qualified_method1604);
             method_prototype();
 
             state._fsp--;
@@ -3146,29 +3224,29 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "fully_qualified_field"
-    // smaliIdeaParser.g:414:1: fully_qualified_field : reference_type_descriptor ARROW simple_name COLON nonvoid_type_descriptor ;
+    // smaliIdeaParser.g:419:1: fully_qualified_field : reference_type_descriptor ARROW simple_name COLON nonvoid_type_descriptor ;
     public final void fully_qualified_field() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:415:3: ( reference_type_descriptor ARROW simple_name COLON nonvoid_type_descriptor )
-            // smaliIdeaParser.g:415:5: reference_type_descriptor ARROW simple_name COLON nonvoid_type_descriptor
+            // smaliIdeaParser.g:420:3: ( reference_type_descriptor ARROW simple_name COLON nonvoid_type_descriptor )
+            // smaliIdeaParser.g:420:5: reference_type_descriptor ARROW simple_name COLON nonvoid_type_descriptor
             {
-            pushFollow(FOLLOW_reference_type_descriptor_in_fully_qualified_field1591);
+            pushFollow(FOLLOW_reference_type_descriptor_in_fully_qualified_field1614);
             reference_type_descriptor();
 
             state._fsp--;
             if (state.failed) return ;
 
-            match(input,ARROW,FOLLOW_ARROW_in_fully_qualified_field1593); if (state.failed) return ;
+            match(input,ARROW,FOLLOW_ARROW_in_fully_qualified_field1616); if (state.failed) return ;
 
-            pushFollow(FOLLOW_simple_name_in_fully_qualified_field1595);
+            pushFollow(FOLLOW_simple_name_in_fully_qualified_field1618);
             simple_name();
 
             state._fsp--;
             if (state.failed) return ;
 
-            match(input,COLON,FOLLOW_COLON_in_fully_qualified_field1597); if (state.failed) return ;
+            match(input,COLON,FOLLOW_COLON_in_fully_qualified_field1620); if (state.failed) return ;
 
-            pushFollow(FOLLOW_nonvoid_type_descriptor_in_fully_qualified_field1599);
+            pushFollow(FOLLOW_nonvoid_type_descriptor_in_fully_qualified_field1622);
             nonvoid_type_descriptor();
 
             state._fsp--;
@@ -3192,15 +3270,15 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "label"
-    // smaliIdeaParser.g:417:1: label : COLON simple_name ;
+    // smaliIdeaParser.g:422:1: label : COLON simple_name ;
     public final void label() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:418:3: ( COLON simple_name )
-            // smaliIdeaParser.g:418:5: COLON simple_name
+            // smaliIdeaParser.g:423:3: ( COLON simple_name )
+            // smaliIdeaParser.g:423:5: COLON simple_name
             {
-            match(input,COLON,FOLLOW_COLON_in_label1609); if (state.failed) return ;
+            match(input,COLON,FOLLOW_COLON_in_label1632); if (state.failed) return ;
 
-            pushFollow(FOLLOW_simple_name_in_label1611);
+            pushFollow(FOLLOW_simple_name_in_label1634);
             simple_name();
 
             state._fsp--;
@@ -3224,43 +3302,43 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "label_ref_or_offset"
-    // smaliIdeaParser.g:420:1: label_ref_or_offset : ( COLON simple_name | OFFSET | NEGATIVE_INTEGER_LITERAL );
+    // smaliIdeaParser.g:425:1: label_ref_or_offset : ( COLON simple_name | OFFSET | NEGATIVE_INTEGER_LITERAL );
     public final void label_ref_or_offset() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:421:3: ( COLON simple_name | OFFSET | NEGATIVE_INTEGER_LITERAL )
-            int alt27=3;
+            // smaliIdeaParser.g:426:3: ( COLON simple_name | OFFSET | NEGATIVE_INTEGER_LITERAL )
+            int alt28=3;
             switch ( input.LA(1) ) {
             case COLON:
                 {
-                alt27=1;
+                alt28=1;
                 }
                 break;
             case OFFSET:
                 {
-                alt27=2;
+                alt28=2;
                 }
                 break;
             case NEGATIVE_INTEGER_LITERAL:
                 {
-                alt27=3;
+                alt28=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 27, 0, input);
+                    new NoViableAltException("", 28, 0, input);
 
                 throw nvae;
 
             }
 
-            switch (alt27) {
+            switch (alt28) {
                 case 1 :
-                    // smaliIdeaParser.g:421:5: COLON simple_name
+                    // smaliIdeaParser.g:426:5: COLON simple_name
                     {
-                    match(input,COLON,FOLLOW_COLON_in_label_ref_or_offset1621); if (state.failed) return ;
+                    match(input,COLON,FOLLOW_COLON_in_label_ref_or_offset1644); if (state.failed) return ;
 
-                    pushFollow(FOLLOW_simple_name_in_label_ref_or_offset1623);
+                    pushFollow(FOLLOW_simple_name_in_label_ref_or_offset1646);
                     simple_name();
 
                     state._fsp--;
@@ -3269,16 +3347,16 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // smaliIdeaParser.g:422:5: OFFSET
+                    // smaliIdeaParser.g:427:5: OFFSET
                     {
-                    match(input,OFFSET,FOLLOW_OFFSET_in_label_ref_or_offset1629); if (state.failed) return ;
+                    match(input,OFFSET,FOLLOW_OFFSET_in_label_ref_or_offset1652); if (state.failed) return ;
 
                     }
                     break;
                 case 3 :
-                    // smaliIdeaParser.g:423:5: NEGATIVE_INTEGER_LITERAL
+                    // smaliIdeaParser.g:428:5: NEGATIVE_INTEGER_LITERAL
                     {
-                    match(input,NEGATIVE_INTEGER_LITERAL,FOLLOW_NEGATIVE_INTEGER_LITERAL_in_label_ref_or_offset1635); if (state.failed) return ;
+                    match(input,NEGATIVE_INTEGER_LITERAL,FOLLOW_NEGATIVE_INTEGER_LITERAL_in_label_ref_or_offset1658); if (state.failed) return ;
 
                     }
                     break;
@@ -3300,49 +3378,49 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "register_list"
-    // smaliIdeaParser.g:425:1: register_list : ( REGISTER ( COMMA REGISTER )* )? ;
+    // smaliIdeaParser.g:430:1: register_list : ( REGISTER ( COMMA REGISTER )* )? ;
     public final void register_list() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:426:3: ( ( REGISTER ( COMMA REGISTER )* )? )
-            // smaliIdeaParser.g:426:5: ( REGISTER ( COMMA REGISTER )* )?
+            // smaliIdeaParser.g:431:3: ( ( REGISTER ( COMMA REGISTER )* )? )
+            // smaliIdeaParser.g:431:5: ( REGISTER ( COMMA REGISTER )* )?
             {
-            // smaliIdeaParser.g:426:5: ( REGISTER ( COMMA REGISTER )* )?
-            int alt29=2;
-            int LA29_0 = input.LA(1);
+            // smaliIdeaParser.g:431:5: ( REGISTER ( COMMA REGISTER )* )?
+            int alt30=2;
+            int LA30_0 = input.LA(1);
 
-            if ( (LA29_0==REGISTER) ) {
-                alt29=1;
+            if ( (LA30_0==REGISTER) ) {
+                alt30=1;
             }
-            switch (alt29) {
+            switch (alt30) {
                 case 1 :
-                    // smaliIdeaParser.g:426:6: REGISTER ( COMMA REGISTER )*
+                    // smaliIdeaParser.g:431:6: REGISTER ( COMMA REGISTER )*
                     {
-                    match(input,REGISTER,FOLLOW_REGISTER_in_register_list1646); if (state.failed) return ;
+                    match(input,REGISTER,FOLLOW_REGISTER_in_register_list1669); if (state.failed) return ;
 
-                    // smaliIdeaParser.g:426:15: ( COMMA REGISTER )*
-                    loop28:
+                    // smaliIdeaParser.g:431:15: ( COMMA REGISTER )*
+                    loop29:
                     do {
-                        int alt28=2;
-                        int LA28_0 = input.LA(1);
+                        int alt29=2;
+                        int LA29_0 = input.LA(1);
 
-                        if ( (LA28_0==COMMA) ) {
-                            alt28=1;
+                        if ( (LA29_0==COMMA) ) {
+                            alt29=1;
                         }
 
 
-                        switch (alt28) {
+                        switch (alt29) {
                     	case 1 :
-                    	    // smaliIdeaParser.g:426:16: COMMA REGISTER
+                    	    // smaliIdeaParser.g:431:16: COMMA REGISTER
                     	    {
-                    	    match(input,COMMA,FOLLOW_COMMA_in_register_list1649); if (state.failed) return ;
+                    	    match(input,COMMA,FOLLOW_COMMA_in_register_list1672); if (state.failed) return ;
 
-                    	    match(input,REGISTER,FOLLOW_REGISTER_in_register_list1651); if (state.failed) return ;
+                    	    match(input,REGISTER,FOLLOW_REGISTER_in_register_list1674); if (state.failed) return ;
 
                     	    }
                     	    break;
 
                     	default :
-                    	    break loop28;
+                    	    break loop29;
                         }
                     } while (true);
 
@@ -3371,39 +3449,39 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "register_range"
-    // smaliIdeaParser.g:428:1: register_range : ( REGISTER ( DOTDOT REGISTER )? )? ;
+    // smaliIdeaParser.g:433:1: register_range : ( REGISTER ( DOTDOT REGISTER )? )? ;
     public final void register_range() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:429:3: ( ( REGISTER ( DOTDOT REGISTER )? )? )
-            // smaliIdeaParser.g:429:5: ( REGISTER ( DOTDOT REGISTER )? )?
+            // smaliIdeaParser.g:434:3: ( ( REGISTER ( DOTDOT REGISTER )? )? )
+            // smaliIdeaParser.g:434:5: ( REGISTER ( DOTDOT REGISTER )? )?
             {
-            // smaliIdeaParser.g:429:5: ( REGISTER ( DOTDOT REGISTER )? )?
-            int alt31=2;
-            int LA31_0 = input.LA(1);
+            // smaliIdeaParser.g:434:5: ( REGISTER ( DOTDOT REGISTER )? )?
+            int alt32=2;
+            int LA32_0 = input.LA(1);
 
-            if ( (LA31_0==REGISTER) ) {
-                alt31=1;
+            if ( (LA32_0==REGISTER) ) {
+                alt32=1;
             }
-            switch (alt31) {
+            switch (alt32) {
                 case 1 :
-                    // smaliIdeaParser.g:429:6: REGISTER ( DOTDOT REGISTER )?
+                    // smaliIdeaParser.g:434:6: REGISTER ( DOTDOT REGISTER )?
                     {
-                    match(input,REGISTER,FOLLOW_REGISTER_in_register_range1666); if (state.failed) return ;
+                    match(input,REGISTER,FOLLOW_REGISTER_in_register_range1689); if (state.failed) return ;
 
-                    // smaliIdeaParser.g:429:15: ( DOTDOT REGISTER )?
-                    int alt30=2;
-                    int LA30_0 = input.LA(1);
+                    // smaliIdeaParser.g:434:15: ( DOTDOT REGISTER )?
+                    int alt31=2;
+                    int LA31_0 = input.LA(1);
 
-                    if ( (LA30_0==DOTDOT) ) {
-                        alt30=1;
+                    if ( (LA31_0==DOTDOT) ) {
+                        alt31=1;
                     }
-                    switch (alt30) {
+                    switch (alt31) {
                         case 1 :
-                            // smaliIdeaParser.g:429:16: DOTDOT REGISTER
+                            // smaliIdeaParser.g:434:16: DOTDOT REGISTER
                             {
-                            match(input,DOTDOT,FOLLOW_DOTDOT_in_register_range1669); if (state.failed) return ;
+                            match(input,DOTDOT,FOLLOW_DOTDOT_in_register_range1692); if (state.failed) return ;
 
-                            match(input,REGISTER,FOLLOW_REGISTER_in_register_range1671); if (state.failed) return ;
+                            match(input,REGISTER,FOLLOW_REGISTER_in_register_range1694); if (state.failed) return ;
 
                             }
                             break;
@@ -3435,47 +3513,47 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "verification_error_reference"
-    // smaliIdeaParser.g:431:1: verification_error_reference : ( CLASS_DESCRIPTOR | fully_qualified_field | fully_qualified_method );
+    // smaliIdeaParser.g:436:1: verification_error_reference : ( class_descriptor | fully_qualified_field | fully_qualified_method );
     public final void verification_error_reference() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:432:3: ( CLASS_DESCRIPTOR | fully_qualified_field | fully_qualified_method )
-            int alt32=3;
-            int LA32_0 = input.LA(1);
+            // smaliIdeaParser.g:437:3: ( class_descriptor | fully_qualified_field | fully_qualified_method )
+            int alt33=3;
+            int LA33_0 = input.LA(1);
 
-            if ( (LA32_0==CLASS_DESCRIPTOR) ) {
-                int LA32_1 = input.LA(2);
+            if ( (LA33_0==CLASS_DESCRIPTOR) ) {
+                int LA33_1 = input.LA(2);
 
-                if ( (LA32_1==ANNOTATION_DIRECTIVE||LA32_1==ARRAY_DATA_DIRECTIVE||(LA32_1 >= CATCH_DIRECTIVE && LA32_1 <= CATCHALL_DIRECTIVE)||LA32_1==COLON||(LA32_1 >= END_LOCAL_DIRECTIVE && LA32_1 <= END_METHOD_DIRECTIVE)||LA32_1==EPILOGUE_DIRECTIVE||(LA32_1 >= INSTRUCTION_FORMAT10t && LA32_1 <= INSTRUCTION_FORMAT51l)||(LA32_1 >= LINE_DIRECTIVE && LA32_1 <= LOCALS_DIRECTIVE)||LA32_1==PACKED_SWITCH_DIRECTIVE||LA32_1==PARAMETER_DIRECTIVE||LA32_1==PROLOGUE_DIRECTIVE||(LA32_1 >= REGISTERS_DIRECTIVE && LA32_1 <= RESTART_LOCAL_DIRECTIVE)||(LA32_1 >= SOURCE_DIRECTIVE && LA32_1 <= SPARSE_SWITCH_DIRECTIVE)) ) {
-                    alt32=1;
+                if ( (LA33_1==ANNOTATION_DIRECTIVE||LA33_1==ARRAY_DATA_DIRECTIVE||(LA33_1 >= CATCH_DIRECTIVE && LA33_1 <= CATCHALL_DIRECTIVE)||LA33_1==COLON||(LA33_1 >= END_LOCAL_DIRECTIVE && LA33_1 <= END_METHOD_DIRECTIVE)||LA33_1==EPILOGUE_DIRECTIVE||(LA33_1 >= INSTRUCTION_FORMAT10t && LA33_1 <= INSTRUCTION_FORMAT51l)||(LA33_1 >= LINE_DIRECTIVE && LA33_1 <= LOCALS_DIRECTIVE)||LA33_1==PACKED_SWITCH_DIRECTIVE||LA33_1==PARAMETER_DIRECTIVE||LA33_1==PROLOGUE_DIRECTIVE||(LA33_1 >= REGISTERS_DIRECTIVE && LA33_1 <= RESTART_LOCAL_DIRECTIVE)||(LA33_1 >= SOURCE_DIRECTIVE && LA33_1 <= SPARSE_SWITCH_DIRECTIVE)) ) {
+                    alt33=1;
                 }
-                else if ( (LA32_1==ARROW) ) {
-                    int LA32_4 = input.LA(3);
+                else if ( (LA33_1==ARROW) ) {
+                    int LA33_4 = input.LA(3);
 
-                    if ( (LA32_4==ACCESS_SPEC||LA32_4==ANNOTATION_VISIBILITY||LA32_4==BOOL_LITERAL||LA32_4==DOUBLE_LITERAL_OR_ID||LA32_4==FLOAT_LITERAL_OR_ID||(LA32_4 >= INSTRUCTION_FORMAT10t && LA32_4 <= INSTRUCTION_FORMAT10x_ODEX)||LA32_4==INSTRUCTION_FORMAT11x||LA32_4==INSTRUCTION_FORMAT12x_OR_ID||(LA32_4 >= INSTRUCTION_FORMAT21c_FIELD && LA32_4 <= INSTRUCTION_FORMAT21c_TYPE)||LA32_4==INSTRUCTION_FORMAT21t||(LA32_4 >= INSTRUCTION_FORMAT22c_FIELD && LA32_4 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA32_4 >= INSTRUCTION_FORMAT22s_OR_ID && LA32_4 <= INSTRUCTION_FORMAT22t)||LA32_4==INSTRUCTION_FORMAT23x||(LA32_4 >= INSTRUCTION_FORMAT31i_OR_ID && LA32_4 <= INSTRUCTION_FORMAT31t)||(LA32_4 >= INSTRUCTION_FORMAT35c_METHOD && LA32_4 <= INSTRUCTION_FORMAT35ms_METHOD)||LA32_4==INSTRUCTION_FORMAT51l||(LA32_4 >= NEGATIVE_INTEGER_LITERAL && LA32_4 <= NULL_LITERAL)||LA32_4==PARAM_LIST_OR_ID||(LA32_4 >= POSITIVE_INTEGER_LITERAL && LA32_4 <= PRIMITIVE_TYPE)||LA32_4==REGISTER||LA32_4==SIMPLE_NAME||(LA32_4 >= VERIFICATION_ERROR_TYPE && LA32_4 <= VOID_TYPE)) ) {
-                        int LA32_5 = input.LA(4);
+                    if ( (LA33_4==ACCESS_SPEC||LA33_4==ANNOTATION_VISIBILITY||LA33_4==BOOL_LITERAL||LA33_4==DOUBLE_LITERAL_OR_ID||LA33_4==FLOAT_LITERAL_OR_ID||(LA33_4 >= INSTRUCTION_FORMAT10t && LA33_4 <= INSTRUCTION_FORMAT10x_ODEX)||LA33_4==INSTRUCTION_FORMAT11x||LA33_4==INSTRUCTION_FORMAT12x_OR_ID||(LA33_4 >= INSTRUCTION_FORMAT21c_FIELD && LA33_4 <= INSTRUCTION_FORMAT21c_TYPE)||LA33_4==INSTRUCTION_FORMAT21t||(LA33_4 >= INSTRUCTION_FORMAT22c_FIELD && LA33_4 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA33_4 >= INSTRUCTION_FORMAT22s_OR_ID && LA33_4 <= INSTRUCTION_FORMAT22t)||LA33_4==INSTRUCTION_FORMAT23x||(LA33_4 >= INSTRUCTION_FORMAT31i_OR_ID && LA33_4 <= INSTRUCTION_FORMAT31t)||(LA33_4 >= INSTRUCTION_FORMAT35c_METHOD && LA33_4 <= INSTRUCTION_FORMAT35ms_METHOD)||LA33_4==INSTRUCTION_FORMAT51l||(LA33_4 >= NEGATIVE_INTEGER_LITERAL && LA33_4 <= NULL_LITERAL)||LA33_4==PARAM_LIST_OR_ID||(LA33_4 >= POSITIVE_INTEGER_LITERAL && LA33_4 <= PRIMITIVE_TYPE)||LA33_4==REGISTER||LA33_4==SIMPLE_NAME||(LA33_4 >= VERIFICATION_ERROR_TYPE && LA33_4 <= VOID_TYPE)) ) {
+                        int LA33_5 = input.LA(4);
 
-                        if ( (LA32_5==COLON) ) {
-                            alt32=2;
+                        if ( (LA33_5==COLON) ) {
+                            alt33=2;
                         }
-                        else if ( (LA32_5==OPEN_PAREN) ) {
-                            alt32=3;
+                        else if ( (LA33_5==OPEN_PAREN) ) {
+                            alt33=3;
                         }
                         else {
                             if (state.backtracking>0) {state.failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("", 32, 5, input);
+                                new NoViableAltException("", 33, 5, input);
 
                             throw nvae;
 
                         }
                     }
-                    else if ( (LA32_4==METHOD_NAME) ) {
-                        alt32=3;
+                    else if ( (LA33_4==METHOD_NAME) ) {
+                        alt33=3;
                     }
                     else {
                         if (state.backtracking>0) {state.failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("", 32, 4, input);
+                            new NoViableAltException("", 33, 4, input);
 
                         throw nvae;
 
@@ -3484,43 +3562,43 @@ public class smaliIdeaParser extends Parser {
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 32, 1, input);
+                        new NoViableAltException("", 33, 1, input);
 
                     throw nvae;
 
                 }
             }
-            else if ( (LA32_0==ARRAY_DESCRIPTOR) ) {
-                int LA32_2 = input.LA(2);
+            else if ( (LA33_0==ARRAY_DESCRIPTOR) ) {
+                int LA33_2 = input.LA(2);
 
-                if ( (LA32_2==ARROW) ) {
-                    int LA32_4 = input.LA(3);
+                if ( (LA33_2==ARROW) ) {
+                    int LA33_4 = input.LA(3);
 
-                    if ( (LA32_4==ACCESS_SPEC||LA32_4==ANNOTATION_VISIBILITY||LA32_4==BOOL_LITERAL||LA32_4==DOUBLE_LITERAL_OR_ID||LA32_4==FLOAT_LITERAL_OR_ID||(LA32_4 >= INSTRUCTION_FORMAT10t && LA32_4 <= INSTRUCTION_FORMAT10x_ODEX)||LA32_4==INSTRUCTION_FORMAT11x||LA32_4==INSTRUCTION_FORMAT12x_OR_ID||(LA32_4 >= INSTRUCTION_FORMAT21c_FIELD && LA32_4 <= INSTRUCTION_FORMAT21c_TYPE)||LA32_4==INSTRUCTION_FORMAT21t||(LA32_4 >= INSTRUCTION_FORMAT22c_FIELD && LA32_4 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA32_4 >= INSTRUCTION_FORMAT22s_OR_ID && LA32_4 <= INSTRUCTION_FORMAT22t)||LA32_4==INSTRUCTION_FORMAT23x||(LA32_4 >= INSTRUCTION_FORMAT31i_OR_ID && LA32_4 <= INSTRUCTION_FORMAT31t)||(LA32_4 >= INSTRUCTION_FORMAT35c_METHOD && LA32_4 <= INSTRUCTION_FORMAT35ms_METHOD)||LA32_4==INSTRUCTION_FORMAT51l||(LA32_4 >= NEGATIVE_INTEGER_LITERAL && LA32_4 <= NULL_LITERAL)||LA32_4==PARAM_LIST_OR_ID||(LA32_4 >= POSITIVE_INTEGER_LITERAL && LA32_4 <= PRIMITIVE_TYPE)||LA32_4==REGISTER||LA32_4==SIMPLE_NAME||(LA32_4 >= VERIFICATION_ERROR_TYPE && LA32_4 <= VOID_TYPE)) ) {
-                        int LA32_5 = input.LA(4);
+                    if ( (LA33_4==ACCESS_SPEC||LA33_4==ANNOTATION_VISIBILITY||LA33_4==BOOL_LITERAL||LA33_4==DOUBLE_LITERAL_OR_ID||LA33_4==FLOAT_LITERAL_OR_ID||(LA33_4 >= INSTRUCTION_FORMAT10t && LA33_4 <= INSTRUCTION_FORMAT10x_ODEX)||LA33_4==INSTRUCTION_FORMAT11x||LA33_4==INSTRUCTION_FORMAT12x_OR_ID||(LA33_4 >= INSTRUCTION_FORMAT21c_FIELD && LA33_4 <= INSTRUCTION_FORMAT21c_TYPE)||LA33_4==INSTRUCTION_FORMAT21t||(LA33_4 >= INSTRUCTION_FORMAT22c_FIELD && LA33_4 <= INSTRUCTION_FORMAT22cs_FIELD)||(LA33_4 >= INSTRUCTION_FORMAT22s_OR_ID && LA33_4 <= INSTRUCTION_FORMAT22t)||LA33_4==INSTRUCTION_FORMAT23x||(LA33_4 >= INSTRUCTION_FORMAT31i_OR_ID && LA33_4 <= INSTRUCTION_FORMAT31t)||(LA33_4 >= INSTRUCTION_FORMAT35c_METHOD && LA33_4 <= INSTRUCTION_FORMAT35ms_METHOD)||LA33_4==INSTRUCTION_FORMAT51l||(LA33_4 >= NEGATIVE_INTEGER_LITERAL && LA33_4 <= NULL_LITERAL)||LA33_4==PARAM_LIST_OR_ID||(LA33_4 >= POSITIVE_INTEGER_LITERAL && LA33_4 <= PRIMITIVE_TYPE)||LA33_4==REGISTER||LA33_4==SIMPLE_NAME||(LA33_4 >= VERIFICATION_ERROR_TYPE && LA33_4 <= VOID_TYPE)) ) {
+                        int LA33_5 = input.LA(4);
 
-                        if ( (LA32_5==COLON) ) {
-                            alt32=2;
+                        if ( (LA33_5==COLON) ) {
+                            alt33=2;
                         }
-                        else if ( (LA32_5==OPEN_PAREN) ) {
-                            alt32=3;
+                        else if ( (LA33_5==OPEN_PAREN) ) {
+                            alt33=3;
                         }
                         else {
                             if (state.backtracking>0) {state.failed=true; return ;}
                             NoViableAltException nvae =
-                                new NoViableAltException("", 32, 5, input);
+                                new NoViableAltException("", 33, 5, input);
 
                             throw nvae;
 
                         }
                     }
-                    else if ( (LA32_4==METHOD_NAME) ) {
-                        alt32=3;
+                    else if ( (LA33_4==METHOD_NAME) ) {
+                        alt33=3;
                     }
                     else {
                         if (state.backtracking>0) {state.failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("", 32, 4, input);
+                            new NoViableAltException("", 33, 4, input);
 
                         throw nvae;
 
@@ -3529,7 +3607,7 @@ public class smaliIdeaParser extends Parser {
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 32, 2, input);
+                        new NoViableAltException("", 33, 2, input);
 
                     throw nvae;
 
@@ -3538,23 +3616,27 @@ public class smaliIdeaParser extends Parser {
             else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 32, 0, input);
+                    new NoViableAltException("", 33, 0, input);
 
                 throw nvae;
 
             }
-            switch (alt32) {
+            switch (alt33) {
                 case 1 :
-                    // smaliIdeaParser.g:432:5: CLASS_DESCRIPTOR
+                    // smaliIdeaParser.g:437:5: class_descriptor
                     {
-                    match(input,CLASS_DESCRIPTOR,FOLLOW_CLASS_DESCRIPTOR_in_verification_error_reference1685); if (state.failed) return ;
+                    pushFollow(FOLLOW_class_descriptor_in_verification_error_reference1708);
+                    class_descriptor();
+
+                    state._fsp--;
+                    if (state.failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // smaliIdeaParser.g:432:24: fully_qualified_field
+                    // smaliIdeaParser.g:437:24: fully_qualified_field
                     {
-                    pushFollow(FOLLOW_fully_qualified_field_in_verification_error_reference1689);
+                    pushFollow(FOLLOW_fully_qualified_field_in_verification_error_reference1712);
                     fully_qualified_field();
 
                     state._fsp--;
@@ -3563,9 +3645,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // smaliIdeaParser.g:432:48: fully_qualified_method
+                    // smaliIdeaParser.g:437:48: fully_qualified_method
                     {
-                    pushFollow(FOLLOW_fully_qualified_method_in_verification_error_reference1693);
+                    pushFollow(FOLLOW_fully_qualified_method_in_verification_error_reference1716);
                     fully_qualified_method();
 
                     state._fsp--;
@@ -3591,39 +3673,39 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "catch_directive"
-    // smaliIdeaParser.g:434:1: catch_directive : CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE label_ref_or_offset DOTDOT label_ref_or_offset CLOSE_BRACE label_ref_or_offset ;
+    // smaliIdeaParser.g:439:1: catch_directive : CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE label_ref_or_offset DOTDOT label_ref_or_offset CLOSE_BRACE label_ref_or_offset ;
     public final void catch_directive() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:435:3: ( CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE label_ref_or_offset DOTDOT label_ref_or_offset CLOSE_BRACE label_ref_or_offset )
-            // smaliIdeaParser.g:435:5: CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE label_ref_or_offset DOTDOT label_ref_or_offset CLOSE_BRACE label_ref_or_offset
+            // smaliIdeaParser.g:440:3: ( CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE label_ref_or_offset DOTDOT label_ref_or_offset CLOSE_BRACE label_ref_or_offset )
+            // smaliIdeaParser.g:440:5: CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE label_ref_or_offset DOTDOT label_ref_or_offset CLOSE_BRACE label_ref_or_offset
             {
-            match(input,CATCH_DIRECTIVE,FOLLOW_CATCH_DIRECTIVE_in_catch_directive1703); if (state.failed) return ;
+            match(input,CATCH_DIRECTIVE,FOLLOW_CATCH_DIRECTIVE_in_catch_directive1726); if (state.failed) return ;
 
-            pushFollow(FOLLOW_nonvoid_type_descriptor_in_catch_directive1705);
+            pushFollow(FOLLOW_nonvoid_type_descriptor_in_catch_directive1728);
             nonvoid_type_descriptor();
 
             state._fsp--;
             if (state.failed) return ;
 
-            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_catch_directive1707); if (state.failed) return ;
+            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_catch_directive1730); if (state.failed) return ;
 
-            pushFollow(FOLLOW_label_ref_or_offset_in_catch_directive1709);
+            pushFollow(FOLLOW_label_ref_or_offset_in_catch_directive1732);
             label_ref_or_offset();
 
             state._fsp--;
             if (state.failed) return ;
 
-            match(input,DOTDOT,FOLLOW_DOTDOT_in_catch_directive1711); if (state.failed) return ;
+            match(input,DOTDOT,FOLLOW_DOTDOT_in_catch_directive1734); if (state.failed) return ;
 
-            pushFollow(FOLLOW_label_ref_or_offset_in_catch_directive1713);
+            pushFollow(FOLLOW_label_ref_or_offset_in_catch_directive1736);
             label_ref_or_offset();
 
             state._fsp--;
             if (state.failed) return ;
 
-            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_catch_directive1715); if (state.failed) return ;
+            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_catch_directive1738); if (state.failed) return ;
 
-            pushFollow(FOLLOW_label_ref_or_offset_in_catch_directive1717);
+            pushFollow(FOLLOW_label_ref_or_offset_in_catch_directive1740);
             label_ref_or_offset();
 
             state._fsp--;
@@ -3647,33 +3729,33 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "catchall_directive"
-    // smaliIdeaParser.g:437:1: catchall_directive : CATCHALL_DIRECTIVE OPEN_BRACE label_ref_or_offset DOTDOT label_ref_or_offset CLOSE_BRACE label_ref_or_offset ;
+    // smaliIdeaParser.g:442:1: catchall_directive : CATCHALL_DIRECTIVE OPEN_BRACE label_ref_or_offset DOTDOT label_ref_or_offset CLOSE_BRACE label_ref_or_offset ;
     public final void catchall_directive() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:438:3: ( CATCHALL_DIRECTIVE OPEN_BRACE label_ref_or_offset DOTDOT label_ref_or_offset CLOSE_BRACE label_ref_or_offset )
-            // smaliIdeaParser.g:438:5: CATCHALL_DIRECTIVE OPEN_BRACE label_ref_or_offset DOTDOT label_ref_or_offset CLOSE_BRACE label_ref_or_offset
+            // smaliIdeaParser.g:443:3: ( CATCHALL_DIRECTIVE OPEN_BRACE label_ref_or_offset DOTDOT label_ref_or_offset CLOSE_BRACE label_ref_or_offset )
+            // smaliIdeaParser.g:443:5: CATCHALL_DIRECTIVE OPEN_BRACE label_ref_or_offset DOTDOT label_ref_or_offset CLOSE_BRACE label_ref_or_offset
             {
-            match(input,CATCHALL_DIRECTIVE,FOLLOW_CATCHALL_DIRECTIVE_in_catchall_directive1727); if (state.failed) return ;
+            match(input,CATCHALL_DIRECTIVE,FOLLOW_CATCHALL_DIRECTIVE_in_catchall_directive1750); if (state.failed) return ;
 
-            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_catchall_directive1729); if (state.failed) return ;
+            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_catchall_directive1752); if (state.failed) return ;
 
-            pushFollow(FOLLOW_label_ref_or_offset_in_catchall_directive1731);
+            pushFollow(FOLLOW_label_ref_or_offset_in_catchall_directive1754);
             label_ref_or_offset();
 
             state._fsp--;
             if (state.failed) return ;
 
-            match(input,DOTDOT,FOLLOW_DOTDOT_in_catchall_directive1733); if (state.failed) return ;
+            match(input,DOTDOT,FOLLOW_DOTDOT_in_catchall_directive1756); if (state.failed) return ;
 
-            pushFollow(FOLLOW_label_ref_or_offset_in_catchall_directive1735);
+            pushFollow(FOLLOW_label_ref_or_offset_in_catchall_directive1758);
             label_ref_or_offset();
 
             state._fsp--;
             if (state.failed) return ;
 
-            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_catchall_directive1737); if (state.failed) return ;
+            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_catchall_directive1760); if (state.failed) return ;
 
-            pushFollow(FOLLOW_label_ref_or_offset_in_catchall_directive1739);
+            pushFollow(FOLLOW_label_ref_or_offset_in_catchall_directive1762);
             label_ref_or_offset();
 
             state._fsp--;
@@ -3697,26 +3779,26 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "parameter_directive"
-    // smaliIdeaParser.g:444:1: parameter_directive : PARAMETER_DIRECTIVE ( STRING_LITERAL )? ({...}? annotation )* ( END_PARAMETER_DIRECTIVE |) ;
+    // smaliIdeaParser.g:449:1: parameter_directive : PARAMETER_DIRECTIVE ( STRING_LITERAL )? ({...}? annotation )* ( END_PARAMETER_DIRECTIVE |) ;
     public final void parameter_directive() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:445:3: ( PARAMETER_DIRECTIVE ( STRING_LITERAL )? ({...}? annotation )* ( END_PARAMETER_DIRECTIVE |) )
-            // smaliIdeaParser.g:445:5: PARAMETER_DIRECTIVE ( STRING_LITERAL )? ({...}? annotation )* ( END_PARAMETER_DIRECTIVE |)
+            // smaliIdeaParser.g:450:3: ( PARAMETER_DIRECTIVE ( STRING_LITERAL )? ({...}? annotation )* ( END_PARAMETER_DIRECTIVE |) )
+            // smaliIdeaParser.g:450:5: PARAMETER_DIRECTIVE ( STRING_LITERAL )? ({...}? annotation )* ( END_PARAMETER_DIRECTIVE |)
             {
-            match(input,PARAMETER_DIRECTIVE,FOLLOW_PARAMETER_DIRECTIVE_in_parameter_directive1751); if (state.failed) return ;
+            match(input,PARAMETER_DIRECTIVE,FOLLOW_PARAMETER_DIRECTIVE_in_parameter_directive1774); if (state.failed) return ;
 
-            // smaliIdeaParser.g:445:25: ( STRING_LITERAL )?
-            int alt33=2;
-            int LA33_0 = input.LA(1);
+            // smaliIdeaParser.g:450:25: ( STRING_LITERAL )?
+            int alt34=2;
+            int LA34_0 = input.LA(1);
 
-            if ( (LA33_0==STRING_LITERAL) ) {
-                alt33=1;
+            if ( (LA34_0==STRING_LITERAL) ) {
+                alt34=1;
             }
-            switch (alt33) {
+            switch (alt34) {
                 case 1 :
-                    // smaliIdeaParser.g:445:25: STRING_LITERAL
+                    // smaliIdeaParser.g:450:25: STRING_LITERAL
                     {
-                    match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_parameter_directive1753); if (state.failed) return ;
+                    match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_parameter_directive1776); if (state.failed) return ;
 
                     }
                     break;
@@ -3724,21 +3806,21 @@ public class smaliIdeaParser extends Parser {
             }
 
 
-            // smaliIdeaParser.g:446:5: ({...}? annotation )*
-            loop34:
+            // smaliIdeaParser.g:451:5: ({...}? annotation )*
+            loop35:
             do {
-                int alt34=2;
-                alt34 = dfa34.predict(input);
-                switch (alt34) {
+                int alt35=2;
+                alt35 = dfa35.predict(input);
+                switch (alt35) {
             	case 1 :
-            	    // smaliIdeaParser.g:446:6: {...}? annotation
+            	    // smaliIdeaParser.g:451:6: {...}? annotation
             	    {
             	    if ( !((input.LA(1) == ANNOTATION_DIRECTIVE)) ) {
             	        if (state.backtracking>0) {state.failed=true; return ;}
             	        throw new FailedPredicateException(input, "parameter_directive", "input.LA(1) == ANNOTATION_DIRECTIVE");
             	    }
 
-            	    pushFollow(FOLLOW_annotation_in_parameter_directive1763);
+            	    pushFollow(FOLLOW_annotation_in_parameter_directive1786);
             	    annotation();
 
             	    state._fsp--;
@@ -3748,39 +3830,39 @@ public class smaliIdeaParser extends Parser {
             	    break;
 
             	default :
-            	    break loop34;
+            	    break loop35;
                 }
             } while (true);
 
 
-            // smaliIdeaParser.g:447:5: ( END_PARAMETER_DIRECTIVE |)
-            int alt35=2;
-            int LA35_0 = input.LA(1);
+            // smaliIdeaParser.g:452:5: ( END_PARAMETER_DIRECTIVE |)
+            int alt36=2;
+            int LA36_0 = input.LA(1);
 
-            if ( (LA35_0==END_PARAMETER_DIRECTIVE) ) {
-                alt35=1;
+            if ( (LA36_0==END_PARAMETER_DIRECTIVE) ) {
+                alt36=1;
             }
-            else if ( (LA35_0==EOF||LA35_0==ANNOTATION_DIRECTIVE||LA35_0==ARRAY_DATA_DIRECTIVE||(LA35_0 >= CATCH_DIRECTIVE && LA35_0 <= CATCHALL_DIRECTIVE)||LA35_0==CLASS_DIRECTIVE||LA35_0==COLON||(LA35_0 >= END_LOCAL_DIRECTIVE && LA35_0 <= END_METHOD_DIRECTIVE)||LA35_0==EPILOGUE_DIRECTIVE||LA35_0==FIELD_DIRECTIVE||LA35_0==IMPLEMENTS_DIRECTIVE||(LA35_0 >= INSTRUCTION_FORMAT10t && LA35_0 <= INSTRUCTION_FORMAT51l)||(LA35_0 >= LINE_DIRECTIVE && LA35_0 <= LOCALS_DIRECTIVE)||LA35_0==METHOD_DIRECTIVE||LA35_0==PACKED_SWITCH_DIRECTIVE||LA35_0==PARAMETER_DIRECTIVE||LA35_0==PROLOGUE_DIRECTIVE||(LA35_0 >= REGISTERS_DIRECTIVE && LA35_0 <= RESTART_LOCAL_DIRECTIVE)||(LA35_0 >= SOURCE_DIRECTIVE && LA35_0 <= SPARSE_SWITCH_DIRECTIVE)||LA35_0==SUPER_DIRECTIVE) ) {
-                alt35=2;
+            else if ( (LA36_0==EOF||LA36_0==ANNOTATION_DIRECTIVE||LA36_0==ARRAY_DATA_DIRECTIVE||(LA36_0 >= CATCH_DIRECTIVE && LA36_0 <= CATCHALL_DIRECTIVE)||LA36_0==CLASS_DIRECTIVE||LA36_0==COLON||(LA36_0 >= END_LOCAL_DIRECTIVE && LA36_0 <= END_METHOD_DIRECTIVE)||LA36_0==EPILOGUE_DIRECTIVE||LA36_0==FIELD_DIRECTIVE||LA36_0==IMPLEMENTS_DIRECTIVE||(LA36_0 >= INSTRUCTION_FORMAT10t && LA36_0 <= INSTRUCTION_FORMAT51l)||(LA36_0 >= LINE_DIRECTIVE && LA36_0 <= LOCALS_DIRECTIVE)||LA36_0==METHOD_DIRECTIVE||LA36_0==PACKED_SWITCH_DIRECTIVE||LA36_0==PARAMETER_DIRECTIVE||LA36_0==PROLOGUE_DIRECTIVE||(LA36_0 >= REGISTERS_DIRECTIVE && LA36_0 <= RESTART_LOCAL_DIRECTIVE)||(LA36_0 >= SOURCE_DIRECTIVE && LA36_0 <= SPARSE_SWITCH_DIRECTIVE)||LA36_0==SUPER_DIRECTIVE) ) {
+                alt36=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 35, 0, input);
+                    new NoViableAltException("", 36, 0, input);
 
                 throw nvae;
 
             }
-            switch (alt35) {
+            switch (alt36) {
                 case 1 :
-                    // smaliIdeaParser.g:447:7: END_PARAMETER_DIRECTIVE
+                    // smaliIdeaParser.g:452:7: END_PARAMETER_DIRECTIVE
                     {
-                    match(input,END_PARAMETER_DIRECTIVE,FOLLOW_END_PARAMETER_DIRECTIVE_in_parameter_directive1773); if (state.failed) return ;
+                    match(input,END_PARAMETER_DIRECTIVE,FOLLOW_END_PARAMETER_DIRECTIVE_in_parameter_directive1796); if (state.failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // smaliIdeaParser.g:449:5: 
+                    // smaliIdeaParser.g:454:5: 
                     {
                     }
                     break;
@@ -3806,61 +3888,61 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "ordered_debug_directive"
-    // smaliIdeaParser.g:451:1: ordered_debug_directive : ( line_directive | local_directive | end_local_directive | restart_local_directive | prologue_directive | epilogue_directive | source_directive );
+    // smaliIdeaParser.g:456:1: ordered_debug_directive : ( line_directive | local_directive | end_local_directive | restart_local_directive | prologue_directive | epilogue_directive | source_directive );
     public final void ordered_debug_directive() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:452:3: ( line_directive | local_directive | end_local_directive | restart_local_directive | prologue_directive | epilogue_directive | source_directive )
-            int alt36=7;
+            // smaliIdeaParser.g:457:3: ( line_directive | local_directive | end_local_directive | restart_local_directive | prologue_directive | epilogue_directive | source_directive )
+            int alt37=7;
             switch ( input.LA(1) ) {
             case LINE_DIRECTIVE:
                 {
-                alt36=1;
+                alt37=1;
                 }
                 break;
             case LOCAL_DIRECTIVE:
                 {
-                alt36=2;
+                alt37=2;
                 }
                 break;
             case END_LOCAL_DIRECTIVE:
                 {
-                alt36=3;
+                alt37=3;
                 }
                 break;
             case RESTART_LOCAL_DIRECTIVE:
                 {
-                alt36=4;
+                alt37=4;
                 }
                 break;
             case PROLOGUE_DIRECTIVE:
                 {
-                alt36=5;
+                alt37=5;
                 }
                 break;
             case EPILOGUE_DIRECTIVE:
                 {
-                alt36=6;
+                alt37=6;
                 }
                 break;
             case SOURCE_DIRECTIVE:
                 {
-                alt36=7;
+                alt37=7;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 36, 0, input);
+                    new NoViableAltException("", 37, 0, input);
 
                 throw nvae;
 
             }
 
-            switch (alt36) {
+            switch (alt37) {
                 case 1 :
-                    // smaliIdeaParser.g:452:5: line_directive
+                    // smaliIdeaParser.g:457:5: line_directive
                     {
-                    pushFollow(FOLLOW_line_directive_in_ordered_debug_directive1797);
+                    pushFollow(FOLLOW_line_directive_in_ordered_debug_directive1820);
                     line_directive();
 
                     state._fsp--;
@@ -3869,9 +3951,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // smaliIdeaParser.g:453:5: local_directive
+                    // smaliIdeaParser.g:458:5: local_directive
                     {
-                    pushFollow(FOLLOW_local_directive_in_ordered_debug_directive1803);
+                    pushFollow(FOLLOW_local_directive_in_ordered_debug_directive1826);
                     local_directive();
 
                     state._fsp--;
@@ -3880,9 +3962,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // smaliIdeaParser.g:454:5: end_local_directive
+                    // smaliIdeaParser.g:459:5: end_local_directive
                     {
-                    pushFollow(FOLLOW_end_local_directive_in_ordered_debug_directive1809);
+                    pushFollow(FOLLOW_end_local_directive_in_ordered_debug_directive1832);
                     end_local_directive();
 
                     state._fsp--;
@@ -3891,9 +3973,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // smaliIdeaParser.g:455:5: restart_local_directive
+                    // smaliIdeaParser.g:460:5: restart_local_directive
                     {
-                    pushFollow(FOLLOW_restart_local_directive_in_ordered_debug_directive1815);
+                    pushFollow(FOLLOW_restart_local_directive_in_ordered_debug_directive1838);
                     restart_local_directive();
 
                     state._fsp--;
@@ -3902,9 +3984,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // smaliIdeaParser.g:456:5: prologue_directive
+                    // smaliIdeaParser.g:461:5: prologue_directive
                     {
-                    pushFollow(FOLLOW_prologue_directive_in_ordered_debug_directive1821);
+                    pushFollow(FOLLOW_prologue_directive_in_ordered_debug_directive1844);
                     prologue_directive();
 
                     state._fsp--;
@@ -3913,9 +3995,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // smaliIdeaParser.g:457:5: epilogue_directive
+                    // smaliIdeaParser.g:462:5: epilogue_directive
                     {
-                    pushFollow(FOLLOW_epilogue_directive_in_ordered_debug_directive1827);
+                    pushFollow(FOLLOW_epilogue_directive_in_ordered_debug_directive1850);
                     epilogue_directive();
 
                     state._fsp--;
@@ -3924,9 +4006,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // smaliIdeaParser.g:458:5: source_directive
+                    // smaliIdeaParser.g:463:5: source_directive
                     {
-                    pushFollow(FOLLOW_source_directive_in_ordered_debug_directive1833);
+                    pushFollow(FOLLOW_source_directive_in_ordered_debug_directive1856);
                     source_directive();
 
                     state._fsp--;
@@ -3952,15 +4034,15 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "line_directive"
-    // smaliIdeaParser.g:460:1: line_directive : LINE_DIRECTIVE integral_literal ;
+    // smaliIdeaParser.g:465:1: line_directive : LINE_DIRECTIVE integral_literal ;
     public final void line_directive() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:461:3: ( LINE_DIRECTIVE integral_literal )
-            // smaliIdeaParser.g:461:5: LINE_DIRECTIVE integral_literal
+            // smaliIdeaParser.g:466:3: ( LINE_DIRECTIVE integral_literal )
+            // smaliIdeaParser.g:466:5: LINE_DIRECTIVE integral_literal
             {
-            match(input,LINE_DIRECTIVE,FOLLOW_LINE_DIRECTIVE_in_line_directive1843); if (state.failed) return ;
+            match(input,LINE_DIRECTIVE,FOLLOW_LINE_DIRECTIVE_in_line_directive1866); if (state.failed) return ;
 
-            pushFollow(FOLLOW_integral_literal_in_line_directive1845);
+            pushFollow(FOLLOW_integral_literal_in_line_directive1868);
             integral_literal();
 
             state._fsp--;
@@ -3984,46 +4066,46 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "local_directive"
-    // smaliIdeaParser.g:463:1: local_directive : LOCAL_DIRECTIVE REGISTER COMMA simple_name COLON nonvoid_type_descriptor ( COMMA STRING_LITERAL )? ;
+    // smaliIdeaParser.g:468:1: local_directive : LOCAL_DIRECTIVE REGISTER COMMA simple_name COLON nonvoid_type_descriptor ( COMMA STRING_LITERAL )? ;
     public final void local_directive() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:464:3: ( LOCAL_DIRECTIVE REGISTER COMMA simple_name COLON nonvoid_type_descriptor ( COMMA STRING_LITERAL )? )
-            // smaliIdeaParser.g:464:5: LOCAL_DIRECTIVE REGISTER COMMA simple_name COLON nonvoid_type_descriptor ( COMMA STRING_LITERAL )?
+            // smaliIdeaParser.g:469:3: ( LOCAL_DIRECTIVE REGISTER COMMA simple_name COLON nonvoid_type_descriptor ( COMMA STRING_LITERAL )? )
+            // smaliIdeaParser.g:469:5: LOCAL_DIRECTIVE REGISTER COMMA simple_name COLON nonvoid_type_descriptor ( COMMA STRING_LITERAL )?
             {
-            match(input,LOCAL_DIRECTIVE,FOLLOW_LOCAL_DIRECTIVE_in_local_directive1855); if (state.failed) return ;
+            match(input,LOCAL_DIRECTIVE,FOLLOW_LOCAL_DIRECTIVE_in_local_directive1878); if (state.failed) return ;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_local_directive1857); if (state.failed) return ;
+            match(input,REGISTER,FOLLOW_REGISTER_in_local_directive1880); if (state.failed) return ;
 
-            match(input,COMMA,FOLLOW_COMMA_in_local_directive1859); if (state.failed) return ;
+            match(input,COMMA,FOLLOW_COMMA_in_local_directive1882); if (state.failed) return ;
 
-            pushFollow(FOLLOW_simple_name_in_local_directive1861);
+            pushFollow(FOLLOW_simple_name_in_local_directive1884);
             simple_name();
 
             state._fsp--;
             if (state.failed) return ;
 
-            match(input,COLON,FOLLOW_COLON_in_local_directive1863); if (state.failed) return ;
+            match(input,COLON,FOLLOW_COLON_in_local_directive1886); if (state.failed) return ;
 
-            pushFollow(FOLLOW_nonvoid_type_descriptor_in_local_directive1865);
+            pushFollow(FOLLOW_nonvoid_type_descriptor_in_local_directive1888);
             nonvoid_type_descriptor();
 
             state._fsp--;
             if (state.failed) return ;
 
-            // smaliIdeaParser.g:464:78: ( COMMA STRING_LITERAL )?
-            int alt37=2;
-            int LA37_0 = input.LA(1);
+            // smaliIdeaParser.g:469:78: ( COMMA STRING_LITERAL )?
+            int alt38=2;
+            int LA38_0 = input.LA(1);
 
-            if ( (LA37_0==COMMA) ) {
-                alt37=1;
+            if ( (LA38_0==COMMA) ) {
+                alt38=1;
             }
-            switch (alt37) {
+            switch (alt38) {
                 case 1 :
-                    // smaliIdeaParser.g:464:79: COMMA STRING_LITERAL
+                    // smaliIdeaParser.g:469:79: COMMA STRING_LITERAL
                     {
-                    match(input,COMMA,FOLLOW_COMMA_in_local_directive1868); if (state.failed) return ;
+                    match(input,COMMA,FOLLOW_COMMA_in_local_directive1891); if (state.failed) return ;
 
-                    match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_local_directive1870); if (state.failed) return ;
+                    match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_local_directive1893); if (state.failed) return ;
 
                     }
                     break;
@@ -4049,15 +4131,15 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "end_local_directive"
-    // smaliIdeaParser.g:466:1: end_local_directive : END_LOCAL_DIRECTIVE REGISTER ;
+    // smaliIdeaParser.g:471:1: end_local_directive : END_LOCAL_DIRECTIVE REGISTER ;
     public final void end_local_directive() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:467:3: ( END_LOCAL_DIRECTIVE REGISTER )
-            // smaliIdeaParser.g:467:5: END_LOCAL_DIRECTIVE REGISTER
+            // smaliIdeaParser.g:472:3: ( END_LOCAL_DIRECTIVE REGISTER )
+            // smaliIdeaParser.g:472:5: END_LOCAL_DIRECTIVE REGISTER
             {
-            match(input,END_LOCAL_DIRECTIVE,FOLLOW_END_LOCAL_DIRECTIVE_in_end_local_directive1882); if (state.failed) return ;
+            match(input,END_LOCAL_DIRECTIVE,FOLLOW_END_LOCAL_DIRECTIVE_in_end_local_directive1905); if (state.failed) return ;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_end_local_directive1884); if (state.failed) return ;
+            match(input,REGISTER,FOLLOW_REGISTER_in_end_local_directive1907); if (state.failed) return ;
 
             }
 
@@ -4077,15 +4159,15 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "restart_local_directive"
-    // smaliIdeaParser.g:469:1: restart_local_directive : RESTART_LOCAL_DIRECTIVE REGISTER ;
+    // smaliIdeaParser.g:474:1: restart_local_directive : RESTART_LOCAL_DIRECTIVE REGISTER ;
     public final void restart_local_directive() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:470:3: ( RESTART_LOCAL_DIRECTIVE REGISTER )
-            // smaliIdeaParser.g:470:5: RESTART_LOCAL_DIRECTIVE REGISTER
+            // smaliIdeaParser.g:475:3: ( RESTART_LOCAL_DIRECTIVE REGISTER )
+            // smaliIdeaParser.g:475:5: RESTART_LOCAL_DIRECTIVE REGISTER
             {
-            match(input,RESTART_LOCAL_DIRECTIVE,FOLLOW_RESTART_LOCAL_DIRECTIVE_in_restart_local_directive1894); if (state.failed) return ;
+            match(input,RESTART_LOCAL_DIRECTIVE,FOLLOW_RESTART_LOCAL_DIRECTIVE_in_restart_local_directive1917); if (state.failed) return ;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_restart_local_directive1896); if (state.failed) return ;
+            match(input,REGISTER,FOLLOW_REGISTER_in_restart_local_directive1919); if (state.failed) return ;
 
             }
 
@@ -4105,13 +4187,13 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "prologue_directive"
-    // smaliIdeaParser.g:472:1: prologue_directive : PROLOGUE_DIRECTIVE ;
+    // smaliIdeaParser.g:477:1: prologue_directive : PROLOGUE_DIRECTIVE ;
     public final void prologue_directive() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:473:3: ( PROLOGUE_DIRECTIVE )
-            // smaliIdeaParser.g:473:5: PROLOGUE_DIRECTIVE
+            // smaliIdeaParser.g:478:3: ( PROLOGUE_DIRECTIVE )
+            // smaliIdeaParser.g:478:5: PROLOGUE_DIRECTIVE
             {
-            match(input,PROLOGUE_DIRECTIVE,FOLLOW_PROLOGUE_DIRECTIVE_in_prologue_directive1906); if (state.failed) return ;
+            match(input,PROLOGUE_DIRECTIVE,FOLLOW_PROLOGUE_DIRECTIVE_in_prologue_directive1929); if (state.failed) return ;
 
             }
 
@@ -4131,13 +4213,13 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "epilogue_directive"
-    // smaliIdeaParser.g:475:1: epilogue_directive : EPILOGUE_DIRECTIVE ;
+    // smaliIdeaParser.g:480:1: epilogue_directive : EPILOGUE_DIRECTIVE ;
     public final void epilogue_directive() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:476:3: ( EPILOGUE_DIRECTIVE )
-            // smaliIdeaParser.g:476:5: EPILOGUE_DIRECTIVE
+            // smaliIdeaParser.g:481:3: ( EPILOGUE_DIRECTIVE )
+            // smaliIdeaParser.g:481:5: EPILOGUE_DIRECTIVE
             {
-            match(input,EPILOGUE_DIRECTIVE,FOLLOW_EPILOGUE_DIRECTIVE_in_epilogue_directive1916); if (state.failed) return ;
+            match(input,EPILOGUE_DIRECTIVE,FOLLOW_EPILOGUE_DIRECTIVE_in_epilogue_directive1939); if (state.failed) return ;
 
             }
 
@@ -4157,15 +4239,15 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "source_directive"
-    // smaliIdeaParser.g:478:1: source_directive : SOURCE_DIRECTIVE STRING_LITERAL ;
+    // smaliIdeaParser.g:483:1: source_directive : SOURCE_DIRECTIVE STRING_LITERAL ;
     public final void source_directive() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:479:3: ( SOURCE_DIRECTIVE STRING_LITERAL )
-            // smaliIdeaParser.g:479:5: SOURCE_DIRECTIVE STRING_LITERAL
+            // smaliIdeaParser.g:484:3: ( SOURCE_DIRECTIVE STRING_LITERAL )
+            // smaliIdeaParser.g:484:5: SOURCE_DIRECTIVE STRING_LITERAL
             {
-            match(input,SOURCE_DIRECTIVE,FOLLOW_SOURCE_DIRECTIVE_in_source_directive1926); if (state.failed) return ;
+            match(input,SOURCE_DIRECTIVE,FOLLOW_SOURCE_DIRECTIVE_in_source_directive1949); if (state.failed) return ;
 
-            match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_source_directive1928); if (state.failed) return ;
+            match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_source_directive1951); if (state.failed) return ;
 
             }
 
@@ -4185,10 +4267,10 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "instruction_format12x"
-    // smaliIdeaParser.g:481:1: instruction_format12x : ( INSTRUCTION_FORMAT12x | INSTRUCTION_FORMAT12x_OR_ID );
+    // smaliIdeaParser.g:486:1: instruction_format12x : ( INSTRUCTION_FORMAT12x | INSTRUCTION_FORMAT12x_OR_ID );
     public final void instruction_format12x() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:482:3: ( INSTRUCTION_FORMAT12x | INSTRUCTION_FORMAT12x_OR_ID )
+            // smaliIdeaParser.g:487:3: ( INSTRUCTION_FORMAT12x | INSTRUCTION_FORMAT12x_OR_ID )
             // smaliIdeaParser.g:
             {
             if ( (input.LA(1) >= INSTRUCTION_FORMAT12x && input.LA(1) <= INSTRUCTION_FORMAT12x_OR_ID) ) {
@@ -4221,10 +4303,10 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "instruction_format22s"
-    // smaliIdeaParser.g:485:1: instruction_format22s : ( INSTRUCTION_FORMAT22s | INSTRUCTION_FORMAT22s_OR_ID );
+    // smaliIdeaParser.g:490:1: instruction_format22s : ( INSTRUCTION_FORMAT22s | INSTRUCTION_FORMAT22s_OR_ID );
     public final void instruction_format22s() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:486:3: ( INSTRUCTION_FORMAT22s | INSTRUCTION_FORMAT22s_OR_ID )
+            // smaliIdeaParser.g:491:3: ( INSTRUCTION_FORMAT22s | INSTRUCTION_FORMAT22s_OR_ID )
             // smaliIdeaParser.g:
             {
             if ( (input.LA(1) >= INSTRUCTION_FORMAT22s && input.LA(1) <= INSTRUCTION_FORMAT22s_OR_ID) ) {
@@ -4257,10 +4339,10 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "instruction_format31i"
-    // smaliIdeaParser.g:489:1: instruction_format31i : ( INSTRUCTION_FORMAT31i | INSTRUCTION_FORMAT31i_OR_ID );
+    // smaliIdeaParser.g:494:1: instruction_format31i : ( INSTRUCTION_FORMAT31i | INSTRUCTION_FORMAT31i_OR_ID );
     public final void instruction_format31i() throws RecognitionException {
         try {
-            // smaliIdeaParser.g:490:3: ( INSTRUCTION_FORMAT31i | INSTRUCTION_FORMAT31i_OR_ID )
+            // smaliIdeaParser.g:495:3: ( INSTRUCTION_FORMAT31i | INSTRUCTION_FORMAT31i_OR_ID )
             // smaliIdeaParser.g:
             {
             if ( (input.LA(1) >= INSTRUCTION_FORMAT31i && input.LA(1) <= INSTRUCTION_FORMAT31i_OR_ID) ) {
@@ -4293,245 +4375,245 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "instruction"
-    // smaliIdeaParser.g:493:1: instruction : ( insn_format10t | insn_format10x | insn_format10x_odex | insn_format11n | insn_format11x | insn_format12x | insn_format20bc | insn_format20t | insn_format21c_field | insn_format21c_field_odex | insn_format21c_string | insn_format21c_type | insn_format21h | insn_format21s | insn_format21t | insn_format22b | insn_format22c_field | insn_format22c_field_odex | insn_format22c_type | insn_format22cs_field | insn_format22s | insn_format22t | insn_format22x | insn_format23x | insn_format30t | insn_format31c | insn_format31i | insn_format31t | insn_format32x | insn_format35c_method | insn_format35c_type | insn_format35c_method_odex | insn_format35mi_method | insn_format35ms_method | insn_format3rc_method | insn_format3rc_method_odex | insn_format3rc_type | insn_format3rmi_method | insn_format3rms_method | insn_format51l | insn_array_data_directive | insn_packed_switch_directive | insn_sparse_switch_directive );
+    // smaliIdeaParser.g:498:1: instruction : ( insn_format10t | insn_format10x | insn_format10x_odex | insn_format11n | insn_format11x | insn_format12x | insn_format20bc | insn_format20t | insn_format21c_field | insn_format21c_field_odex | insn_format21c_string | insn_format21c_type | insn_format21h | insn_format21s | insn_format21t | insn_format22b | insn_format22c_field | insn_format22c_field_odex | insn_format22c_type | insn_format22cs_field | insn_format22s | insn_format22t | insn_format22x | insn_format23x | insn_format30t | insn_format31c | insn_format31i | insn_format31t | insn_format32x | insn_format35c_method | insn_format35c_type | insn_format35c_method_odex | insn_format35mi_method | insn_format35ms_method | insn_format3rc_method | insn_format3rc_method_odex | insn_format3rc_type | insn_format3rmi_method | insn_format3rms_method | insn_format51l | insn_array_data_directive | insn_packed_switch_directive | insn_sparse_switch_directive );
     public final void instruction() throws RecognitionException {
          Marker marker = mark(); 
         try {
-            // smaliIdeaParser.g:495:3: ( insn_format10t | insn_format10x | insn_format10x_odex | insn_format11n | insn_format11x | insn_format12x | insn_format20bc | insn_format20t | insn_format21c_field | insn_format21c_field_odex | insn_format21c_string | insn_format21c_type | insn_format21h | insn_format21s | insn_format21t | insn_format22b | insn_format22c_field | insn_format22c_field_odex | insn_format22c_type | insn_format22cs_field | insn_format22s | insn_format22t | insn_format22x | insn_format23x | insn_format30t | insn_format31c | insn_format31i | insn_format31t | insn_format32x | insn_format35c_method | insn_format35c_type | insn_format35c_method_odex | insn_format35mi_method | insn_format35ms_method | insn_format3rc_method | insn_format3rc_method_odex | insn_format3rc_type | insn_format3rmi_method | insn_format3rms_method | insn_format51l | insn_array_data_directive | insn_packed_switch_directive | insn_sparse_switch_directive )
-            int alt38=43;
+            // smaliIdeaParser.g:500:3: ( insn_format10t | insn_format10x | insn_format10x_odex | insn_format11n | insn_format11x | insn_format12x | insn_format20bc | insn_format20t | insn_format21c_field | insn_format21c_field_odex | insn_format21c_string | insn_format21c_type | insn_format21h | insn_format21s | insn_format21t | insn_format22b | insn_format22c_field | insn_format22c_field_odex | insn_format22c_type | insn_format22cs_field | insn_format22s | insn_format22t | insn_format22x | insn_format23x | insn_format30t | insn_format31c | insn_format31i | insn_format31t | insn_format32x | insn_format35c_method | insn_format35c_type | insn_format35c_method_odex | insn_format35mi_method | insn_format35ms_method | insn_format3rc_method | insn_format3rc_method_odex | insn_format3rc_type | insn_format3rmi_method | insn_format3rms_method | insn_format51l | insn_array_data_directive | insn_packed_switch_directive | insn_sparse_switch_directive )
+            int alt39=43;
             switch ( input.LA(1) ) {
             case INSTRUCTION_FORMAT10t:
                 {
-                alt38=1;
+                alt39=1;
                 }
                 break;
             case INSTRUCTION_FORMAT10x:
                 {
-                alt38=2;
+                alt39=2;
                 }
                 break;
             case INSTRUCTION_FORMAT10x_ODEX:
                 {
-                alt38=3;
+                alt39=3;
                 }
                 break;
             case INSTRUCTION_FORMAT11n:
                 {
-                alt38=4;
+                alt39=4;
                 }
                 break;
             case INSTRUCTION_FORMAT11x:
                 {
-                alt38=5;
+                alt39=5;
                 }
                 break;
             case INSTRUCTION_FORMAT12x:
             case INSTRUCTION_FORMAT12x_OR_ID:
                 {
-                alt38=6;
+                alt39=6;
                 }
                 break;
             case INSTRUCTION_FORMAT20bc:
                 {
-                alt38=7;
+                alt39=7;
                 }
                 break;
             case INSTRUCTION_FORMAT20t:
                 {
-                alt38=8;
+                alt39=8;
                 }
                 break;
             case INSTRUCTION_FORMAT21c_FIELD:
                 {
-                alt38=9;
+                alt39=9;
                 }
                 break;
             case INSTRUCTION_FORMAT21c_FIELD_ODEX:
                 {
-                alt38=10;
+                alt39=10;
                 }
                 break;
             case INSTRUCTION_FORMAT21c_STRING:
                 {
-                alt38=11;
+                alt39=11;
                 }
                 break;
             case INSTRUCTION_FORMAT21c_TYPE:
                 {
-                alt38=12;
+                alt39=12;
                 }
                 break;
             case INSTRUCTION_FORMAT21h:
                 {
-                alt38=13;
+                alt39=13;
                 }
                 break;
             case INSTRUCTION_FORMAT21s:
                 {
-                alt38=14;
+                alt39=14;
                 }
                 break;
             case INSTRUCTION_FORMAT21t:
                 {
-                alt38=15;
+                alt39=15;
                 }
                 break;
             case INSTRUCTION_FORMAT22b:
                 {
-                alt38=16;
+                alt39=16;
                 }
                 break;
             case INSTRUCTION_FORMAT22c_FIELD:
                 {
-                alt38=17;
+                alt39=17;
                 }
                 break;
             case INSTRUCTION_FORMAT22c_FIELD_ODEX:
                 {
-                alt38=18;
+                alt39=18;
                 }
                 break;
             case INSTRUCTION_FORMAT22c_TYPE:
                 {
-                alt38=19;
+                alt39=19;
                 }
                 break;
             case INSTRUCTION_FORMAT22cs_FIELD:
                 {
-                alt38=20;
+                alt39=20;
                 }
                 break;
             case INSTRUCTION_FORMAT22s:
             case INSTRUCTION_FORMAT22s_OR_ID:
                 {
-                alt38=21;
+                alt39=21;
                 }
                 break;
             case INSTRUCTION_FORMAT22t:
                 {
-                alt38=22;
+                alt39=22;
                 }
                 break;
             case INSTRUCTION_FORMAT22x:
                 {
-                alt38=23;
+                alt39=23;
                 }
                 break;
             case INSTRUCTION_FORMAT23x:
                 {
-                alt38=24;
+                alt39=24;
                 }
                 break;
             case INSTRUCTION_FORMAT30t:
                 {
-                alt38=25;
+                alt39=25;
                 }
                 break;
             case INSTRUCTION_FORMAT31c:
                 {
-                alt38=26;
+                alt39=26;
                 }
                 break;
             case INSTRUCTION_FORMAT31i:
             case INSTRUCTION_FORMAT31i_OR_ID:
                 {
-                alt38=27;
+                alt39=27;
                 }
                 break;
             case INSTRUCTION_FORMAT31t:
                 {
-                alt38=28;
+                alt39=28;
                 }
                 break;
             case INSTRUCTION_FORMAT32x:
                 {
-                alt38=29;
+                alt39=29;
                 }
                 break;
             case INSTRUCTION_FORMAT35c_METHOD:
                 {
-                alt38=30;
+                alt39=30;
                 }
                 break;
             case INSTRUCTION_FORMAT35c_TYPE:
                 {
-                alt38=31;
+                alt39=31;
                 }
                 break;
             case INSTRUCTION_FORMAT35c_METHOD_ODEX:
                 {
-                alt38=32;
+                alt39=32;
                 }
                 break;
             case INSTRUCTION_FORMAT35mi_METHOD:
                 {
-                alt38=33;
+                alt39=33;
                 }
                 break;
             case INSTRUCTION_FORMAT35ms_METHOD:
                 {
-                alt38=34;
+                alt39=34;
                 }
                 break;
             case INSTRUCTION_FORMAT3rc_METHOD:
                 {
-                alt38=35;
+                alt39=35;
                 }
                 break;
             case INSTRUCTION_FORMAT3rc_METHOD_ODEX:
                 {
-                alt38=36;
+                alt39=36;
                 }
                 break;
             case INSTRUCTION_FORMAT3rc_TYPE:
                 {
-                alt38=37;
+                alt39=37;
                 }
                 break;
             case INSTRUCTION_FORMAT3rmi_METHOD:
                 {
-                alt38=38;
+                alt39=38;
                 }
                 break;
             case INSTRUCTION_FORMAT3rms_METHOD:
                 {
-                alt38=39;
+                alt39=39;
                 }
                 break;
             case INSTRUCTION_FORMAT51l:
                 {
-                alt38=40;
+                alt39=40;
                 }
                 break;
             case ARRAY_DATA_DIRECTIVE:
                 {
-                alt38=41;
+                alt39=41;
                 }
                 break;
             case PACKED_SWITCH_DIRECTIVE:
                 {
-                alt38=42;
+                alt39=42;
                 }
                 break;
             case SPARSE_SWITCH_DIRECTIVE:
                 {
-                alt38=43;
+                alt39=43;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 38, 0, input);
+                    new NoViableAltException("", 39, 0, input);
 
                 throw nvae;
 
             }
 
-            switch (alt38) {
+            switch (alt39) {
                 case 1 :
-                    // smaliIdeaParser.g:495:5: insn_format10t
+                    // smaliIdeaParser.g:500:5: insn_format10t
                     {
-                    pushFollow(FOLLOW_insn_format10t_in_instruction1993);
+                    pushFollow(FOLLOW_insn_format10t_in_instruction2016);
                     insn_format10t();
 
                     state._fsp--;
@@ -4540,9 +4622,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // smaliIdeaParser.g:496:5: insn_format10x
+                    // smaliIdeaParser.g:501:5: insn_format10x
                     {
-                    pushFollow(FOLLOW_insn_format10x_in_instruction1999);
+                    pushFollow(FOLLOW_insn_format10x_in_instruction2022);
                     insn_format10x();
 
                     state._fsp--;
@@ -4551,9 +4633,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // smaliIdeaParser.g:497:5: insn_format10x_odex
+                    // smaliIdeaParser.g:502:5: insn_format10x_odex
                     {
-                    pushFollow(FOLLOW_insn_format10x_odex_in_instruction2005);
+                    pushFollow(FOLLOW_insn_format10x_odex_in_instruction2028);
                     insn_format10x_odex();
 
                     state._fsp--;
@@ -4562,9 +4644,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // smaliIdeaParser.g:498:5: insn_format11n
+                    // smaliIdeaParser.g:503:5: insn_format11n
                     {
-                    pushFollow(FOLLOW_insn_format11n_in_instruction2011);
+                    pushFollow(FOLLOW_insn_format11n_in_instruction2034);
                     insn_format11n();
 
                     state._fsp--;
@@ -4573,9 +4655,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // smaliIdeaParser.g:499:5: insn_format11x
+                    // smaliIdeaParser.g:504:5: insn_format11x
                     {
-                    pushFollow(FOLLOW_insn_format11x_in_instruction2017);
+                    pushFollow(FOLLOW_insn_format11x_in_instruction2040);
                     insn_format11x();
 
                     state._fsp--;
@@ -4584,9 +4666,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // smaliIdeaParser.g:500:5: insn_format12x
+                    // smaliIdeaParser.g:505:5: insn_format12x
                     {
-                    pushFollow(FOLLOW_insn_format12x_in_instruction2023);
+                    pushFollow(FOLLOW_insn_format12x_in_instruction2046);
                     insn_format12x();
 
                     state._fsp--;
@@ -4595,9 +4677,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // smaliIdeaParser.g:501:5: insn_format20bc
+                    // smaliIdeaParser.g:506:5: insn_format20bc
                     {
-                    pushFollow(FOLLOW_insn_format20bc_in_instruction2029);
+                    pushFollow(FOLLOW_insn_format20bc_in_instruction2052);
                     insn_format20bc();
 
                     state._fsp--;
@@ -4606,9 +4688,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 8 :
-                    // smaliIdeaParser.g:502:5: insn_format20t
+                    // smaliIdeaParser.g:507:5: insn_format20t
                     {
-                    pushFollow(FOLLOW_insn_format20t_in_instruction2035);
+                    pushFollow(FOLLOW_insn_format20t_in_instruction2058);
                     insn_format20t();
 
                     state._fsp--;
@@ -4617,9 +4699,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 9 :
-                    // smaliIdeaParser.g:503:5: insn_format21c_field
+                    // smaliIdeaParser.g:508:5: insn_format21c_field
                     {
-                    pushFollow(FOLLOW_insn_format21c_field_in_instruction2041);
+                    pushFollow(FOLLOW_insn_format21c_field_in_instruction2064);
                     insn_format21c_field();
 
                     state._fsp--;
@@ -4628,9 +4710,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 10 :
-                    // smaliIdeaParser.g:504:5: insn_format21c_field_odex
+                    // smaliIdeaParser.g:509:5: insn_format21c_field_odex
                     {
-                    pushFollow(FOLLOW_insn_format21c_field_odex_in_instruction2047);
+                    pushFollow(FOLLOW_insn_format21c_field_odex_in_instruction2070);
                     insn_format21c_field_odex();
 
                     state._fsp--;
@@ -4639,9 +4721,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 11 :
-                    // smaliIdeaParser.g:505:5: insn_format21c_string
+                    // smaliIdeaParser.g:510:5: insn_format21c_string
                     {
-                    pushFollow(FOLLOW_insn_format21c_string_in_instruction2053);
+                    pushFollow(FOLLOW_insn_format21c_string_in_instruction2076);
                     insn_format21c_string();
 
                     state._fsp--;
@@ -4650,9 +4732,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 12 :
-                    // smaliIdeaParser.g:506:5: insn_format21c_type
+                    // smaliIdeaParser.g:511:5: insn_format21c_type
                     {
-                    pushFollow(FOLLOW_insn_format21c_type_in_instruction2059);
+                    pushFollow(FOLLOW_insn_format21c_type_in_instruction2082);
                     insn_format21c_type();
 
                     state._fsp--;
@@ -4661,9 +4743,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 13 :
-                    // smaliIdeaParser.g:507:5: insn_format21h
+                    // smaliIdeaParser.g:512:5: insn_format21h
                     {
-                    pushFollow(FOLLOW_insn_format21h_in_instruction2065);
+                    pushFollow(FOLLOW_insn_format21h_in_instruction2088);
                     insn_format21h();
 
                     state._fsp--;
@@ -4672,9 +4754,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 14 :
-                    // smaliIdeaParser.g:508:5: insn_format21s
+                    // smaliIdeaParser.g:513:5: insn_format21s
                     {
-                    pushFollow(FOLLOW_insn_format21s_in_instruction2071);
+                    pushFollow(FOLLOW_insn_format21s_in_instruction2094);
                     insn_format21s();
 
                     state._fsp--;
@@ -4683,9 +4765,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 15 :
-                    // smaliIdeaParser.g:509:5: insn_format21t
+                    // smaliIdeaParser.g:514:5: insn_format21t
                     {
-                    pushFollow(FOLLOW_insn_format21t_in_instruction2077);
+                    pushFollow(FOLLOW_insn_format21t_in_instruction2100);
                     insn_format21t();
 
                     state._fsp--;
@@ -4694,9 +4776,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 16 :
-                    // smaliIdeaParser.g:510:5: insn_format22b
+                    // smaliIdeaParser.g:515:5: insn_format22b
                     {
-                    pushFollow(FOLLOW_insn_format22b_in_instruction2083);
+                    pushFollow(FOLLOW_insn_format22b_in_instruction2106);
                     insn_format22b();
 
                     state._fsp--;
@@ -4705,9 +4787,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 17 :
-                    // smaliIdeaParser.g:511:5: insn_format22c_field
+                    // smaliIdeaParser.g:516:5: insn_format22c_field
                     {
-                    pushFollow(FOLLOW_insn_format22c_field_in_instruction2089);
+                    pushFollow(FOLLOW_insn_format22c_field_in_instruction2112);
                     insn_format22c_field();
 
                     state._fsp--;
@@ -4716,9 +4798,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 18 :
-                    // smaliIdeaParser.g:512:5: insn_format22c_field_odex
+                    // smaliIdeaParser.g:517:5: insn_format22c_field_odex
                     {
-                    pushFollow(FOLLOW_insn_format22c_field_odex_in_instruction2095);
+                    pushFollow(FOLLOW_insn_format22c_field_odex_in_instruction2118);
                     insn_format22c_field_odex();
 
                     state._fsp--;
@@ -4727,9 +4809,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 19 :
-                    // smaliIdeaParser.g:513:5: insn_format22c_type
+                    // smaliIdeaParser.g:518:5: insn_format22c_type
                     {
-                    pushFollow(FOLLOW_insn_format22c_type_in_instruction2101);
+                    pushFollow(FOLLOW_insn_format22c_type_in_instruction2124);
                     insn_format22c_type();
 
                     state._fsp--;
@@ -4738,9 +4820,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 20 :
-                    // smaliIdeaParser.g:514:5: insn_format22cs_field
+                    // smaliIdeaParser.g:519:5: insn_format22cs_field
                     {
-                    pushFollow(FOLLOW_insn_format22cs_field_in_instruction2107);
+                    pushFollow(FOLLOW_insn_format22cs_field_in_instruction2130);
                     insn_format22cs_field();
 
                     state._fsp--;
@@ -4749,9 +4831,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 21 :
-                    // smaliIdeaParser.g:515:5: insn_format22s
+                    // smaliIdeaParser.g:520:5: insn_format22s
                     {
-                    pushFollow(FOLLOW_insn_format22s_in_instruction2113);
+                    pushFollow(FOLLOW_insn_format22s_in_instruction2136);
                     insn_format22s();
 
                     state._fsp--;
@@ -4760,9 +4842,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 22 :
-                    // smaliIdeaParser.g:516:5: insn_format22t
+                    // smaliIdeaParser.g:521:5: insn_format22t
                     {
-                    pushFollow(FOLLOW_insn_format22t_in_instruction2119);
+                    pushFollow(FOLLOW_insn_format22t_in_instruction2142);
                     insn_format22t();
 
                     state._fsp--;
@@ -4771,9 +4853,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 23 :
-                    // smaliIdeaParser.g:517:5: insn_format22x
+                    // smaliIdeaParser.g:522:5: insn_format22x
                     {
-                    pushFollow(FOLLOW_insn_format22x_in_instruction2125);
+                    pushFollow(FOLLOW_insn_format22x_in_instruction2148);
                     insn_format22x();
 
                     state._fsp--;
@@ -4782,9 +4864,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 24 :
-                    // smaliIdeaParser.g:518:5: insn_format23x
+                    // smaliIdeaParser.g:523:5: insn_format23x
                     {
-                    pushFollow(FOLLOW_insn_format23x_in_instruction2131);
+                    pushFollow(FOLLOW_insn_format23x_in_instruction2154);
                     insn_format23x();
 
                     state._fsp--;
@@ -4793,9 +4875,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 25 :
-                    // smaliIdeaParser.g:519:5: insn_format30t
+                    // smaliIdeaParser.g:524:5: insn_format30t
                     {
-                    pushFollow(FOLLOW_insn_format30t_in_instruction2137);
+                    pushFollow(FOLLOW_insn_format30t_in_instruction2160);
                     insn_format30t();
 
                     state._fsp--;
@@ -4804,9 +4886,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 26 :
-                    // smaliIdeaParser.g:520:5: insn_format31c
+                    // smaliIdeaParser.g:525:5: insn_format31c
                     {
-                    pushFollow(FOLLOW_insn_format31c_in_instruction2143);
+                    pushFollow(FOLLOW_insn_format31c_in_instruction2166);
                     insn_format31c();
 
                     state._fsp--;
@@ -4815,9 +4897,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 27 :
-                    // smaliIdeaParser.g:521:5: insn_format31i
+                    // smaliIdeaParser.g:526:5: insn_format31i
                     {
-                    pushFollow(FOLLOW_insn_format31i_in_instruction2149);
+                    pushFollow(FOLLOW_insn_format31i_in_instruction2172);
                     insn_format31i();
 
                     state._fsp--;
@@ -4826,9 +4908,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 28 :
-                    // smaliIdeaParser.g:522:5: insn_format31t
+                    // smaliIdeaParser.g:527:5: insn_format31t
                     {
-                    pushFollow(FOLLOW_insn_format31t_in_instruction2155);
+                    pushFollow(FOLLOW_insn_format31t_in_instruction2178);
                     insn_format31t();
 
                     state._fsp--;
@@ -4837,9 +4919,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 29 :
-                    // smaliIdeaParser.g:523:5: insn_format32x
+                    // smaliIdeaParser.g:528:5: insn_format32x
                     {
-                    pushFollow(FOLLOW_insn_format32x_in_instruction2161);
+                    pushFollow(FOLLOW_insn_format32x_in_instruction2184);
                     insn_format32x();
 
                     state._fsp--;
@@ -4848,9 +4930,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 30 :
-                    // smaliIdeaParser.g:524:5: insn_format35c_method
+                    // smaliIdeaParser.g:529:5: insn_format35c_method
                     {
-                    pushFollow(FOLLOW_insn_format35c_method_in_instruction2167);
+                    pushFollow(FOLLOW_insn_format35c_method_in_instruction2190);
                     insn_format35c_method();
 
                     state._fsp--;
@@ -4859,9 +4941,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 31 :
-                    // smaliIdeaParser.g:525:5: insn_format35c_type
+                    // smaliIdeaParser.g:530:5: insn_format35c_type
                     {
-                    pushFollow(FOLLOW_insn_format35c_type_in_instruction2173);
+                    pushFollow(FOLLOW_insn_format35c_type_in_instruction2196);
                     insn_format35c_type();
 
                     state._fsp--;
@@ -4870,9 +4952,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 32 :
-                    // smaliIdeaParser.g:526:5: insn_format35c_method_odex
+                    // smaliIdeaParser.g:531:5: insn_format35c_method_odex
                     {
-                    pushFollow(FOLLOW_insn_format35c_method_odex_in_instruction2179);
+                    pushFollow(FOLLOW_insn_format35c_method_odex_in_instruction2202);
                     insn_format35c_method_odex();
 
                     state._fsp--;
@@ -4881,9 +4963,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 33 :
-                    // smaliIdeaParser.g:527:5: insn_format35mi_method
+                    // smaliIdeaParser.g:532:5: insn_format35mi_method
                     {
-                    pushFollow(FOLLOW_insn_format35mi_method_in_instruction2185);
+                    pushFollow(FOLLOW_insn_format35mi_method_in_instruction2208);
                     insn_format35mi_method();
 
                     state._fsp--;
@@ -4892,9 +4974,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 34 :
-                    // smaliIdeaParser.g:528:5: insn_format35ms_method
+                    // smaliIdeaParser.g:533:5: insn_format35ms_method
                     {
-                    pushFollow(FOLLOW_insn_format35ms_method_in_instruction2191);
+                    pushFollow(FOLLOW_insn_format35ms_method_in_instruction2214);
                     insn_format35ms_method();
 
                     state._fsp--;
@@ -4903,9 +4985,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 35 :
-                    // smaliIdeaParser.g:529:5: insn_format3rc_method
+                    // smaliIdeaParser.g:534:5: insn_format3rc_method
                     {
-                    pushFollow(FOLLOW_insn_format3rc_method_in_instruction2197);
+                    pushFollow(FOLLOW_insn_format3rc_method_in_instruction2220);
                     insn_format3rc_method();
 
                     state._fsp--;
@@ -4914,9 +4996,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 36 :
-                    // smaliIdeaParser.g:530:5: insn_format3rc_method_odex
+                    // smaliIdeaParser.g:535:5: insn_format3rc_method_odex
                     {
-                    pushFollow(FOLLOW_insn_format3rc_method_odex_in_instruction2203);
+                    pushFollow(FOLLOW_insn_format3rc_method_odex_in_instruction2226);
                     insn_format3rc_method_odex();
 
                     state._fsp--;
@@ -4925,9 +5007,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 37 :
-                    // smaliIdeaParser.g:531:5: insn_format3rc_type
+                    // smaliIdeaParser.g:536:5: insn_format3rc_type
                     {
-                    pushFollow(FOLLOW_insn_format3rc_type_in_instruction2209);
+                    pushFollow(FOLLOW_insn_format3rc_type_in_instruction2232);
                     insn_format3rc_type();
 
                     state._fsp--;
@@ -4936,9 +5018,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 38 :
-                    // smaliIdeaParser.g:532:5: insn_format3rmi_method
+                    // smaliIdeaParser.g:537:5: insn_format3rmi_method
                     {
-                    pushFollow(FOLLOW_insn_format3rmi_method_in_instruction2215);
+                    pushFollow(FOLLOW_insn_format3rmi_method_in_instruction2238);
                     insn_format3rmi_method();
 
                     state._fsp--;
@@ -4947,9 +5029,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 39 :
-                    // smaliIdeaParser.g:533:5: insn_format3rms_method
+                    // smaliIdeaParser.g:538:5: insn_format3rms_method
                     {
-                    pushFollow(FOLLOW_insn_format3rms_method_in_instruction2221);
+                    pushFollow(FOLLOW_insn_format3rms_method_in_instruction2244);
                     insn_format3rms_method();
 
                     state._fsp--;
@@ -4958,9 +5040,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 40 :
-                    // smaliIdeaParser.g:534:5: insn_format51l
+                    // smaliIdeaParser.g:539:5: insn_format51l
                     {
-                    pushFollow(FOLLOW_insn_format51l_in_instruction2227);
+                    pushFollow(FOLLOW_insn_format51l_in_instruction2250);
                     insn_format51l();
 
                     state._fsp--;
@@ -4969,9 +5051,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 41 :
-                    // smaliIdeaParser.g:535:5: insn_array_data_directive
+                    // smaliIdeaParser.g:540:5: insn_array_data_directive
                     {
-                    pushFollow(FOLLOW_insn_array_data_directive_in_instruction2233);
+                    pushFollow(FOLLOW_insn_array_data_directive_in_instruction2256);
                     insn_array_data_directive();
 
                     state._fsp--;
@@ -4980,9 +5062,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 42 :
-                    // smaliIdeaParser.g:536:5: insn_packed_switch_directive
+                    // smaliIdeaParser.g:541:5: insn_packed_switch_directive
                     {
-                    pushFollow(FOLLOW_insn_packed_switch_directive_in_instruction2239);
+                    pushFollow(FOLLOW_insn_packed_switch_directive_in_instruction2262);
                     insn_packed_switch_directive();
 
                     state._fsp--;
@@ -4991,9 +5073,9 @@ public class smaliIdeaParser extends Parser {
                     }
                     break;
                 case 43 :
-                    // smaliIdeaParser.g:537:5: insn_sparse_switch_directive
+                    // smaliIdeaParser.g:542:5: insn_sparse_switch_directive
                     {
-                    pushFollow(FOLLOW_insn_sparse_switch_directive_in_instruction2245);
+                    pushFollow(FOLLOW_insn_sparse_switch_directive_in_instruction2268);
                     insn_sparse_switch_directive();
 
                     state._fsp--;
@@ -5020,18 +5102,18 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format10t"
-    // smaliIdeaParser.g:540:1: insn_format10t returns [int size] : INSTRUCTION_FORMAT10t label_ref_or_offset ;
+    // smaliIdeaParser.g:545:1: insn_format10t returns [int size] : INSTRUCTION_FORMAT10t label_ref_or_offset ;
     public final int insn_format10t() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:541:3: ( INSTRUCTION_FORMAT10t label_ref_or_offset )
-            // smaliIdeaParser.g:543:5: INSTRUCTION_FORMAT10t label_ref_or_offset
+            // smaliIdeaParser.g:546:3: ( INSTRUCTION_FORMAT10t label_ref_or_offset )
+            // smaliIdeaParser.g:548:5: INSTRUCTION_FORMAT10t label_ref_or_offset
             {
-            match(input,INSTRUCTION_FORMAT10t,FOLLOW_INSTRUCTION_FORMAT10t_in_insn_format10t2275); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT10t,FOLLOW_INSTRUCTION_FORMAT10t_in_insn_format10t2298); if (state.failed) return size;
 
-            pushFollow(FOLLOW_label_ref_or_offset_in_insn_format10t2277);
+            pushFollow(FOLLOW_label_ref_or_offset_in_insn_format10t2300);
             label_ref_or_offset();
 
             state._fsp--;
@@ -5055,16 +5137,16 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format10x"
-    // smaliIdeaParser.g:545:1: insn_format10x returns [int size] : INSTRUCTION_FORMAT10x ;
+    // smaliIdeaParser.g:550:1: insn_format10x returns [int size] : INSTRUCTION_FORMAT10x ;
     public final int insn_format10x() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:546:3: ( INSTRUCTION_FORMAT10x )
-            // smaliIdeaParser.g:547:5: INSTRUCTION_FORMAT10x
+            // smaliIdeaParser.g:551:3: ( INSTRUCTION_FORMAT10x )
+            // smaliIdeaParser.g:552:5: INSTRUCTION_FORMAT10x
             {
-            match(input,INSTRUCTION_FORMAT10x,FOLLOW_INSTRUCTION_FORMAT10x_in_insn_format10x2296); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT10x,FOLLOW_INSTRUCTION_FORMAT10x_in_insn_format10x2319); if (state.failed) return size;
 
             }
 
@@ -5084,16 +5166,16 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format10x_odex"
-    // smaliIdeaParser.g:549:1: insn_format10x_odex returns [int size] : INSTRUCTION_FORMAT10x_ODEX ;
+    // smaliIdeaParser.g:554:1: insn_format10x_odex returns [int size] : INSTRUCTION_FORMAT10x_ODEX ;
     public final int insn_format10x_odex() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:550:3: ( INSTRUCTION_FORMAT10x_ODEX )
-            // smaliIdeaParser.g:551:5: INSTRUCTION_FORMAT10x_ODEX
+            // smaliIdeaParser.g:555:3: ( INSTRUCTION_FORMAT10x_ODEX )
+            // smaliIdeaParser.g:556:5: INSTRUCTION_FORMAT10x_ODEX
             {
-            match(input,INSTRUCTION_FORMAT10x_ODEX,FOLLOW_INSTRUCTION_FORMAT10x_ODEX_in_insn_format10x_odex2315); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT10x_ODEX,FOLLOW_INSTRUCTION_FORMAT10x_ODEX_in_insn_format10x_odex2338); if (state.failed) return size;
 
             }
 
@@ -5113,22 +5195,22 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format11n"
-    // smaliIdeaParser.g:553:1: insn_format11n returns [int size] : INSTRUCTION_FORMAT11n REGISTER COMMA integral_literal ;
+    // smaliIdeaParser.g:558:1: insn_format11n returns [int size] : INSTRUCTION_FORMAT11n REGISTER COMMA integral_literal ;
     public final int insn_format11n() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:554:3: ( INSTRUCTION_FORMAT11n REGISTER COMMA integral_literal )
-            // smaliIdeaParser.g:555:5: INSTRUCTION_FORMAT11n REGISTER COMMA integral_literal
+            // smaliIdeaParser.g:559:3: ( INSTRUCTION_FORMAT11n REGISTER COMMA integral_literal )
+            // smaliIdeaParser.g:560:5: INSTRUCTION_FORMAT11n REGISTER COMMA integral_literal
             {
-            match(input,INSTRUCTION_FORMAT11n,FOLLOW_INSTRUCTION_FORMAT11n_in_insn_format11n2334); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT11n,FOLLOW_INSTRUCTION_FORMAT11n_in_insn_format11n2357); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format11n2336); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format11n2359); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format11n2338); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format11n2361); if (state.failed) return size;
 
-            pushFollow(FOLLOW_integral_literal_in_insn_format11n2340);
+            pushFollow(FOLLOW_integral_literal_in_insn_format11n2363);
             integral_literal();
 
             state._fsp--;
@@ -5152,18 +5234,18 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format11x"
-    // smaliIdeaParser.g:557:1: insn_format11x returns [int size] : INSTRUCTION_FORMAT11x REGISTER ;
+    // smaliIdeaParser.g:562:1: insn_format11x returns [int size] : INSTRUCTION_FORMAT11x REGISTER ;
     public final int insn_format11x() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:558:3: ( INSTRUCTION_FORMAT11x REGISTER )
-            // smaliIdeaParser.g:559:5: INSTRUCTION_FORMAT11x REGISTER
+            // smaliIdeaParser.g:563:3: ( INSTRUCTION_FORMAT11x REGISTER )
+            // smaliIdeaParser.g:564:5: INSTRUCTION_FORMAT11x REGISTER
             {
-            match(input,INSTRUCTION_FORMAT11x,FOLLOW_INSTRUCTION_FORMAT11x_in_insn_format11x2359); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT11x,FOLLOW_INSTRUCTION_FORMAT11x_in_insn_format11x2382); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format11x2361); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format11x2384); if (state.failed) return size;
 
             }
 
@@ -5183,26 +5265,26 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format12x"
-    // smaliIdeaParser.g:561:1: insn_format12x returns [int size] : instruction_format12x REGISTER COMMA REGISTER ;
+    // smaliIdeaParser.g:566:1: insn_format12x returns [int size] : instruction_format12x REGISTER COMMA REGISTER ;
     public final int insn_format12x() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:562:3: ( instruction_format12x REGISTER COMMA REGISTER )
-            // smaliIdeaParser.g:563:5: instruction_format12x REGISTER COMMA REGISTER
+            // smaliIdeaParser.g:567:3: ( instruction_format12x REGISTER COMMA REGISTER )
+            // smaliIdeaParser.g:568:5: instruction_format12x REGISTER COMMA REGISTER
             {
-            pushFollow(FOLLOW_instruction_format12x_in_insn_format12x2380);
+            pushFollow(FOLLOW_instruction_format12x_in_insn_format12x2403);
             instruction_format12x();
 
             state._fsp--;
             if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format12x2382); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format12x2405); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format12x2384); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format12x2407); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format12x2386); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format12x2409); if (state.failed) return size;
 
             }
 
@@ -5222,22 +5304,22 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format20bc"
-    // smaliIdeaParser.g:565:1: insn_format20bc returns [int size] : INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE COMMA verification_error_reference ;
+    // smaliIdeaParser.g:570:1: insn_format20bc returns [int size] : INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE COMMA verification_error_reference ;
     public final int insn_format20bc() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:566:3: ( INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE COMMA verification_error_reference )
-            // smaliIdeaParser.g:567:5: INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE COMMA verification_error_reference
+            // smaliIdeaParser.g:571:3: ( INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE COMMA verification_error_reference )
+            // smaliIdeaParser.g:572:5: INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE COMMA verification_error_reference
             {
-            match(input,INSTRUCTION_FORMAT20bc,FOLLOW_INSTRUCTION_FORMAT20bc_in_insn_format20bc2405); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT20bc,FOLLOW_INSTRUCTION_FORMAT20bc_in_insn_format20bc2428); if (state.failed) return size;
 
-            match(input,VERIFICATION_ERROR_TYPE,FOLLOW_VERIFICATION_ERROR_TYPE_in_insn_format20bc2407); if (state.failed) return size;
+            match(input,VERIFICATION_ERROR_TYPE,FOLLOW_VERIFICATION_ERROR_TYPE_in_insn_format20bc2430); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format20bc2409); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format20bc2432); if (state.failed) return size;
 
-            pushFollow(FOLLOW_verification_error_reference_in_insn_format20bc2411);
+            pushFollow(FOLLOW_verification_error_reference_in_insn_format20bc2434);
             verification_error_reference();
 
             state._fsp--;
@@ -5261,18 +5343,18 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format20t"
-    // smaliIdeaParser.g:569:1: insn_format20t returns [int size] : INSTRUCTION_FORMAT20t label_ref_or_offset ;
+    // smaliIdeaParser.g:574:1: insn_format20t returns [int size] : INSTRUCTION_FORMAT20t label_ref_or_offset ;
     public final int insn_format20t() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:570:3: ( INSTRUCTION_FORMAT20t label_ref_or_offset )
-            // smaliIdeaParser.g:571:5: INSTRUCTION_FORMAT20t label_ref_or_offset
+            // smaliIdeaParser.g:575:3: ( INSTRUCTION_FORMAT20t label_ref_or_offset )
+            // smaliIdeaParser.g:576:5: INSTRUCTION_FORMAT20t label_ref_or_offset
             {
-            match(input,INSTRUCTION_FORMAT20t,FOLLOW_INSTRUCTION_FORMAT20t_in_insn_format20t2430); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT20t,FOLLOW_INSTRUCTION_FORMAT20t_in_insn_format20t2453); if (state.failed) return size;
 
-            pushFollow(FOLLOW_label_ref_or_offset_in_insn_format20t2432);
+            pushFollow(FOLLOW_label_ref_or_offset_in_insn_format20t2455);
             label_ref_or_offset();
 
             state._fsp--;
@@ -5296,22 +5378,22 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format21c_field"
-    // smaliIdeaParser.g:573:1: insn_format21c_field returns [int size] : INSTRUCTION_FORMAT21c_FIELD REGISTER COMMA fully_qualified_field ;
+    // smaliIdeaParser.g:578:1: insn_format21c_field returns [int size] : INSTRUCTION_FORMAT21c_FIELD REGISTER COMMA fully_qualified_field ;
     public final int insn_format21c_field() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:574:3: ( INSTRUCTION_FORMAT21c_FIELD REGISTER COMMA fully_qualified_field )
-            // smaliIdeaParser.g:575:5: INSTRUCTION_FORMAT21c_FIELD REGISTER COMMA fully_qualified_field
+            // smaliIdeaParser.g:579:3: ( INSTRUCTION_FORMAT21c_FIELD REGISTER COMMA fully_qualified_field )
+            // smaliIdeaParser.g:580:5: INSTRUCTION_FORMAT21c_FIELD REGISTER COMMA fully_qualified_field
             {
-            match(input,INSTRUCTION_FORMAT21c_FIELD,FOLLOW_INSTRUCTION_FORMAT21c_FIELD_in_insn_format21c_field2451); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT21c_FIELD,FOLLOW_INSTRUCTION_FORMAT21c_FIELD_in_insn_format21c_field2474); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format21c_field2453); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format21c_field2476); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format21c_field2455); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format21c_field2478); if (state.failed) return size;
 
-            pushFollow(FOLLOW_fully_qualified_field_in_insn_format21c_field2457);
+            pushFollow(FOLLOW_fully_qualified_field_in_insn_format21c_field2480);
             fully_qualified_field();
 
             state._fsp--;
@@ -5335,22 +5417,22 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format21c_field_odex"
-    // smaliIdeaParser.g:577:1: insn_format21c_field_odex returns [int size] : INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER COMMA fully_qualified_field ;
+    // smaliIdeaParser.g:582:1: insn_format21c_field_odex returns [int size] : INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER COMMA fully_qualified_field ;
     public final int insn_format21c_field_odex() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:578:3: ( INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER COMMA fully_qualified_field )
-            // smaliIdeaParser.g:579:5: INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER COMMA fully_qualified_field
+            // smaliIdeaParser.g:583:3: ( INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER COMMA fully_qualified_field )
+            // smaliIdeaParser.g:584:5: INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER COMMA fully_qualified_field
             {
-            match(input,INSTRUCTION_FORMAT21c_FIELD_ODEX,FOLLOW_INSTRUCTION_FORMAT21c_FIELD_ODEX_in_insn_format21c_field_odex2476); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT21c_FIELD_ODEX,FOLLOW_INSTRUCTION_FORMAT21c_FIELD_ODEX_in_insn_format21c_field_odex2499); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format21c_field_odex2478); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format21c_field_odex2501); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format21c_field_odex2480); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format21c_field_odex2503); if (state.failed) return size;
 
-            pushFollow(FOLLOW_fully_qualified_field_in_insn_format21c_field_odex2482);
+            pushFollow(FOLLOW_fully_qualified_field_in_insn_format21c_field_odex2505);
             fully_qualified_field();
 
             state._fsp--;
@@ -5374,22 +5456,22 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format21c_string"
-    // smaliIdeaParser.g:581:1: insn_format21c_string returns [int size] : INSTRUCTION_FORMAT21c_STRING REGISTER COMMA STRING_LITERAL ;
+    // smaliIdeaParser.g:586:1: insn_format21c_string returns [int size] : INSTRUCTION_FORMAT21c_STRING REGISTER COMMA STRING_LITERAL ;
     public final int insn_format21c_string() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:582:3: ( INSTRUCTION_FORMAT21c_STRING REGISTER COMMA STRING_LITERAL )
-            // smaliIdeaParser.g:583:5: INSTRUCTION_FORMAT21c_STRING REGISTER COMMA STRING_LITERAL
+            // smaliIdeaParser.g:587:3: ( INSTRUCTION_FORMAT21c_STRING REGISTER COMMA STRING_LITERAL )
+            // smaliIdeaParser.g:588:5: INSTRUCTION_FORMAT21c_STRING REGISTER COMMA STRING_LITERAL
             {
-            match(input,INSTRUCTION_FORMAT21c_STRING,FOLLOW_INSTRUCTION_FORMAT21c_STRING_in_insn_format21c_string2501); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT21c_STRING,FOLLOW_INSTRUCTION_FORMAT21c_STRING_in_insn_format21c_string2524); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format21c_string2503); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format21c_string2526); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format21c_string2505); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format21c_string2528); if (state.failed) return size;
 
-            match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_insn_format21c_string2507); if (state.failed) return size;
+            match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_insn_format21c_string2530); if (state.failed) return size;
 
             }
 
@@ -5409,22 +5491,22 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format21c_type"
-    // smaliIdeaParser.g:585:1: insn_format21c_type returns [int size] : INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA reference_type_descriptor ;
+    // smaliIdeaParser.g:590:1: insn_format21c_type returns [int size] : INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA reference_type_descriptor ;
     public final int insn_format21c_type() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:586:3: ( INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA reference_type_descriptor )
-            // smaliIdeaParser.g:587:5: INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA reference_type_descriptor
+            // smaliIdeaParser.g:591:3: ( INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA reference_type_descriptor )
+            // smaliIdeaParser.g:592:5: INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA reference_type_descriptor
             {
-            match(input,INSTRUCTION_FORMAT21c_TYPE,FOLLOW_INSTRUCTION_FORMAT21c_TYPE_in_insn_format21c_type2526); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT21c_TYPE,FOLLOW_INSTRUCTION_FORMAT21c_TYPE_in_insn_format21c_type2549); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format21c_type2528); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format21c_type2551); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format21c_type2530); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format21c_type2553); if (state.failed) return size;
 
-            pushFollow(FOLLOW_reference_type_descriptor_in_insn_format21c_type2532);
+            pushFollow(FOLLOW_reference_type_descriptor_in_insn_format21c_type2555);
             reference_type_descriptor();
 
             state._fsp--;
@@ -5448,22 +5530,22 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format21h"
-    // smaliIdeaParser.g:589:1: insn_format21h returns [int size] : INSTRUCTION_FORMAT21h REGISTER COMMA integral_literal ;
+    // smaliIdeaParser.g:594:1: insn_format21h returns [int size] : INSTRUCTION_FORMAT21h REGISTER COMMA integral_literal ;
     public final int insn_format21h() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:590:3: ( INSTRUCTION_FORMAT21h REGISTER COMMA integral_literal )
-            // smaliIdeaParser.g:591:5: INSTRUCTION_FORMAT21h REGISTER COMMA integral_literal
+            // smaliIdeaParser.g:595:3: ( INSTRUCTION_FORMAT21h REGISTER COMMA integral_literal )
+            // smaliIdeaParser.g:596:5: INSTRUCTION_FORMAT21h REGISTER COMMA integral_literal
             {
-            match(input,INSTRUCTION_FORMAT21h,FOLLOW_INSTRUCTION_FORMAT21h_in_insn_format21h2551); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT21h,FOLLOW_INSTRUCTION_FORMAT21h_in_insn_format21h2574); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format21h2553); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format21h2576); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format21h2555); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format21h2578); if (state.failed) return size;
 
-            pushFollow(FOLLOW_integral_literal_in_insn_format21h2557);
+            pushFollow(FOLLOW_integral_literal_in_insn_format21h2580);
             integral_literal();
 
             state._fsp--;
@@ -5487,22 +5569,22 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format21s"
-    // smaliIdeaParser.g:593:1: insn_format21s returns [int size] : INSTRUCTION_FORMAT21s REGISTER COMMA integral_literal ;
+    // smaliIdeaParser.g:598:1: insn_format21s returns [int size] : INSTRUCTION_FORMAT21s REGISTER COMMA integral_literal ;
     public final int insn_format21s() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:594:3: ( INSTRUCTION_FORMAT21s REGISTER COMMA integral_literal )
-            // smaliIdeaParser.g:595:5: INSTRUCTION_FORMAT21s REGISTER COMMA integral_literal
+            // smaliIdeaParser.g:599:3: ( INSTRUCTION_FORMAT21s REGISTER COMMA integral_literal )
+            // smaliIdeaParser.g:600:5: INSTRUCTION_FORMAT21s REGISTER COMMA integral_literal
             {
-            match(input,INSTRUCTION_FORMAT21s,FOLLOW_INSTRUCTION_FORMAT21s_in_insn_format21s2576); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT21s,FOLLOW_INSTRUCTION_FORMAT21s_in_insn_format21s2599); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format21s2578); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format21s2601); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format21s2580); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format21s2603); if (state.failed) return size;
 
-            pushFollow(FOLLOW_integral_literal_in_insn_format21s2582);
+            pushFollow(FOLLOW_integral_literal_in_insn_format21s2605);
             integral_literal();
 
             state._fsp--;
@@ -5526,25 +5608,25 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format21t"
-    // smaliIdeaParser.g:597:1: insn_format21t returns [int size] : INSTRUCTION_FORMAT21t REGISTER COMMA ( label_ref_or_offset ) ;
+    // smaliIdeaParser.g:602:1: insn_format21t returns [int size] : INSTRUCTION_FORMAT21t REGISTER COMMA ( label_ref_or_offset ) ;
     public final int insn_format21t() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:598:3: ( INSTRUCTION_FORMAT21t REGISTER COMMA ( label_ref_or_offset ) )
-            // smaliIdeaParser.g:599:5: INSTRUCTION_FORMAT21t REGISTER COMMA ( label_ref_or_offset )
+            // smaliIdeaParser.g:603:3: ( INSTRUCTION_FORMAT21t REGISTER COMMA ( label_ref_or_offset ) )
+            // smaliIdeaParser.g:604:5: INSTRUCTION_FORMAT21t REGISTER COMMA ( label_ref_or_offset )
             {
-            match(input,INSTRUCTION_FORMAT21t,FOLLOW_INSTRUCTION_FORMAT21t_in_insn_format21t2601); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT21t,FOLLOW_INSTRUCTION_FORMAT21t_in_insn_format21t2624); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format21t2603); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format21t2626); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format21t2605); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format21t2628); if (state.failed) return size;
 
-            // smaliIdeaParser.g:599:42: ( label_ref_or_offset )
-            // smaliIdeaParser.g:599:43: label_ref_or_offset
+            // smaliIdeaParser.g:604:42: ( label_ref_or_offset )
+            // smaliIdeaParser.g:604:43: label_ref_or_offset
             {
-            pushFollow(FOLLOW_label_ref_or_offset_in_insn_format21t2608);
+            pushFollow(FOLLOW_label_ref_or_offset_in_insn_format21t2631);
             label_ref_or_offset();
 
             state._fsp--;
@@ -5571,26 +5653,26 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format22b"
-    // smaliIdeaParser.g:601:1: insn_format22b returns [int size] : INSTRUCTION_FORMAT22b REGISTER COMMA REGISTER COMMA integral_literal ;
+    // smaliIdeaParser.g:606:1: insn_format22b returns [int size] : INSTRUCTION_FORMAT22b REGISTER COMMA REGISTER COMMA integral_literal ;
     public final int insn_format22b() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:602:3: ( INSTRUCTION_FORMAT22b REGISTER COMMA REGISTER COMMA integral_literal )
-            // smaliIdeaParser.g:603:5: INSTRUCTION_FORMAT22b REGISTER COMMA REGISTER COMMA integral_literal
+            // smaliIdeaParser.g:607:3: ( INSTRUCTION_FORMAT22b REGISTER COMMA REGISTER COMMA integral_literal )
+            // smaliIdeaParser.g:608:5: INSTRUCTION_FORMAT22b REGISTER COMMA REGISTER COMMA integral_literal
             {
-            match(input,INSTRUCTION_FORMAT22b,FOLLOW_INSTRUCTION_FORMAT22b_in_insn_format22b2628); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT22b,FOLLOW_INSTRUCTION_FORMAT22b_in_insn_format22b2651); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22b2630); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22b2653); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format22b2632); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format22b2655); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22b2634); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22b2657); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format22b2636); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format22b2659); if (state.failed) return size;
 
-            pushFollow(FOLLOW_integral_literal_in_insn_format22b2638);
+            pushFollow(FOLLOW_integral_literal_in_insn_format22b2661);
             integral_literal();
 
             state._fsp--;
@@ -5614,26 +5696,26 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format22c_field"
-    // smaliIdeaParser.g:605:1: insn_format22c_field returns [int size] : INSTRUCTION_FORMAT22c_FIELD REGISTER COMMA REGISTER COMMA fully_qualified_field ;
+    // smaliIdeaParser.g:610:1: insn_format22c_field returns [int size] : INSTRUCTION_FORMAT22c_FIELD REGISTER COMMA REGISTER COMMA fully_qualified_field ;
     public final int insn_format22c_field() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:606:3: ( INSTRUCTION_FORMAT22c_FIELD REGISTER COMMA REGISTER COMMA fully_qualified_field )
-            // smaliIdeaParser.g:607:5: INSTRUCTION_FORMAT22c_FIELD REGISTER COMMA REGISTER COMMA fully_qualified_field
+            // smaliIdeaParser.g:611:3: ( INSTRUCTION_FORMAT22c_FIELD REGISTER COMMA REGISTER COMMA fully_qualified_field )
+            // smaliIdeaParser.g:612:5: INSTRUCTION_FORMAT22c_FIELD REGISTER COMMA REGISTER COMMA fully_qualified_field
             {
-            match(input,INSTRUCTION_FORMAT22c_FIELD,FOLLOW_INSTRUCTION_FORMAT22c_FIELD_in_insn_format22c_field2657); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT22c_FIELD,FOLLOW_INSTRUCTION_FORMAT22c_FIELD_in_insn_format22c_field2680); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22c_field2659); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22c_field2682); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format22c_field2661); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format22c_field2684); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22c_field2663); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22c_field2686); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format22c_field2665); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format22c_field2688); if (state.failed) return size;
 
-            pushFollow(FOLLOW_fully_qualified_field_in_insn_format22c_field2667);
+            pushFollow(FOLLOW_fully_qualified_field_in_insn_format22c_field2690);
             fully_qualified_field();
 
             state._fsp--;
@@ -5657,26 +5739,26 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format22c_field_odex"
-    // smaliIdeaParser.g:609:1: insn_format22c_field_odex returns [int size] : INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER COMMA REGISTER COMMA fully_qualified_field ;
+    // smaliIdeaParser.g:614:1: insn_format22c_field_odex returns [int size] : INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER COMMA REGISTER COMMA fully_qualified_field ;
     public final int insn_format22c_field_odex() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:610:3: ( INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER COMMA REGISTER COMMA fully_qualified_field )
-            // smaliIdeaParser.g:611:5: INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER COMMA REGISTER COMMA fully_qualified_field
+            // smaliIdeaParser.g:615:3: ( INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER COMMA REGISTER COMMA fully_qualified_field )
+            // smaliIdeaParser.g:616:5: INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER COMMA REGISTER COMMA fully_qualified_field
             {
-            match(input,INSTRUCTION_FORMAT22c_FIELD_ODEX,FOLLOW_INSTRUCTION_FORMAT22c_FIELD_ODEX_in_insn_format22c_field_odex2686); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT22c_FIELD_ODEX,FOLLOW_INSTRUCTION_FORMAT22c_FIELD_ODEX_in_insn_format22c_field_odex2709); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22c_field_odex2688); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22c_field_odex2711); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format22c_field_odex2690); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format22c_field_odex2713); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22c_field_odex2692); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22c_field_odex2715); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format22c_field_odex2694); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format22c_field_odex2717); if (state.failed) return size;
 
-            pushFollow(FOLLOW_fully_qualified_field_in_insn_format22c_field_odex2696);
+            pushFollow(FOLLOW_fully_qualified_field_in_insn_format22c_field_odex2719);
             fully_qualified_field();
 
             state._fsp--;
@@ -5700,26 +5782,26 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format22c_type"
-    // smaliIdeaParser.g:613:1: insn_format22c_type returns [int size] : INSTRUCTION_FORMAT22c_TYPE REGISTER COMMA REGISTER COMMA nonvoid_type_descriptor ;
+    // smaliIdeaParser.g:618:1: insn_format22c_type returns [int size] : INSTRUCTION_FORMAT22c_TYPE REGISTER COMMA REGISTER COMMA nonvoid_type_descriptor ;
     public final int insn_format22c_type() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:614:3: ( INSTRUCTION_FORMAT22c_TYPE REGISTER COMMA REGISTER COMMA nonvoid_type_descriptor )
-            // smaliIdeaParser.g:615:5: INSTRUCTION_FORMAT22c_TYPE REGISTER COMMA REGISTER COMMA nonvoid_type_descriptor
+            // smaliIdeaParser.g:619:3: ( INSTRUCTION_FORMAT22c_TYPE REGISTER COMMA REGISTER COMMA nonvoid_type_descriptor )
+            // smaliIdeaParser.g:620:5: INSTRUCTION_FORMAT22c_TYPE REGISTER COMMA REGISTER COMMA nonvoid_type_descriptor
             {
-            match(input,INSTRUCTION_FORMAT22c_TYPE,FOLLOW_INSTRUCTION_FORMAT22c_TYPE_in_insn_format22c_type2715); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT22c_TYPE,FOLLOW_INSTRUCTION_FORMAT22c_TYPE_in_insn_format22c_type2738); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22c_type2717); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22c_type2740); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format22c_type2719); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format22c_type2742); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22c_type2721); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22c_type2744); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format22c_type2723); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format22c_type2746); if (state.failed) return size;
 
-            pushFollow(FOLLOW_nonvoid_type_descriptor_in_insn_format22c_type2725);
+            pushFollow(FOLLOW_nonvoid_type_descriptor_in_insn_format22c_type2748);
             nonvoid_type_descriptor();
 
             state._fsp--;
@@ -5743,26 +5825,26 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format22cs_field"
-    // smaliIdeaParser.g:617:1: insn_format22cs_field returns [int size] : INSTRUCTION_FORMAT22cs_FIELD REGISTER COMMA REGISTER COMMA FIELD_OFFSET ;
+    // smaliIdeaParser.g:622:1: insn_format22cs_field returns [int size] : INSTRUCTION_FORMAT22cs_FIELD REGISTER COMMA REGISTER COMMA FIELD_OFFSET ;
     public final int insn_format22cs_field() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:618:3: ( INSTRUCTION_FORMAT22cs_FIELD REGISTER COMMA REGISTER COMMA FIELD_OFFSET )
-            // smaliIdeaParser.g:619:5: INSTRUCTION_FORMAT22cs_FIELD REGISTER COMMA REGISTER COMMA FIELD_OFFSET
+            // smaliIdeaParser.g:623:3: ( INSTRUCTION_FORMAT22cs_FIELD REGISTER COMMA REGISTER COMMA FIELD_OFFSET )
+            // smaliIdeaParser.g:624:5: INSTRUCTION_FORMAT22cs_FIELD REGISTER COMMA REGISTER COMMA FIELD_OFFSET
             {
-            match(input,INSTRUCTION_FORMAT22cs_FIELD,FOLLOW_INSTRUCTION_FORMAT22cs_FIELD_in_insn_format22cs_field2744); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT22cs_FIELD,FOLLOW_INSTRUCTION_FORMAT22cs_FIELD_in_insn_format22cs_field2767); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22cs_field2746); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22cs_field2769); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format22cs_field2748); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format22cs_field2771); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22cs_field2750); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22cs_field2773); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format22cs_field2752); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format22cs_field2775); if (state.failed) return size;
 
-            match(input,FIELD_OFFSET,FOLLOW_FIELD_OFFSET_in_insn_format22cs_field2754); if (state.failed) return size;
+            match(input,FIELD_OFFSET,FOLLOW_FIELD_OFFSET_in_insn_format22cs_field2777); if (state.failed) return size;
 
             }
 
@@ -5782,30 +5864,30 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format22s"
-    // smaliIdeaParser.g:621:1: insn_format22s returns [int size] : instruction_format22s REGISTER COMMA REGISTER COMMA integral_literal ;
+    // smaliIdeaParser.g:626:1: insn_format22s returns [int size] : instruction_format22s REGISTER COMMA REGISTER COMMA integral_literal ;
     public final int insn_format22s() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:622:3: ( instruction_format22s REGISTER COMMA REGISTER COMMA integral_literal )
-            // smaliIdeaParser.g:623:5: instruction_format22s REGISTER COMMA REGISTER COMMA integral_literal
+            // smaliIdeaParser.g:627:3: ( instruction_format22s REGISTER COMMA REGISTER COMMA integral_literal )
+            // smaliIdeaParser.g:628:5: instruction_format22s REGISTER COMMA REGISTER COMMA integral_literal
             {
-            pushFollow(FOLLOW_instruction_format22s_in_insn_format22s2773);
+            pushFollow(FOLLOW_instruction_format22s_in_insn_format22s2796);
             instruction_format22s();
 
             state._fsp--;
             if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22s2775); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22s2798); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format22s2777); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format22s2800); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22s2779); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22s2802); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format22s2781); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format22s2804); if (state.failed) return size;
 
-            pushFollow(FOLLOW_integral_literal_in_insn_format22s2783);
+            pushFollow(FOLLOW_integral_literal_in_insn_format22s2806);
             integral_literal();
 
             state._fsp--;
@@ -5829,26 +5911,26 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format22t"
-    // smaliIdeaParser.g:625:1: insn_format22t returns [int size] : INSTRUCTION_FORMAT22t REGISTER COMMA REGISTER COMMA label_ref_or_offset ;
+    // smaliIdeaParser.g:630:1: insn_format22t returns [int size] : INSTRUCTION_FORMAT22t REGISTER COMMA REGISTER COMMA label_ref_or_offset ;
     public final int insn_format22t() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:626:3: ( INSTRUCTION_FORMAT22t REGISTER COMMA REGISTER COMMA label_ref_or_offset )
-            // smaliIdeaParser.g:627:5: INSTRUCTION_FORMAT22t REGISTER COMMA REGISTER COMMA label_ref_or_offset
+            // smaliIdeaParser.g:631:3: ( INSTRUCTION_FORMAT22t REGISTER COMMA REGISTER COMMA label_ref_or_offset )
+            // smaliIdeaParser.g:632:5: INSTRUCTION_FORMAT22t REGISTER COMMA REGISTER COMMA label_ref_or_offset
             {
-            match(input,INSTRUCTION_FORMAT22t,FOLLOW_INSTRUCTION_FORMAT22t_in_insn_format22t2802); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT22t,FOLLOW_INSTRUCTION_FORMAT22t_in_insn_format22t2825); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22t2804); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22t2827); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format22t2806); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format22t2829); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22t2808); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22t2831); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format22t2810); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format22t2833); if (state.failed) return size;
 
-            pushFollow(FOLLOW_label_ref_or_offset_in_insn_format22t2812);
+            pushFollow(FOLLOW_label_ref_or_offset_in_insn_format22t2835);
             label_ref_or_offset();
 
             state._fsp--;
@@ -5872,22 +5954,22 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format22x"
-    // smaliIdeaParser.g:629:1: insn_format22x returns [int size] : INSTRUCTION_FORMAT22x REGISTER COMMA REGISTER ;
+    // smaliIdeaParser.g:634:1: insn_format22x returns [int size] : INSTRUCTION_FORMAT22x REGISTER COMMA REGISTER ;
     public final int insn_format22x() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:630:3: ( INSTRUCTION_FORMAT22x REGISTER COMMA REGISTER )
-            // smaliIdeaParser.g:631:5: INSTRUCTION_FORMAT22x REGISTER COMMA REGISTER
+            // smaliIdeaParser.g:635:3: ( INSTRUCTION_FORMAT22x REGISTER COMMA REGISTER )
+            // smaliIdeaParser.g:636:5: INSTRUCTION_FORMAT22x REGISTER COMMA REGISTER
             {
-            match(input,INSTRUCTION_FORMAT22x,FOLLOW_INSTRUCTION_FORMAT22x_in_insn_format22x2831); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT22x,FOLLOW_INSTRUCTION_FORMAT22x_in_insn_format22x2854); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22x2833); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22x2856); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format22x2835); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format22x2858); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22x2837); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format22x2860); if (state.failed) return size;
 
             }
 
@@ -5907,26 +5989,26 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format23x"
-    // smaliIdeaParser.g:633:1: insn_format23x returns [int size] : INSTRUCTION_FORMAT23x REGISTER COMMA REGISTER COMMA REGISTER ;
+    // smaliIdeaParser.g:638:1: insn_format23x returns [int size] : INSTRUCTION_FORMAT23x REGISTER COMMA REGISTER COMMA REGISTER ;
     public final int insn_format23x() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:634:3: ( INSTRUCTION_FORMAT23x REGISTER COMMA REGISTER COMMA REGISTER )
-            // smaliIdeaParser.g:635:5: INSTRUCTION_FORMAT23x REGISTER COMMA REGISTER COMMA REGISTER
+            // smaliIdeaParser.g:639:3: ( INSTRUCTION_FORMAT23x REGISTER COMMA REGISTER COMMA REGISTER )
+            // smaliIdeaParser.g:640:5: INSTRUCTION_FORMAT23x REGISTER COMMA REGISTER COMMA REGISTER
             {
-            match(input,INSTRUCTION_FORMAT23x,FOLLOW_INSTRUCTION_FORMAT23x_in_insn_format23x2856); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT23x,FOLLOW_INSTRUCTION_FORMAT23x_in_insn_format23x2879); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format23x2858); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format23x2881); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format23x2860); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format23x2883); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format23x2862); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format23x2885); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format23x2864); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format23x2887); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format23x2866); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format23x2889); if (state.failed) return size;
 
             }
 
@@ -5946,18 +6028,18 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format30t"
-    // smaliIdeaParser.g:637:1: insn_format30t returns [int size] : INSTRUCTION_FORMAT30t label_ref_or_offset ;
+    // smaliIdeaParser.g:642:1: insn_format30t returns [int size] : INSTRUCTION_FORMAT30t label_ref_or_offset ;
     public final int insn_format30t() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:638:3: ( INSTRUCTION_FORMAT30t label_ref_or_offset )
-            // smaliIdeaParser.g:639:5: INSTRUCTION_FORMAT30t label_ref_or_offset
+            // smaliIdeaParser.g:643:3: ( INSTRUCTION_FORMAT30t label_ref_or_offset )
+            // smaliIdeaParser.g:644:5: INSTRUCTION_FORMAT30t label_ref_or_offset
             {
-            match(input,INSTRUCTION_FORMAT30t,FOLLOW_INSTRUCTION_FORMAT30t_in_insn_format30t2885); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT30t,FOLLOW_INSTRUCTION_FORMAT30t_in_insn_format30t2908); if (state.failed) return size;
 
-            pushFollow(FOLLOW_label_ref_or_offset_in_insn_format30t2887);
+            pushFollow(FOLLOW_label_ref_or_offset_in_insn_format30t2910);
             label_ref_or_offset();
 
             state._fsp--;
@@ -5981,22 +6063,22 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format31c"
-    // smaliIdeaParser.g:641:1: insn_format31c returns [int size] : INSTRUCTION_FORMAT31c REGISTER COMMA STRING_LITERAL ;
+    // smaliIdeaParser.g:646:1: insn_format31c returns [int size] : INSTRUCTION_FORMAT31c REGISTER COMMA STRING_LITERAL ;
     public final int insn_format31c() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:642:3: ( INSTRUCTION_FORMAT31c REGISTER COMMA STRING_LITERAL )
-            // smaliIdeaParser.g:643:5: INSTRUCTION_FORMAT31c REGISTER COMMA STRING_LITERAL
+            // smaliIdeaParser.g:647:3: ( INSTRUCTION_FORMAT31c REGISTER COMMA STRING_LITERAL )
+            // smaliIdeaParser.g:648:5: INSTRUCTION_FORMAT31c REGISTER COMMA STRING_LITERAL
             {
-            match(input,INSTRUCTION_FORMAT31c,FOLLOW_INSTRUCTION_FORMAT31c_in_insn_format31c2906); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT31c,FOLLOW_INSTRUCTION_FORMAT31c_in_insn_format31c2929); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format31c2908); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format31c2931); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format31c2910); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format31c2933); if (state.failed) return size;
 
-            match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_insn_format31c2912); if (state.failed) return size;
+            match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_insn_format31c2935); if (state.failed) return size;
 
             }
 
@@ -6016,26 +6098,26 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format31i"
-    // smaliIdeaParser.g:645:1: insn_format31i returns [int size] : instruction_format31i REGISTER COMMA fixed_32bit_literal ;
+    // smaliIdeaParser.g:650:1: insn_format31i returns [int size] : instruction_format31i REGISTER COMMA fixed_32bit_literal ;
     public final int insn_format31i() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:646:3: ( instruction_format31i REGISTER COMMA fixed_32bit_literal )
-            // smaliIdeaParser.g:647:5: instruction_format31i REGISTER COMMA fixed_32bit_literal
+            // smaliIdeaParser.g:651:3: ( instruction_format31i REGISTER COMMA fixed_32bit_literal )
+            // smaliIdeaParser.g:652:5: instruction_format31i REGISTER COMMA fixed_32bit_literal
             {
-            pushFollow(FOLLOW_instruction_format31i_in_insn_format31i2931);
+            pushFollow(FOLLOW_instruction_format31i_in_insn_format31i2954);
             instruction_format31i();
 
             state._fsp--;
             if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format31i2933); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format31i2956); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format31i2935); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format31i2958); if (state.failed) return size;
 
-            pushFollow(FOLLOW_fixed_32bit_literal_in_insn_format31i2937);
+            pushFollow(FOLLOW_fixed_32bit_literal_in_insn_format31i2960);
             fixed_32bit_literal();
 
             state._fsp--;
@@ -6059,22 +6141,22 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format31t"
-    // smaliIdeaParser.g:649:1: insn_format31t returns [int size] : INSTRUCTION_FORMAT31t REGISTER COMMA label_ref_or_offset ;
+    // smaliIdeaParser.g:654:1: insn_format31t returns [int size] : INSTRUCTION_FORMAT31t REGISTER COMMA label_ref_or_offset ;
     public final int insn_format31t() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:650:3: ( INSTRUCTION_FORMAT31t REGISTER COMMA label_ref_or_offset )
-            // smaliIdeaParser.g:651:5: INSTRUCTION_FORMAT31t REGISTER COMMA label_ref_or_offset
+            // smaliIdeaParser.g:655:3: ( INSTRUCTION_FORMAT31t REGISTER COMMA label_ref_or_offset )
+            // smaliIdeaParser.g:656:5: INSTRUCTION_FORMAT31t REGISTER COMMA label_ref_or_offset
             {
-            match(input,INSTRUCTION_FORMAT31t,FOLLOW_INSTRUCTION_FORMAT31t_in_insn_format31t2956); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT31t,FOLLOW_INSTRUCTION_FORMAT31t_in_insn_format31t2979); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format31t2958); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format31t2981); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format31t2960); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format31t2983); if (state.failed) return size;
 
-            pushFollow(FOLLOW_label_ref_or_offset_in_insn_format31t2962);
+            pushFollow(FOLLOW_label_ref_or_offset_in_insn_format31t2985);
             label_ref_or_offset();
 
             state._fsp--;
@@ -6098,22 +6180,22 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format32x"
-    // smaliIdeaParser.g:653:1: insn_format32x returns [int size] : INSTRUCTION_FORMAT32x REGISTER COMMA REGISTER ;
+    // smaliIdeaParser.g:658:1: insn_format32x returns [int size] : INSTRUCTION_FORMAT32x REGISTER COMMA REGISTER ;
     public final int insn_format32x() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:654:3: ( INSTRUCTION_FORMAT32x REGISTER COMMA REGISTER )
-            // smaliIdeaParser.g:655:5: INSTRUCTION_FORMAT32x REGISTER COMMA REGISTER
+            // smaliIdeaParser.g:659:3: ( INSTRUCTION_FORMAT32x REGISTER COMMA REGISTER )
+            // smaliIdeaParser.g:660:5: INSTRUCTION_FORMAT32x REGISTER COMMA REGISTER
             {
-            match(input,INSTRUCTION_FORMAT32x,FOLLOW_INSTRUCTION_FORMAT32x_in_insn_format32x2981); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT32x,FOLLOW_INSTRUCTION_FORMAT32x_in_insn_format32x3004); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format32x2983); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format32x3006); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format32x2985); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format32x3008); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format32x2987); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format32x3010); if (state.failed) return size;
 
             }
 
@@ -6133,30 +6215,30 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format35c_method"
-    // smaliIdeaParser.g:657:1: insn_format35c_method returns [int size] : INSTRUCTION_FORMAT35c_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method ;
+    // smaliIdeaParser.g:662:1: insn_format35c_method returns [int size] : INSTRUCTION_FORMAT35c_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method ;
     public final int insn_format35c_method() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:658:3: ( INSTRUCTION_FORMAT35c_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method )
-            // smaliIdeaParser.g:659:5: INSTRUCTION_FORMAT35c_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method
+            // smaliIdeaParser.g:663:3: ( INSTRUCTION_FORMAT35c_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method )
+            // smaliIdeaParser.g:664:5: INSTRUCTION_FORMAT35c_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method
             {
-            match(input,INSTRUCTION_FORMAT35c_METHOD,FOLLOW_INSTRUCTION_FORMAT35c_METHOD_in_insn_format35c_method3006); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT35c_METHOD,FOLLOW_INSTRUCTION_FORMAT35c_METHOD_in_insn_format35c_method3029); if (state.failed) return size;
 
-            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format35c_method3008); if (state.failed) return size;
+            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format35c_method3031); if (state.failed) return size;
 
-            pushFollow(FOLLOW_register_list_in_insn_format35c_method3010);
+            pushFollow(FOLLOW_register_list_in_insn_format35c_method3033);
             register_list();
 
             state._fsp--;
             if (state.failed) return size;
 
-            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format35c_method3012); if (state.failed) return size;
+            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format35c_method3035); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format35c_method3014); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format35c_method3037); if (state.failed) return size;
 
-            pushFollow(FOLLOW_fully_qualified_method_in_insn_format35c_method3016);
+            pushFollow(FOLLOW_fully_qualified_method_in_insn_format35c_method3039);
             fully_qualified_method();
 
             state._fsp--;
@@ -6180,30 +6262,30 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format35c_type"
-    // smaliIdeaParser.g:661:1: insn_format35c_type returns [int size] : INSTRUCTION_FORMAT35c_TYPE OPEN_BRACE register_list CLOSE_BRACE COMMA nonvoid_type_descriptor ;
+    // smaliIdeaParser.g:666:1: insn_format35c_type returns [int size] : INSTRUCTION_FORMAT35c_TYPE OPEN_BRACE register_list CLOSE_BRACE COMMA nonvoid_type_descriptor ;
     public final int insn_format35c_type() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:662:3: ( INSTRUCTION_FORMAT35c_TYPE OPEN_BRACE register_list CLOSE_BRACE COMMA nonvoid_type_descriptor )
-            // smaliIdeaParser.g:663:5: INSTRUCTION_FORMAT35c_TYPE OPEN_BRACE register_list CLOSE_BRACE COMMA nonvoid_type_descriptor
+            // smaliIdeaParser.g:667:3: ( INSTRUCTION_FORMAT35c_TYPE OPEN_BRACE register_list CLOSE_BRACE COMMA nonvoid_type_descriptor )
+            // smaliIdeaParser.g:668:5: INSTRUCTION_FORMAT35c_TYPE OPEN_BRACE register_list CLOSE_BRACE COMMA nonvoid_type_descriptor
             {
-            match(input,INSTRUCTION_FORMAT35c_TYPE,FOLLOW_INSTRUCTION_FORMAT35c_TYPE_in_insn_format35c_type3035); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT35c_TYPE,FOLLOW_INSTRUCTION_FORMAT35c_TYPE_in_insn_format35c_type3058); if (state.failed) return size;
 
-            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format35c_type3037); if (state.failed) return size;
+            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format35c_type3060); if (state.failed) return size;
 
-            pushFollow(FOLLOW_register_list_in_insn_format35c_type3039);
+            pushFollow(FOLLOW_register_list_in_insn_format35c_type3062);
             register_list();
 
             state._fsp--;
             if (state.failed) return size;
 
-            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format35c_type3041); if (state.failed) return size;
+            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format35c_type3064); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format35c_type3043); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format35c_type3066); if (state.failed) return size;
 
-            pushFollow(FOLLOW_nonvoid_type_descriptor_in_insn_format35c_type3045);
+            pushFollow(FOLLOW_nonvoid_type_descriptor_in_insn_format35c_type3068);
             nonvoid_type_descriptor();
 
             state._fsp--;
@@ -6227,30 +6309,30 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format35c_method_odex"
-    // smaliIdeaParser.g:665:1: insn_format35c_method_odex returns [int size] : INSTRUCTION_FORMAT35c_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method ;
+    // smaliIdeaParser.g:670:1: insn_format35c_method_odex returns [int size] : INSTRUCTION_FORMAT35c_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method ;
     public final int insn_format35c_method_odex() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:666:3: ( INSTRUCTION_FORMAT35c_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method )
-            // smaliIdeaParser.g:667:5: INSTRUCTION_FORMAT35c_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method
+            // smaliIdeaParser.g:671:3: ( INSTRUCTION_FORMAT35c_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method )
+            // smaliIdeaParser.g:672:5: INSTRUCTION_FORMAT35c_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method
             {
-            match(input,INSTRUCTION_FORMAT35c_METHOD_ODEX,FOLLOW_INSTRUCTION_FORMAT35c_METHOD_ODEX_in_insn_format35c_method_odex3064); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT35c_METHOD_ODEX,FOLLOW_INSTRUCTION_FORMAT35c_METHOD_ODEX_in_insn_format35c_method_odex3087); if (state.failed) return size;
 
-            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format35c_method_odex3066); if (state.failed) return size;
+            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format35c_method_odex3089); if (state.failed) return size;
 
-            pushFollow(FOLLOW_register_list_in_insn_format35c_method_odex3068);
+            pushFollow(FOLLOW_register_list_in_insn_format35c_method_odex3091);
             register_list();
 
             state._fsp--;
             if (state.failed) return size;
 
-            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format35c_method_odex3070); if (state.failed) return size;
+            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format35c_method_odex3093); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format35c_method_odex3072); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format35c_method_odex3095); if (state.failed) return size;
 
-            pushFollow(FOLLOW_fully_qualified_method_in_insn_format35c_method_odex3074);
+            pushFollow(FOLLOW_fully_qualified_method_in_insn_format35c_method_odex3097);
             fully_qualified_method();
 
             state._fsp--;
@@ -6274,30 +6356,30 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format35mi_method"
-    // smaliIdeaParser.g:669:1: insn_format35mi_method returns [int size] : INSTRUCTION_FORMAT35mi_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA INLINE_INDEX ;
+    // smaliIdeaParser.g:674:1: insn_format35mi_method returns [int size] : INSTRUCTION_FORMAT35mi_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA INLINE_INDEX ;
     public final int insn_format35mi_method() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:670:3: ( INSTRUCTION_FORMAT35mi_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA INLINE_INDEX )
-            // smaliIdeaParser.g:671:5: INSTRUCTION_FORMAT35mi_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA INLINE_INDEX
+            // smaliIdeaParser.g:675:3: ( INSTRUCTION_FORMAT35mi_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA INLINE_INDEX )
+            // smaliIdeaParser.g:676:5: INSTRUCTION_FORMAT35mi_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA INLINE_INDEX
             {
-            match(input,INSTRUCTION_FORMAT35mi_METHOD,FOLLOW_INSTRUCTION_FORMAT35mi_METHOD_in_insn_format35mi_method3093); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT35mi_METHOD,FOLLOW_INSTRUCTION_FORMAT35mi_METHOD_in_insn_format35mi_method3116); if (state.failed) return size;
 
-            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format35mi_method3095); if (state.failed) return size;
+            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format35mi_method3118); if (state.failed) return size;
 
-            pushFollow(FOLLOW_register_list_in_insn_format35mi_method3097);
+            pushFollow(FOLLOW_register_list_in_insn_format35mi_method3120);
             register_list();
 
             state._fsp--;
             if (state.failed) return size;
 
-            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format35mi_method3099); if (state.failed) return size;
+            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format35mi_method3122); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format35mi_method3101); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format35mi_method3124); if (state.failed) return size;
 
-            match(input,INLINE_INDEX,FOLLOW_INLINE_INDEX_in_insn_format35mi_method3103); if (state.failed) return size;
+            match(input,INLINE_INDEX,FOLLOW_INLINE_INDEX_in_insn_format35mi_method3126); if (state.failed) return size;
 
             }
 
@@ -6317,30 +6399,30 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format35ms_method"
-    // smaliIdeaParser.g:673:1: insn_format35ms_method returns [int size] : INSTRUCTION_FORMAT35ms_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA VTABLE_INDEX ;
+    // smaliIdeaParser.g:678:1: insn_format35ms_method returns [int size] : INSTRUCTION_FORMAT35ms_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA VTABLE_INDEX ;
     public final int insn_format35ms_method() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:674:3: ( INSTRUCTION_FORMAT35ms_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA VTABLE_INDEX )
-            // smaliIdeaParser.g:675:5: INSTRUCTION_FORMAT35ms_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA VTABLE_INDEX
+            // smaliIdeaParser.g:679:3: ( INSTRUCTION_FORMAT35ms_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA VTABLE_INDEX )
+            // smaliIdeaParser.g:680:5: INSTRUCTION_FORMAT35ms_METHOD OPEN_BRACE register_list CLOSE_BRACE COMMA VTABLE_INDEX
             {
-            match(input,INSTRUCTION_FORMAT35ms_METHOD,FOLLOW_INSTRUCTION_FORMAT35ms_METHOD_in_insn_format35ms_method3122); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT35ms_METHOD,FOLLOW_INSTRUCTION_FORMAT35ms_METHOD_in_insn_format35ms_method3145); if (state.failed) return size;
 
-            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format35ms_method3124); if (state.failed) return size;
+            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format35ms_method3147); if (state.failed) return size;
 
-            pushFollow(FOLLOW_register_list_in_insn_format35ms_method3126);
+            pushFollow(FOLLOW_register_list_in_insn_format35ms_method3149);
             register_list();
 
             state._fsp--;
             if (state.failed) return size;
 
-            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format35ms_method3128); if (state.failed) return size;
+            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format35ms_method3151); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format35ms_method3130); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format35ms_method3153); if (state.failed) return size;
 
-            match(input,VTABLE_INDEX,FOLLOW_VTABLE_INDEX_in_insn_format35ms_method3132); if (state.failed) return size;
+            match(input,VTABLE_INDEX,FOLLOW_VTABLE_INDEX_in_insn_format35ms_method3155); if (state.failed) return size;
 
             }
 
@@ -6360,30 +6442,30 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format3rc_method"
-    // smaliIdeaParser.g:677:1: insn_format3rc_method returns [int size] : INSTRUCTION_FORMAT3rc_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA fully_qualified_method ;
+    // smaliIdeaParser.g:682:1: insn_format3rc_method returns [int size] : INSTRUCTION_FORMAT3rc_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA fully_qualified_method ;
     public final int insn_format3rc_method() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:678:3: ( INSTRUCTION_FORMAT3rc_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA fully_qualified_method )
-            // smaliIdeaParser.g:679:5: INSTRUCTION_FORMAT3rc_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA fully_qualified_method
+            // smaliIdeaParser.g:683:3: ( INSTRUCTION_FORMAT3rc_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA fully_qualified_method )
+            // smaliIdeaParser.g:684:5: INSTRUCTION_FORMAT3rc_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA fully_qualified_method
             {
-            match(input,INSTRUCTION_FORMAT3rc_METHOD,FOLLOW_INSTRUCTION_FORMAT3rc_METHOD_in_insn_format3rc_method3151); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT3rc_METHOD,FOLLOW_INSTRUCTION_FORMAT3rc_METHOD_in_insn_format3rc_method3174); if (state.failed) return size;
 
-            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format3rc_method3153); if (state.failed) return size;
+            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format3rc_method3176); if (state.failed) return size;
 
-            pushFollow(FOLLOW_register_range_in_insn_format3rc_method3155);
+            pushFollow(FOLLOW_register_range_in_insn_format3rc_method3178);
             register_range();
 
             state._fsp--;
             if (state.failed) return size;
 
-            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format3rc_method3157); if (state.failed) return size;
+            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format3rc_method3180); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format3rc_method3159); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format3rc_method3182); if (state.failed) return size;
 
-            pushFollow(FOLLOW_fully_qualified_method_in_insn_format3rc_method3161);
+            pushFollow(FOLLOW_fully_qualified_method_in_insn_format3rc_method3184);
             fully_qualified_method();
 
             state._fsp--;
@@ -6407,30 +6489,30 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format3rc_method_odex"
-    // smaliIdeaParser.g:681:1: insn_format3rc_method_odex returns [int size] : INSTRUCTION_FORMAT3rc_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method ;
+    // smaliIdeaParser.g:686:1: insn_format3rc_method_odex returns [int size] : INSTRUCTION_FORMAT3rc_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method ;
     public final int insn_format3rc_method_odex() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:682:3: ( INSTRUCTION_FORMAT3rc_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method )
-            // smaliIdeaParser.g:683:5: INSTRUCTION_FORMAT3rc_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method
+            // smaliIdeaParser.g:687:3: ( INSTRUCTION_FORMAT3rc_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method )
+            // smaliIdeaParser.g:688:5: INSTRUCTION_FORMAT3rc_METHOD_ODEX OPEN_BRACE register_list CLOSE_BRACE COMMA fully_qualified_method
             {
-            match(input,INSTRUCTION_FORMAT3rc_METHOD_ODEX,FOLLOW_INSTRUCTION_FORMAT3rc_METHOD_ODEX_in_insn_format3rc_method_odex3180); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT3rc_METHOD_ODEX,FOLLOW_INSTRUCTION_FORMAT3rc_METHOD_ODEX_in_insn_format3rc_method_odex3203); if (state.failed) return size;
 
-            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format3rc_method_odex3182); if (state.failed) return size;
+            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format3rc_method_odex3205); if (state.failed) return size;
 
-            pushFollow(FOLLOW_register_list_in_insn_format3rc_method_odex3184);
+            pushFollow(FOLLOW_register_list_in_insn_format3rc_method_odex3207);
             register_list();
 
             state._fsp--;
             if (state.failed) return size;
 
-            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format3rc_method_odex3186); if (state.failed) return size;
+            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format3rc_method_odex3209); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format3rc_method_odex3188); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format3rc_method_odex3211); if (state.failed) return size;
 
-            pushFollow(FOLLOW_fully_qualified_method_in_insn_format3rc_method_odex3190);
+            pushFollow(FOLLOW_fully_qualified_method_in_insn_format3rc_method_odex3213);
             fully_qualified_method();
 
             state._fsp--;
@@ -6454,30 +6536,30 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format3rc_type"
-    // smaliIdeaParser.g:685:1: insn_format3rc_type returns [int size] : INSTRUCTION_FORMAT3rc_TYPE OPEN_BRACE register_range CLOSE_BRACE COMMA nonvoid_type_descriptor ;
+    // smaliIdeaParser.g:690:1: insn_format3rc_type returns [int size] : INSTRUCTION_FORMAT3rc_TYPE OPEN_BRACE register_range CLOSE_BRACE COMMA nonvoid_type_descriptor ;
     public final int insn_format3rc_type() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:686:3: ( INSTRUCTION_FORMAT3rc_TYPE OPEN_BRACE register_range CLOSE_BRACE COMMA nonvoid_type_descriptor )
-            // smaliIdeaParser.g:687:5: INSTRUCTION_FORMAT3rc_TYPE OPEN_BRACE register_range CLOSE_BRACE COMMA nonvoid_type_descriptor
+            // smaliIdeaParser.g:691:3: ( INSTRUCTION_FORMAT3rc_TYPE OPEN_BRACE register_range CLOSE_BRACE COMMA nonvoid_type_descriptor )
+            // smaliIdeaParser.g:692:5: INSTRUCTION_FORMAT3rc_TYPE OPEN_BRACE register_range CLOSE_BRACE COMMA nonvoid_type_descriptor
             {
-            match(input,INSTRUCTION_FORMAT3rc_TYPE,FOLLOW_INSTRUCTION_FORMAT3rc_TYPE_in_insn_format3rc_type3209); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT3rc_TYPE,FOLLOW_INSTRUCTION_FORMAT3rc_TYPE_in_insn_format3rc_type3232); if (state.failed) return size;
 
-            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format3rc_type3211); if (state.failed) return size;
+            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format3rc_type3234); if (state.failed) return size;
 
-            pushFollow(FOLLOW_register_range_in_insn_format3rc_type3213);
+            pushFollow(FOLLOW_register_range_in_insn_format3rc_type3236);
             register_range();
 
             state._fsp--;
             if (state.failed) return size;
 
-            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format3rc_type3215); if (state.failed) return size;
+            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format3rc_type3238); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format3rc_type3217); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format3rc_type3240); if (state.failed) return size;
 
-            pushFollow(FOLLOW_nonvoid_type_descriptor_in_insn_format3rc_type3219);
+            pushFollow(FOLLOW_nonvoid_type_descriptor_in_insn_format3rc_type3242);
             nonvoid_type_descriptor();
 
             state._fsp--;
@@ -6501,30 +6583,30 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format3rmi_method"
-    // smaliIdeaParser.g:689:1: insn_format3rmi_method returns [int size] : INSTRUCTION_FORMAT3rmi_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA INLINE_INDEX ;
+    // smaliIdeaParser.g:694:1: insn_format3rmi_method returns [int size] : INSTRUCTION_FORMAT3rmi_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA INLINE_INDEX ;
     public final int insn_format3rmi_method() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:690:3: ( INSTRUCTION_FORMAT3rmi_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA INLINE_INDEX )
-            // smaliIdeaParser.g:691:5: INSTRUCTION_FORMAT3rmi_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA INLINE_INDEX
+            // smaliIdeaParser.g:695:3: ( INSTRUCTION_FORMAT3rmi_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA INLINE_INDEX )
+            // smaliIdeaParser.g:696:5: INSTRUCTION_FORMAT3rmi_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA INLINE_INDEX
             {
-            match(input,INSTRUCTION_FORMAT3rmi_METHOD,FOLLOW_INSTRUCTION_FORMAT3rmi_METHOD_in_insn_format3rmi_method3238); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT3rmi_METHOD,FOLLOW_INSTRUCTION_FORMAT3rmi_METHOD_in_insn_format3rmi_method3261); if (state.failed) return size;
 
-            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format3rmi_method3240); if (state.failed) return size;
+            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format3rmi_method3263); if (state.failed) return size;
 
-            pushFollow(FOLLOW_register_range_in_insn_format3rmi_method3242);
+            pushFollow(FOLLOW_register_range_in_insn_format3rmi_method3265);
             register_range();
 
             state._fsp--;
             if (state.failed) return size;
 
-            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format3rmi_method3244); if (state.failed) return size;
+            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format3rmi_method3267); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format3rmi_method3246); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format3rmi_method3269); if (state.failed) return size;
 
-            match(input,INLINE_INDEX,FOLLOW_INLINE_INDEX_in_insn_format3rmi_method3248); if (state.failed) return size;
+            match(input,INLINE_INDEX,FOLLOW_INLINE_INDEX_in_insn_format3rmi_method3271); if (state.failed) return size;
 
             }
 
@@ -6544,30 +6626,30 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format3rms_method"
-    // smaliIdeaParser.g:693:1: insn_format3rms_method returns [int size] : INSTRUCTION_FORMAT3rms_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA VTABLE_INDEX ;
+    // smaliIdeaParser.g:698:1: insn_format3rms_method returns [int size] : INSTRUCTION_FORMAT3rms_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA VTABLE_INDEX ;
     public final int insn_format3rms_method() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:694:3: ( INSTRUCTION_FORMAT3rms_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA VTABLE_INDEX )
-            // smaliIdeaParser.g:695:5: INSTRUCTION_FORMAT3rms_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA VTABLE_INDEX
+            // smaliIdeaParser.g:699:3: ( INSTRUCTION_FORMAT3rms_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA VTABLE_INDEX )
+            // smaliIdeaParser.g:700:5: INSTRUCTION_FORMAT3rms_METHOD OPEN_BRACE register_range CLOSE_BRACE COMMA VTABLE_INDEX
             {
-            match(input,INSTRUCTION_FORMAT3rms_METHOD,FOLLOW_INSTRUCTION_FORMAT3rms_METHOD_in_insn_format3rms_method3267); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT3rms_METHOD,FOLLOW_INSTRUCTION_FORMAT3rms_METHOD_in_insn_format3rms_method3290); if (state.failed) return size;
 
-            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format3rms_method3269); if (state.failed) return size;
+            match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_insn_format3rms_method3292); if (state.failed) return size;
 
-            pushFollow(FOLLOW_register_range_in_insn_format3rms_method3271);
+            pushFollow(FOLLOW_register_range_in_insn_format3rms_method3294);
             register_range();
 
             state._fsp--;
             if (state.failed) return size;
 
-            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format3rms_method3273); if (state.failed) return size;
+            match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_insn_format3rms_method3296); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format3rms_method3275); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format3rms_method3298); if (state.failed) return size;
 
-            match(input,VTABLE_INDEX,FOLLOW_VTABLE_INDEX_in_insn_format3rms_method3277); if (state.failed) return size;
+            match(input,VTABLE_INDEX,FOLLOW_VTABLE_INDEX_in_insn_format3rms_method3300); if (state.failed) return size;
 
             }
 
@@ -6587,22 +6669,22 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_format51l"
-    // smaliIdeaParser.g:697:1: insn_format51l returns [int size] : INSTRUCTION_FORMAT51l REGISTER COMMA fixed_literal ;
+    // smaliIdeaParser.g:702:1: insn_format51l returns [int size] : INSTRUCTION_FORMAT51l REGISTER COMMA fixed_literal ;
     public final int insn_format51l() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:698:3: ( INSTRUCTION_FORMAT51l REGISTER COMMA fixed_literal )
-            // smaliIdeaParser.g:699:5: INSTRUCTION_FORMAT51l REGISTER COMMA fixed_literal
+            // smaliIdeaParser.g:703:3: ( INSTRUCTION_FORMAT51l REGISTER COMMA fixed_literal )
+            // smaliIdeaParser.g:704:5: INSTRUCTION_FORMAT51l REGISTER COMMA fixed_literal
             {
-            match(input,INSTRUCTION_FORMAT51l,FOLLOW_INSTRUCTION_FORMAT51l_in_insn_format51l3296); if (state.failed) return size;
+            match(input,INSTRUCTION_FORMAT51l,FOLLOW_INSTRUCTION_FORMAT51l_in_insn_format51l3319); if (state.failed) return size;
 
-            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format51l3298); if (state.failed) return size;
+            match(input,REGISTER,FOLLOW_REGISTER_in_insn_format51l3321); if (state.failed) return size;
 
-            match(input,COMMA,FOLLOW_COMMA_in_insn_format51l3300); if (state.failed) return size;
+            match(input,COMMA,FOLLOW_COMMA_in_insn_format51l3323); if (state.failed) return size;
 
-            pushFollow(FOLLOW_fixed_literal_in_insn_format51l3302);
+            pushFollow(FOLLOW_fixed_literal_in_insn_format51l3325);
             fixed_literal();
 
             state._fsp--;
@@ -6626,39 +6708,39 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_array_data_directive"
-    // smaliIdeaParser.g:701:1: insn_array_data_directive returns [int size] : ARRAY_DATA_DIRECTIVE integral_literal ( fixed_literal )* END_ARRAY_DATA_DIRECTIVE ;
+    // smaliIdeaParser.g:706:1: insn_array_data_directive returns [int size] : ARRAY_DATA_DIRECTIVE integral_literal ( fixed_literal )* END_ARRAY_DATA_DIRECTIVE ;
     public final int insn_array_data_directive() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:702:3: ( ARRAY_DATA_DIRECTIVE integral_literal ( fixed_literal )* END_ARRAY_DATA_DIRECTIVE )
-            // smaliIdeaParser.g:702:5: ARRAY_DATA_DIRECTIVE integral_literal ( fixed_literal )* END_ARRAY_DATA_DIRECTIVE
+            // smaliIdeaParser.g:707:3: ( ARRAY_DATA_DIRECTIVE integral_literal ( fixed_literal )* END_ARRAY_DATA_DIRECTIVE )
+            // smaliIdeaParser.g:707:5: ARRAY_DATA_DIRECTIVE integral_literal ( fixed_literal )* END_ARRAY_DATA_DIRECTIVE
             {
-            match(input,ARRAY_DATA_DIRECTIVE,FOLLOW_ARRAY_DATA_DIRECTIVE_in_insn_array_data_directive3316); if (state.failed) return size;
+            match(input,ARRAY_DATA_DIRECTIVE,FOLLOW_ARRAY_DATA_DIRECTIVE_in_insn_array_data_directive3339); if (state.failed) return size;
 
-            pushFollow(FOLLOW_integral_literal_in_insn_array_data_directive3318);
+            pushFollow(FOLLOW_integral_literal_in_insn_array_data_directive3341);
             integral_literal();
 
             state._fsp--;
             if (state.failed) return size;
 
-            // smaliIdeaParser.g:702:43: ( fixed_literal )*
-            loop39:
+            // smaliIdeaParser.g:707:43: ( fixed_literal )*
+            loop40:
             do {
-                int alt39=2;
-                int LA39_0 = input.LA(1);
+                int alt40=2;
+                int LA40_0 = input.LA(1);
 
-                if ( ((LA39_0 >= BOOL_LITERAL && LA39_0 <= BYTE_LITERAL)||LA39_0==CHAR_LITERAL||(LA39_0 >= DOUBLE_LITERAL && LA39_0 <= DOUBLE_LITERAL_OR_ID)||(LA39_0 >= FLOAT_LITERAL && LA39_0 <= FLOAT_LITERAL_OR_ID)||LA39_0==LONG_LITERAL||LA39_0==NEGATIVE_INTEGER_LITERAL||LA39_0==POSITIVE_INTEGER_LITERAL||LA39_0==SHORT_LITERAL) ) {
-                    alt39=1;
+                if ( ((LA40_0 >= BOOL_LITERAL && LA40_0 <= BYTE_LITERAL)||LA40_0==CHAR_LITERAL||(LA40_0 >= DOUBLE_LITERAL && LA40_0 <= DOUBLE_LITERAL_OR_ID)||(LA40_0 >= FLOAT_LITERAL && LA40_0 <= FLOAT_LITERAL_OR_ID)||LA40_0==LONG_LITERAL||LA40_0==NEGATIVE_INTEGER_LITERAL||LA40_0==POSITIVE_INTEGER_LITERAL||LA40_0==SHORT_LITERAL) ) {
+                    alt40=1;
                 }
 
 
-                switch (alt39) {
+                switch (alt40) {
             	case 1 :
-            	    // smaliIdeaParser.g:702:43: fixed_literal
+            	    // smaliIdeaParser.g:707:43: fixed_literal
             	    {
-            	    pushFollow(FOLLOW_fixed_literal_in_insn_array_data_directive3320);
+            	    pushFollow(FOLLOW_fixed_literal_in_insn_array_data_directive3343);
             	    fixed_literal();
 
             	    state._fsp--;
@@ -6668,12 +6750,12 @@ public class smaliIdeaParser extends Parser {
             	    break;
 
             	default :
-            	    break loop39;
+            	    break loop40;
                 }
             } while (true);
 
 
-            match(input,END_ARRAY_DATA_DIRECTIVE,FOLLOW_END_ARRAY_DATA_DIRECTIVE_in_insn_array_data_directive3323); if (state.failed) return size;
+            match(input,END_ARRAY_DATA_DIRECTIVE,FOLLOW_END_ARRAY_DATA_DIRECTIVE_in_insn_array_data_directive3346); if (state.failed) return size;
 
             }
 
@@ -6693,39 +6775,39 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_packed_switch_directive"
-    // smaliIdeaParser.g:704:1: insn_packed_switch_directive returns [int size] : PACKED_SWITCH_DIRECTIVE fixed_32bit_literal ( label_ref_or_offset )* END_PACKED_SWITCH_DIRECTIVE ;
+    // smaliIdeaParser.g:709:1: insn_packed_switch_directive returns [int size] : PACKED_SWITCH_DIRECTIVE fixed_32bit_literal ( label_ref_or_offset )* END_PACKED_SWITCH_DIRECTIVE ;
     public final int insn_packed_switch_directive() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:705:3: ( PACKED_SWITCH_DIRECTIVE fixed_32bit_literal ( label_ref_or_offset )* END_PACKED_SWITCH_DIRECTIVE )
-            // smaliIdeaParser.g:705:5: PACKED_SWITCH_DIRECTIVE fixed_32bit_literal ( label_ref_or_offset )* END_PACKED_SWITCH_DIRECTIVE
+            // smaliIdeaParser.g:710:3: ( PACKED_SWITCH_DIRECTIVE fixed_32bit_literal ( label_ref_or_offset )* END_PACKED_SWITCH_DIRECTIVE )
+            // smaliIdeaParser.g:710:5: PACKED_SWITCH_DIRECTIVE fixed_32bit_literal ( label_ref_or_offset )* END_PACKED_SWITCH_DIRECTIVE
             {
-            match(input,PACKED_SWITCH_DIRECTIVE,FOLLOW_PACKED_SWITCH_DIRECTIVE_in_insn_packed_switch_directive3337); if (state.failed) return size;
+            match(input,PACKED_SWITCH_DIRECTIVE,FOLLOW_PACKED_SWITCH_DIRECTIVE_in_insn_packed_switch_directive3360); if (state.failed) return size;
 
-            pushFollow(FOLLOW_fixed_32bit_literal_in_insn_packed_switch_directive3339);
+            pushFollow(FOLLOW_fixed_32bit_literal_in_insn_packed_switch_directive3362);
             fixed_32bit_literal();
 
             state._fsp--;
             if (state.failed) return size;
 
-            // smaliIdeaParser.g:705:49: ( label_ref_or_offset )*
-            loop40:
+            // smaliIdeaParser.g:710:49: ( label_ref_or_offset )*
+            loop41:
             do {
-                int alt40=2;
-                int LA40_0 = input.LA(1);
+                int alt41=2;
+                int LA41_0 = input.LA(1);
 
-                if ( (LA40_0==COLON||LA40_0==NEGATIVE_INTEGER_LITERAL||LA40_0==OFFSET) ) {
-                    alt40=1;
+                if ( (LA41_0==COLON||LA41_0==NEGATIVE_INTEGER_LITERAL||LA41_0==OFFSET) ) {
+                    alt41=1;
                 }
 
 
-                switch (alt40) {
+                switch (alt41) {
             	case 1 :
-            	    // smaliIdeaParser.g:705:49: label_ref_or_offset
+            	    // smaliIdeaParser.g:710:49: label_ref_or_offset
             	    {
-            	    pushFollow(FOLLOW_label_ref_or_offset_in_insn_packed_switch_directive3341);
+            	    pushFollow(FOLLOW_label_ref_or_offset_in_insn_packed_switch_directive3364);
             	    label_ref_or_offset();
 
             	    state._fsp--;
@@ -6735,12 +6817,12 @@ public class smaliIdeaParser extends Parser {
             	    break;
 
             	default :
-            	    break loop40;
+            	    break loop41;
                 }
             } while (true);
 
 
-            match(input,END_PACKED_SWITCH_DIRECTIVE,FOLLOW_END_PACKED_SWITCH_DIRECTIVE_in_insn_packed_switch_directive3344); if (state.failed) return size;
+            match(input,END_PACKED_SWITCH_DIRECTIVE,FOLLOW_END_PACKED_SWITCH_DIRECTIVE_in_insn_packed_switch_directive3367); if (state.failed) return size;
 
             }
 
@@ -6760,41 +6842,41 @@ public class smaliIdeaParser extends Parser {
 
 
     // $ANTLR start "insn_sparse_switch_directive"
-    // smaliIdeaParser.g:707:1: insn_sparse_switch_directive returns [int size] : SPARSE_SWITCH_DIRECTIVE ( fixed_32bit_literal ARROW label_ref_or_offset )* END_SPARSE_SWITCH_DIRECTIVE ;
+    // smaliIdeaParser.g:712:1: insn_sparse_switch_directive returns [int size] : SPARSE_SWITCH_DIRECTIVE ( fixed_32bit_literal ARROW label_ref_or_offset )* END_SPARSE_SWITCH_DIRECTIVE ;
     public final int insn_sparse_switch_directive() throws RecognitionException {
         int size = 0;
 
 
         try {
-            // smaliIdeaParser.g:708:3: ( SPARSE_SWITCH_DIRECTIVE ( fixed_32bit_literal ARROW label_ref_or_offset )* END_SPARSE_SWITCH_DIRECTIVE )
-            // smaliIdeaParser.g:708:5: SPARSE_SWITCH_DIRECTIVE ( fixed_32bit_literal ARROW label_ref_or_offset )* END_SPARSE_SWITCH_DIRECTIVE
+            // smaliIdeaParser.g:713:3: ( SPARSE_SWITCH_DIRECTIVE ( fixed_32bit_literal ARROW label_ref_or_offset )* END_SPARSE_SWITCH_DIRECTIVE )
+            // smaliIdeaParser.g:713:5: SPARSE_SWITCH_DIRECTIVE ( fixed_32bit_literal ARROW label_ref_or_offset )* END_SPARSE_SWITCH_DIRECTIVE
             {
-            match(input,SPARSE_SWITCH_DIRECTIVE,FOLLOW_SPARSE_SWITCH_DIRECTIVE_in_insn_sparse_switch_directive3358); if (state.failed) return size;
+            match(input,SPARSE_SWITCH_DIRECTIVE,FOLLOW_SPARSE_SWITCH_DIRECTIVE_in_insn_sparse_switch_directive3381); if (state.failed) return size;
 
-            // smaliIdeaParser.g:708:29: ( fixed_32bit_literal ARROW label_ref_or_offset )*
-            loop41:
+            // smaliIdeaParser.g:713:29: ( fixed_32bit_literal ARROW label_ref_or_offset )*
+            loop42:
             do {
-                int alt41=2;
-                int LA41_0 = input.LA(1);
+                int alt42=2;
+                int LA42_0 = input.LA(1);
 
-                if ( ((LA41_0 >= BOOL_LITERAL && LA41_0 <= BYTE_LITERAL)||LA41_0==CHAR_LITERAL||(LA41_0 >= FLOAT_LITERAL && LA41_0 <= FLOAT_LITERAL_OR_ID)||LA41_0==LONG_LITERAL||LA41_0==NEGATIVE_INTEGER_LITERAL||LA41_0==POSITIVE_INTEGER_LITERAL||LA41_0==SHORT_LITERAL) ) {
-                    alt41=1;
+                if ( ((LA42_0 >= BOOL_LITERAL && LA42_0 <= BYTE_LITERAL)||LA42_0==CHAR_LITERAL||(LA42_0 >= FLOAT_LITERAL && LA42_0 <= FLOAT_LITERAL_OR_ID)||LA42_0==LONG_LITERAL||LA42_0==NEGATIVE_INTEGER_LITERAL||LA42_0==POSITIVE_INTEGER_LITERAL||LA42_0==SHORT_LITERAL) ) {
+                    alt42=1;
                 }
 
 
-                switch (alt41) {
+                switch (alt42) {
             	case 1 :
-            	    // smaliIdeaParser.g:708:30: fixed_32bit_literal ARROW label_ref_or_offset
+            	    // smaliIdeaParser.g:713:30: fixed_32bit_literal ARROW label_ref_or_offset
             	    {
-            	    pushFollow(FOLLOW_fixed_32bit_literal_in_insn_sparse_switch_directive3361);
+            	    pushFollow(FOLLOW_fixed_32bit_literal_in_insn_sparse_switch_directive3384);
             	    fixed_32bit_literal();
 
             	    state._fsp--;
             	    if (state.failed) return size;
 
-            	    match(input,ARROW,FOLLOW_ARROW_in_insn_sparse_switch_directive3363); if (state.failed) return size;
+            	    match(input,ARROW,FOLLOW_ARROW_in_insn_sparse_switch_directive3386); if (state.failed) return size;
 
-            	    pushFollow(FOLLOW_label_ref_or_offset_in_insn_sparse_switch_directive3365);
+            	    pushFollow(FOLLOW_label_ref_or_offset_in_insn_sparse_switch_directive3388);
             	    label_ref_or_offset();
 
             	    state._fsp--;
@@ -6804,12 +6886,12 @@ public class smaliIdeaParser extends Parser {
             	    break;
 
             	default :
-            	    break loop41;
+            	    break loop42;
                 }
             } while (true);
 
 
-            match(input,END_SPARSE_SWITCH_DIRECTIVE,FOLLOW_END_SPARSE_SWITCH_DIRECTIVE_in_insn_sparse_switch_directive3369); if (state.failed) return size;
+            match(input,END_SPARSE_SWITCH_DIRECTIVE,FOLLOW_END_SPARSE_SWITCH_DIRECTIVE_in_insn_sparse_switch_directive3392); if (state.failed) return size;
 
             }
 
@@ -6882,20 +6964,20 @@ public class smaliIdeaParser extends Parser {
     }
 
 
-    protected DFA34 dfa34 = new DFA34(this);
-    static final String DFA34_eotS =
+    protected DFA35 dfa35 = new DFA35(this);
+    static final String DFA35_eotS =
         "\75\uffff";
-    static final String DFA34_eofS =
+    static final String DFA35_eofS =
         "\75\uffff";
-    static final String DFA34_minS =
+    static final String DFA35_minS =
         "\1\5\72\uffff\1\0\1\uffff";
-    static final String DFA34_maxS =
+    static final String DFA35_maxS =
         "\1\177\72\uffff\1\0\1\uffff";
-    static final String DFA34_acceptS =
+    static final String DFA35_acceptS =
         "\1\uffff\1\2\72\uffff\1\1";
-    static final String DFA34_specialS =
+    static final String DFA35_specialS =
         "\73\uffff\1\0\1\uffff}>";
-    static final String[] DFA34_transitionS = {
+    static final String[] DFA35_transitionS = {
             "\1\73\1\uffff\1\1\17\uffff\2\1\5\uffff\1\1\10\uffff\2\1\1\uffff"+
             "\1\1\3\uffff\1\1\13\uffff\53\1\2\uffff\3\1\10\uffff\1\1\2\uffff"+
             "\1\1\2\uffff\1\1\1\uffff\2\1\2\uffff\2\1",
@@ -6961,47 +7043,47 @@ public class smaliIdeaParser extends Parser {
             ""
     };
 
-    static final short[] DFA34_eot = DFA.unpackEncodedString(DFA34_eotS);
-    static final short[] DFA34_eof = DFA.unpackEncodedString(DFA34_eofS);
-    static final char[] DFA34_min = DFA.unpackEncodedStringToUnsignedChars(DFA34_minS);
-    static final char[] DFA34_max = DFA.unpackEncodedStringToUnsignedChars(DFA34_maxS);
-    static final short[] DFA34_accept = DFA.unpackEncodedString(DFA34_acceptS);
-    static final short[] DFA34_special = DFA.unpackEncodedString(DFA34_specialS);
-    static final short[][] DFA34_transition;
+    static final short[] DFA35_eot = DFA.unpackEncodedString(DFA35_eotS);
+    static final short[] DFA35_eof = DFA.unpackEncodedString(DFA35_eofS);
+    static final char[] DFA35_min = DFA.unpackEncodedStringToUnsignedChars(DFA35_minS);
+    static final char[] DFA35_max = DFA.unpackEncodedStringToUnsignedChars(DFA35_maxS);
+    static final short[] DFA35_accept = DFA.unpackEncodedString(DFA35_acceptS);
+    static final short[] DFA35_special = DFA.unpackEncodedString(DFA35_specialS);
+    static final short[][] DFA35_transition;
 
     static {
-        int numStates = DFA34_transitionS.length;
-        DFA34_transition = new short[numStates][];
+        int numStates = DFA35_transitionS.length;
+        DFA35_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA34_transition[i] = DFA.unpackEncodedString(DFA34_transitionS[i]);
+            DFA35_transition[i] = DFA.unpackEncodedString(DFA35_transitionS[i]);
         }
     }
 
-    class DFA34 extends DFA {
+    class DFA35 extends DFA {
 
-        public DFA34(BaseRecognizer recognizer) {
+        public DFA35(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 34;
-            this.eot = DFA34_eot;
-            this.eof = DFA34_eof;
-            this.min = DFA34_min;
-            this.max = DFA34_max;
-            this.accept = DFA34_accept;
-            this.special = DFA34_special;
-            this.transition = DFA34_transition;
+            this.decisionNumber = 35;
+            this.eot = DFA35_eot;
+            this.eof = DFA35_eof;
+            this.min = DFA35_min;
+            this.max = DFA35_max;
+            this.accept = DFA35_accept;
+            this.special = DFA35_special;
+            this.transition = DFA35_transition;
         }
         public String getDescription() {
-            return "()* loopback of 446:5: ({...}? annotation )*";
+            return "()* loopback of 451:5: ({...}? annotation )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA34_59 = input.LA(1);
+                        int LA35_59 = input.LA(1);
 
                          
-                        int index34_59 = input.index();
+                        int index35_59 = input.index();
                         input.rewind();
 
                         s = -1;
@@ -7010,7 +7092,7 @@ public class smaliIdeaParser extends Parser {
                         else if ( (true) ) {s = 1;}
 
                          
-                        input.seek(index34_59);
+                        input.seek(index35_59);
 
                         if ( s>=0 ) return s;
                         break;
@@ -7018,7 +7100,7 @@ public class smaliIdeaParser extends Parser {
             if (state.backtracking>0) {state.failed=true; return -1;}
 
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 34, _s, input);
+                new NoViableAltException(getDescription(), 35, _s, input);
             error(nvae);
             throw nvae;
         }
@@ -7038,11 +7120,11 @@ public class smaliIdeaParser extends Parser {
     public static final BitSet FOLLOW_annotation_in_class_element119 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_CLASS_DIRECTIVE_in_class_spec137 = new BitSet(new long[]{0x0000000004000010L});
     public static final BitSet FOLLOW_access_list_in_class_spec139 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_class_spec141 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_class_descriptor_in_class_spec141 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_SUPER_DIRECTIVE_in_super_spec164 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_super_spec166 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_class_descriptor_in_super_spec166 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_IMPLEMENTS_DIRECTIVE_in_implements_spec189 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_implements_spec191 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_class_descriptor_in_implements_spec191 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_SOURCE_DIRECTIVE_in_source_spec214 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
     public static final BitSet FOLLOW_STRING_LITERAL_in_source_spec216 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ACCESS_SPEC_in_access_list239 = new BitSet(new long[]{0x0000000000000012L});
@@ -7086,385 +7168,388 @@ public class smaliIdeaParser extends Parser {
     public static final BitSet FOLLOW_nonvoid_type_descriptor_in_param_list964 = new BitSet(new long[]{0x0000000004000102L,0x0080000000000000L});
     public static final BitSet FOLLOW_VOID_TYPE_in_void_type982 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_PRIMITIVE_TYPE_in_primitive_type1005 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_void_type_in_type_descriptor1021 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_primitive_type_in_type_descriptor1027 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_type_descriptor1033 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ARRAY_DESCRIPTOR_in_type_descriptor1039 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_primitive_type_in_nonvoid_type_descriptor1049 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_nonvoid_type_descriptor1055 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ARRAY_DESCRIPTOR_in_nonvoid_type_descriptor1061 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LONG_LITERAL_in_literal1142 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_integer_literal_in_literal1148 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_SHORT_LITERAL_in_literal1154 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_BYTE_LITERAL_in_literal1160 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_float_literal_in_literal1166 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_double_literal_in_literal1172 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CHAR_LITERAL_in_literal1178 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_STRING_LITERAL_in_literal1184 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_BOOL_LITERAL_in_literal1190 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_NULL_LITERAL_in_literal1196 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_array_literal_in_literal1202 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_subannotation_in_literal1208 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_type_field_method_literal_in_literal1214 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_enum_literal_in_literal1220 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LONG_LITERAL_in_integral_literal1243 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_integer_literal_in_integral_literal1249 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_SHORT_LITERAL_in_integral_literal1255 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CHAR_LITERAL_in_integral_literal1261 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_BYTE_LITERAL_in_integral_literal1267 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LONG_LITERAL_in_fixed_32bit_literal1283 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_integer_literal_in_fixed_32bit_literal1289 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_SHORT_LITERAL_in_fixed_32bit_literal1295 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_BYTE_LITERAL_in_fixed_32bit_literal1301 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_float_literal_in_fixed_32bit_literal1307 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CHAR_LITERAL_in_fixed_32bit_literal1313 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_BOOL_LITERAL_in_fixed_32bit_literal1319 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_integer_literal_in_fixed_literal1329 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LONG_LITERAL_in_fixed_literal1335 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_SHORT_LITERAL_in_fixed_literal1341 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_BYTE_LITERAL_in_fixed_literal1347 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_float_literal_in_fixed_literal1353 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_double_literal_in_fixed_literal1359 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CHAR_LITERAL_in_fixed_literal1365 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_BOOL_LITERAL_in_fixed_literal1371 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_array_literal1381 = new BitSet(new long[]{0x0018200C16600100L,0x10C1640000000000L,0x0000000000000013L});
-    public static final BitSet FOLLOW_literal_in_array_literal1384 = new BitSet(new long[]{0x0000000090000000L});
-    public static final BitSet FOLLOW_COMMA_in_array_literal1387 = new BitSet(new long[]{0x0018200C06600100L,0x10C1640000000000L,0x0000000000000013L});
-    public static final BitSet FOLLOW_literal_in_array_literal1389 = new BitSet(new long[]{0x0000000090000000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_array_literal1397 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_simple_name_in_annotation_element1407 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_EQUAL_in_annotation_element1409 = new BitSet(new long[]{0x0018200C06600100L,0x10C1640000000000L,0x0000000000000013L});
-    public static final BitSet FOLLOW_literal_in_annotation_element1411 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ANNOTATION_DIRECTIVE_in_annotation1429 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_ANNOTATION_VISIBILITY_in_annotation1431 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_annotation1433 = new BitSet(new long[]{0x5C10001800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
-    public static final BitSet FOLLOW_annotation_element_in_annotation1439 = new BitSet(new long[]{0x5C10001800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
-    public static final BitSet FOLLOW_END_ANNOTATION_DIRECTIVE_in_annotation1442 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_SUBANNOTATION_DIRECTIVE_in_subannotation1458 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_subannotation1460 = new BitSet(new long[]{0x5C10100800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
-    public static final BitSet FOLLOW_annotation_element_in_subannotation1462 = new BitSet(new long[]{0x5C10100800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
-    public static final BitSet FOLLOW_END_SUBANNOTATION_DIRECTIVE_in_subannotation1465 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ENUM_DIRECTIVE_in_enum_literal1475 = new BitSet(new long[]{0x0000000004000100L});
-    public static final BitSet FOLLOW_reference_type_descriptor_in_enum_literal1477 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_ARROW_in_enum_literal1479 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
-    public static final BitSet FOLLOW_simple_name_in_enum_literal1481 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_COLON_in_enum_literal1483 = new BitSet(new long[]{0x0000000004000100L});
-    public static final BitSet FOLLOW_reference_type_descriptor_in_enum_literal1485 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_reference_type_descriptor_in_type_field_method_literal1495 = new BitSet(new long[]{0x0000000000000202L});
-    public static final BitSet FOLLOW_ARROW_in_type_field_method_literal1503 = new BitSet(new long[]{0x5C10000800200050L,0x22D070107D8B7A79L,0x0000000000000018L});
-    public static final BitSet FOLLOW_simple_name_in_type_field_method_literal1513 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_COLON_in_type_field_method_literal1515 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
-    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_type_field_method_literal1517 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_method_name_in_type_field_method_literal1527 = new BitSet(new long[]{0x0000000000000000L,0x0002000000000000L});
-    public static final BitSet FOLLOW_method_prototype_in_type_field_method_literal1529 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_primitive_type_in_type_field_method_literal1559 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_void_type_in_type_field_method_literal1565 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_reference_type_descriptor_in_fully_qualified_method1575 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_ARROW_in_fully_qualified_method1577 = new BitSet(new long[]{0x5C10000800200050L,0x22D070107D8B7A79L,0x0000000000000018L});
-    public static final BitSet FOLLOW_method_name_in_fully_qualified_method1579 = new BitSet(new long[]{0x0000000000000000L,0x0002000000000000L});
-    public static final BitSet FOLLOW_method_prototype_in_fully_qualified_method1581 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_reference_type_descriptor_in_fully_qualified_field1591 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_ARROW_in_fully_qualified_field1593 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
-    public static final BitSet FOLLOW_simple_name_in_fully_qualified_field1595 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_COLON_in_fully_qualified_field1597 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
-    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_fully_qualified_field1599 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_COLON_in_label1609 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
-    public static final BitSet FOLLOW_simple_name_in_label1611 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_COLON_in_label_ref_or_offset1621 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
-    public static final BitSet FOLLOW_simple_name_in_label_ref_or_offset1623 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_OFFSET_in_label_ref_or_offset1629 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_NEGATIVE_INTEGER_LITERAL_in_label_ref_or_offset1635 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_REGISTER_in_register_list1646 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_COMMA_in_register_list1649 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_register_list1651 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_REGISTER_in_register_range1666 = new BitSet(new long[]{0x0000000200000002L});
-    public static final BitSet FOLLOW_DOTDOT_in_register_range1669 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_register_range1671 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_verification_error_reference1685 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_fully_qualified_field_in_verification_error_reference1689 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_fully_qualified_method_in_verification_error_reference1693 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CATCH_DIRECTIVE_in_catch_directive1703 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
-    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_catch_directive1705 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_catch_directive1707 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_catch_directive1709 = new BitSet(new long[]{0x0000000200000000L});
-    public static final BitSet FOLLOW_DOTDOT_in_catch_directive1711 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_catch_directive1713 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_catch_directive1715 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_catch_directive1717 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CATCHALL_DIRECTIVE_in_catchall_directive1727 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_catchall_directive1729 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_catchall_directive1731 = new BitSet(new long[]{0x0000000200000000L});
-    public static final BitSet FOLLOW_DOTDOT_in_catchall_directive1733 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_catchall_directive1735 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_catchall_directive1737 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_catchall_directive1739 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PARAMETER_DIRECTIVE_in_parameter_directive1751 = new BitSet(new long[]{0x0000040000000022L,0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_STRING_LITERAL_in_parameter_directive1753 = new BitSet(new long[]{0x0000040000000022L});
-    public static final BitSet FOLLOW_annotation_in_parameter_directive1763 = new BitSet(new long[]{0x0000040000000022L});
-    public static final BitSet FOLLOW_END_PARAMETER_DIRECTIVE_in_parameter_directive1773 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_line_directive_in_ordered_debug_directive1797 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_local_directive_in_ordered_debug_directive1803 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_end_local_directive_in_ordered_debug_directive1809 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_restart_local_directive_in_ordered_debug_directive1815 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_prologue_directive_in_ordered_debug_directive1821 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_epilogue_directive_in_ordered_debug_directive1827 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_source_directive_in_ordered_debug_directive1833 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LINE_DIRECTIVE_in_line_directive1843 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L});
-    public static final BitSet FOLLOW_integral_literal_in_line_directive1845 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LOCAL_DIRECTIVE_in_local_directive1855 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_local_directive1857 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_local_directive1859 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
-    public static final BitSet FOLLOW_simple_name_in_local_directive1861 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_COLON_in_local_directive1863 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
-    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_local_directive1865 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_COMMA_in_local_directive1868 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_STRING_LITERAL_in_local_directive1870 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_END_LOCAL_DIRECTIVE_in_end_local_directive1882 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_end_local_directive1884 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RESTART_LOCAL_DIRECTIVE_in_restart_local_directive1894 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_restart_local_directive1896 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PROLOGUE_DIRECTIVE_in_prologue_directive1906 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_EPILOGUE_DIRECTIVE_in_epilogue_directive1916 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_SOURCE_DIRECTIVE_in_source_directive1926 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_STRING_LITERAL_in_source_directive1928 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format10t_in_instruction1993 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format10x_in_instruction1999 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format10x_odex_in_instruction2005 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format11n_in_instruction2011 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format11x_in_instruction2017 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format12x_in_instruction2023 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format20bc_in_instruction2029 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format20t_in_instruction2035 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format21c_field_in_instruction2041 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format21c_field_odex_in_instruction2047 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format21c_string_in_instruction2053 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format21c_type_in_instruction2059 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format21h_in_instruction2065 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format21s_in_instruction2071 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format21t_in_instruction2077 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format22b_in_instruction2083 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format22c_field_in_instruction2089 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format22c_field_odex_in_instruction2095 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format22c_type_in_instruction2101 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format22cs_field_in_instruction2107 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format22s_in_instruction2113 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format22t_in_instruction2119 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format22x_in_instruction2125 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format23x_in_instruction2131 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format30t_in_instruction2137 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format31c_in_instruction2143 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format31i_in_instruction2149 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format31t_in_instruction2155 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format32x_in_instruction2161 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format35c_method_in_instruction2167 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format35c_type_in_instruction2173 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format35c_method_odex_in_instruction2179 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format35mi_method_in_instruction2185 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format35ms_method_in_instruction2191 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format3rc_method_in_instruction2197 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format3rc_method_odex_in_instruction2203 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format3rc_type_in_instruction2209 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format3rmi_method_in_instruction2215 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format3rms_method_in_instruction2221 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_format51l_in_instruction2227 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_array_data_directive_in_instruction2233 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_packed_switch_directive_in_instruction2239 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_insn_sparse_switch_directive_in_instruction2245 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT10t_in_insn_format10t2275 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_format10t2277 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT10x_in_insn_format10x2296 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT10x_ODEX_in_insn_format10x_odex2315 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT11n_in_insn_format11n2334 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format11n2336 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format11n2338 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L});
-    public static final BitSet FOLLOW_integral_literal_in_insn_format11n2340 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT11x_in_insn_format11x2359 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format11x2361 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_instruction_format12x_in_insn_format12x2380 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format12x2382 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format12x2384 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format12x2386 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT20bc_in_insn_format20bc2405 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
-    public static final BitSet FOLLOW_VERIFICATION_ERROR_TYPE_in_insn_format20bc2407 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format20bc2409 = new BitSet(new long[]{0x0000000004000100L});
-    public static final BitSet FOLLOW_verification_error_reference_in_insn_format20bc2411 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT20t_in_insn_format20t2430 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_format20t2432 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_FIELD_in_insn_format21c_field2451 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format21c_field2453 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format21c_field2455 = new BitSet(new long[]{0x0000000004000100L});
-    public static final BitSet FOLLOW_fully_qualified_field_in_insn_format21c_field2457 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_FIELD_ODEX_in_insn_format21c_field_odex2476 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format21c_field_odex2478 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format21c_field_odex2480 = new BitSet(new long[]{0x0000000004000100L});
-    public static final BitSet FOLLOW_fully_qualified_field_in_insn_format21c_field_odex2482 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_STRING_in_insn_format21c_string2501 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format21c_string2503 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format21c_string2505 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_STRING_LITERAL_in_insn_format21c_string2507 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_TYPE_in_insn_format21c_type2526 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format21c_type2528 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format21c_type2530 = new BitSet(new long[]{0x0000000004000100L});
-    public static final BitSet FOLLOW_reference_type_descriptor_in_insn_format21c_type2532 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21h_in_insn_format21h2551 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format21h2553 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format21h2555 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L});
-    public static final BitSet FOLLOW_integral_literal_in_insn_format21h2557 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21s_in_insn_format21s2576 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format21s2578 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format21s2580 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L});
-    public static final BitSet FOLLOW_integral_literal_in_insn_format21s2582 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21t_in_insn_format21t2601 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format21t2603 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format21t2605 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_format21t2608 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22b_in_insn_format22b2628 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22b2630 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format22b2632 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22b2634 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format22b2636 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L});
-    public static final BitSet FOLLOW_integral_literal_in_insn_format22b2638 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_FIELD_in_insn_format22c_field2657 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22c_field2659 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format22c_field2661 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22c_field2663 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format22c_field2665 = new BitSet(new long[]{0x0000000004000100L});
-    public static final BitSet FOLLOW_fully_qualified_field_in_insn_format22c_field2667 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_FIELD_ODEX_in_insn_format22c_field_odex2686 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22c_field_odex2688 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format22c_field_odex2690 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22c_field_odex2692 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format22c_field_odex2694 = new BitSet(new long[]{0x0000000004000100L});
-    public static final BitSet FOLLOW_fully_qualified_field_in_insn_format22c_field_odex2696 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_TYPE_in_insn_format22c_type2715 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22c_type2717 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format22c_type2719 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22c_type2721 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format22c_type2723 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
-    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_insn_format22c_type2725 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22cs_FIELD_in_insn_format22cs_field2744 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22cs_field2746 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format22cs_field2748 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22cs_field2750 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format22cs_field2752 = new BitSet(new long[]{0x0004000000000000L});
-    public static final BitSet FOLLOW_FIELD_OFFSET_in_insn_format22cs_field2754 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_instruction_format22s_in_insn_format22s2773 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22s2775 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format22s2777 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22s2779 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format22s2781 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L});
-    public static final BitSet FOLLOW_integral_literal_in_insn_format22s2783 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22t_in_insn_format22t2802 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22t2804 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format22t2806 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22t2808 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format22t2810 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_format22t2812 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22x_in_insn_format22x2831 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22x2833 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format22x2835 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format22x2837 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT23x_in_insn_format23x2856 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format23x2858 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format23x2860 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format23x2862 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format23x2864 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format23x2866 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT30t_in_insn_format30t2885 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_format30t2887 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT31c_in_insn_format31c2906 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format31c2908 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format31c2910 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_STRING_LITERAL_in_insn_format31c2912 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_instruction_format31i_in_insn_format31i2931 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format31i2933 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format31i2935 = new BitSet(new long[]{0x0018000002600000L,0x1040240000000000L});
-    public static final BitSet FOLLOW_fixed_32bit_literal_in_insn_format31i2937 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT31t_in_insn_format31t2956 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format31t2958 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format31t2960 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_format31t2962 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT32x_in_insn_format32x2981 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format32x2983 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format32x2985 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format32x2987 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35c_METHOD_in_insn_format35c_method3006 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format35c_method3008 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_register_list_in_insn_format35c_method3010 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format35c_method3012 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format35c_method3014 = new BitSet(new long[]{0x0000000004000100L});
-    public static final BitSet FOLLOW_fully_qualified_method_in_insn_format35c_method3016 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35c_TYPE_in_insn_format35c_type3035 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format35c_type3037 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_register_list_in_insn_format35c_type3039 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format35c_type3041 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format35c_type3043 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
-    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_insn_format35c_type3045 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35c_METHOD_ODEX_in_insn_format35c_method_odex3064 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format35c_method_odex3066 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_register_list_in_insn_format35c_method_odex3068 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format35c_method_odex3070 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format35c_method_odex3072 = new BitSet(new long[]{0x0000000004000100L});
-    public static final BitSet FOLLOW_fully_qualified_method_in_insn_format35c_method_odex3074 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35mi_METHOD_in_insn_format35mi_method3093 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format35mi_method3095 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_register_list_in_insn_format35mi_method3097 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format35mi_method3099 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format35mi_method3101 = new BitSet(new long[]{0x0200000000000000L});
-    public static final BitSet FOLLOW_INLINE_INDEX_in_insn_format35mi_method3103 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35ms_METHOD_in_insn_format35ms_method3122 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format35ms_method3124 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_register_list_in_insn_format35ms_method3126 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format35ms_method3128 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format35ms_method3130 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000020L});
-    public static final BitSet FOLLOW_VTABLE_INDEX_in_insn_format35ms_method3132 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rc_METHOD_in_insn_format3rc_method3151 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format3rc_method3153 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_register_range_in_insn_format3rc_method3155 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format3rc_method3157 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format3rc_method3159 = new BitSet(new long[]{0x0000000004000100L});
-    public static final BitSet FOLLOW_fully_qualified_method_in_insn_format3rc_method3161 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rc_METHOD_ODEX_in_insn_format3rc_method_odex3180 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format3rc_method_odex3182 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_register_list_in_insn_format3rc_method_odex3184 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format3rc_method_odex3186 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format3rc_method_odex3188 = new BitSet(new long[]{0x0000000004000100L});
-    public static final BitSet FOLLOW_fully_qualified_method_in_insn_format3rc_method_odex3190 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rc_TYPE_in_insn_format3rc_type3209 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format3rc_type3211 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_register_range_in_insn_format3rc_type3213 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format3rc_type3215 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format3rc_type3217 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
-    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_insn_format3rc_type3219 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rmi_METHOD_in_insn_format3rmi_method3238 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format3rmi_method3240 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_register_range_in_insn_format3rmi_method3242 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format3rmi_method3244 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format3rmi_method3246 = new BitSet(new long[]{0x0200000000000000L});
-    public static final BitSet FOLLOW_INLINE_INDEX_in_insn_format3rmi_method3248 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rms_METHOD_in_insn_format3rms_method3267 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format3rms_method3269 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_register_range_in_insn_format3rms_method3271 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format3rms_method3273 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format3rms_method3275 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000020L});
-    public static final BitSet FOLLOW_VTABLE_INDEX_in_insn_format3rms_method3277 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INSTRUCTION_FORMAT51l_in_insn_format51l3296 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
-    public static final BitSet FOLLOW_REGISTER_in_insn_format51l3298 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_COMMA_in_insn_format51l3300 = new BitSet(new long[]{0x0018000C02600000L,0x1040240000000000L});
-    public static final BitSet FOLLOW_fixed_literal_in_insn_format51l3302 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ARRAY_DATA_DIRECTIVE_in_insn_array_data_directive3316 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L});
-    public static final BitSet FOLLOW_integral_literal_in_insn_array_data_directive3318 = new BitSet(new long[]{0x0018002C02600000L,0x1040240000000000L});
-    public static final BitSet FOLLOW_fixed_literal_in_insn_array_data_directive3320 = new BitSet(new long[]{0x0018002C02600000L,0x1040240000000000L});
-    public static final BitSet FOLLOW_END_ARRAY_DATA_DIRECTIVE_in_insn_array_data_directive3323 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PACKED_SWITCH_DIRECTIVE_in_insn_packed_switch_directive3337 = new BitSet(new long[]{0x0018000002600000L,0x1040240000000000L});
-    public static final BitSet FOLLOW_fixed_32bit_literal_in_insn_packed_switch_directive3339 = new BitSet(new long[]{0x0000020040000000L,0x0000A00000000000L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_packed_switch_directive3341 = new BitSet(new long[]{0x0000020040000000L,0x0000A00000000000L});
-    public static final BitSet FOLLOW_END_PACKED_SWITCH_DIRECTIVE_in_insn_packed_switch_directive3344 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_SPARSE_SWITCH_DIRECTIVE_in_insn_sparse_switch_directive3358 = new BitSet(new long[]{0x0018080002600000L,0x1040240000000000L});
-    public static final BitSet FOLLOW_fixed_32bit_literal_in_insn_sparse_switch_directive3361 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_ARROW_in_insn_sparse_switch_directive3363 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
-    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_sparse_switch_directive3365 = new BitSet(new long[]{0x0018080002600000L,0x1040240000000000L});
-    public static final BitSet FOLLOW_END_SPARSE_SWITCH_DIRECTIVE_in_insn_sparse_switch_directive3369 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_CLASS_DESCRIPTOR_in_class_descriptor1028 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_void_type_in_type_descriptor1044 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_primitive_type_in_type_descriptor1050 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_class_descriptor_in_type_descriptor1056 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ARRAY_DESCRIPTOR_in_type_descriptor1062 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_primitive_type_in_nonvoid_type_descriptor1072 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_class_descriptor_in_nonvoid_type_descriptor1078 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ARRAY_DESCRIPTOR_in_nonvoid_type_descriptor1084 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_class_descriptor_in_reference_type_descriptor1094 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ARRAY_DESCRIPTOR_in_reference_type_descriptor1100 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LONG_LITERAL_in_literal1165 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_integer_literal_in_literal1171 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_SHORT_LITERAL_in_literal1177 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_BYTE_LITERAL_in_literal1183 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_float_literal_in_literal1189 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_double_literal_in_literal1195 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_CHAR_LITERAL_in_literal1201 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_STRING_LITERAL_in_literal1207 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_BOOL_LITERAL_in_literal1213 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_NULL_LITERAL_in_literal1219 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_array_literal_in_literal1225 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_subannotation_in_literal1231 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_type_field_method_literal_in_literal1237 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_enum_literal_in_literal1243 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LONG_LITERAL_in_integral_literal1266 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_integer_literal_in_integral_literal1272 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_SHORT_LITERAL_in_integral_literal1278 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_CHAR_LITERAL_in_integral_literal1284 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_BYTE_LITERAL_in_integral_literal1290 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LONG_LITERAL_in_fixed_32bit_literal1306 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_integer_literal_in_fixed_32bit_literal1312 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_SHORT_LITERAL_in_fixed_32bit_literal1318 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_BYTE_LITERAL_in_fixed_32bit_literal1324 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_float_literal_in_fixed_32bit_literal1330 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_CHAR_LITERAL_in_fixed_32bit_literal1336 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_BOOL_LITERAL_in_fixed_32bit_literal1342 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_integer_literal_in_fixed_literal1352 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LONG_LITERAL_in_fixed_literal1358 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_SHORT_LITERAL_in_fixed_literal1364 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_BYTE_LITERAL_in_fixed_literal1370 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_float_literal_in_fixed_literal1376 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_double_literal_in_fixed_literal1382 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_CHAR_LITERAL_in_fixed_literal1388 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_BOOL_LITERAL_in_fixed_literal1394 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_array_literal1404 = new BitSet(new long[]{0x0018200C16600100L,0x10C1640000000000L,0x0000000000000013L});
+    public static final BitSet FOLLOW_literal_in_array_literal1407 = new BitSet(new long[]{0x0000000090000000L});
+    public static final BitSet FOLLOW_COMMA_in_array_literal1410 = new BitSet(new long[]{0x0018200C06600100L,0x10C1640000000000L,0x0000000000000013L});
+    public static final BitSet FOLLOW_literal_in_array_literal1412 = new BitSet(new long[]{0x0000000090000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_array_literal1420 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_simple_name_in_annotation_element1430 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_EQUAL_in_annotation_element1432 = new BitSet(new long[]{0x0018200C06600100L,0x10C1640000000000L,0x0000000000000013L});
+    public static final BitSet FOLLOW_literal_in_annotation_element1434 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ANNOTATION_DIRECTIVE_in_annotation1452 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_ANNOTATION_VISIBILITY_in_annotation1454 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_class_descriptor_in_annotation1456 = new BitSet(new long[]{0x5C10001800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
+    public static final BitSet FOLLOW_annotation_element_in_annotation1462 = new BitSet(new long[]{0x5C10001800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
+    public static final BitSet FOLLOW_END_ANNOTATION_DIRECTIVE_in_annotation1465 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_SUBANNOTATION_DIRECTIVE_in_subannotation1481 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_class_descriptor_in_subannotation1483 = new BitSet(new long[]{0x5C10100800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
+    public static final BitSet FOLLOW_annotation_element_in_subannotation1485 = new BitSet(new long[]{0x5C10100800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
+    public static final BitSet FOLLOW_END_SUBANNOTATION_DIRECTIVE_in_subannotation1488 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ENUM_DIRECTIVE_in_enum_literal1498 = new BitSet(new long[]{0x0000000004000100L});
+    public static final BitSet FOLLOW_reference_type_descriptor_in_enum_literal1500 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_ARROW_in_enum_literal1502 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
+    public static final BitSet FOLLOW_simple_name_in_enum_literal1504 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_COLON_in_enum_literal1506 = new BitSet(new long[]{0x0000000004000100L});
+    public static final BitSet FOLLOW_reference_type_descriptor_in_enum_literal1508 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_reference_type_descriptor_in_type_field_method_literal1518 = new BitSet(new long[]{0x0000000000000202L});
+    public static final BitSet FOLLOW_ARROW_in_type_field_method_literal1526 = new BitSet(new long[]{0x5C10000800200050L,0x22D070107D8B7A79L,0x0000000000000018L});
+    public static final BitSet FOLLOW_simple_name_in_type_field_method_literal1536 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_COLON_in_type_field_method_literal1538 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
+    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_type_field_method_literal1540 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_method_name_in_type_field_method_literal1550 = new BitSet(new long[]{0x0000000000000000L,0x0002000000000000L});
+    public static final BitSet FOLLOW_method_prototype_in_type_field_method_literal1552 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_primitive_type_in_type_field_method_literal1582 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_void_type_in_type_field_method_literal1588 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_reference_type_descriptor_in_fully_qualified_method1598 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_ARROW_in_fully_qualified_method1600 = new BitSet(new long[]{0x5C10000800200050L,0x22D070107D8B7A79L,0x0000000000000018L});
+    public static final BitSet FOLLOW_method_name_in_fully_qualified_method1602 = new BitSet(new long[]{0x0000000000000000L,0x0002000000000000L});
+    public static final BitSet FOLLOW_method_prototype_in_fully_qualified_method1604 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_reference_type_descriptor_in_fully_qualified_field1614 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_ARROW_in_fully_qualified_field1616 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
+    public static final BitSet FOLLOW_simple_name_in_fully_qualified_field1618 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_COLON_in_fully_qualified_field1620 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
+    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_fully_qualified_field1622 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_COLON_in_label1632 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
+    public static final BitSet FOLLOW_simple_name_in_label1634 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_COLON_in_label_ref_or_offset1644 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
+    public static final BitSet FOLLOW_simple_name_in_label_ref_or_offset1646 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_OFFSET_in_label_ref_or_offset1652 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_NEGATIVE_INTEGER_LITERAL_in_label_ref_or_offset1658 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_REGISTER_in_register_list1669 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_COMMA_in_register_list1672 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_register_list1674 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_REGISTER_in_register_range1689 = new BitSet(new long[]{0x0000000200000002L});
+    public static final BitSet FOLLOW_DOTDOT_in_register_range1692 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_register_range1694 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_class_descriptor_in_verification_error_reference1708 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_fully_qualified_field_in_verification_error_reference1712 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_fully_qualified_method_in_verification_error_reference1716 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_CATCH_DIRECTIVE_in_catch_directive1726 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
+    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_catch_directive1728 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_catch_directive1730 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_catch_directive1732 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_DOTDOT_in_catch_directive1734 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_catch_directive1736 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_catch_directive1738 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_catch_directive1740 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_CATCHALL_DIRECTIVE_in_catchall_directive1750 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_catchall_directive1752 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_catchall_directive1754 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_DOTDOT_in_catchall_directive1756 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_catchall_directive1758 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_catchall_directive1760 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_catchall_directive1762 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_PARAMETER_DIRECTIVE_in_parameter_directive1774 = new BitSet(new long[]{0x0000040000000022L,0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_STRING_LITERAL_in_parameter_directive1776 = new BitSet(new long[]{0x0000040000000022L});
+    public static final BitSet FOLLOW_annotation_in_parameter_directive1786 = new BitSet(new long[]{0x0000040000000022L});
+    public static final BitSet FOLLOW_END_PARAMETER_DIRECTIVE_in_parameter_directive1796 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_line_directive_in_ordered_debug_directive1820 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_local_directive_in_ordered_debug_directive1826 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_end_local_directive_in_ordered_debug_directive1832 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_restart_local_directive_in_ordered_debug_directive1838 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_prologue_directive_in_ordered_debug_directive1844 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_epilogue_directive_in_ordered_debug_directive1850 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_source_directive_in_ordered_debug_directive1856 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LINE_DIRECTIVE_in_line_directive1866 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L});
+    public static final BitSet FOLLOW_integral_literal_in_line_directive1868 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LOCAL_DIRECTIVE_in_local_directive1878 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_local_directive1880 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_local_directive1882 = new BitSet(new long[]{0x5C10000800200050L,0x22D060107D8B7A79L,0x0000000000000018L});
+    public static final BitSet FOLLOW_simple_name_in_local_directive1884 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_COLON_in_local_directive1886 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
+    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_local_directive1888 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_COMMA_in_local_directive1891 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_STRING_LITERAL_in_local_directive1893 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_END_LOCAL_DIRECTIVE_in_end_local_directive1905 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_end_local_directive1907 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RESTART_LOCAL_DIRECTIVE_in_restart_local_directive1917 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_restart_local_directive1919 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_PROLOGUE_DIRECTIVE_in_prologue_directive1929 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_EPILOGUE_DIRECTIVE_in_epilogue_directive1939 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_SOURCE_DIRECTIVE_in_source_directive1949 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_STRING_LITERAL_in_source_directive1951 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format10t_in_instruction2016 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format10x_in_instruction2022 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format10x_odex_in_instruction2028 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format11n_in_instruction2034 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format11x_in_instruction2040 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format12x_in_instruction2046 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format20bc_in_instruction2052 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format20t_in_instruction2058 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format21c_field_in_instruction2064 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format21c_field_odex_in_instruction2070 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format21c_string_in_instruction2076 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format21c_type_in_instruction2082 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format21h_in_instruction2088 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format21s_in_instruction2094 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format21t_in_instruction2100 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format22b_in_instruction2106 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format22c_field_in_instruction2112 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format22c_field_odex_in_instruction2118 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format22c_type_in_instruction2124 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format22cs_field_in_instruction2130 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format22s_in_instruction2136 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format22t_in_instruction2142 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format22x_in_instruction2148 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format23x_in_instruction2154 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format30t_in_instruction2160 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format31c_in_instruction2166 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format31i_in_instruction2172 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format31t_in_instruction2178 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format32x_in_instruction2184 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format35c_method_in_instruction2190 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format35c_type_in_instruction2196 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format35c_method_odex_in_instruction2202 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format35mi_method_in_instruction2208 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format35ms_method_in_instruction2214 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format3rc_method_in_instruction2220 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format3rc_method_odex_in_instruction2226 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format3rc_type_in_instruction2232 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format3rmi_method_in_instruction2238 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format3rms_method_in_instruction2244 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_format51l_in_instruction2250 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_array_data_directive_in_instruction2256 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_packed_switch_directive_in_instruction2262 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_insn_sparse_switch_directive_in_instruction2268 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT10t_in_insn_format10t2298 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_format10t2300 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT10x_in_insn_format10x2319 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT10x_ODEX_in_insn_format10x_odex2338 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT11n_in_insn_format11n2357 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format11n2359 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format11n2361 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L});
+    public static final BitSet FOLLOW_integral_literal_in_insn_format11n2363 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT11x_in_insn_format11x2382 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format11x2384 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_instruction_format12x_in_insn_format12x2403 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format12x2405 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format12x2407 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format12x2409 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT20bc_in_insn_format20bc2428 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000008L});
+    public static final BitSet FOLLOW_VERIFICATION_ERROR_TYPE_in_insn_format20bc2430 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format20bc2432 = new BitSet(new long[]{0x0000000004000100L});
+    public static final BitSet FOLLOW_verification_error_reference_in_insn_format20bc2434 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT20t_in_insn_format20t2453 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_format20t2455 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_FIELD_in_insn_format21c_field2474 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format21c_field2476 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format21c_field2478 = new BitSet(new long[]{0x0000000004000100L});
+    public static final BitSet FOLLOW_fully_qualified_field_in_insn_format21c_field2480 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_FIELD_ODEX_in_insn_format21c_field_odex2499 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format21c_field_odex2501 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format21c_field_odex2503 = new BitSet(new long[]{0x0000000004000100L});
+    public static final BitSet FOLLOW_fully_qualified_field_in_insn_format21c_field_odex2505 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_STRING_in_insn_format21c_string2524 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format21c_string2526 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format21c_string2528 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_STRING_LITERAL_in_insn_format21c_string2530 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21c_TYPE_in_insn_format21c_type2549 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format21c_type2551 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format21c_type2553 = new BitSet(new long[]{0x0000000004000100L});
+    public static final BitSet FOLLOW_reference_type_descriptor_in_insn_format21c_type2555 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21h_in_insn_format21h2574 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format21h2576 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format21h2578 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L});
+    public static final BitSet FOLLOW_integral_literal_in_insn_format21h2580 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21s_in_insn_format21s2599 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format21s2601 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format21s2603 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L});
+    public static final BitSet FOLLOW_integral_literal_in_insn_format21s2605 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT21t_in_insn_format21t2624 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format21t2626 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format21t2628 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_format21t2631 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22b_in_insn_format22b2651 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22b2653 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format22b2655 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22b2657 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format22b2659 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L});
+    public static final BitSet FOLLOW_integral_literal_in_insn_format22b2661 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_FIELD_in_insn_format22c_field2680 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22c_field2682 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format22c_field2684 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22c_field2686 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format22c_field2688 = new BitSet(new long[]{0x0000000004000100L});
+    public static final BitSet FOLLOW_fully_qualified_field_in_insn_format22c_field2690 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_FIELD_ODEX_in_insn_format22c_field_odex2709 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22c_field_odex2711 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format22c_field_odex2713 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22c_field_odex2715 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format22c_field_odex2717 = new BitSet(new long[]{0x0000000004000100L});
+    public static final BitSet FOLLOW_fully_qualified_field_in_insn_format22c_field_odex2719 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22c_TYPE_in_insn_format22c_type2738 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22c_type2740 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format22c_type2742 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22c_type2744 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format22c_type2746 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
+    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_insn_format22c_type2748 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22cs_FIELD_in_insn_format22cs_field2767 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22cs_field2769 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format22cs_field2771 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22cs_field2773 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format22cs_field2775 = new BitSet(new long[]{0x0004000000000000L});
+    public static final BitSet FOLLOW_FIELD_OFFSET_in_insn_format22cs_field2777 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_instruction_format22s_in_insn_format22s2796 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22s2798 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format22s2800 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22s2802 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format22s2804 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L});
+    public static final BitSet FOLLOW_integral_literal_in_insn_format22s2806 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22t_in_insn_format22t2825 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22t2827 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format22t2829 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22t2831 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format22t2833 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_format22t2835 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT22x_in_insn_format22x2854 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22x2856 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format22x2858 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format22x2860 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT23x_in_insn_format23x2879 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format23x2881 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format23x2883 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format23x2885 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format23x2887 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format23x2889 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT30t_in_insn_format30t2908 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_format30t2910 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT31c_in_insn_format31c2929 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format31c2931 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format31c2933 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_STRING_LITERAL_in_insn_format31c2935 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_instruction_format31i_in_insn_format31i2954 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format31i2956 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format31i2958 = new BitSet(new long[]{0x0018000002600000L,0x1040240000000000L});
+    public static final BitSet FOLLOW_fixed_32bit_literal_in_insn_format31i2960 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT31t_in_insn_format31t2979 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format31t2981 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format31t2983 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_format31t2985 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT32x_in_insn_format32x3004 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format32x3006 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format32x3008 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format32x3010 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35c_METHOD_in_insn_format35c_method3029 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format35c_method3031 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_list_in_insn_format35c_method3033 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format35c_method3035 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format35c_method3037 = new BitSet(new long[]{0x0000000004000100L});
+    public static final BitSet FOLLOW_fully_qualified_method_in_insn_format35c_method3039 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35c_TYPE_in_insn_format35c_type3058 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format35c_type3060 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_list_in_insn_format35c_type3062 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format35c_type3064 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format35c_type3066 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
+    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_insn_format35c_type3068 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35c_METHOD_ODEX_in_insn_format35c_method_odex3087 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format35c_method_odex3089 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_list_in_insn_format35c_method_odex3091 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format35c_method_odex3093 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format35c_method_odex3095 = new BitSet(new long[]{0x0000000004000100L});
+    public static final BitSet FOLLOW_fully_qualified_method_in_insn_format35c_method_odex3097 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35mi_METHOD_in_insn_format35mi_method3116 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format35mi_method3118 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_list_in_insn_format35mi_method3120 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format35mi_method3122 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format35mi_method3124 = new BitSet(new long[]{0x0200000000000000L});
+    public static final BitSet FOLLOW_INLINE_INDEX_in_insn_format35mi_method3126 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT35ms_METHOD_in_insn_format35ms_method3145 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format35ms_method3147 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_list_in_insn_format35ms_method3149 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format35ms_method3151 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format35ms_method3153 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000020L});
+    public static final BitSet FOLLOW_VTABLE_INDEX_in_insn_format35ms_method3155 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rc_METHOD_in_insn_format3rc_method3174 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format3rc_method3176 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_range_in_insn_format3rc_method3178 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format3rc_method3180 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format3rc_method3182 = new BitSet(new long[]{0x0000000004000100L});
+    public static final BitSet FOLLOW_fully_qualified_method_in_insn_format3rc_method3184 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rc_METHOD_ODEX_in_insn_format3rc_method_odex3203 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format3rc_method_odex3205 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_list_in_insn_format3rc_method_odex3207 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format3rc_method_odex3209 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format3rc_method_odex3211 = new BitSet(new long[]{0x0000000004000100L});
+    public static final BitSet FOLLOW_fully_qualified_method_in_insn_format3rc_method_odex3213 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rc_TYPE_in_insn_format3rc_type3232 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format3rc_type3234 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_range_in_insn_format3rc_type3236 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format3rc_type3238 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format3rc_type3240 = new BitSet(new long[]{0x0000000004000100L,0x0080000000000000L});
+    public static final BitSet FOLLOW_nonvoid_type_descriptor_in_insn_format3rc_type3242 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rmi_METHOD_in_insn_format3rmi_method3261 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format3rmi_method3263 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_range_in_insn_format3rmi_method3265 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format3rmi_method3267 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format3rmi_method3269 = new BitSet(new long[]{0x0200000000000000L});
+    public static final BitSet FOLLOW_INLINE_INDEX_in_insn_format3rmi_method3271 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT3rms_METHOD_in_insn_format3rms_method3290 = new BitSet(new long[]{0x0000000000000000L,0x0001000000000000L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_insn_format3rms_method3292 = new BitSet(new long[]{0x0000000010000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_register_range_in_insn_format3rms_method3294 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_insn_format3rms_method3296 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format3rms_method3298 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000000000020L});
+    public static final BitSet FOLLOW_VTABLE_INDEX_in_insn_format3rms_method3300 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INSTRUCTION_FORMAT51l_in_insn_format51l3319 = new BitSet(new long[]{0x0000000000000000L,0x0200000000000000L});
+    public static final BitSet FOLLOW_REGISTER_in_insn_format51l3321 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_COMMA_in_insn_format51l3323 = new BitSet(new long[]{0x0018000C02600000L,0x1040240000000000L});
+    public static final BitSet FOLLOW_fixed_literal_in_insn_format51l3325 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ARRAY_DATA_DIRECTIVE_in_insn_array_data_directive3339 = new BitSet(new long[]{0x0000000002400000L,0x1040240000000000L});
+    public static final BitSet FOLLOW_integral_literal_in_insn_array_data_directive3341 = new BitSet(new long[]{0x0018002C02600000L,0x1040240000000000L});
+    public static final BitSet FOLLOW_fixed_literal_in_insn_array_data_directive3343 = new BitSet(new long[]{0x0018002C02600000L,0x1040240000000000L});
+    public static final BitSet FOLLOW_END_ARRAY_DATA_DIRECTIVE_in_insn_array_data_directive3346 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_PACKED_SWITCH_DIRECTIVE_in_insn_packed_switch_directive3360 = new BitSet(new long[]{0x0018000002600000L,0x1040240000000000L});
+    public static final BitSet FOLLOW_fixed_32bit_literal_in_insn_packed_switch_directive3362 = new BitSet(new long[]{0x0000020040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_packed_switch_directive3364 = new BitSet(new long[]{0x0000020040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_END_PACKED_SWITCH_DIRECTIVE_in_insn_packed_switch_directive3367 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_SPARSE_SWITCH_DIRECTIVE_in_insn_sparse_switch_directive3381 = new BitSet(new long[]{0x0018080002600000L,0x1040240000000000L});
+    public static final BitSet FOLLOW_fixed_32bit_literal_in_insn_sparse_switch_directive3384 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_ARROW_in_insn_sparse_switch_directive3386 = new BitSet(new long[]{0x0000000040000000L,0x0000A00000000000L});
+    public static final BitSet FOLLOW_label_ref_or_offset_in_insn_sparse_switch_directive3388 = new BitSet(new long[]{0x0018080002600000L,0x1040240000000000L});
+    public static final BitSet FOLLOW_END_SPARSE_SWITCH_DIRECTIVE_in_insn_sparse_switch_directive3392 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ANNOTATION_DIRECTIVE_in_synpred1_smaliIdeaParser298 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ANNOTATION_DIRECTIVE_in_synpred2_smaliIdeaParser341 = new BitSet(new long[]{0x0000000000000002L});
 
