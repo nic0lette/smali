@@ -57,4 +57,7 @@ public class ElementTypes {
     public static final IElementType INSTRUCTION = new IElementType("instruction", SmaliLanguage.INSTANCE);
 
     public static final IElementType LITERAL = new IElementType("literal", SmaliLanguage.INSTANCE);
+
+    public static final IElementType VOID_TYPE = new IElementType("void type", SmaliLanguage.INSTANCE);
+    public static final IElementType PRIMITIVE_TYPE = new IElementType("primitive type", SmaliLanguage.INSTANCE);
 }

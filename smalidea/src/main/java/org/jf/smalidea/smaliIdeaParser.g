@@ -295,14 +295,24 @@ param_list
   | PARAM_LIST_OR_ID
   | nonvoid_type_descriptor*;
 
+void_type
+  @init { Marker marker = mark(); }
+  : VOID_TYPE;
+  finally { marker.done(ElementTypes.VOID_TYPE); }
+
+primitive_type
+  @init { Marker marker = mark(); }
+  : PRIMITIVE_TYPE;
+  finally { marker.done(ElementTypes.PRIMITIVE_TYPE); }
+
 type_descriptor
-  : VOID_TYPE
-  | PRIMITIVE_TYPE
+  : void_type
+  | primitive_type
   | CLASS_DESCRIPTOR
   | ARRAY_DESCRIPTOR;
 
 nonvoid_type_descriptor
-  : PRIMITIVE_TYPE
+  : primitive_type
   | CLASS_DESCRIPTOR
   | ARRAY_DESCRIPTOR;
 
@@ -395,8 +405,8 @@ type_field_method_literal
       )
     |   /*epsilon*/
     )
-  | PRIMITIVE_TYPE
-  | VOID_TYPE;
+  | primitive_type
+  | void_type;
 
 fully_qualified_method
   : reference_type_descriptor ARROW method_name method_prototype;

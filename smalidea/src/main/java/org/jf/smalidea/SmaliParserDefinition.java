@@ -44,12 +44,8 @@ import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
-import org.jf.smali.smaliParser;
 import org.jf.smalidea.psi.ElementTypes;
-import org.jf.smalidea.psi.iface.SmaliLiteral;
-import org.jf.smalidea.psi.iface.SmaliRegistersSpec;
 import org.jf.smalidea.psi.impl.*;
-import org.jf.smalidea.psi.stub.element.SmaliClassElementType;
 import org.jf.smalidea.psi.stub.element.SmaliFileElementType;
 
 public class SmaliParserDefinition implements ParserDefinition {
@@ -96,6 +92,10 @@ public class SmaliParserDefinition implements ParserDefinition {
             return new SmaliLiteralImpl(node);
         } else if (node.getElementType() == ElementTypes.REGISTERS_SPEC) {
             return new SmaliRegistersSpecImpl(node);
+        } else if (node.getElementType() == ElementTypes.VOID_TYPE) {
+            return new SmaliVoidTypeElementImpl(node);
+        } else if (node.getElementType() == ElementTypes.PRIMITIVE_TYPE) {
+            return new SmaliPrimitiveTypeElementImpl(node);
         }
         return new ASTWrapperPsiElement(node);
     }
