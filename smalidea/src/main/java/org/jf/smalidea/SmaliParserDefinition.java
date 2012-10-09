@@ -98,6 +98,8 @@ public class SmaliParserDefinition implements ParserDefinition {
             return new SmaliPrimitiveTypeElementImpl(node);
         } else if (node.getElementType() == ElementTypes.CLASS_TYPE) {
             return new SmaliClassTypeElementImpl(node);
+        } else if (node.getElementType() == ElementTypes.METHOD_PARAM_LIST) {
+            return new SmaliParamList(node);
         }
         return new ASTWrapperPsiElement(node);
     }

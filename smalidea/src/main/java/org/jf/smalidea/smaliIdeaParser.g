@@ -291,9 +291,11 @@ method_prototype
   finally { marker.done(ElementTypes.METHOD_PROTOTYPE); }
 
 param_list
+  @init { Marker marker = mark(); }
   : PARAM_LIST
   | PARAM_LIST_OR_ID
   | nonvoid_type_descriptor*;
+  finally { marker.done(ElementTypes.METHOD_PARAM_LIST); }
 
 void_type
   @init { Marker marker = mark(); }

@@ -38,14 +38,20 @@ import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiType;
+import com.intellij.psi.impl.source.tree.LeafPsiElement;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
+import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.iface.SmaliTypeElement;
 
-public class SmaliClassTypeElementImpl extends ASTWrapperPsiElement implements SmaliTypeElement, PsiReference {
+public class SmaliClassTypeElementImpl extends LeafPsiElement implements SmaliTypeElement, PsiReference {
     public SmaliClassTypeElementImpl(@NotNull ASTNode node) {
-        super(node);
+        super(node.getElementType(), node.getText());
+    }
+
+    public SmaliClassTypeElementImpl(@NotNull CharSequence text) {
+        super(ElementTypes.CLASS_TYPE, text);
     }
 
     @NotNull

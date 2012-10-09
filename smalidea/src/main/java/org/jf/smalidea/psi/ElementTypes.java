@@ -54,6 +54,7 @@ public class ElementTypes {
     public static final IElementType SIMPLE_NAME = new IElementType("simple name", SmaliLanguage.INSTANCE);
     public static final IElementType METHOD_NAME = new IElementType("method name", SmaliLanguage.INSTANCE);
     public static final IElementType METHOD_PROTOTYPE = new IElementType("method prototype", SmaliLanguage.INSTANCE);
+    public static final IElementType METHOD_PARAM_LIST = new IElementType("method param list", SmaliLanguage.INSTANCE);
     public static final IElementType INSTRUCTION = new IElementType("instruction", SmaliLanguage.INSTANCE);
 
     public static final IElementType LITERAL = new IElementType("literal", SmaliLanguage.INSTANCE);

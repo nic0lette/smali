@@ -33,43 +33,10 @@ package org.jf.smalidea.psi.impl;
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiType;
-import com.intellij.psi.impl.source.tree.LeafPsiElement;
 import org.jetbrains.annotations.NotNull;
-import org.jf.smalidea.psi.ElementTypes;
-import org.jf.smalidea.psi.iface.SmaliTypeElement;
 
-public class SmaliPrimitiveTypeElementImpl extends LeafPsiElement implements SmaliTypeElement {
-    public SmaliPrimitiveTypeElementImpl(@NotNull ASTNode node) {
-        super(node.getElementType(), node.getText());
-    }
-
-    public SmaliPrimitiveTypeElementImpl(@NotNull CharSequence text) {
-        super(ElementTypes.PRIMITIVE_TYPE, text);
-    }
-
-    @NotNull
-    @Override
-    public PsiType getType() {
-        switch (getText().charAt(0)) {
-            case 'Z':
-                return PsiType.BOOLEAN;
-            case 'B':
-                return PsiType.BYTE;
-            case 'S':
-                return PsiType.SHORT;
-            case 'C':
-                return PsiType.CHAR;
-            case 'I':
-                return PsiType.INT;
-            case 'J':
-                return PsiType.LONG;
-            case 'F':
-                return PsiType.FLOAT;
-            case 'D':
-                return PsiType.DOUBLE;
-            default:
-                throw new RuntimeException("Unexpected primitive type");
-        }
+public class SmaliParamList extends ASTWrapperPsiElement {
+    public SmaliParamList(@NotNull ASTNode node) {
+        super(node);
     }
 }
