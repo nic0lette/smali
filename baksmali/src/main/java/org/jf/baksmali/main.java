@@ -29,8 +29,8 @@
 package org.jf.baksmali;
 
 import org.apache.commons.cli.*;
-import org.jf.dexlib.Code.Opcode;
-import org.jf.dexlib.DexFile;
+import org.jf.dexlib2.DexFileFactory;
+import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 import org.jf.util.ConsoleUtil;
 import org.jf.util.SmaliHelpFormatter;
 
@@ -49,14 +49,6 @@ public class main {
     private static final Options basicOptions;
     private static final Options debugOptions;
     private static final Options options;
-
-    public static final int ALL = 1;
-    public static final int ALLPRE = 2;
-    public static final int ALLPOST = 4;
-    public static final int ARGS = 8;
-    public static final int DEST = 16;
-    public static final int MERGE = 32;
-    public static final int FULLMERGE = 64;
 
     static {
         options = new Options();
@@ -100,9 +92,6 @@ public class main {
 
         boolean disassemble = true;
         boolean doDump = false;
-        boolean write = false;
-        boolean sort = false;
-        boolean fixRegisters = false;
         boolean noParameterRegisters = false;
         boolean useLocalsDirective = false;
         boolean useSequentialLabels = false;
@@ -110,16 +99,15 @@ public class main {
         boolean addCodeOffsets = false;
         boolean noAccessorComments = false;
         boolean deodex = false;
-        boolean verify = false;
         boolean ignoreErrors = false;
+        boolean checkPackagePrivateAccess = false;
 
-        int apiLevel = 14;
+        int apiLevel = 15;
 
         int registerInfo = 0;
 
         String outputDirectory = "out";
         String dumpFileName = null;
-        String outputDexFileName = null;
         String inputDexFileName = null;
         String bootClassPath = null;
         StringBuffer extraBootClassPathEntries = new StringBuffer();
@@ -173,31 +161,31 @@ public class main {
                     String[] values = commandLine.getOptionValues('r');
 
                     if (values == null || values.length == 0) {
-                        registerInfo = ARGS | DEST;
+                        registerInfo = baksmaliOptions.ARGS | baksmaliOptions.DEST;
                     } else {
                         for (String value: values) {
                             if (value.equalsIgnoreCase("ALL")) {
-                                registerInfo |= ALL;
+                                registerInfo |= baksmaliOptions.ALL;
                             } else if (value.equalsIgnoreCase("ALLPRE")) {
-                                registerInfo |= ALLPRE;
+                                registerInfo |= baksmaliOptions.ALLPRE;
                             } else if (value.equalsIgnoreCase("ALLPOST")) {
-                                registerInfo |= ALLPOST;
+                                registerInfo |= baksmaliOptions.ALLPOST;
                             } else if (value.equalsIgnoreCase("ARGS")) {
-                                registerInfo |= ARGS;
+                                registerInfo |= baksmaliOptions.ARGS;
                             } else if (value.equalsIgnoreCase("DEST")) {
-                                registerInfo |= DEST;
+                                registerInfo |= baksmaliOptions.DEST;
                             } else if (value.equalsIgnoreCase("MERGE")) {
-                                registerInfo |= MERGE;
+                                registerInfo |= baksmaliOptions.MERGE;
                             } else if (value.equalsIgnoreCase("FULLMERGE")) {
-                                registerInfo |= FULLMERGE;
+                                registerInfo |= baksmaliOptions.FULLMERGE;
                             } else {
                                 usage();
                                 return;
                             }
                         }
 
-                        if ((registerInfo & FULLMERGE) != 0) {
-                            registerInfo &= ~MERGE;
+                        if ((registerInfo & baksmaliOptions.FULLMERGE) != 0) {
+                            registerInfo &= ~baksmaliOptions.MERGE;
                         }
                     }
                     break;
@@ -228,21 +216,11 @@ public class main {
                 case 'I':
                     ignoreErrors = true;
                     break;
-                case 'W':
-                    write = true;
-                    outputDexFileName = commandLine.getOptionValue("W");
-                    break;
-                case 'S':
-                    sort = true;
-                    break;
-                case 'F':
-                    fixRegisters = true;
-                    break;
-                case 'V':
-                    verify = true;
-                    break;
                 case 'T':
                     inlineTable = commandLine.getOptionValue("T");
+                    break;
+                case 'K':
+                    checkPackagePrivateAccess = true;
                     break;
                 default:
                     assert false;
@@ -263,18 +241,10 @@ public class main {
                 System.exit(1);
             }
 
-            Opcode.updateMapsForApiLevel(apiLevel);
-
             //Read in and parse the dex file
-            DexFile dexFile = new DexFile(dexFileFile, !fixRegisters, false);
+            DexBackedDexFile dexFile = DexFileFactory.loadDexFile(dexFileFile, apiLevel);
 
-            if (dexFile.isOdex()) {
-                if (doDump) {
-                    System.err.println("-D cannot be used with on odex file. Ignoring -D");
-                }
-                if (write) {
-                    System.err.println("-W cannot be used with an odex file. Ignoring -W");
-                }
+            if (dexFile.isOdexFile()) {
                 if (!deodex) {
                     System.err.println("Warning: You are disassembling an odex file without deodexing it. You");
                     System.err.println("won't be able to re-assemble the results unless you deodex it with the -x");
@@ -294,16 +264,15 @@ public class main {
                     bootClassPathDirsArray[i] = bootClassPathDirs.get(i);
                 }
 
-                baksmali.disassembleDexFile(dexFileFile.getPath(), dexFile, deodex, outputDirectory,
+                baksmali.disassembleDexFile(dexFileFile.getPath(), dexFile, apiLevel, deodex, outputDirectory,
                         bootClassPathDirsArray, bootClassPath, extraBootClassPathEntries.toString(),
                         noParameterRegisters, useLocalsDirective, useSequentialLabels, outputDebugInfo, addCodeOffsets,
-                        noAccessorComments, registerInfo, verify, ignoreErrors, inlineTable);
+                        noAccessorComments, registerInfo, ignoreErrors, inlineTable, checkPackagePrivateAccess);
             }
 
-            if ((doDump || write) && !dexFile.isOdex()) {
-                try
-                {
-                    dump.dump(dexFile, dumpFileName, outputDexFileName, sort);
+            if (doDump) {
+                try {
+                    dump.dump(dexFile, dumpFileName, apiLevel);
                 }catch (IOException ex) {
                     System.err.println("Error occured while writing dump file");
                     ex.printStackTrace();
@@ -428,7 +397,7 @@ public class main {
 
         Option apiLevelOption = OptionBuilder.withLongOpt("api-level")
                 .withDescription("The numeric api-level of the file being disassembled. If not " +
-                        "specified, it defaults to 14 (ICS).")
+                        "specified, it defaults to 15 (ICS).")
                 .hasArg()
                 .withArgName("API_LEVEL")
                 .create("a");
@@ -446,35 +415,21 @@ public class main {
                         " behavior is to stop disassembling and exit once an error is encountered")
                 .create("I");
 
-
         Option noDisassemblyOption = OptionBuilder.withLongOpt("no-disassembly")
                 .withDescription("suppresses the output of the disassembly")
                 .create("N");
-
-        Option writeDexOption = OptionBuilder.withLongOpt("write-dex")
-                .withDescription("additionally rewrites the input dex file to FILE")
-                .hasArg()
-                .withArgName("FILE")
-                .create("W");
-
-        Option sortOption = OptionBuilder.withLongOpt("sort")
-                .withDescription("sort the items in the dex file into a canonical order before dumping/writing")
-                .create("S");
-
-        Option fixSignedRegisterOption = OptionBuilder.withLongOpt("fix-signed-registers")
-                .withDescription("when dumping or rewriting, fix any registers in the debug info that are encoded as" +
-                        " a signed value")
-                .create("F");
-
-        Option verifyDexOption = OptionBuilder.withLongOpt("verify")
-                .withDescription("perform bytecode verification")
-                .create("V");
 
         Option inlineTableOption = OptionBuilder.withLongOpt("inline-table")
                 .withDescription("specify a file containing a custom inline method table to use for deodexing")
                 .hasArg()
                 .withArgName("FILE")
                 .create("T");
+
+        Option checkPackagePrivateAccess = OptionBuilder.withLongOpt("check-package-private-access")
+                .withDescription("When deodexing, use the new virtual table generation logic that " +
+                        "prevents overriding an inaccessible package private method. This is a temporary option " +
+                        "that will be removed once this new functionality can be tied to a specific api level.")
+                .create("K");
 
         basicOptions.addOption(versionOption);
         basicOptions.addOption(helpOption);
@@ -494,11 +449,8 @@ public class main {
         debugOptions.addOption(dumpOption);
         debugOptions.addOption(ignoreErrorsOption);
         debugOptions.addOption(noDisassemblyOption);
-        debugOptions.addOption(writeDexOption);
-        debugOptions.addOption(sortOption);
-        debugOptions.addOption(fixSignedRegisterOption);
-        debugOptions.addOption(verifyDexOption);
         debugOptions.addOption(inlineTableOption);
+        debugOptions.addOption(checkPackagePrivateAccess);
 
         for (Object option: basicOptions.getOptions()) {
             options.addOption((Option)option);

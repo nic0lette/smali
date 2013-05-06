@@ -36,42 +36,70 @@ configurations {
 }
 
 ext.antlrSource = 'src/main/antlr3'
-ext.antlrOutput = file(new File(buildDir, '/generated-sources/antlr3'))
+ext.antlrOutput = file("${buildDir}/generated-sources/antlr3")
 
 ext.jflexSource = "src/main/jflex"
-ext.jflexOutput = file(new File(buildDir, '/generated-sources/jflex'))
+ext.jflexOutput = file("${buildDir}/generated-sources/jflex")
 
 ext.testAntlrSource = 'src/test/antlr3'
-ext.testAntlrOutput = file(new File(buildDir, '/generated-test-sources/antlr3'))
+ext.testAntlrOutput = file("${buildDir}/generated-test-sources/antlr3")
 
 sourceSets.main.java.srcDir antlrOutput
 sourceSets.main.java.srcDir jflexOutput
 
 sourceSets.test.java.srcDir testAntlrOutput
 
-dependencies {
-    compile project(':util')
-    compile project(':dexlib')
-    compile 'org.antlr:antlr-runtime:3.2'
-    compile 'commons-cli:commons-cli:1.2'
-
-    testCompile 'junit:junit:4.6'
-
-    antlr3 'org.antlr:antlr:3.2'
-    jflex 'de.jflex:jflex:1.4.3'
-    proguard 'net.sf.proguard:proguard-base:4.8'
+idea {
+    module {
+        excludeDirs -= buildDir
+        if (buildDir.exists()) {
+            excludeDirs.addAll(buildDir.listFiles())
+        }
+        for (sourceDir in (sourceDirs + testSourceDirs)) {
+            excludeDirs.remove(sourceDir);
+            while ((sourceDir = sourceDir.getParentFile()) != null) {
+                excludeDirs.remove(sourceDir);
+            }
+        }
+    }
 }
 
-task generateAntlrSource(type: JavaExec) {
+dependencies {
+    compile project(':util')
+    compile project(':dexlib2')
+    compile depends.antlr_runtime
+    compile depends.commons_cli
+
+    testCompile depends.junit
+
+    antlr3 depends.antlr
+    jflex depends.jflex
+    proguard depends.proguard
+}
+
+task generateParserAntlrSource(type: JavaExec) {
     inputs.dir file(antlrSource)
     outputs.dir file(antlrOutput)
 
     mkdir(antlrOutput)
-    def grammars = fileTree(antlrSource).include('**/*.g')
+    def grammars = fileTree(antlrSource).include('**/smaliParser.g')
 
     classpath = configurations.antlr3
     main = 'org.antlr.Tool'
-    args '-fo', relativePath(new File(antlrOutput, 'org/jf/smali'))
+    args '-fo', relativePath("${antlrOutput}/org/jf/smali")
+    args grammars.files
+}
+
+task generateTreeWalkerAntlrSource(type: JavaExec) {
+    inputs.dir file(antlrSource)
+    outputs.dir file(antlrOutput)
+
+    mkdir(antlrOutput)
+    def grammars = fileTree(antlrSource).include('**/smaliTreeWalker.g')
+
+    classpath = configurations.antlr3
+    main = 'org.antlr.Tool'
+    args '-fo', relativePath("${antlrOutput}/org/jf/smali")
     args grammars.files
 }
 
@@ -84,7 +112,7 @@ task generateTestAntlrSource(type: JavaExec) {
 
     classpath = configurations.antlr3
     main = 'org.antlr.Tool'
-    args '-fo', relativePath(new File(testAntlrOutput, 'org/jf/smali'))
+    args '-fo', relativePath("${testAntlrOutput}/org/jf/smali")
     args grammars.files.join(' ')
 }
 
@@ -98,44 +126,39 @@ task generateJflexSource(type: JavaExec) {
     classpath = configurations.jflex
     main = 'JFlex.Main'
     args '-q'
-    args '-d', relativePath(new File(jflexOutput, 'org/jf/smali'))
+    args '-d', relativePath("${jflexOutput}/org/jf/smali")
     args grammars.files.join(' ')
 }
 
-
-compileJava.dependsOn generateAntlrSource, generateJflexSource
+compileJava.dependsOn generateParserAntlrSource, generateTreeWalkerAntlrSource, generateJflexSource
 compileTestJava.dependsOn generateTestAntlrSource
 
-// We have to do this in taskGraph.whenReady, so that we use the correct
-// version to resolve the project dependencies
-gradle.taskGraph.whenReady {
-    // build a jar containing all dependencies
-    jar {
-        from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+// build a jar containing all dependencies
+jar {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 
-        manifest {
-            attributes("Main-Class": "org.jf.smali.main")
-        }
+    manifest {
+        attributes("Main-Class": "org.jf.smali.main")
     }
 
-    processResources.inputs.properties('version': version)
-    processResources.expand('version': version)
-
-    proguard {
-        def outFile = relativePath(buildDir) + '/libs/' + jar.baseName + '-' + jar.version + '-small' + '.' + jar.extension
-
-        inputs.file jar.archivePath
-        outputs.file outFile
-
-        args '-injars ' + jar.archivePath + '(!**/TestStringTemplate*.class)'
-        args '-outjars ' + outFile
+    doLast {
+        ant.symlink(link: file("${destinationDir}/smali.jar"), resource: archivePath, overwrite: true)
     }
 }
 
+processResources.inputs.property('version', version)
+processResources.expand('version': version)
+
 task proguard(type: JavaExec, dependsOn: jar) {
+    def outFile = jar.destinationDir.getPath() + '/' + jar.baseName + '-' + jar.version + '-small' + '.' + jar.extension
+    inputs.file jar.archivePath
+    outputs.file outFile
+
     classpath = configurations.proguard
     main = 'proguard.ProGuard'
-    args '-libraryjars ' + System.properties['java.home'] + '/lib/rt.jar'
+    args "-injars ${jar.archivePath}(!**/TestStringTemplate*.class)"
+    args "-outjars ${outFile}"
+    args "-libraryjars ${System.properties['java.home']}/lib/rt.jar"
     args '-dontobfuscate'
     args '-dontoptimize'
     args '-keep public class org.jf.smali.main { public static void main(java.lang.String[]); }'
@@ -144,8 +167,4 @@ task proguard(type: JavaExec, dependsOn: jar) {
     args '-dontnote com.google.common.base.**'
 }
 
-release.dependsOn(proguard)
-
-idea.module {    
-    sourceDirs += file(new File(buildDir, '/generated-sources'))
-}
+tasks.getByPath(':release').dependsOn(proguard)

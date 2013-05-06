@@ -29,6 +29,9 @@
 package org.jf.dexlib;
 
 import org.jf.dexlib.Util.*;
+import org.jf.util.AlignmentUtils;
+import org.jf.util.ExceptionWithContext;
+import org.jf.util.Hex;
 
 import java.io.*;
 import java.security.DigestException;

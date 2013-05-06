@@ -45,7 +45,7 @@ import static org.jf.smali.smaliParser.*;
         }
         catch (java.io.IOException e) {
             System.err.println("shouldn't happen: " + e.getMessage());
-            return Token.EOF_TOKEN;
+            return newToken(EOF);
         }
     }
 
@@ -268,8 +268,8 @@ Type = {PrimitiveType} | {ClassDescriptor} | {ArrayDescriptor}
     ".catch" { return newToken(CATCH_DIRECTIVE); }
     ".catchall" { return newToken(CATCHALL_DIRECTIVE); }
     ".line" { return newToken(LINE_DIRECTIVE); }
-    ".parameter" { return newToken(PARAMETER_DIRECTIVE); }
-    ".end parameter" { return newToken(END_PARAMETER_DIRECTIVE); }
+    ".param" { return newToken(PARAMETER_DIRECTIVE); }
+    ".end param" { return newToken(END_PARAMETER_DIRECTIVE); }
     ".local" { return newToken(LOCAL_DIRECTIVE); }
     ".end local" { return newToken(END_LOCAL_DIRECTIVE); }
     ".restart local" { return newToken(RESTART_LOCAL_DIRECTIVE); }
@@ -461,8 +461,12 @@ Type = {PrimitiveType} | {ClassDescriptor} | {ArrayDescriptor}
         return newToken(INSTRUCTION_FORMAT21c_TYPE);
     }
 
-    "const/high16" | "const-wide/high16" {
-        return newToken(INSTRUCTION_FORMAT21h);
+    "const/high16" {
+        return newToken(INSTRUCTION_FORMAT21ih);
+    }
+
+    "const-wide/high16" {
+        return newToken(INSTRUCTION_FORMAT21lh);
     }
 
     "const/16" | "const-wide/16" {

@@ -102,7 +102,8 @@ tokens {
   INSTRUCTION_FORMAT21c_FIELD_ODEX;
   INSTRUCTION_FORMAT21c_STRING;
   INSTRUCTION_FORMAT21c_TYPE;
-  INSTRUCTION_FORMAT21h;
+  INSTRUCTION_FORMAT21ih;
+  INSTRUCTION_FORMAT21lh;
   INSTRUCTION_FORMAT21s;
   INSTRUCTION_FORMAT21t;
   INSTRUCTION_FORMAT22b;
@@ -200,13 +201,10 @@ tokens {
   I_ARRAY_ELEMENT_SIZE;
   I_ARRAY_ELEMENTS;
   I_PACKED_SWITCH_START_KEY;
-  I_PACKED_SWITCH_TARGET_COUNT;
-  I_PACKED_SWITCH_TARGETS;
+  I_PACKED_SWITCH_ELEMENTS;
   I_PACKED_SWITCH_DECLARATION;
   I_PACKED_SWITCH_DECLARATIONS;
-  I_SPARSE_SWITCH_KEYS;
-  I_SPARSE_SWITCH_TARGET_COUNT;
-  I_SPARSE_SWITCH_TARGETS;
+  I_SPARSE_SWITCH_ELEMENTS;
   I_SPARSE_SWITCH_DECLARATION;
   I_SPARSE_SWITCH_DECLARATIONS;
   I_ADDRESS;
@@ -234,7 +232,8 @@ tokens {
   I_STATEMENT_FORMAT21c_TYPE;
   I_STATEMENT_FORMAT21c_FIELD;
   I_STATEMENT_FORMAT21c_STRING;
-  I_STATEMENT_FORMAT21h;
+  I_STATEMENT_FORMAT21ih;
+  I_STATEMENT_FORMAT21lh;
   I_STATEMENT_FORMAT21s;
   I_STATEMENT_FORMAT21t;
   I_STATEMENT_FORMAT22b;
@@ -264,8 +263,9 @@ tokens {
 @header {
 package org.jf.smali;
 
-import org.jf.dexlib.Code.Format.*;
-import org.jf.dexlib.Code.Opcode;
+import org.jf.dexlib2.Format;
+import org.jf.dexlib2.Opcode;
+import org.jf.dexlib2.Opcodes;
 }
 
 
@@ -274,7 +274,8 @@ import org.jf.dexlib.Code.Opcode;
 
   private boolean verboseErrors = false;
   private boolean allowOdex = false;
-  private int apiLevel;
+  private int apiLevel = 15;
+  private Opcodes opcodes = new Opcodes(apiLevel);
 
   public void setVerboseErrors(boolean verboseErrors) {
     this.verboseErrors = verboseErrors;
@@ -285,6 +286,7 @@ import org.jf.dexlib.Code.Opcode;
   }
 
   public void setApiLevel(int apiLevel) {
+      this.opcodes = new Opcodes(apiLevel);
       this.apiLevel = apiLevel;
   }
 
@@ -659,6 +661,9 @@ literal
   | type_field_method_literal
   | enum_literal;
 
+parsed_integer_literal returns[int value]
+  : integer_literal { $value = LiteralTools.parseInt($integer_literal.text); };
+
 integral_literal
   : LONG_LITERAL
   | integer_literal
@@ -757,14 +762,13 @@ the annotations. If it turns out that they are parameter annotations, we include
 add them to the $statements_and_directives::methodAnnotations list*/
 parameter_directive
   @init {List<CommonTree> annotations = new ArrayList<CommonTree>();}
-  : PARAMETER_DIRECTIVE
-    STRING_LITERAL?
+  : PARAMETER_DIRECTIVE REGISTER (COMMA STRING_LITERAL)?
     ({input.LA(1) == ANNOTATION_DIRECTIVE}? annotation {annotations.add($annotation.tree);})*
 
     ( END_PARAMETER_DIRECTIVE
-      -> ^(I_PARAMETER[$start, "I_PARAMETER"] STRING_LITERAL? ^(I_ANNOTATIONS annotation*))
+      -> ^(I_PARAMETER[$start, "I_PARAMETER"] REGISTER STRING_LITERAL? ^(I_ANNOTATIONS annotation*))
     | /*epsilon*/ {$statements_and_directives::methodAnnotations.addAll(annotations);}
-      -> ^(I_PARAMETER[$start, "I_PARAMETER"] STRING_LITERAL? ^(I_ANNOTATIONS))
+      -> ^(I_PARAMETER[$start, "I_PARAMETER"] REGISTER STRING_LITERAL? ^(I_ANNOTATIONS))
     );
 
 ordered_debug_directive
@@ -778,11 +782,13 @@ ordered_debug_directive
 
 line_directive
   : LINE_DIRECTIVE integral_literal
-    -> ^(I_LINE integral_literal I_ADDRESS[$start, Integer.toString($method::currentAddress)]);
+    -> ^(I_LINE[$start, "I_LINE"] integral_literal I_ADDRESS[$start, Integer.toString($method::currentAddress)]);
 
 local_directive
-  : LOCAL_DIRECTIVE REGISTER COMMA simple_name COLON nonvoid_type_descriptor (COMMA STRING_LITERAL)?
-    -> ^(I_LOCAL[$start, "I_LOCAL"] REGISTER simple_name nonvoid_type_descriptor STRING_LITERAL? I_ADDRESS[$start, Integer.toString($method::currentAddress)]);
+  : LOCAL_DIRECTIVE REGISTER (COMMA (NULL_LITERAL | name=STRING_LITERAL) COLON (VOID_TYPE | nonvoid_type_descriptor)
+                              (COMMA signature=STRING_LITERAL)? )?
+    -> ^(I_LOCAL[$start, "I_LOCAL"] REGISTER NULL_LITERAL? $name? nonvoid_type_descriptor? $signature?
+         I_ADDRESS[$start, Integer.toString($method::currentAddress)]);
 
 end_local_directive
   : END_LOCAL_DIRECTIVE REGISTER
@@ -801,8 +807,8 @@ epilogue_directive
     -> ^(I_EPILOGUE[$start, "I_EPILOGUE"] I_ADDRESS[$start, Integer.toString($method::currentAddress)]);
 
 source_directive
-  : SOURCE_DIRECTIVE STRING_LITERAL
-    -> ^(I_SOURCE[$start, "I_SOURCE"] STRING_LITERAL I_ADDRESS[$start, Integer.toString($method::currentAddress)]);
+  : SOURCE_DIRECTIVE STRING_LITERAL?
+    -> ^(I_SOURCE[$start, "I_SOURCE"] STRING_LITERAL? I_ADDRESS[$start, Integer.toString($method::currentAddress)]);
 
 instruction_format12x
   : INSTRUCTION_FORMAT12x
@@ -831,7 +837,8 @@ instruction returns [int size]
   | insn_format21c_field_odex { $size = $insn_format21c_field_odex.size; }
   | insn_format21c_string { $size = $insn_format21c_string.size; }
   | insn_format21c_type { $size = $insn_format21c_type.size; }
-  | insn_format21h { $size = $insn_format21h.size; }
+  | insn_format21ih { $size = $insn_format21ih.size; }
+  | insn_format21lh { $size = $insn_format21lh.size; }
   | insn_format21s { $size = $insn_format21s.size; }
   | insn_format21t { $size = $insn_format21t.size; }
   | insn_format22b { $size = $insn_format22b.size; }
@@ -900,12 +907,11 @@ insn_format20bc returns [int size]
   : //e.g. throw-verification-error generic-error, Lsome/class;
     INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE COMMA verification_error_reference {$size += Format.Format20bc.size;}
     {
-      if (!allowOdex || Opcode.getOpcodeByName($INSTRUCTION_FORMAT20bc.text) == null || apiLevel >= 14) {
+      if (!allowOdex || opcodes.getOpcodeByName($INSTRUCTION_FORMAT20bc.text) == null || apiLevel >= 14) {
         throwOdexedInstructionException(input, $INSTRUCTION_FORMAT20bc.text);
       }
     }
     -> ^(I_STATEMENT_FORMAT20bc INSTRUCTION_FORMAT20bc VERIFICATION_ERROR_TYPE verification_error_reference);
-    //TODO: check if dalvik has a jumbo version of throw-verification-error
 
 insn_format20t returns [int size]
   : //e.g. goto/16 endloop:
@@ -921,7 +927,7 @@ insn_format21c_field_odex returns [int size]
   : //e.g. sget-object-volatile v0, java/lang/System/out LJava/io/PrintStream;
     INSTRUCTION_FORMAT21c_FIELD_ODEX REGISTER COMMA fully_qualified_field {$size = Format.Format21c.size;}
     {
-      if (!allowOdex || Opcode.getOpcodeByName($INSTRUCTION_FORMAT21c_FIELD_ODEX.text) == null || apiLevel >= 14) {
+      if (!allowOdex || opcodes.getOpcodeByName($INSTRUCTION_FORMAT21c_FIELD_ODEX.text) == null || apiLevel >= 14) {
         throwOdexedInstructionException(input, $INSTRUCTION_FORMAT21c_FIELD_ODEX.text);
       }
     }
@@ -937,10 +943,15 @@ insn_format21c_type returns [int size]
     INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA reference_type_descriptor {$size = Format.Format21c.size;}
     -> ^(I_STATEMENT_FORMAT21c_TYPE[$start, "I_STATEMENT_FORMAT21c"] INSTRUCTION_FORMAT21c_TYPE REGISTER reference_type_descriptor);
 
-insn_format21h returns [int size]
+insn_format21ih returns [int size]
   : //e.g. const/high16 v1, 1234
-    INSTRUCTION_FORMAT21h REGISTER COMMA integral_literal {$size = Format.Format21h.size;}
-    -> ^(I_STATEMENT_FORMAT21h[$start, "I_STATEMENT_FORMAT21h"] INSTRUCTION_FORMAT21h REGISTER integral_literal);
+    INSTRUCTION_FORMAT21ih REGISTER COMMA fixed_32bit_literal {$size = Format.Format21ih.size;}
+    -> ^(I_STATEMENT_FORMAT21ih[$start, "I_STATEMENT_FORMAT21ih"] INSTRUCTION_FORMAT21ih REGISTER fixed_32bit_literal);
+
+insn_format21lh returns [int size]
+  : //e.g. const-wide/high16 v1, 1234
+    INSTRUCTION_FORMAT21lh REGISTER COMMA fixed_32bit_literal {$size = Format.Format21lh.size;}
+    -> ^(I_STATEMENT_FORMAT21lh[$start, "I_STATEMENT_FORMAT21lh"] INSTRUCTION_FORMAT21lh REGISTER fixed_32bit_literal);
 
 insn_format21s returns [int size]
   : //e.g. const/16 v1, 1234
@@ -966,7 +977,7 @@ insn_format22c_field_odex returns [int size]
   : //e.g. iput-object-volatile v1, v0 org/jf/HelloWorld2/HelloWorld2.helloWorld Ljava/lang/String;
     INSTRUCTION_FORMAT22c_FIELD_ODEX REGISTER COMMA REGISTER COMMA fully_qualified_field {$size = Format.Format22c.size;}
     {
-      if (!allowOdex || Opcode.getOpcodeByName($INSTRUCTION_FORMAT22c_FIELD_ODEX.text) == null || apiLevel >= 14) {
+      if (!allowOdex || opcodes.getOpcodeByName($INSTRUCTION_FORMAT22c_FIELD_ODEX.text) == null || apiLevel >= 14) {
         throwOdexedInstructionException(input, $INSTRUCTION_FORMAT22c_FIELD_ODEX.text);
       }
     }
@@ -1112,87 +1123,40 @@ insn_format51l returns [int size]
     -> ^(I_STATEMENT_FORMAT51l[$start, "I_STATEMENT_FORMAT51l"] INSTRUCTION_FORMAT51l REGISTER fixed_literal);
 
 insn_array_data_directive returns [int size]
-    @init {boolean needsNop = false;}
-  :   ARRAY_DATA_DIRECTIVE
+  : ARRAY_DATA_DIRECTIVE
+    parsed_integer_literal
     {
-      if (($method::currentAddress \% 2) != 0) {
-        needsNop = true;
-        $size = 2;
-      } else {
-        $size = 0;
-      }
+        int elementWidth = $parsed_integer_literal.value;
+        if (elementWidth != 4 && elementWidth != 8 && elementWidth != 1 && elementWidth != 2) {
+            throw new SemanticException(input, $start, "Invalid element width: \%d. Must be 1, 2, 4 or 8", elementWidth);
+        }
     }
 
-    integral_literal (fixed_literal {$size+=$fixed_literal.size;})* END_ARRAY_DATA_DIRECTIVE
-    {$size = (($size + 1)/2)*2 + 8;}
+    (fixed_literal {$size+=elementWidth;})* END_ARRAY_DATA_DIRECTIVE
+    {$size = (($size + 1) & ~1) + 8;}
 
-    /*add a nop statement before this if needed to force the correct alignment*/
-    -> {needsNop}? ^(I_STATEMENT_FORMAT10x[$start,  "I_STATEMENT_FORMAT10x"] INSTRUCTION_FORMAT10x[$start, "nop"])
-       ^(I_STATEMENT_ARRAY_DATA ^(I_ARRAY_ELEMENT_SIZE integral_literal) ^(I_ARRAY_ELEMENTS fixed_literal*))
-
-    -> ^(I_STATEMENT_ARRAY_DATA[$start, "I_STATEMENT_ARRAY_DATA"] ^(I_ARRAY_ELEMENT_SIZE integral_literal)
+    -> ^(I_STATEMENT_ARRAY_DATA[$start, "I_STATEMENT_ARRAY_DATA"] ^(I_ARRAY_ELEMENT_SIZE parsed_integer_literal)
        ^(I_ARRAY_ELEMENTS fixed_literal*));
 
 insn_packed_switch_directive returns [int size]
-    @init {boolean needsNop = false; int targetCount = 0;}
     :   PACKED_SWITCH_DIRECTIVE
-    {
-      targetCount = 0;
-      if (($method::currentAddress \% 2) != 0) {
-        needsNop = true;
-        $size = 2;
-      } else {
-        $size = 0;
-      }
-    }
-
     fixed_32bit_literal
 
-    (switch_target += label_ref_or_offset {$size+=4; targetCount++;})*
+    (switch_target += label_ref_or_offset {$size+=4;})*
 
     END_PACKED_SWITCH_DIRECTIVE {$size = $size + 8;}
 
-    /*add a nop statement before this if needed to force the correct alignment*/
-    -> {needsNop}? ^(I_STATEMENT_FORMAT10x[$start,  "I_STATEMENT_FORMAT10x"] INSTRUCTION_FORMAT10x[$start, "nop"])
-         ^(I_STATEMENT_PACKED_SWITCH[$start, "I_STATEMENT_PACKED_SWITCH"]
-         ^(I_PACKED_SWITCH_START_KEY[$start, "I_PACKED_SWITCH_START_KEY"] fixed_32bit_literal)
-         ^(I_PACKED_SWITCH_TARGETS[$start, "I_PACKED_SWITCH_TARGETS"]
-           I_PACKED_SWITCH_TARGET_COUNT[$start, Integer.toString(targetCount)] $switch_target*)
-       )
-
     -> ^(I_STATEMENT_PACKED_SWITCH[$start, "I_STATEMENT_PACKED_SWITCH"]
          ^(I_PACKED_SWITCH_START_KEY[$start, "I_PACKED_SWITCH_START_KEY"] fixed_32bit_literal)
-         ^(I_PACKED_SWITCH_TARGETS[$start, "I_PACKED_SWITCH_TARGETS"]
-           I_PACKED_SWITCH_TARGET_COUNT[$start, Integer.toString(targetCount)] $switch_target*)
+         ^(I_PACKED_SWITCH_ELEMENTS[$start, "I_PACKED_SWITCH_ELEMENTS"]
+          $switch_target*)
        );
 
 insn_sparse_switch_directive returns [int size]
-    @init {boolean needsNop = false; int targetCount = 0;}
   :   SPARSE_SWITCH_DIRECTIVE
-    {
-      targetCount = 0;
-      if (($method::currentAddress \% 2) != 0) {
-        needsNop = true;
-        $size = 2;
-      } else {
-        $size = 0;
-      }
-    }
-
-    (fixed_32bit_literal ARROW switch_target += label_ref_or_offset {$size += 8; targetCount++;})*
+    (fixed_32bit_literal ARROW switch_target += label_ref_or_offset {$size += 8;})*
 
     END_SPARSE_SWITCH_DIRECTIVE {$size = $size + 4;}
 
-    /*add a nop statement before this if needed to force the correct alignment*/
-    -> {needsNop}?
-       ^(I_STATEMENT_FORMAT10x[$start,  "I_STATEMENT_FORMAT10x"] INSTRUCTION_FORMAT10x[$start, "nop"])
-       ^(I_STATEMENT_SPARSE_SWITCH[$start, "I_STATEMENT_SPARSE_SWITCH"]
-         I_SPARSE_SWITCH_TARGET_COUNT[$start, Integer.toString(targetCount)]
-         ^(I_SPARSE_SWITCH_KEYS[$start, "I_SPARSE_SWITCH_KEYS"] fixed_32bit_literal*)
-         ^(I_SPARSE_SWITCH_TARGETS $switch_target*)
-       )
-
     -> ^(I_STATEMENT_SPARSE_SWITCH[$start, "I_STATEMENT_SPARSE_SWITCH"]
-       I_SPARSE_SWITCH_TARGET_COUNT[$start, Integer.toString(targetCount)]
-       ^(I_SPARSE_SWITCH_KEYS[$start, "I_SPARSE_SWITCH_KEYS"] fixed_32bit_literal*)
-       ^(I_SPARSE_SWITCH_TARGETS $switch_target*));
+       ^(I_SPARSE_SWITCH_ELEMENTS[$start, "I_SPARSE_SWITCH_ELEMENTS"] (fixed_32bit_literal $switch_target)*));
