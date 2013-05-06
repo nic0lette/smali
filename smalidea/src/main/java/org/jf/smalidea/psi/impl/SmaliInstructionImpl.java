@@ -33,7 +33,6 @@ package org.jf.smalidea.psi.impl;
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
-import org.eclipse.jdt.core.util.OpcodeStringValues;
 import org.jetbrains.annotations.NotNull;
 import org.jf.dexlib.Code.Opcode;
 import org.jf.smalidea.SmaliTokens;

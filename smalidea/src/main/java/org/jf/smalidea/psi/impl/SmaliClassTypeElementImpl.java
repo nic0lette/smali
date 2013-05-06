@@ -31,7 +31,6 @@
 
 package org.jf.smalidea.psi.impl;
 
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.JavaPsiFacade;
@@ -78,6 +77,9 @@ public class SmaliClassTypeElementImpl extends LeafPsiElement implements SmaliTy
 
     @Override
     public PsiElement resolve() {
+        if (getManager() == null) {
+            return null;
+        }
         JavaPsiFacade facade = JavaPsiFacade.getInstance(getProject());
         return facade.findClass(getCanonicalText(), getResolveScope());
     }
