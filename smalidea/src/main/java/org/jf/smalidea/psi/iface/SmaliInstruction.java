@@ -32,7 +32,7 @@
 package org.jf.smalidea.psi.iface;
 
 import com.intellij.psi.PsiElement;
-import org.jf.dexlib.Code.Opcode;
+import org.jf.dexlib2.Opcode;
 
 public interface SmaliInstruction extends PsiElement {
     Opcode getOpcode();

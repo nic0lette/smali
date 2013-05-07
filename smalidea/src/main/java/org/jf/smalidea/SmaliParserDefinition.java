@@ -44,11 +44,15 @@ import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
+import org.jf.dexlib2.Opcodes;
 import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.impl.*;
 import org.jf.smalidea.psi.stub.element.SmaliFileElementType;
 
 public class SmaliParserDefinition implements ParserDefinition {
+    // TODO: hook into api level set in android plugin?
+    private Opcodes opcodes = new Opcodes(15);
+
     @NotNull
     public Lexer createLexer(Project project) {
         return new SmaliLexer();
@@ -83,11 +87,14 @@ public class SmaliParserDefinition implements ParserDefinition {
     @NotNull
     public PsiElement createElement(ASTNode node) {
         if (node.getElementType() == ElementTypes.SMALI_CLASS) {
-            return new SmaliClassImpl(node);
+            SmaliClassImpl impl = SmaliClassImpl.make(node);
+            if (impl != null) {
+                return impl;
+            }
         } else if (node.getElementType() == ElementTypes.METHOD) {
             return new SmaliMethodImpl(node);
         } else if (node.getElementType() == ElementTypes.INSTRUCTION) {
-            return new SmaliInstructionImpl(node);
+            return new SmaliInstructionImpl(node, opcodes);
         } else if (node.getElementType() == ElementTypes.LITERAL) {
             return new SmaliLiteralImpl(node);
         } else if (node.getElementType() == ElementTypes.REGISTERS_SPEC) {

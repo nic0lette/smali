@@ -34,19 +34,20 @@ package org.jf.smalidea.psi.impl;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import org.jetbrains.annotations.NotNull;
-import org.jf.dexlib.Code.Opcode;
+import org.jf.dexlib2.Opcode;
+import org.jf.dexlib2.Opcodes;
 import org.jf.smalidea.SmaliTokens;
 import org.jf.smalidea.psi.iface.SmaliInstruction;
 
 public class SmaliInstructionImpl extends ASTWrapperPsiElement implements SmaliInstruction {
     private Opcode opcode = null;
 
-    public SmaliInstructionImpl(@NotNull ASTNode node) {
+    public SmaliInstructionImpl(@NotNull ASTNode node, @NotNull Opcodes opcodes) {
         super(node);
 
         ASTNode instrNode = node.findChildByType(SmaliTokens.INSTRUCTION_TOKENS);
         if (instrNode != null) {
-            opcode = Opcode.getOpcodeByName(instrNode.getText());
+            opcode = opcodes.getOpcodeByName(instrNode.getText());
         }
     }
 

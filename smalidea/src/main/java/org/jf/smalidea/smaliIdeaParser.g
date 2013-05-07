@@ -511,7 +511,8 @@ instruction
   | insn_format21c_field_odex
   | insn_format21c_string
   | insn_format21c_type
-  | insn_format21h
+  | insn_format21ih
+  | insn_format21lh
   | insn_format21s
   | insn_format21t
   | insn_format22b
@@ -593,9 +594,13 @@ insn_format21c_type returns [int size]
   : //e.g. const-class v2, Lorg/jf/HelloWorld2/HelloWorld2;
     INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA reference_type_descriptor;
 
-insn_format21h returns [int size]
+insn_format21ih returns [int size]
   : //e.g. const/high16 v1, 1234
-    INSTRUCTION_FORMAT21h REGISTER COMMA integral_literal;
+    INSTRUCTION_FORMAT21ih REGISTER COMMA fixed_32bit_literal;
+
+insn_format21lh returns [int size]
+  : //e.g. const-wide/high16 v1, 1234
+    INSTRUCTION_FORMAT21lh REGISTER COMMA fixed_32bit_literal;
 
 insn_format21s returns [int size]
   : //e.g. const/16 v1, 1234

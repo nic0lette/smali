@@ -31,7 +31,7 @@
 
 package org.jf.smalidea;
 
-import com.intellij.openapi.editor.HighlighterColors;
+import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
@@ -42,42 +42,42 @@ import java.util.HashMap;
 public class SmaliTokens {
     public static class Attributes {
         public static final TextAttributesKey ACCESS = TextAttributesKey.createTextAttributesKey(
-                "ACCESS", HighlighterColors.TEXT.getDefaultAttributes());
+                "ACCESS", DefaultLanguageHighlighterColors.KEYWORD);
         public static final TextAttributesKey ARROW = TextAttributesKey.createTextAttributesKey(
-                "ARROW", HighlighterColors.TEXT.getDefaultAttributes());
+                "ARROW", DefaultLanguageHighlighterColors.PREDEFINED_SYMBOL);
         public static final TextAttributesKey BRACES = TextAttributesKey.createTextAttributesKey(
-                "BRACES", HighlighterColors.TEXT.getDefaultAttributes());
+                "BRACES", DefaultLanguageHighlighterColors.BRACES);
         public static final TextAttributesKey COLON = TextAttributesKey.createTextAttributesKey(
-                "COLON", HighlighterColors.TEXT.getDefaultAttributes());
+                "COLON", DefaultLanguageHighlighterColors.PREDEFINED_SYMBOL);
         public static final TextAttributesKey COMMA = TextAttributesKey.createTextAttributesKey(
-                "COMMA", HighlighterColors.TEXT.getDefaultAttributes());
+                "COMMA", DefaultLanguageHighlighterColors.COMMA);
         public static final TextAttributesKey COMMENT = TextAttributesKey.createTextAttributesKey(
-                "COMMENT", HighlighterColors.TEXT.getDefaultAttributes());
+                "COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
         public static final TextAttributesKey DIRECTIVE = TextAttributesKey.createTextAttributesKey(
-                "DIRECTIVE", HighlighterColors.TEXT.getDefaultAttributes());
+                "DIRECTIVE", DefaultLanguageHighlighterColors.KEYWORD);
         public static final TextAttributesKey DOTDOT = TextAttributesKey.createTextAttributesKey(
-                "DOTDOT", HighlighterColors.TEXT.getDefaultAttributes());
+                "DOTDOT", DefaultLanguageHighlighterColors.PREDEFINED_SYMBOL);
         public static final TextAttributesKey EQUAL = TextAttributesKey.createTextAttributesKey(
-                "EQUAL", HighlighterColors.TEXT.getDefaultAttributes());
+                "EQUAL", DefaultLanguageHighlighterColors.PREDEFINED_SYMBOL);
         public static final TextAttributesKey IDENTIFIER = TextAttributesKey.createTextAttributesKey(
-                "IDENTIFIER", HighlighterColors.TEXT.getDefaultAttributes());
+                "IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
         public static final TextAttributesKey INSTRUCTION = TextAttributesKey.createTextAttributesKey(
-                "INSTRUCTION", HighlighterColors.TEXT.getDefaultAttributes());
+                "INSTRUCTION", DefaultLanguageHighlighterColors.KEYWORD);
         public static final TextAttributesKey LITERAL = TextAttributesKey.createTextAttributesKey(
-                "LITERAL", HighlighterColors.TEXT.getDefaultAttributes());
+                "LITERAL", DefaultLanguageHighlighterColors.NUMBER);
         public static final TextAttributesKey NUMBER = TextAttributesKey.createTextAttributesKey(
-                "NUMBER", HighlighterColors.TEXT.getDefaultAttributes());
+                "NUMBER", DefaultLanguageHighlighterColors.NUMBER);
         public static final TextAttributesKey ODEX_REFERENCE = TextAttributesKey.createTextAttributesKey(
-                "ODEX_REFERENCE", HighlighterColors.TEXT.getDefaultAttributes());
-        public static final TextAttributesKey OFFSET = TextAttributesKey.createTextAttributesKey("OFFSET", HighlighterColors.TEXT.getDefaultAttributes());
-        public static final TextAttributesKey PARENS = TextAttributesKey.createTextAttributesKey("PARENS", HighlighterColors.TEXT.getDefaultAttributes());
-        public static final TextAttributesKey REGISTER = TextAttributesKey.createTextAttributesKey("REGISTER", HighlighterColors.TEXT.getDefaultAttributes());
+                "ODEX_REFERENCE", DefaultLanguageHighlighterColors.INSTANCE_METHOD);
+        public static final TextAttributesKey OFFSET = TextAttributesKey.createTextAttributesKey("OFFSET", DefaultLanguageHighlighterColors.LABEL);
+        public static final TextAttributesKey PARENS = TextAttributesKey.createTextAttributesKey("PARENS", DefaultLanguageHighlighterColors.PARENTHESES);
+        public static final TextAttributesKey REGISTER = TextAttributesKey.createTextAttributesKey("REGISTER", DefaultLanguageHighlighterColors.LOCAL_VARIABLE);
         public static final TextAttributesKey STRING = TextAttributesKey.createTextAttributesKey(
-                "STRING", HighlighterColors.TEXT.getDefaultAttributes());
+                "STRING", DefaultLanguageHighlighterColors.STRING);
         public static final TextAttributesKey TYPE = TextAttributesKey.createTextAttributesKey(
-                "TYPE", HighlighterColors.TEXT.getDefaultAttributes());
+                "TYPE", DefaultLanguageHighlighterColors.CLASS_REFERENCE);
         public static final TextAttributesKey VERIFICATION_ERROR_TYPE = TextAttributesKey.createTextAttributesKey(
-                "VERIFICATION_ERROR_TYPE", HighlighterColors.TEXT.getDefaultAttributes());
+                "VERIFICATION_ERROR_TYPE", DefaultLanguageHighlighterColors.KEYWORD);
 
         public static final TextAttributesKey[] ALL_KEYS = new TextAttributesKey[] {
                 ACCESS,
@@ -182,7 +182,8 @@ public class SmaliTokens {
     public static final IElementType INSTRUCTION_FORMAT21c_FIELD_ODEX;
     public static final IElementType INSTRUCTION_FORMAT21c_STRING;
     public static final IElementType INSTRUCTION_FORMAT21c_TYPE;
-    public static final IElementType INSTRUCTION_FORMAT21h;
+    public static final IElementType INSTRUCTION_FORMAT21ih;
+    public static final IElementType INSTRUCTION_FORMAT21lh;
     public static final IElementType INSTRUCTION_FORMAT21s;
     public static final IElementType INSTRUCTION_FORMAT21t;
     public static final IElementType INSTRUCTION_FORMAT22b;
@@ -254,121 +255,122 @@ public class SmaliTokens {
         TokenRegisterer tokenRegisterer = new TokenRegisterer();
         ELEMENT_TYPES = new IElementType[tokenRegisterer.tokenCount];
 
-        CLASS_DIRECTIVE = tokenRegisterer.register("CLASS_DIRECTIVE", Attributes.DIRECTIVE);;
-        SUPER_DIRECTIVE = tokenRegisterer.register("SUPER_DIRECTIVE", Attributes.DIRECTIVE);;
-        IMPLEMENTS_DIRECTIVE = tokenRegisterer.register("IMPLEMENTS_DIRECTIVE", Attributes.DIRECTIVE);;
-        SOURCE_DIRECTIVE = tokenRegisterer.register("SOURCE_DIRECTIVE", Attributes.DIRECTIVE);;
-        FIELD_DIRECTIVE = tokenRegisterer.register("FIELD_DIRECTIVE", Attributes.DIRECTIVE);;
-        END_FIELD_DIRECTIVE = tokenRegisterer.register("END_FIELD_DIRECTIVE", Attributes.DIRECTIVE);;
-        SUBANNOTATION_DIRECTIVE = tokenRegisterer.register("SUBANNOTATION_DIRECTIVE", Attributes.DIRECTIVE);;
-        END_SUBANNOTATION_DIRECTIVE = tokenRegisterer.register("END_SUBANNOTATION_DIRECTIVE", Attributes.DIRECTIVE);;
-        ANNOTATION_DIRECTIVE = tokenRegisterer.register("ANNOTATION_DIRECTIVE", Attributes.DIRECTIVE);;
-        END_ANNOTATION_DIRECTIVE = tokenRegisterer.register("END_ANNOTATION_DIRECTIVE", Attributes.DIRECTIVE);;
-        ENUM_DIRECTIVE = tokenRegisterer.register("ENUM_DIRECTIVE", Attributes.DIRECTIVE);;
-        METHOD_DIRECTIVE = tokenRegisterer.register("METHOD_DIRECTIVE", Attributes.DIRECTIVE);;
-        END_METHOD_DIRECTIVE = tokenRegisterer.register("END_METHOD_DIRECTIVE", Attributes.DIRECTIVE);;
-        REGISTERS_DIRECTIVE = tokenRegisterer.register("REGISTERS_DIRECTIVE", Attributes.DIRECTIVE);;
-        LOCALS_DIRECTIVE = tokenRegisterer.register("LOCALS_DIRECTIVE", Attributes.DIRECTIVE);;
-        ARRAY_DATA_DIRECTIVE = tokenRegisterer.register("ARRAY_DATA_DIRECTIVE", Attributes.DIRECTIVE);;
-        END_ARRAY_DATA_DIRECTIVE = tokenRegisterer.register("END_ARRAY_DATA_DIRECTIVE", Attributes.DIRECTIVE);;
-        PACKED_SWITCH_DIRECTIVE = tokenRegisterer.register("PACKED_SWITCH_DIRECTIVE", Attributes.DIRECTIVE);;
-        END_PACKED_SWITCH_DIRECTIVE = tokenRegisterer.register("END_PACKED_SWITCH_DIRECTIVE", Attributes.DIRECTIVE);;
-        SPARSE_SWITCH_DIRECTIVE = tokenRegisterer.register("SPARSE_SWITCH_DIRECTIVE", Attributes.DIRECTIVE);;
-        END_SPARSE_SWITCH_DIRECTIVE = tokenRegisterer.register("END_SPARSE_SWITCH_DIRECTIVE", Attributes.DIRECTIVE);;
-        CATCH_DIRECTIVE = tokenRegisterer.register("CATCH_DIRECTIVE", Attributes.DIRECTIVE);;
-        CATCHALL_DIRECTIVE = tokenRegisterer.register("CATCHALL_DIRECTIVE", Attributes.DIRECTIVE);;
-        LINE_DIRECTIVE = tokenRegisterer.register("LINE_DIRECTIVE", Attributes.DIRECTIVE);;
-        PARAMETER_DIRECTIVE = tokenRegisterer.register("PARAMETER_DIRECTIVE", Attributes.DIRECTIVE);;
-        END_PARAMETER_DIRECTIVE = tokenRegisterer.register("END_PARAMETER_DIRECTIVE", Attributes.DIRECTIVE);;
-        LOCAL_DIRECTIVE = tokenRegisterer.register("LOCAL_DIRECTIVE", Attributes.DIRECTIVE);;
-        END_LOCAL_DIRECTIVE = tokenRegisterer.register("END_LOCAL_DIRECTIVE", Attributes.DIRECTIVE);;
-        RESTART_LOCAL_DIRECTIVE = tokenRegisterer.register("RESTART_LOCAL_DIRECTIVE", Attributes.DIRECTIVE);;
-        PROLOGUE_DIRECTIVE = tokenRegisterer.register("PROLOGUE_DIRECTIVE", Attributes.DIRECTIVE);;
-        EPILOGUE_DIRECTIVE = tokenRegisterer.register("EPILOGUE_DIRECTIVE", Attributes.DIRECTIVE);;
-        POSITIVE_INTEGER_LITERAL = tokenRegisterer.register("POSITIVE_INTEGER_LITERAL", Attributes.NUMBER);;
-        NEGATIVE_INTEGER_LITERAL = tokenRegisterer.register("NEGATIVE_INTEGER_LITERAL", Attributes.NUMBER);;
-        INTEGER_LITERAL = tokenRegisterer.register("INTEGER_LITERAL", Attributes.NUMBER);;
+        CLASS_DIRECTIVE = tokenRegisterer.register("CLASS_DIRECTIVE", Attributes.DIRECTIVE);
+        SUPER_DIRECTIVE = tokenRegisterer.register("SUPER_DIRECTIVE", Attributes.DIRECTIVE);
+        IMPLEMENTS_DIRECTIVE = tokenRegisterer.register("IMPLEMENTS_DIRECTIVE", Attributes.DIRECTIVE);
+        SOURCE_DIRECTIVE = tokenRegisterer.register("SOURCE_DIRECTIVE", Attributes.DIRECTIVE);
+        FIELD_DIRECTIVE = tokenRegisterer.register("FIELD_DIRECTIVE", Attributes.DIRECTIVE);
+        END_FIELD_DIRECTIVE = tokenRegisterer.register("END_FIELD_DIRECTIVE", Attributes.DIRECTIVE);
+        SUBANNOTATION_DIRECTIVE = tokenRegisterer.register("SUBANNOTATION_DIRECTIVE", Attributes.DIRECTIVE);
+        END_SUBANNOTATION_DIRECTIVE = tokenRegisterer.register("END_SUBANNOTATION_DIRECTIVE", Attributes.DIRECTIVE);
+        ANNOTATION_DIRECTIVE = tokenRegisterer.register("ANNOTATION_DIRECTIVE", Attributes.DIRECTIVE);
+        END_ANNOTATION_DIRECTIVE = tokenRegisterer.register("END_ANNOTATION_DIRECTIVE", Attributes.DIRECTIVE);
+        ENUM_DIRECTIVE = tokenRegisterer.register("ENUM_DIRECTIVE", Attributes.DIRECTIVE);
+        METHOD_DIRECTIVE = tokenRegisterer.register("METHOD_DIRECTIVE", Attributes.DIRECTIVE);
+        END_METHOD_DIRECTIVE = tokenRegisterer.register("END_METHOD_DIRECTIVE", Attributes.DIRECTIVE);
+        REGISTERS_DIRECTIVE = tokenRegisterer.register("REGISTERS_DIRECTIVE", Attributes.DIRECTIVE);
+        LOCALS_DIRECTIVE = tokenRegisterer.register("LOCALS_DIRECTIVE", Attributes.DIRECTIVE);
+        ARRAY_DATA_DIRECTIVE = tokenRegisterer.register("ARRAY_DATA_DIRECTIVE", Attributes.DIRECTIVE);
+        END_ARRAY_DATA_DIRECTIVE = tokenRegisterer.register("END_ARRAY_DATA_DIRECTIVE", Attributes.DIRECTIVE);
+        PACKED_SWITCH_DIRECTIVE = tokenRegisterer.register("PACKED_SWITCH_DIRECTIVE", Attributes.DIRECTIVE);
+        END_PACKED_SWITCH_DIRECTIVE = tokenRegisterer.register("END_PACKED_SWITCH_DIRECTIVE", Attributes.DIRECTIVE);
+        SPARSE_SWITCH_DIRECTIVE = tokenRegisterer.register("SPARSE_SWITCH_DIRECTIVE", Attributes.DIRECTIVE);
+        END_SPARSE_SWITCH_DIRECTIVE = tokenRegisterer.register("END_SPARSE_SWITCH_DIRECTIVE", Attributes.DIRECTIVE);
+        CATCH_DIRECTIVE = tokenRegisterer.register("CATCH_DIRECTIVE", Attributes.DIRECTIVE);
+        CATCHALL_DIRECTIVE = tokenRegisterer.register("CATCHALL_DIRECTIVE", Attributes.DIRECTIVE);
+        LINE_DIRECTIVE = tokenRegisterer.register("LINE_DIRECTIVE", Attributes.DIRECTIVE);
+        PARAMETER_DIRECTIVE = tokenRegisterer.register("PARAMETER_DIRECTIVE", Attributes.DIRECTIVE);
+        END_PARAMETER_DIRECTIVE = tokenRegisterer.register("END_PARAMETER_DIRECTIVE", Attributes.DIRECTIVE);
+        LOCAL_DIRECTIVE = tokenRegisterer.register("LOCAL_DIRECTIVE", Attributes.DIRECTIVE);
+        END_LOCAL_DIRECTIVE = tokenRegisterer.register("END_LOCAL_DIRECTIVE", Attributes.DIRECTIVE);
+        RESTART_LOCAL_DIRECTIVE = tokenRegisterer.register("RESTART_LOCAL_DIRECTIVE", Attributes.DIRECTIVE);
+        PROLOGUE_DIRECTIVE = tokenRegisterer.register("PROLOGUE_DIRECTIVE", Attributes.DIRECTIVE);
+        EPILOGUE_DIRECTIVE = tokenRegisterer.register("EPILOGUE_DIRECTIVE", Attributes.DIRECTIVE);
+        POSITIVE_INTEGER_LITERAL = tokenRegisterer.register("POSITIVE_INTEGER_LITERAL", Attributes.NUMBER);
+        NEGATIVE_INTEGER_LITERAL = tokenRegisterer.register("NEGATIVE_INTEGER_LITERAL", Attributes.NUMBER);
+        INTEGER_LITERAL = tokenRegisterer.register("INTEGER_LITERAL", Attributes.NUMBER);
 
-        LONG_LITERAL = tokenRegisterer.register("LONG_LITERAL", Attributes.NUMBER);;
-        SHORT_LITERAL = tokenRegisterer.register("SHORT_LITERAL", Attributes.NUMBER);;
-        BYTE_LITERAL = tokenRegisterer.register("BYTE_LITERAL", Attributes.NUMBER);;
-        FLOAT_LITERAL_OR_ID = tokenRegisterer.register("FLOAT_LITERAL_OR_ID", Attributes.NUMBER);;
-        DOUBLE_LITERAL_OR_ID = tokenRegisterer.register("DOUBLE_LITERAL_OR_ID", Attributes.NUMBER);;
-        FLOAT_LITERAL = tokenRegisterer.register("FLOAT_LITERAL", Attributes.NUMBER);;
-        DOUBLE_LITERAL = tokenRegisterer.register("DOUBLE_LITERAL", Attributes.NUMBER);;
-        BOOL_LITERAL = tokenRegisterer.register("BOOL_LITERAL", Attributes.LITERAL);;
-        NULL_LITERAL = tokenRegisterer.register("NULL_LITERAL", Attributes.LITERAL);;
-        STRING_LITERAL = tokenRegisterer.register("STRING_LITERAL", Attributes.STRING);;
-        CHAR_LITERAL = tokenRegisterer.register("CHAR_LITERAL", Attributes.STRING);;
-        REGISTER = tokenRegisterer.register("REGISTER", Attributes.REGISTER);;
-        ANNOTATION_VISIBILITY = tokenRegisterer.register("ANNOTATION_VISIBILITY", Attributes.ACCESS);;
-        ACCESS_SPEC = tokenRegisterer.register("ACCESS_SPEC", Attributes.ACCESS);;
-        VERIFICATION_ERROR_TYPE = tokenRegisterer.register("VERIFICATION_ERROR_TYPE", Attributes.VERIFICATION_ERROR_TYPE);;
-        INLINE_INDEX = tokenRegisterer.register("INLINE_INDEX", Attributes.ODEX_REFERENCE);;
-        VTABLE_INDEX = tokenRegisterer.register("VTABLE_INDEX", Attributes.ODEX_REFERENCE);;
-        FIELD_OFFSET = tokenRegisterer.register("FIELD_OFFSET", Attributes.ODEX_REFERENCE);;
-        OFFSET = tokenRegisterer.register("OFFSET", Attributes.OFFSET);;
-        LINE_COMMENT = tokenRegisterer.register("LINE_COMMENT", Attributes.COMMENT);;
-        INSTRUCTION_FORMAT10t = tokenRegisterer.register("INSTRUCTION_FORMAT10t", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT10x = tokenRegisterer.register("INSTRUCTION_FORMAT10x", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT10x_ODEX = tokenRegisterer.register("INSTRUCTION_FORMAT10x_ODEX", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT11n = tokenRegisterer.register("INSTRUCTION_FORMAT11n", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT11x = tokenRegisterer.register("INSTRUCTION_FORMAT11x", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT12x_OR_ID = tokenRegisterer.register("INSTRUCTION_FORMAT12x_OR_ID", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT12x = tokenRegisterer.register("INSTRUCTION_FORMAT12x", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT20bc = tokenRegisterer.register("INSTRUCTION_FORMAT20bc", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT20t = tokenRegisterer.register("INSTRUCTION_FORMAT20t", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT21c_FIELD = tokenRegisterer.register("INSTRUCTION_FORMAT21c_FIELD", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT21c_FIELD_ODEX = tokenRegisterer.register("INSTRUCTION_FORMAT21c_FIELD_ODEX", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT21c_STRING = tokenRegisterer.register("INSTRUCTION_FORMAT21c_STRING", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT21c_TYPE = tokenRegisterer.register("INSTRUCTION_FORMAT21c_TYPE", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT21h = tokenRegisterer.register("INSTRUCTION_FORMAT21h", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT21s = tokenRegisterer.register("INSTRUCTION_FORMAT21s", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT21t = tokenRegisterer.register("INSTRUCTION_FORMAT21t", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT22b = tokenRegisterer.register("INSTRUCTION_FORMAT22b", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT22c_FIELD = tokenRegisterer.register("INSTRUCTION_FORMAT22c_FIELD", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT22c_FIELD_ODEX = tokenRegisterer.register("INSTRUCTION_FORMAT22c_FIELD_ODEX", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT22c_TYPE = tokenRegisterer.register("INSTRUCTION_FORMAT22c_TYPE", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT22cs_FIELD = tokenRegisterer.register("INSTRUCTION_FORMAT22cs_FIELD", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT22s_OR_ID = tokenRegisterer.register("INSTRUCTION_FORMAT22s_OR_ID", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT22s = tokenRegisterer.register("INSTRUCTION_FORMAT22s", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT22t = tokenRegisterer.register("INSTRUCTION_FORMAT22t", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT22x = tokenRegisterer.register("INSTRUCTION_FORMAT22x", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT23x = tokenRegisterer.register("INSTRUCTION_FORMAT23x", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT30t = tokenRegisterer.register("INSTRUCTION_FORMAT30t", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT31c = tokenRegisterer.register("INSTRUCTION_FORMAT31c", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT31i_OR_ID = tokenRegisterer.register("INSTRUCTION_FORMAT31i_OR_ID", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT31i = tokenRegisterer.register("INSTRUCTION_FORMAT31i", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT31t = tokenRegisterer.register("INSTRUCTION_FORMAT31t", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT32x = tokenRegisterer.register("INSTRUCTION_FORMAT32x", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT35c_METHOD = tokenRegisterer.register("INSTRUCTION_FORMAT35c_METHOD", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT35c_METHOD_ODEX = tokenRegisterer.register("INSTRUCTION_FORMAT35c_METHOD_ODEX", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT35c_TYPE = tokenRegisterer.register("INSTRUCTION_FORMAT35c_TYPE", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT35mi_METHOD = tokenRegisterer.register("INSTRUCTION_FORMAT35mi_METHOD", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT35ms_METHOD = tokenRegisterer.register("INSTRUCTION_FORMAT35ms_METHOD", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT3rc_METHOD = tokenRegisterer.register("INSTRUCTION_FORMAT3rc_METHOD", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT3rc_METHOD_ODEX = tokenRegisterer.register("INSTRUCTION_FORMAT3rc_METHOD_ODEX", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT3rc_TYPE = tokenRegisterer.register("INSTRUCTION_FORMAT3rc_TYPE", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT3rmi_METHOD = tokenRegisterer.register("INSTRUCTION_FORMAT3rmi_METHOD", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT3rms_METHOD = tokenRegisterer.register("INSTRUCTION_FORMAT3rms_METHOD", Attributes.INSTRUCTION);;
-        INSTRUCTION_FORMAT51l = tokenRegisterer.register("INSTRUCTION_FORMAT51l", Attributes.INSTRUCTION);;
-        PRIMITIVE_TYPE = tokenRegisterer.register("PRIMITIVE_TYPE", Attributes.TYPE);;
-        VOID_TYPE = tokenRegisterer.register("VOID_TYPE", Attributes.TYPE);;
-        CLASS_DESCRIPTOR = tokenRegisterer.register("CLASS_DESCRIPTOR", Attributes.TYPE);;
-        ARRAY_DESCRIPTOR = tokenRegisterer.register("ARRAY_DESCRIPTOR", Attributes.TYPE);;
-        PARAM_LIST_OR_ID = tokenRegisterer.register("PARAM_LIST_OR_ID", Attributes.TYPE);;
-        PARAM_LIST = tokenRegisterer.register("PARAM_LIST", Attributes.TYPE);;
-        SIMPLE_NAME = tokenRegisterer.register("SIMPLE_NAME", Attributes.IDENTIFIER);;
-        METHOD_NAME = tokenRegisterer.register("METHOD_NAME", Attributes.IDENTIFIER);;
-        DOTDOT = tokenRegisterer.register("DOTDOT", Attributes.DOTDOT);;
-        ARROW = tokenRegisterer.register("ARROW", Attributes.ARROW);;
-        EQUAL = tokenRegisterer.register("EQUAL", Attributes.EQUAL);;
-        COLON = tokenRegisterer.register("COLON", Attributes.COLON);;
-        COMMA = tokenRegisterer.register("COMMA", Attributes.COMMA);;
-        OPEN_BRACE = tokenRegisterer.register("OPEN_BRACE", Attributes.BRACES);;
-        CLOSE_BRACE = tokenRegisterer.register("CLOSE_BRACE", Attributes.BRACES);;
-        OPEN_PAREN = tokenRegisterer.register("OPEN_PAREN", Attributes.PARENS);;
-        CLOSE_PAREN = tokenRegisterer.register("CLOSE_PAREN", Attributes.PARENS);;
+        LONG_LITERAL = tokenRegisterer.register("LONG_LITERAL", Attributes.NUMBER);
+        SHORT_LITERAL = tokenRegisterer.register("SHORT_LITERAL", Attributes.NUMBER);
+        BYTE_LITERAL = tokenRegisterer.register("BYTE_LITERAL", Attributes.NUMBER);
+        FLOAT_LITERAL_OR_ID = tokenRegisterer.register("FLOAT_LITERAL_OR_ID", Attributes.NUMBER);
+        DOUBLE_LITERAL_OR_ID = tokenRegisterer.register("DOUBLE_LITERAL_OR_ID", Attributes.NUMBER);
+        FLOAT_LITERAL = tokenRegisterer.register("FLOAT_LITERAL", Attributes.NUMBER);
+        DOUBLE_LITERAL = tokenRegisterer.register("DOUBLE_LITERAL", Attributes.NUMBER);
+        BOOL_LITERAL = tokenRegisterer.register("BOOL_LITERAL", Attributes.LITERAL);
+        NULL_LITERAL = tokenRegisterer.register("NULL_LITERAL", Attributes.LITERAL);
+        STRING_LITERAL = tokenRegisterer.register("STRING_LITERAL", Attributes.STRING);
+        CHAR_LITERAL = tokenRegisterer.register("CHAR_LITERAL", Attributes.STRING);
+        REGISTER = tokenRegisterer.register("REGISTER", Attributes.REGISTER);
+        ANNOTATION_VISIBILITY = tokenRegisterer.register("ANNOTATION_VISIBILITY", Attributes.ACCESS);
+        ACCESS_SPEC = tokenRegisterer.register("ACCESS_SPEC", Attributes.ACCESS);
+        VERIFICATION_ERROR_TYPE = tokenRegisterer.register("VERIFICATION_ERROR_TYPE", Attributes.VERIFICATION_ERROR_TYPE);
+        INLINE_INDEX = tokenRegisterer.register("INLINE_INDEX", Attributes.ODEX_REFERENCE);
+        VTABLE_INDEX = tokenRegisterer.register("VTABLE_INDEX", Attributes.ODEX_REFERENCE);
+        FIELD_OFFSET = tokenRegisterer.register("FIELD_OFFSET", Attributes.ODEX_REFERENCE);
+        OFFSET = tokenRegisterer.register("OFFSET", Attributes.OFFSET);
+        LINE_COMMENT = tokenRegisterer.register("LINE_COMMENT", Attributes.COMMENT);
+        INSTRUCTION_FORMAT10t = tokenRegisterer.register("INSTRUCTION_FORMAT10t", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT10x = tokenRegisterer.register("INSTRUCTION_FORMAT10x", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT10x_ODEX = tokenRegisterer.register("INSTRUCTION_FORMAT10x_ODEX", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT11n = tokenRegisterer.register("INSTRUCTION_FORMAT11n", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT11x = tokenRegisterer.register("INSTRUCTION_FORMAT11x", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT12x_OR_ID = tokenRegisterer.register("INSTRUCTION_FORMAT12x_OR_ID", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT12x = tokenRegisterer.register("INSTRUCTION_FORMAT12x", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT20bc = tokenRegisterer.register("INSTRUCTION_FORMAT20bc", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT20t = tokenRegisterer.register("INSTRUCTION_FORMAT20t", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT21c_FIELD = tokenRegisterer.register("INSTRUCTION_FORMAT21c_FIELD", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT21c_FIELD_ODEX = tokenRegisterer.register("INSTRUCTION_FORMAT21c_FIELD_ODEX", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT21c_STRING = tokenRegisterer.register("INSTRUCTION_FORMAT21c_STRING", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT21c_TYPE = tokenRegisterer.register("INSTRUCTION_FORMAT21c_TYPE", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT21ih = tokenRegisterer.register("INSTRUCTION_FORMAT21ih", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT21lh = tokenRegisterer.register("INSTRUCTION_FORMAT21lh", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT21s = tokenRegisterer.register("INSTRUCTION_FORMAT21s", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT21t = tokenRegisterer.register("INSTRUCTION_FORMAT21t", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT22b = tokenRegisterer.register("INSTRUCTION_FORMAT22b", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT22c_FIELD = tokenRegisterer.register("INSTRUCTION_FORMAT22c_FIELD", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT22c_FIELD_ODEX = tokenRegisterer.register("INSTRUCTION_FORMAT22c_FIELD_ODEX", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT22c_TYPE = tokenRegisterer.register("INSTRUCTION_FORMAT22c_TYPE", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT22cs_FIELD = tokenRegisterer.register("INSTRUCTION_FORMAT22cs_FIELD", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT22s_OR_ID = tokenRegisterer.register("INSTRUCTION_FORMAT22s_OR_ID", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT22s = tokenRegisterer.register("INSTRUCTION_FORMAT22s", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT22t = tokenRegisterer.register("INSTRUCTION_FORMAT22t", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT22x = tokenRegisterer.register("INSTRUCTION_FORMAT22x", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT23x = tokenRegisterer.register("INSTRUCTION_FORMAT23x", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT30t = tokenRegisterer.register("INSTRUCTION_FORMAT30t", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT31c = tokenRegisterer.register("INSTRUCTION_FORMAT31c", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT31i_OR_ID = tokenRegisterer.register("INSTRUCTION_FORMAT31i_OR_ID", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT31i = tokenRegisterer.register("INSTRUCTION_FORMAT31i", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT31t = tokenRegisterer.register("INSTRUCTION_FORMAT31t", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT32x = tokenRegisterer.register("INSTRUCTION_FORMAT32x", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT35c_METHOD = tokenRegisterer.register("INSTRUCTION_FORMAT35c_METHOD", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT35c_METHOD_ODEX = tokenRegisterer.register("INSTRUCTION_FORMAT35c_METHOD_ODEX", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT35c_TYPE = tokenRegisterer.register("INSTRUCTION_FORMAT35c_TYPE", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT35mi_METHOD = tokenRegisterer.register("INSTRUCTION_FORMAT35mi_METHOD", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT35ms_METHOD = tokenRegisterer.register("INSTRUCTION_FORMAT35ms_METHOD", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT3rc_METHOD = tokenRegisterer.register("INSTRUCTION_FORMAT3rc_METHOD", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT3rc_METHOD_ODEX = tokenRegisterer.register("INSTRUCTION_FORMAT3rc_METHOD_ODEX", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT3rc_TYPE = tokenRegisterer.register("INSTRUCTION_FORMAT3rc_TYPE", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT3rmi_METHOD = tokenRegisterer.register("INSTRUCTION_FORMAT3rmi_METHOD", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT3rms_METHOD = tokenRegisterer.register("INSTRUCTION_FORMAT3rms_METHOD", Attributes.INSTRUCTION);
+        INSTRUCTION_FORMAT51l = tokenRegisterer.register("INSTRUCTION_FORMAT51l", Attributes.INSTRUCTION);
+        PRIMITIVE_TYPE = tokenRegisterer.register("PRIMITIVE_TYPE", Attributes.TYPE);
+        VOID_TYPE = tokenRegisterer.register("VOID_TYPE", Attributes.TYPE);
+        CLASS_DESCRIPTOR = tokenRegisterer.register("CLASS_DESCRIPTOR", Attributes.TYPE);
+        ARRAY_DESCRIPTOR = tokenRegisterer.register("ARRAY_DESCRIPTOR", Attributes.TYPE);
+        PARAM_LIST_OR_ID = tokenRegisterer.register("PARAM_LIST_OR_ID", Attributes.TYPE);
+        PARAM_LIST = tokenRegisterer.register("PARAM_LIST", Attributes.TYPE);
+        SIMPLE_NAME = tokenRegisterer.register("SIMPLE_NAME", Attributes.IDENTIFIER);
+        METHOD_NAME = tokenRegisterer.register("METHOD_NAME", Attributes.IDENTIFIER);
+        DOTDOT = tokenRegisterer.register("DOTDOT", Attributes.DOTDOT);
+        ARROW = tokenRegisterer.register("ARROW", Attributes.ARROW);
+        EQUAL = tokenRegisterer.register("EQUAL", Attributes.EQUAL);
+        COLON = tokenRegisterer.register("COLON", Attributes.COLON);
+        COMMA = tokenRegisterer.register("COMMA", Attributes.COMMA);
+        OPEN_BRACE = tokenRegisterer.register("OPEN_BRACE", Attributes.BRACES);
+        CLOSE_BRACE = tokenRegisterer.register("CLOSE_BRACE", Attributes.BRACES);
+        OPEN_PAREN = tokenRegisterer.register("OPEN_PAREN", Attributes.PARENS);
+        CLOSE_PAREN = tokenRegisterer.register("CLOSE_PAREN", Attributes.PARENS);
     }
 
     public static final TokenSet INSTRUCTION_TOKENS = TokenSet.create(
@@ -385,7 +387,8 @@ public class SmaliTokens {
             INSTRUCTION_FORMAT21c_FIELD_ODEX,
             INSTRUCTION_FORMAT21c_STRING,
             INSTRUCTION_FORMAT21c_TYPE,
-            INSTRUCTION_FORMAT21h,
+            INSTRUCTION_FORMAT21ih,
+            INSTRUCTION_FORMAT21lh,
             INSTRUCTION_FORMAT21s,
             INSTRUCTION_FORMAT21t,
             INSTRUCTION_FORMAT22b,

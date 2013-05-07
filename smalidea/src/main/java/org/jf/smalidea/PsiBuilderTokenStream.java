@@ -62,6 +62,10 @@ public class PsiBuilderTokenStream implements TokenStream {
         throw new UnsupportedOperationException();
     }
 
+    @Override public int range() {
+        return currentToken==null?0:1;
+    }
+
     public Token get(int i) {
         throw new UnsupportedOperationException();
     }

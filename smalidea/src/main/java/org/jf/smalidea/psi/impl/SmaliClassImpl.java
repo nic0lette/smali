@@ -46,9 +46,8 @@ import com.sun.jdi.ReferenceType;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jf.smalidea.SmaliTokens;
-import org.jf.smalidea.psi.iface.SmaliClass;
 import org.jf.smalidea.psi.ElementTypes;
+import org.jf.smalidea.psi.iface.SmaliClass;
 import org.jf.smalidea.psi.iface.SmaliMethod;
 import org.jf.smalidea.psi.stub.SmaliClassStub;
 
@@ -61,12 +60,22 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
         implements SmaliClass, StubBasedPsiElement<SmaliClassStub>, ItemPresentation {
     private String name;
 
-
-    public SmaliClassImpl(@NotNull ASTNode node) {
-        super(node);
+    public static SmaliClassImpl make(@NotNull ASTNode node) {
         ASTNode classDeclNode = node.findChildByType(ElementTypes.CLASS_SPEC);
-        ASTNode classDescNode = classDeclNode.findChildByType(ElementTypes.CLASS_TYPE);
-        name = classDescNode.getText();
+        if (classDeclNode != null) {
+            ASTNode classDescNode = classDeclNode.findChildByType(ElementTypes.CLASS_TYPE);
+            if (classDescNode != null) {
+                String name = classDescNode.getText();
+                return new SmaliClassImpl(node, name);
+            }
+        }
+        return null;
+    }
+
+
+    private SmaliClassImpl(@NotNull ASTNode node, String name) {
+        super(node);
+        this.name = name;
     }
 
     public SmaliClassImpl(@NotNull SmaliClassStub stub, @NotNull IStubElementType nodeType) {
