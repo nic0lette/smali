@@ -1454,8 +1454,8 @@ public class MethodAnalyzer {
             deodexedOpcode = Opcode.INVOKE_VIRTUAL_RANGE;
         }
 
-        Instruction3rc deodexedInstruction = new ImmutableInstruction3rc(deodexedOpcode, instruction.getRegisterCount(),
-                instruction.getStartRegister(), resolvedMethod);
+        Instruction3rc deodexedInstruction = new ImmutableInstruction3rc(deodexedOpcode, instruction.getStartRegister(),
+                instruction.getRegisterCount(), resolvedMethod);
 
         analyzedInstruction.setDeodexedInstruction(deodexedInstruction);
         analyzeInstruction(analyzedInstruction);
@@ -1487,8 +1487,17 @@ public class MethodAnalyzer {
     private void analyzeInvokeObjectInitRange(@Nonnull AnalyzedInstruction analyzedInstruction, boolean analyzeResult) {
         Instruction3rc instruction = (Instruction3rc)analyzedInstruction.instruction;
 
-        Instruction3rc deodexedInstruction = new ImmutableInstruction3rc(Opcode.INVOKE_DIRECT_RANGE,
-                instruction.getStartRegister(), instruction.getRegisterCount(), instruction.getReference());
+        Instruction deodexedInstruction;
+
+        int startRegister = instruction.getStartRegister();
+        int registerCount = instruction.getRegisterCount();
+        if (registerCount == 1 && startRegister < 16) {
+            deodexedInstruction = new ImmutableInstruction35c(Opcode.INVOKE_DIRECT,
+                    registerCount, startRegister, 0, 0, 0, 0, instruction.getReference());
+        } else {
+            deodexedInstruction = new ImmutableInstruction3rc(Opcode.INVOKE_DIRECT_RANGE,
+                    startRegister, registerCount, instruction.getReference());
+        }
 
         analyzedInstruction.setDeodexedInstruction(deodexedInstruction);
 
@@ -1545,7 +1554,7 @@ public class MethodAnalyzer {
         } else {
             Instruction35ms instruction = (Instruction35ms)analyzedInstruction.instruction;
             methodIndex = instruction.getVtableIndex();
-            objectRegister = instruction.getRegisterD();
+            objectRegister = instruction.getRegisterC();
         }
 
         RegisterType objectRegisterType = getAndCheckSourceRegister(analyzedInstruction, objectRegister,
@@ -1590,8 +1599,8 @@ public class MethodAnalyzer {
                 opcode = Opcode.INVOKE_VIRTUAL_RANGE;
             }
 
-            deodexedInstruction = new ImmutableInstruction3rc(opcode, instruction.getRegisterCount(),
-                    instruction.getStartRegister(), resolvedMethod);
+            deodexedInstruction = new ImmutableInstruction3rc(opcode, instruction.getStartRegister(),
+                    instruction.getRegisterCount(), resolvedMethod);
         } else {
             Instruction35ms instruction = (Instruction35ms)analyzedInstruction.instruction;
             Opcode opcode;
