@@ -60,6 +60,10 @@ public class SmaliPositionManager implements PositionManager {
     }
 
     public SourcePosition getSourcePosition(@Nullable Location location) throws NoDataException {
+        if (location == null) {
+            return null;
+        }
+
         String sig = location.declaringType().signature();
         Collection<SmaliClass> classes = SmaliClassNameIndex.INSTANCE.get(sig, debugProcess.getProject(),
                 GlobalSearchScope.projectScope(debugProcess.getProject()));
@@ -112,18 +116,19 @@ public class SmaliPositionManager implements PositionManager {
         return locations;
     }
 
-    public ClassPrepareRequest createPrepareRequest(final ClassPrepareRequestor requestor, final SourcePosition position) throws NoDataException {
+    public ClassPrepareRequest createPrepareRequest(final ClassPrepareRequestor requestor,
+                                                    final SourcePosition position) throws NoDataException {
         String className = ((SmaliClass)position.getElementAt().getContainingFile().getFirstChild()).getName();
 
-            return debugProcess.getRequestsManager().createClassPrepareRequest(new ClassPrepareRequestor() {
-                public void processClassPrepare(DebugProcess debuggerProcess, ReferenceType referenceType) {
-                    onClassPrepare(debuggerProcess, referenceType, position, requestor);
-                }
-            }, className);
-        }
+        return debugProcess.getRequestsManager().createClassPrepareRequest(new ClassPrepareRequestor() {
+            public void processClassPrepare(DebugProcess debuggerProcess, ReferenceType referenceType) {
+                onClassPrepare(debuggerProcess, referenceType, position, requestor);
+            }
+        }, className);
+    }
 
-        protected void onClassPrepare(final DebugProcess debuggerProcess, final ReferenceType referenceType,
-        final SourcePosition position, final ClassPrepareRequestor requestor) {
-            requestor.processClassPrepare(debuggerProcess, referenceType);
-        }
+    protected void onClassPrepare(final DebugProcess debuggerProcess, final ReferenceType referenceType,
+                                  final SourcePosition position, final ClassPrepareRequestor requestor) {
+        requestor.processClassPrepare(debuggerProcess, referenceType);
+    }
 }
