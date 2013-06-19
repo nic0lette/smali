@@ -44,10 +44,13 @@ import org.jf.dexlib2.iface.reference.MethodReference;
 import org.jf.dexlib2.iface.reference.Reference;
 import org.jf.dexlib2.iface.reference.TypeReference;
 import org.jf.dexlib2.immutable.instruction.*;
+import org.jf.dexlib2.immutable.reference.ImmutableFieldReference;
+import org.jf.dexlib2.immutable.reference.ImmutableMethodReference;
 import org.jf.dexlib2.util.MethodUtil;
 import org.jf.dexlib2.util.ReferenceUtil;
 import org.jf.dexlib2.util.TypeUtils;
 import org.jf.util.BitSetUtils;
+import org.jf.util.ExceptionWithContext;
 import org.jf.util.SparseArray;
 
 import javax.annotation.Nonnull;
@@ -265,7 +268,7 @@ public class MethodAnalyzer {
                         break;
                     case Format35mi:
                     case Format35ms:
-                        objectRegisterNumber = ((FiveRegisterInstruction)instruction).getRegisterD();
+                        objectRegisterNumber = ((FiveRegisterInstruction)instruction).getRegisterC();
                         break;
                     case Format3rmi:
                     case Format3rms:
@@ -397,7 +400,7 @@ public class MethodAnalyzer {
         //next, populate the exceptionHandlers array. The array item for each instruction that can throw an exception
         //and is covered by a try block should be set to a list of the first instructions of each exception handler
         //for the try block covering the instruction
-        List<? extends TryBlock> tries = methodImpl.getTryBlocks();
+        List<? extends TryBlock<? extends ExceptionHandler>> tries = methodImpl.getTryBlocks();
         int triesIndex = 0;
         TryBlock currentTry = null;
         AnalyzedInstruction[] currentExceptionHandlers = null;
@@ -419,7 +422,7 @@ public class MethodAnalyzer {
 
                 //check if the next try is applicable yet
                 if (currentTry == null && triesIndex < tries.size()) {
-                    TryBlock tryBlock = tries.get(triesIndex);
+                    TryBlock<? extends ExceptionHandler> tryBlock = tries.get(triesIndex);
                     if (tryBlock.getStartCodeAddress() <= currentCodeAddress) {
                         assert(tryBlock.getStartCodeAddress() + tryBlock.getCodeUnitCount() > currentCodeAddress);
 
@@ -529,7 +532,7 @@ public class MethodAnalyzer {
     }
 
     @Nonnull
-    private AnalyzedInstruction[] buildExceptionHandlerArray(@Nonnull TryBlock tryBlock) {
+    private AnalyzedInstruction[] buildExceptionHandlerArray(@Nonnull TryBlock<? extends ExceptionHandler> tryBlock) {
         List<? extends ExceptionHandler> exceptionHandlers = tryBlock.getExceptionHandlers();
 
         AnalyzedInstruction[] handlerInstructions = new AnalyzedInstruction[exceptionHandlers.size()];
@@ -1517,24 +1520,52 @@ public class MethodAnalyzer {
             return false;
         }
 
-        TypeProto registerTypeProto = objectRegisterType.type;
-        assert registerTypeProto != null;
+        TypeProto objectRegisterTypeProto = objectRegisterType.type;
+        assert objectRegisterTypeProto != null;
 
-        TypeProto classTypeProto = classPath.getClass(registerTypeProto.getType());
-        FieldReference field = classTypeProto.getFieldByOffset(fieldOffset);
+        TypeProto classTypeProto = classPath.getClass(objectRegisterTypeProto.getType());
+        FieldReference resolvedField = classTypeProto.getFieldByOffset(fieldOffset);
 
-        if (field == null) {
+        if (resolvedField == null) {
             throw new AnalysisException("Could not resolve the field in class %s at offset %d",
                     objectRegisterType.type.getType(), fieldOffset);
         }
 
-        String fieldType = field.getType();
+        ClassDef thisClass = classPath.getClassDef(method.getDefiningClass());
+
+        if (!canAccessClass(thisClass, classPath.getClassDef(resolvedField.getDefiningClass()))) {
+
+            // the class is not accessible. So we start looking at objectRegisterTypeProto (which may be different
+            // than resolvedField.getDefiningClass()), and walk up the class hierarchy.
+            ClassDef fieldClass = classPath.getClassDef(objectRegisterTypeProto.getType());
+            while (!canAccessClass(thisClass, fieldClass)) {
+                String superclass = fieldClass.getSuperclass();
+                if (superclass == null) {
+                    throw new ExceptionWithContext("Couldn't find accessible class while resolving field %s",
+                            ReferenceUtil.getShortFieldDescriptor(resolvedField));
+                }
+
+                fieldClass = classPath.getClassDef(superclass);
+            }
+
+            // fieldClass is now the first accessible class found. Now. we need to make sure that the field is
+            // actually valid for this class
+            resolvedField = classPath.getClass(fieldClass.getType()).getFieldByOffset(fieldOffset);
+            if (resolvedField == null) {
+                throw new ExceptionWithContext("Couldn't find accessible class while resolving field %s",
+                        ReferenceUtil.getShortFieldDescriptor(resolvedField));
+            }
+            resolvedField = new ImmutableFieldReference(fieldClass.getType(), resolvedField.getName(),
+                    resolvedField.getType());
+        }
+
+        String fieldType = resolvedField.getType();
 
         Opcode opcode = OdexedFieldInstructionMapper.getAndCheckDeodexedOpcodeForOdexedOpcode(fieldType,
                 instruction.getOpcode());
 
         Instruction22c deodexedInstruction = new ImmutableInstruction22c(opcode, (byte)instruction.getRegisterA(),
-                (byte)instruction.getRegisterB(), field);
+                (byte)instruction.getRegisterB(), resolvedField);
         analyzedInstruction.setDeodexedInstruction(deodexedInstruction);
 
         analyzeInstruction(analyzedInstruction);
@@ -1565,6 +1596,8 @@ public class MethodAnalyzer {
             return false;
         }
 
+        assert objectRegisterTypeProto != null;
+
         MethodReference resolvedMethod;
         if (isSuper) {
             // invoke-super is only used for the same class that we're currently in
@@ -1587,6 +1620,35 @@ public class MethodAnalyzer {
         if (resolvedMethod == null) {
             throw new AnalysisException("Could not resolve the method in class %s at index %d",
                     objectRegisterType.type.getType(), methodIndex);
+        }
+
+        // no need to check class access for invoke-super. A class can obviously access its superclass.
+        ClassDef thisClass = classPath.getClassDef(method.getDefiningClass());
+
+        if (!isSuper && !canAccessClass(thisClass, classPath.getClassDef(resolvedMethod.getDefiningClass()))) {
+
+            // the class is not accessible. So we start looking at objectRegisterTypeProto (which may be different
+            // than resolvedMethod.getDefiningClass()), and walk up the class hierarchy.
+            ClassDef methodClass = classPath.getClassDef(objectRegisterTypeProto.getType());
+            while (!canAccessClass(thisClass, methodClass)) {
+                String superclass = methodClass.getSuperclass();
+                if (superclass == null) {
+                    throw new ExceptionWithContext("Couldn't find accessible class while resolving method %s",
+                            ReferenceUtil.getShortMethodDescriptor(resolvedMethod));
+                }
+
+                methodClass = classPath.getClassDef(superclass);
+            }
+
+            // methodClass is now the first accessible class found. Now. we need to make sure that the method is
+            // actually valid for this class
+            resolvedMethod = classPath.getClass(methodClass.getType()).getMethodByVtableIndex(methodIndex);
+            if (resolvedMethod == null) {
+                throw new ExceptionWithContext("Couldn't find accessible class while resolving method %s",
+                        ReferenceUtil.getShortMethodDescriptor(resolvedMethod));
+            }
+            resolvedMethod = new ImmutableMethodReference(methodClass.getType(), resolvedMethod.getName(),
+                    resolvedMethod.getParameterTypes(), resolvedMethod.getReturnType());
         }
 
         Instruction deodexedInstruction;
@@ -1619,6 +1681,24 @@ public class MethodAnalyzer {
         analyzeInstruction(analyzedInstruction);
 
         return true;
+    }
+
+    private boolean canAccessClass(@Nonnull ClassDef accessorClassDef, @Nonnull ClassDef accesseeClassDef) {
+        if (AccessFlags.PUBLIC.isSet(accesseeClassDef.getAccessFlags())) {
+            return true;
+        }
+
+        // Classes can only be public or package private. Any private or protected inner classes are actually
+        // package private.
+        return getPackage(accesseeClassDef.getType()).equals(getPackage(accessorClassDef.getType()));
+    }
+
+    private static String getPackage(String className) {
+        int lastSlash = className.lastIndexOf('/');
+        if (lastSlash < 0) {
+            return "";
+        }
+        return className.substring(1, lastSlash);
     }
 
     private boolean analyzePutGetVolatile(@Nonnull AnalyzedInstruction analyzedInstruction) {

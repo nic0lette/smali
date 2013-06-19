@@ -229,11 +229,11 @@ public class ClassPool implements ClassSection<CharSequence, CharSequence,
             }
 
             @Override public Integer getValue() {
-                return classDef.classDefOffset;
+                return classDef.classDefIndex;
             }
 
             @Override public Integer setValue(Integer value) {
-                return classDef.classDefOffset = value;
+                return classDef.classDefIndex = value;
             }
         };
     }
@@ -519,28 +519,31 @@ public class ClassPool implements ClassSection<CharSequence, CharSequence,
     }
 
     @Override public int getItemIndex(@Nonnull PoolClassDef classDef) {
-        return classDef.classDefOffset;
+        return classDef.classDefIndex;
     }
 
     @Nonnull @Override public Collection<? extends Map.Entry<PoolClassDef, Integer>> getItems() {
         class MapEntry implements Map.Entry<PoolClassDef, Integer> {
-            PoolClassDef classDef = null;
+            @Nonnull private final PoolClassDef classDef;
+
+            public MapEntry(@Nonnull PoolClassDef classDef) {
+                this.classDef = classDef;
+            }
 
             @Override public PoolClassDef getKey() {
                 return classDef;
             }
 
             @Override public Integer getValue() {
-                return classDef.classDefOffset;
+                return classDef.classDefIndex;
             }
 
             @Override public Integer setValue(Integer value) {
-                int prev = classDef.classDefOffset;
-                classDef.classDefOffset = value;
+                int prev = classDef.classDefIndex;
+                classDef.classDefIndex = value;
                 return prev;
             }
         }
-        final MapEntry entry = new MapEntry();
 
         return new AbstractCollection<Entry<PoolClassDef, Integer>>() {
             @Nonnull @Override public Iterator<Entry<PoolClassDef, Integer>> iterator() {
@@ -552,8 +555,7 @@ public class ClassPool implements ClassSection<CharSequence, CharSequence,
                     }
 
                     @Override public Entry<PoolClassDef, Integer> next() {
-                        entry.classDef = iter.next();
-                        return entry;
+                        return new MapEntry(iter.next());
                     }
 
                     @Override public void remove() {
