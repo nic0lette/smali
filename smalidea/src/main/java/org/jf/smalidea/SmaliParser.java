@@ -35,12 +35,9 @@ package org.jf.smalidea;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiParser;
-import com.intellij.lang.impl.PsiBuilderImpl;
 import com.intellij.psi.tree.IElementType;
 import org.antlr.runtime.RecognitionException;
-import org.antlr.runtime.TokenSource;
 import org.jetbrains.annotations.NotNull;
-import org.jf.smali.smaliParser;
 import org.jf.smalidea.psi.ElementTypes;
 
 public class SmaliParser implements PsiParser {
