@@ -449,7 +449,7 @@ or method annotations until we determine if there is an .end parameter directive
 the annotations. If it turns out that they are parameter annotations, we include them in the I_PARAMETER AST. Otherwise, we
 add them to the $statements_and_directives::methodAnnotations list*/
 parameter_directive
-  : PARAMETER_DIRECTIVE STRING_LITERAL?
+  : PARAMETER_DIRECTIVE REGISTER (COMMA STRING_LITERAL)?
     ({input.LA(1) == ANNOTATION_DIRECTIVE}? annotation)*
     ( END_PARAMETER_DIRECTIVE
     | /*epsilon*/
@@ -468,7 +468,8 @@ line_directive
   : LINE_DIRECTIVE integral_literal;
 
 local_directive
-  : LOCAL_DIRECTIVE REGISTER COMMA simple_name COLON nonvoid_type_descriptor (COMMA STRING_LITERAL)?;
+  : LOCAL_DIRECTIVE REGISTER (COMMA (NULL_LITERAL | STRING_LITERAL) COLON (VOID_TYPE | nonvoid_type_descriptor)
+                              (COMMA STRING_LITERAL)? )?;
 
 end_local_directive
   : END_LOCAL_DIRECTIVE REGISTER;
