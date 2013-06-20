@@ -135,6 +135,7 @@ public class PsiBuilderTokenStream implements TokenStream {
 
     public void rewind() {
         rewind(markers.size()-1);
+        mark();
     }
 
     public void release(int markerIndex) {
@@ -144,7 +145,12 @@ public class PsiBuilderTokenStream implements TokenStream {
     }
 
     public void seek(int index) {
-        throw new UnsupportedOperationException();
+        if (index < psiBuilder.getCurrentOffset()) {
+            throw new UnsupportedOperationException();
+        }
+        while (index > psiBuilder.getCurrentOffset()) {
+            consume();
+        }
     }
 
     public int size() {
