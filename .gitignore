@@ -7,3 +7,4 @@
 /smali/build
 /util/build
 /smalidea/out
+/smalidea/src/main/java/org/jf/smalidea/smaliIdeaParser.tokens

@@ -29,9 +29,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+configurations {
+    antlr3
+}
+
+ext.antlrSource = 'src/main/antlr3'
+ext.antlrOutput = file("src/main/java")
+
 dependencies {
     compile project(':smali')
-    compile depends.antlr
+    compile depends.antlr_runtime
+
+    antlr3 depends.antlr
 }
 
 idea {
@@ -43,7 +52,21 @@ idea {
 // We can't actually compile the plugin with gradle, so we just disable everything
 // except the tasks related to generating the IDEA module
 tasks.all {
-    if (name != 'idea' && name != 'ideaModule') {
+    if (name != 'idea' && name != 'ideaModule' && name != 'generateParserAntlrSource') {
         enabled = false
     }
+}
+
+task generateParserAntlrSource(type: JavaExec) {
+    inputs.dir file(antlrSource)
+    outputs.dir file(antlrOutput)
+
+    mkdir(antlrOutput)
+    def grammars = fileTree(antlrSource).include('**/smaliIdeaParser.g')
+
+    classpath = configurations.antlr3
+    main = 'org.antlr.Tool'
+    args '-fo', relativePath("${antlrOutput}/org/jf/smalidea")
+    args '-lib', relativePath(project.parent.childProjects.get('smali').antlrOutput) + "/org/jf/smali"
+    args grammars.files
 }
