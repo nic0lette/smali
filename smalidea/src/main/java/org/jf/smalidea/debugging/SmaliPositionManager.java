@@ -61,7 +61,7 @@ public class SmaliPositionManager implements PositionManager {
 
     public SourcePosition getSourcePosition(@Nullable Location location) throws NoDataException {
         if (location == null) {
-            return null;
+            throw new NoDataException();
         }
 
         String sig = location.declaringType().signature();
@@ -81,11 +81,15 @@ public class SmaliPositionManager implements PositionManager {
             }
         }
 
-        return null;
+        throw new NoDataException();
     }
 
     @NotNull
     public List<ReferenceType> getAllClasses(SourcePosition classPosition) throws NoDataException {
+        if (!(classPosition.getElementAt().getContainingFile() instanceof SmaliClass)) {
+            throw new NoDataException();
+        }
+
         List<ReferenceType> list = new ArrayList<ReferenceType>();
         String className = ((SmaliClass)classPosition.getElementAt().getContainingFile().getFirstChild()).getName();
         className = className.substring(1, className.length()-1);
@@ -94,6 +98,10 @@ public class SmaliPositionManager implements PositionManager {
 
     @NotNull
     public List<Location> locationsOfLine(final ReferenceType type, final SourcePosition position) throws NoDataException {
+        if (!(position.getElementAt().getContainingFile() instanceof SmaliClass)) {
+            throw new NoDataException();
+        }
+
         final ArrayList<Location> locations = new ArrayList<Location>(1);
 
         ApplicationManager.getApplication().runReadAction(new Runnable() {
@@ -118,6 +126,10 @@ public class SmaliPositionManager implements PositionManager {
 
     public ClassPrepareRequest createPrepareRequest(final ClassPrepareRequestor requestor,
                                                     final SourcePosition position) throws NoDataException {
+        if (!(position.getElementAt().getContainingFile() instanceof SmaliClass)) {
+            throw new NoDataException();
+        }
+
         String className = ((SmaliClass)position.getElementAt().getContainingFile().getFirstChild()).getName();
 
         return debugProcess.getRequestsManager().createClassPrepareRequest(new ClassPrepareRequestor() {
