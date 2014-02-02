@@ -34,7 +34,7 @@ configurations {
 }
 
 ext.antlrSource = 'src/main/antlr3'
-ext.antlrOutput = file("src/main/java")
+ext.antlrOutput = file("${buildDir}/generated-sources/antlr3")
 
 dependencies {
     compile project(':smali')

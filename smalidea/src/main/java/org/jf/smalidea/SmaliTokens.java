@@ -69,9 +69,10 @@ public class SmaliTokens {
                 "NUMBER", DefaultLanguageHighlighterColors.NUMBER);
         public static final TextAttributesKey ODEX_REFERENCE = TextAttributesKey.createTextAttributesKey(
                 "ODEX_REFERENCE", DefaultLanguageHighlighterColors.INSTANCE_METHOD);
-        public static final TextAttributesKey OFFSET = TextAttributesKey.createTextAttributesKey("OFFSET", DefaultLanguageHighlighterColors.LABEL);
-        public static final TextAttributesKey PARENS = TextAttributesKey.createTextAttributesKey("PARENS", DefaultLanguageHighlighterColors.PARENTHESES);
-        public static final TextAttributesKey REGISTER = TextAttributesKey.createTextAttributesKey("REGISTER", DefaultLanguageHighlighterColors.LOCAL_VARIABLE);
+        public static final TextAttributesKey PARENS = TextAttributesKey.createTextAttributesKey(
+                "PARENS", DefaultLanguageHighlighterColors.PARENTHESES);
+        public static final TextAttributesKey REGISTER = TextAttributesKey.createTextAttributesKey(
+                "REGISTER", DefaultLanguageHighlighterColors.LOCAL_VARIABLE);
         public static final TextAttributesKey STRING = TextAttributesKey.createTextAttributesKey(
                 "STRING", DefaultLanguageHighlighterColors.STRING);
         public static final TextAttributesKey TYPE = TextAttributesKey.createTextAttributesKey(
@@ -94,7 +95,6 @@ public class SmaliTokens {
                 LITERAL,
                 NUMBER,
                 ODEX_REFERENCE,
-                OFFSET,
                 PARENS,
                 REGISTER,
                 STRING,
@@ -167,7 +167,6 @@ public class SmaliTokens {
     public static final IElementType INLINE_INDEX;
     public static final IElementType VTABLE_INDEX;
     public static final IElementType FIELD_OFFSET;
-    public static final IElementType OFFSET;
     public static final IElementType LINE_COMMENT;
     public static final IElementType INSTRUCTION_FORMAT10t;
     public static final IElementType INSTRUCTION_FORMAT10x;
@@ -220,7 +219,7 @@ public class SmaliTokens {
     public static final IElementType PARAM_LIST_OR_ID;
     public static final IElementType PARAM_LIST;
     public static final IElementType SIMPLE_NAME;
-    public static final IElementType METHOD_NAME;
+    public static final IElementType MEMBER_NAME;
     public static final IElementType DOTDOT;
     public static final IElementType ARROW;
     public static final IElementType EQUAL;
@@ -308,7 +307,6 @@ public class SmaliTokens {
         INLINE_INDEX = tokenRegisterer.register("INLINE_INDEX", Attributes.ODEX_REFERENCE);
         VTABLE_INDEX = tokenRegisterer.register("VTABLE_INDEX", Attributes.ODEX_REFERENCE);
         FIELD_OFFSET = tokenRegisterer.register("FIELD_OFFSET", Attributes.ODEX_REFERENCE);
-        OFFSET = tokenRegisterer.register("OFFSET", Attributes.OFFSET);
         LINE_COMMENT = tokenRegisterer.register("LINE_COMMENT", Attributes.COMMENT);
         INSTRUCTION_FORMAT10t = tokenRegisterer.register("INSTRUCTION_FORMAT10t", Attributes.INSTRUCTION);
         INSTRUCTION_FORMAT10x = tokenRegisterer.register("INSTRUCTION_FORMAT10x", Attributes.INSTRUCTION);
@@ -361,7 +359,7 @@ public class SmaliTokens {
         PARAM_LIST_OR_ID = tokenRegisterer.register("PARAM_LIST_OR_ID", Attributes.TYPE);
         PARAM_LIST = tokenRegisterer.register("PARAM_LIST", Attributes.TYPE);
         SIMPLE_NAME = tokenRegisterer.register("SIMPLE_NAME", Attributes.IDENTIFIER);
-        METHOD_NAME = tokenRegisterer.register("METHOD_NAME", Attributes.IDENTIFIER);
+        MEMBER_NAME = tokenRegisterer.register("MEMBER_NAME", Attributes.IDENTIFIER);
         DOTDOT = tokenRegisterer.register("DOTDOT", Attributes.DOTDOT);
         ARROW = tokenRegisterer.register("ARROW", Attributes.ARROW);
         EQUAL = tokenRegisterer.register("EQUAL", Attributes.EQUAL);

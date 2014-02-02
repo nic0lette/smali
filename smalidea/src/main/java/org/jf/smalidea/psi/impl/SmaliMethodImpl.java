@@ -32,28 +32,19 @@
 package org.jf.smalidea.psi.impl;
 
 import com.intellij.debugger.SourcePosition;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.extapi.psi.StubBasedPsiElementBase;
 import com.intellij.lang.ASTNode;
-import com.intellij.openapi.application.Application;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.util.Computable;
-import com.intellij.psi.*;
-import com.intellij.psi.javadoc.PsiDocComment;
+import com.intellij.psi.PsiDocumentManager;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.StubBasedPsiElement;
 import com.intellij.psi.stubs.IStubElementType;
-import com.intellij.psi.util.MethodSignature;
-import com.intellij.psi.util.MethodSignatureBackedByPsiMethod;
-import com.intellij.util.IncorrectOperationException;
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.iface.SmaliInstruction;
 import org.jf.smalidea.psi.iface.SmaliMethod;
 import org.jf.smalidea.psi.iface.SmaliRegistersSpec;
 import org.jf.smalidea.psi.stub.SmaliMethodStub;
-
-import java.util.List;
 
 public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
         implements SmaliMethod, StubBasedPsiElement<SmaliMethodStub> {
@@ -75,7 +66,7 @@ public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
     }
 
     public String getName() {
-        ASTNode nameElement = getNode().findChildByType(ElementTypes.METHOD_NAME);
+        ASTNode nameElement = getNode().findChildByType(ElementTypes.MEMBER_NAME);
         if (nameElement != null) {
             return nameElement.getText();
         }

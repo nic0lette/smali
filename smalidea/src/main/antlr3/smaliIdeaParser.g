@@ -186,7 +186,7 @@ field
     Marker annotationsMarker = null;
     boolean classAnnotations = true;
   }
-  : FIELD_DIRECTIVE access_list simple_name COLON nonvoid_type_descriptor (EQUAL literal)?
+  : FIELD_DIRECTIVE access_list member_name COLON nonvoid_type_descriptor (EQUAL literal)?
     ( END_FIELD_DIRECTIVE
     | (ANNOTATION_DIRECTIVE)=> ( {annotationsMarker = mark();}
                                  ((ANNOTATION_DIRECTIVE)=> annotation)+
@@ -210,21 +210,25 @@ field
 
 method
   @init { Marker marker = mark(); }
-  : METHOD_DIRECTIVE access_list method_name method_prototype statements_and_directives END_METHOD_DIRECTIVE;
+  : METHOD_DIRECTIVE access_list member_name method_prototype statements_and_directives END_METHOD_DIRECTIVE;
   finally { marker.done(ElementTypes.METHOD); }
 
 statements_and_directives
   : (
-      (instruction
+      ( ordered_method_item
       | registers_directive
-      | label
       | catch_directive
       | catchall_directive
       | parameter_directive
-      | ordered_debug_directive
       | annotation
       )
     sync[false])*;
+
+/* Method items whose order/location is important */
+ordered_method_item
+  : label
+  | instruction
+  | debug_directive;
 
 registers_directive
   @init { Marker marker = mark(); }
@@ -279,11 +283,11 @@ simple_name
   | INSTRUCTION_FORMAT51l;
   catch [RecognitionException ex] { marker.error(getErrorMessage(ex, tokenNames)); recover(input,ex); }
 
-method_name
+member_name
   @init { Marker marker = mark(); }
   : simple_name
-  | METHOD_NAME;
-  finally { marker.done(ElementTypes.METHOD_NAME); }
+  | MEMBER_NAME;
+  finally { marker.done(ElementTypes.MEMBER_NAME); }
 
 method_prototype
   @init { Marker marker = mark(); }
@@ -407,8 +411,8 @@ enum_literal
 type_field_method_literal
   : reference_type_descriptor
     ( ARROW
-      ( simple_name COLON nonvoid_type_descriptor
-      | method_name method_prototype
+      ( member_name COLON nonvoid_type_descriptor
+      | member_name method_prototype
       )
     |   /*epsilon*/
     )
@@ -416,17 +420,16 @@ type_field_method_literal
   | void_type;
 
 fully_qualified_method
-  : reference_type_descriptor ARROW method_name method_prototype;
+  : reference_type_descriptor ARROW member_name method_prototype;
 
 fully_qualified_field
-  : reference_type_descriptor ARROW simple_name COLON nonvoid_type_descriptor;
+  : reference_type_descriptor ARROW member_name COLON nonvoid_type_descriptor;
 
 label
   : COLON simple_name;
 
-label_ref_or_offset
+label_ref
   : COLON simple_name
-  | OFFSET
   | NEGATIVE_INTEGER_LITERAL;
 
 register_list
@@ -439,10 +442,10 @@ verification_error_reference
   : class_descriptor | fully_qualified_field | fully_qualified_method;
 
 catch_directive
-  : CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE label_ref_or_offset DOTDOT label_ref_or_offset CLOSE_BRACE label_ref_or_offset;
+  : CATCH_DIRECTIVE nonvoid_type_descriptor OPEN_BRACE label_ref DOTDOT label_ref CLOSE_BRACE label_ref;
 
 catchall_directive
-  : CATCHALL_DIRECTIVE OPEN_BRACE label_ref_or_offset DOTDOT label_ref_or_offset CLOSE_BRACE label_ref_or_offset;
+  : CATCHALL_DIRECTIVE OPEN_BRACE label_ref DOTDOT label_ref CLOSE_BRACE label_ref;
 
 /*When there are annotations immediately after a parameter definition, we don't know whether they are parameter annotations
 or method annotations until we determine if there is an .end parameter directive. In either case, we still "consume" and parse
@@ -455,7 +458,7 @@ parameter_directive
     | /*epsilon*/
     );
 
-ordered_debug_directive
+debug_directive
   : line_directive
   | local_directive
   | end_local_directive
@@ -484,7 +487,7 @@ epilogue_directive
   : EPILOGUE_DIRECTIVE;
 
 source_directive
-  : SOURCE_DIRECTIVE STRING_LITERAL;
+  : SOURCE_DIRECTIVE STRING_LITERAL?;
 
 instruction_format12x
   : INSTRUCTION_FORMAT12x
@@ -549,7 +552,7 @@ instruction
 insn_format10t returns [int size]
   : //e.g. goto endloop:
     //e.g. goto +3
-    INSTRUCTION_FORMAT10t label_ref_or_offset;
+    INSTRUCTION_FORMAT10t label_ref;
 
 insn_format10x returns [int size]
   : //e.g. return-void
@@ -577,7 +580,7 @@ insn_format20bc returns [int size]
 
 insn_format20t returns [int size]
   : //e.g. goto/16 endloop:
-    INSTRUCTION_FORMAT20t label_ref_or_offset;
+    INSTRUCTION_FORMAT20t label_ref;
 
 insn_format21c_field returns [int size]
   : //e.g. sget-object v0, java/lang/System/out LJava/io/PrintStream;
@@ -593,7 +596,7 @@ insn_format21c_string returns [int size]
 
 insn_format21c_type returns [int size]
   : //e.g. const-class v2, Lorg/jf/HelloWorld2/HelloWorld2;
-    INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA reference_type_descriptor;
+    INSTRUCTION_FORMAT21c_TYPE REGISTER COMMA nonvoid_type_descriptor;
 
 insn_format21ih returns [int size]
   : //e.g. const/high16 v1, 1234
@@ -609,7 +612,7 @@ insn_format21s returns [int size]
 
 insn_format21t returns [int size]
   : //e.g. if-eqz v0, endloop:
-    INSTRUCTION_FORMAT21t REGISTER COMMA (label_ref_or_offset);
+    INSTRUCTION_FORMAT21t REGISTER COMMA (label_ref);
 
 insn_format22b returns [int size]
   : //e.g. add-int v0, v1, 123
@@ -637,7 +640,7 @@ insn_format22s returns [int size]
 
 insn_format22t returns [int size]
   : //e.g. if-eq v0, v1, endloop:
-    INSTRUCTION_FORMAT22t REGISTER COMMA REGISTER COMMA label_ref_or_offset;
+    INSTRUCTION_FORMAT22t REGISTER COMMA REGISTER COMMA label_ref;
 
 insn_format22x returns [int size]
   : //e.g. move/from16 v1, v1234
@@ -649,7 +652,7 @@ insn_format23x returns [int size]
 
 insn_format30t returns [int size]
   : //e.g. goto/32 endloop:
-    INSTRUCTION_FORMAT30t label_ref_or_offset;
+    INSTRUCTION_FORMAT30t label_ref;
 
 insn_format31c returns [int size]
   : //e.g. const-string/jumbo v1 "Hello World!"
@@ -661,7 +664,7 @@ insn_format31i returns [int size]
 
 insn_format31t returns [int size]
   : //e.g. fill-array-data v0, ArrayData:
-    INSTRUCTION_FORMAT31t REGISTER COMMA label_ref_or_offset;
+    INSTRUCTION_FORMAT31t REGISTER COMMA label_ref;
 
 insn_format32x returns [int size]
   : //e.g. move/16 v4567, v1234
@@ -715,7 +718,7 @@ insn_array_data_directive returns [int size]
   : ARRAY_DATA_DIRECTIVE integral_literal fixed_literal* END_ARRAY_DATA_DIRECTIVE;
 
 insn_packed_switch_directive returns [int size]
-  : PACKED_SWITCH_DIRECTIVE fixed_32bit_literal label_ref_or_offset* END_PACKED_SWITCH_DIRECTIVE;
+  : PACKED_SWITCH_DIRECTIVE fixed_32bit_literal label_ref* END_PACKED_SWITCH_DIRECTIVE;
 
 insn_sparse_switch_directive returns [int size]
-  : SPARSE_SWITCH_DIRECTIVE (fixed_32bit_literal ARROW label_ref_or_offset)* END_SPARSE_SWITCH_DIRECTIVE;
+  : SPARSE_SWITCH_DIRECTIVE (fixed_32bit_literal ARROW label_ref)* END_SPARSE_SWITCH_DIRECTIVE;
