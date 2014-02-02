@@ -61,7 +61,6 @@ public class ImmutableInstruction35c extends ImmutableInstruction implements Ins
                                    int registerG,
                                    @Nonnull Reference reference) {
         super(opcode);
-        Preconditions.checkFormat(opcode, FORMAT);
         this.registerCount = Preconditions.check35cRegisterCount(registerCount);
         this.registerC = (registerCount>0) ? Preconditions.checkNibbleRegister(registerC) : 0;
         this.registerD = (registerCount>1) ? Preconditions.checkNibbleRegister(registerD) : 0;
@@ -93,6 +92,7 @@ public class ImmutableInstruction35c extends ImmutableInstruction implements Ins
     @Override public int getRegisterF() { return registerF; }
     @Override public int getRegisterG() { return registerG; }
     @Nonnull @Override public ImmutableReference getReference() { return reference; }
+    @Override public int getReferenceType() { return opcode.referenceType; }
 
     @Override public Format getFormat() { return FORMAT; }
 }

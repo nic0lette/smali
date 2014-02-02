@@ -67,6 +67,13 @@ public class BuilderClassDef extends BaseTypeReference implements ClassDef {
                     @Nonnull BuilderAnnotationSet annotations,
                     @Nullable Iterable<? extends BuilderField> fields,
                     @Nullable Iterable<? extends BuilderMethod> methods) {
+        if (fields == null) {
+            fields = ImmutableList.of();
+        }
+        if (methods == null) {
+            methods = ImmutableList.of();
+        }
+
         this.type = type;
         this.accessFlags = accessFlags;
         this.superclass = superclass;

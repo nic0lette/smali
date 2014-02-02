@@ -51,7 +51,6 @@ public class ImmutableInstruction31c extends ImmutableInstruction implements Ins
                                    int registerA,
                                    @Nonnull Reference reference) {
         super(opcode);
-        Preconditions.checkFormat(opcode, FORMAT);
         this.registerA = Preconditions.checkByteRegister(registerA);
         this.reference = ImmutableReferenceFactory.of(opcode.referenceType, reference);
     }
@@ -68,6 +67,7 @@ public class ImmutableInstruction31c extends ImmutableInstruction implements Ins
 
     @Override public int getRegisterA() { return registerA; }
     @Nonnull @Override public ImmutableReference getReference() { return reference; }
+    @Override public int getReferenceType() { return opcode.referenceType; }
 
     @Override public Format getFormat() { return FORMAT; }
 }

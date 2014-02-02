@@ -31,7 +31,6 @@ package org.jf.baksmali;
 import com.google.common.collect.Lists;
 import org.apache.commons.cli.*;
 import org.jf.dexlib2.DexFileFactory;
-import org.jf.dexlib2.analysis.CustomInlineMethodResolver;
 import org.jf.dexlib2.analysis.InlineMethodResolver;
 import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 import org.jf.dexlib2.dexbacked.DexBackedOdexFile;
@@ -202,6 +201,10 @@ public class main {
                 case 'j':
                     options.jobs = Integer.parseInt(commandLine.getOptionValue("j"));
                     break;
+                case 'i':
+                    String rif = commandLine.getOptionValue("i");
+                    options.setResourceIdFiles(rif);
+                    break;
                 case 'N':
                     disassemble = false;
                     break;
@@ -213,10 +216,7 @@ public class main {
                     options.ignoreErrors = true;
                     break;
                 case 'T':
-                    options.inlineResolver = new CustomInlineMethodResolver(options.classPath, new File(commandLine.getOptionValue("T")));
-                    break;
-                case 'K':
-                    options.checkPackagePrivateAccess = true;
+                    options.customInlineDefinitions = new File(commandLine.getOptionValue("T"));
                     break;
                 default:
                     assert false;
@@ -235,6 +235,10 @@ public class main {
             }
         }
 
+        if (options.apiLevel >= 17) {
+            options.checkPackagePrivateAccess = true;
+        }
+
         String inputDexFileName = remainingArgs[0];
 
         File dexFileFile = new File(inputDexFileName);
@@ -251,6 +255,7 @@ public class main {
                 System.err.println("Warning: You are disassembling an odex file without deodexing it. You");
                 System.err.println("won't be able to re-assemble the results unless you deodex it with the -x");
                 System.err.println("option");
+                options.allowOdex = true;
             }
         } else {
             options.deodex = false;
@@ -264,7 +269,7 @@ public class main {
             }
         }
 
-        if (options.inlineResolver == null && dexFile instanceof DexBackedOdexFile) {
+        if (options.customInlineDefinitions == null && dexFile instanceof DexBackedOdexFile) {
             options.inlineResolver =
                     InlineMethodResolver.createInlineMethodResolver(((DexBackedOdexFile)dexFile).getOdexVersion());
         }
@@ -407,6 +412,14 @@ public class main {
                 .withArgName("NUM_THREADS")
                 .create("j");
 
+        Option resourceIdFilesOption = OptionBuilder.withLongOpt("resource-id-files")
+                .withDescription("the resource ID files to use, for analysis. A colon-separated list of prefix=file " +
+                        "pairs.  For example R=res/values/public.xml:" +
+                        "android.R=$ANDROID_HOME/platforms/android-19/data/res/values/public.xml")
+                .hasArg()
+                .withArgName("FILES")
+                .create("i");
+
         Option dumpOption = OptionBuilder.withLongOpt("dump-to")
                 .withDescription("dumps the given dex file into a single annotated dump file named FILE" +
                         " (<dexfile>.dump by default), along with the normal disassembly")
@@ -430,12 +443,6 @@ public class main {
                 .withArgName("FILE")
                 .create("T");
 
-        Option checkPackagePrivateAccess = OptionBuilder.withLongOpt("check-package-private-access")
-                .withDescription("When deodexing, use the new virtual table generation logic that " +
-                        "prevents overriding an inaccessible package private method. This is a temporary option " +
-                        "that will be removed once this new functionality can be tied to a specific api level.")
-                .create("K");
-
         basicOptions.addOption(versionOption);
         basicOptions.addOption(helpOption);
         basicOptions.addOption(outputDirOption);
@@ -451,12 +458,12 @@ public class main {
         basicOptions.addOption(noAccessorCommentsOption);
         basicOptions.addOption(apiLevelOption);
         basicOptions.addOption(jobsOption);
+        basicOptions.addOption(resourceIdFilesOption);
 
         debugOptions.addOption(dumpOption);
         debugOptions.addOption(ignoreErrorsOption);
         debugOptions.addOption(noDisassemblyOption);
         debugOptions.addOption(inlineTableOption);
-        debugOptions.addOption(checkPackagePrivateAccess);
 
         for (Object option: basicOptions.getOptions()) {
             options.addOption((Option)option);

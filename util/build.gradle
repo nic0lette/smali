@@ -35,3 +35,14 @@ dependencies {
     compile depends.guava
     testCompile depends.junit
 }
+
+uploadArchives {
+    repositories.mavenDeployer {
+        pom.project {
+            description 'This library contains random utilities used by smali/baksmali/dexlib2'
+            scm {
+                url 'https://github.com/JesusFreke/smali/tree/master/util'
+            }
+        }
+    }
+}

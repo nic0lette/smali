@@ -49,20 +49,6 @@ import static org.jf.smali.smaliParser.*;
         }
     }
 
-    public void reset(CharSequence charSequence, int start, int end, int initialState) {
-        zzReader = BlankReader.INSTANCE;
-        zzBuffer = new char[charSequence.length()];
-        for (int i=0; i<charSequence.length(); i++) {
-            zzBuffer[i] = charSequence.charAt(i);
-        }
-
-        yychar = zzCurrentPos = zzMarkedPos = zzStartRead = start;
-        zzEndRead = end;
-        zzAtBOL = true;
-        zzAtEOF = false;
-        yybegin(initialState);
-    }
-
     public void setLine(int line) {
         this.yyline = line-1;
     }
@@ -391,8 +377,6 @@ Type = {PrimitiveType} | {ClassDescriptor} | {ArrayDescriptor}
     "vtable@0x" {HexDigit}+ { return newToken(VTABLE_INDEX); }
     "field@0x" {HexDigit}+ { return newToken(FIELD_OFFSET); }
 
-    "+" {Integer} { return newToken(OFFSET); }
-
     # [^\r\n]* { return newToken(LINE_COMMENT, true); }
 }
 
@@ -606,7 +590,7 @@ Type = {PrimitiveType} | {ClassDescriptor} | {ArrayDescriptor}
     {PrimitiveType} {PrimitiveType}+ { return newToken(PARAM_LIST_OR_ID); }
     {Type} {Type}+ { return newToken(PARAM_LIST); }
     {SimpleName} { return newToken(SIMPLE_NAME); }
-    "<init>" | "<clinit>" { return newToken(METHOD_NAME); }
+    "<" {SimpleName} ">" { return newToken(MEMBER_NAME); }
 }
 
 /*Symbols/Whitespace/EOF*/

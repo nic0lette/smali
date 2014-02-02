@@ -54,7 +54,6 @@ public class ImmutableInstruction3rc extends ImmutableInstruction implements Ins
                                    int registerCount,
                                    @Nonnull Reference reference) {
         super(opcode);
-        Preconditions.checkFormat(opcode, FORMAT);
         this.startRegister = Preconditions.checkShortRegister(startRegister);
         this.registerCount = Preconditions.checkRegisterRangeCount(registerCount);
         this.reference = ImmutableReferenceFactory.of(opcode.referenceType, reference);
@@ -74,6 +73,7 @@ public class ImmutableInstruction3rc extends ImmutableInstruction implements Ins
     @Override public int getStartRegister() { return startRegister; }
     @Override public int getRegisterCount() { return registerCount; }
     @Nonnull @Override public ImmutableReference getReference() { return reference; }
+    @Override public int getReferenceType() { return opcode.referenceType; }
 
     @Override public Format getFormat() { return FORMAT; }
 }

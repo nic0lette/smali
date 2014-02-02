@@ -31,6 +31,7 @@ package org.jf.baksmali.Adaptors;
 import com.google.common.collect.ImmutableList;
 import org.jf.baksmali.Adaptors.Debug.DebugMethodItem;
 import org.jf.baksmali.Adaptors.Format.InstructionMethodItemFactory;
+import org.jf.baksmali.baksmaliOptions;
 import org.jf.dexlib2.AccessFlags;
 import org.jf.dexlib2.Format;
 import org.jf.dexlib2.Opcode;
@@ -38,6 +39,7 @@ import org.jf.dexlib2.ReferenceType;
 import org.jf.dexlib2.analysis.AnalysisException;
 import org.jf.dexlib2.analysis.AnalyzedInstruction;
 import org.jf.dexlib2.analysis.MethodAnalyzer;
+import org.jf.dexlib2.dexbacked.DexBackedDexFile.InvalidItemIndex;
 import org.jf.dexlib2.iface.*;
 import org.jf.dexlib2.iface.debug.DebugItem;
 import org.jf.dexlib2.iface.instruction.Instruction;
@@ -45,6 +47,7 @@ import org.jf.dexlib2.iface.instruction.OffsetInstruction;
 import org.jf.dexlib2.iface.instruction.ReferenceInstruction;
 import org.jf.dexlib2.iface.reference.MethodReference;
 import org.jf.dexlib2.util.InstructionOffsetMap;
+import org.jf.dexlib2.util.InstructionOffsetMap.InvalidInstructionOffset;
 import org.jf.dexlib2.util.ReferenceUtil;
 import org.jf.dexlib2.util.SyntheticAccessorResolver;
 import org.jf.dexlib2.util.TypeUtils;
@@ -91,15 +94,31 @@ public class MethodDefinition {
 
                 Opcode opcode = instruction.getOpcode();
                 if (opcode == Opcode.PACKED_SWITCH) {
+                    boolean valid = true;
                     int codeOffset = instructionOffsetMap.getInstructionCodeOffset(i);
                     int targetOffset = codeOffset + ((OffsetInstruction)instruction).getCodeOffset();
-                    targetOffset = findSwitchPayload(targetOffset, Opcode.PACKED_SWITCH_PAYLOAD);
-                    packedSwitchMap.append(targetOffset, codeOffset);
+                    try {
+                        targetOffset = findSwitchPayload(targetOffset, Opcode.PACKED_SWITCH_PAYLOAD);
+                    } catch (InvalidSwitchPayload ex) {
+                        valid = false;
+                    }
+                    if (valid) {
+                        packedSwitchMap.append(targetOffset, codeOffset);
+                    }
                 } else if (opcode == Opcode.SPARSE_SWITCH) {
+                    boolean valid = true;
                     int codeOffset = instructionOffsetMap.getInstructionCodeOffset(i);
                     int targetOffset = codeOffset + ((OffsetInstruction)instruction).getCodeOffset();
-                    targetOffset = findSwitchPayload(targetOffset, Opcode.SPARSE_SWITCH_PAYLOAD);
-                    sparseSwitchMap.append(targetOffset, codeOffset);
+                    try {
+                        targetOffset = findSwitchPayload(targetOffset, Opcode.SPARSE_SWITCH_PAYLOAD);
+                    } catch (InvalidSwitchPayload ex) {
+                        valid = false;
+                        // The offset to the payload instruction was invalid. Nothing to do, except that we won't
+                        // add this instruction to the map.
+                    }
+                    if (valid) {
+                        sparseSwitchMap.append(targetOffset, codeOffset);
+                    }
                 }
             }
         }catch (Exception ex) {
@@ -113,7 +132,8 @@ public class MethodDefinition {
         }
     }
 
-    public static void writeEmptyMethodTo(IndentingWriter writer, Method method) throws IOException {
+    public static void writeEmptyMethodTo(IndentingWriter writer, Method method,
+                                          baksmaliOptions options) throws IOException {
         writer.write(".method ");
         writeAccessFlags(writer, method.getAccessFlags());
         writer.write(method.getName());
@@ -127,7 +147,7 @@ public class MethodDefinition {
         writer.write('\n');
 
         writer.indent(4);
-        writeParameters(writer, method, methodParameters);
+        writeParameters(writer, method, methodParameters, options);
         AnnotationFormatter.writeTo(writer, method.getAnnotations());
         writer.deindent(4);
         writer.write(".end method\n");
@@ -164,7 +184,7 @@ public class MethodDefinition {
             writer.printSignedIntAsDec(methodImpl.getRegisterCount());
         }
         writer.write('\n');
-        writeParameters(writer, method, methodParameters);
+        writeParameters(writer, method, methodParameters, classDef.options);
 
         if (registerFormatter == null) {
             registerFormatter = new RegisterFormatter(classDef.options, methodImpl.getRegisterCount(),
@@ -185,8 +205,13 @@ public class MethodDefinition {
         writer.write(".end method\n");
     }
 
-    private int findSwitchPayload(int targetOffset, Opcode type) {
-        int targetIndex = instructionOffsetMap.getInstructionIndexAtCodeOffset(targetOffset);
+    public int findSwitchPayload(int targetOffset, Opcode type) {
+        int targetIndex;
+        try {
+            targetIndex = instructionOffsetMap.getInstructionIndexAtCodeOffset(targetOffset);
+        } catch (InvalidInstructionOffset ex) {
+            throw new InvalidSwitchPayload(targetOffset);
+        }
 
         //TODO: does dalvik let you pad with multiple nops?
         //TODO: does dalvik let a switch instruction point to a non-payload instruction?
@@ -203,7 +228,7 @@ public class MethodDefinition {
                     }
                 }
             }
-            throw new ExceptionWithContext("No switch payload at offset 0x%x", targetOffset);
+            throw new InvalidSwitchPayload(targetOffset);
         } else {
             return targetOffset;
         }
@@ -218,7 +243,8 @@ public class MethodDefinition {
     }
 
     private static void writeParameters(IndentingWriter writer, Method method,
-                                        List<? extends MethodParameter> parameters) throws IOException {
+                                        List<? extends MethodParameter> parameters,
+                                        baksmaliOptions options) throws IOException {
         boolean isStatic = AccessFlags.STATIC.isSet(method.getAccessFlags());
         int registerNumber = isStatic?0:1;
         for (MethodParameter parameter: parameters) {
@@ -229,7 +255,7 @@ public class MethodDefinition {
                 writer.write(".param p");
                 writer.printSignedIntAsDec(registerNumber);
 
-                if (parameterName != null) {
+                if (parameterName != null && options.outputDebugInfo) {
                     writer.write(", ");
                     ReferenceFormatter.writeStringReference(writer, parameterName);
                 }
@@ -334,10 +360,16 @@ public class MethodDefinition {
                 Opcode opcode = instruction.getOpcode();
 
                 if (opcode.referenceType == ReferenceType.METHOD) {
-                    MethodReference methodReference =
-                            (MethodReference)((ReferenceInstruction)instruction).getReference();
+                    MethodReference methodReference = null;
+                    try {
+                        methodReference = (MethodReference)((ReferenceInstruction)instruction).getReference();
+                    } catch (InvalidItemIndex ex) {
+                        // just ignore it for now. We'll deal with it later, when processing the instructions
+                        // themselves
+                    }
 
-                    if (SyntheticAccessorResolver.looksLikeSyntheticAccessor(methodReference.getName())) {
+                    if (methodReference != null &&
+                            SyntheticAccessorResolver.looksLikeSyntheticAccessor(methodReference.getName())) {
                         SyntheticAccessorResolver.AccessedMember accessedMember =
                                 classDef.options.syntheticAccessorResolver.getAccessedMember(methodReference);
                         if (accessedMember != null) {
@@ -505,6 +537,19 @@ public class MethodDefinition {
 
         public Collection<LabelMethodItem> getLabels() {
             return labels.values();
+        }
+    }
+
+    public static class InvalidSwitchPayload extends ExceptionWithContext {
+        private final int payloadOffset;
+
+        public InvalidSwitchPayload(int payloadOffset) {
+            super("No switch payload at offset: %d", payloadOffset);
+            this.payloadOffset = payloadOffset;
+        }
+
+        public int getPayloadOffset() {
+            return payloadOffset;
         }
     }
 }
