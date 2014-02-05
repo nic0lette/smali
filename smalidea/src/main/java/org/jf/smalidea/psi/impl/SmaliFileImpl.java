@@ -32,13 +32,21 @@
 package org.jf.smalidea.psi.impl;
 
 import com.intellij.extapi.psi.PsiFileBase;
+import com.intellij.lang.ASTNode;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.FileViewProvider;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiClassOwner;
+import com.intellij.psi.tree.TokenSet;
+import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jf.smalidea.SmaliFileType;
 import org.jf.smalidea.SmaliLanguage;
+import org.jf.smalidea.psi.ElementTypes;
+import org.jf.smalidea.psi.iface.SmaliClass;
 
-public class SmaliFileImpl extends PsiFileBase {
+public class SmaliFileImpl extends PsiFileBase implements PsiClassOwner {
     public SmaliFileImpl(FileViewProvider viewProvider) {
         super(viewProvider, SmaliLanguage.INSTANCE);
     }
@@ -46,5 +54,34 @@ public class SmaliFileImpl extends PsiFileBase {
     @NotNull
     public FileType getFileType() {
         return SmaliFileType.INSTANCE;
+    }
+
+    @Nullable
+    public SmaliClassImpl getPsiClass() {
+        for (ASTNode node: getNode().getChildren(TokenSet.create(ElementTypes.SMALI_CLASS))) {
+            // we can only have a single class declaration in a file
+            return (SmaliClassImpl)node.getPsi();
+        }
+        return null;
+    }
+
+    @NotNull @Override public PsiClass[] getClasses() {
+        SmaliClass cls = getPsiClass();
+        if (cls == null) {
+            return PsiClass.EMPTY_ARRAY;
+        }
+        return new PsiClass[]{cls};
+    }
+
+    @Override public String getPackageName() {
+        SmaliClass cls = getPsiClass();
+        if (cls == null) {
+            return null;
+        }
+        return cls.getPackageName();
+    }
+
+    @Override public void setPackageName(String packageName) throws IncorrectOperationException {
+        throw new IncorrectOperationException();
     }
 }

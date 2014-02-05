@@ -43,9 +43,7 @@ import java.util.Collection;
 public class SmaliClassFinder extends PsiElementFinder {
     @Override
     public PsiClass findClass(@NotNull String qualifiedName, @NotNull GlobalSearchScope scope) {
-        //TODO: index by java name, so we don't have to construct the smali name
-        String smaliClassName = "L" + qualifiedName.replace('.', '/') + ";";
-        Collection<SmaliClass> classes = SmaliClassNameIndex.INSTANCE.get(smaliClassName, scope.getProject(), scope);
+        Collection<SmaliClass> classes = SmaliClassNameIndex.INSTANCE.get(qualifiedName, scope.getProject(), scope);
         if (classes != null && classes.size() == 1) {
             return classes.iterator().next();
         }
@@ -55,7 +53,7 @@ public class SmaliClassFinder extends PsiElementFinder {
     @NotNull
     @Override
     public PsiClass[] findClasses(@NotNull String qualifiedName, @NotNull GlobalSearchScope scope) {
-         PsiClass cls = findClass(qualifiedName, scope);
+        PsiClass cls = findClass(qualifiedName, scope);
         if (cls != null) {
             return new PsiClass[] {cls};
         }

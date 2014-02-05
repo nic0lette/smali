@@ -51,6 +51,7 @@ import org.jf.smalidea.psi.iface.SmaliClass;
 import org.jf.smalidea.psi.iface.SmaliMethod;
 import org.jf.smalidea.psi.stub.SmaliClassStub;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -66,6 +67,7 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
             ASTNode classDescNode = classDeclNode.findChildByType(ElementTypes.CLASS_TYPE);
             if (classDescNode != null) {
                 String name = classDescNode.getText();
+                name = name.substring(1, name.length()-1).replace('/', '.');
                 return new SmaliClassImpl(node, name);
             }
         }
@@ -81,6 +83,16 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
     public SmaliClassImpl(@NotNull SmaliClassStub stub, @NotNull IStubElementType nodeType) {
         super(stub, nodeType);
         name = stub.getName();
+    }
+
+    @NotNull
+    public String getPackageName() {
+        String name = getQualifiedName();
+        int lastDot = name.lastIndexOf('.');
+        if (lastDot < 0) {
+            return "";
+        }
+        return name.substring(0, lastDot);
     }
 
     public static String shortNameFromQualifiedName(String qualifiedName) {
@@ -112,10 +124,16 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
         return this;
     }
 
+    @Nonnull
     public String getName() {
-        return name;
+        int lastDot = name.lastIndexOf('.');
+        if (lastDot < 0) {
+            return name;
+        }
+        return name.substring(lastDot+1);
     }
 
+    @Nonnull
     public String getQualifiedName() {
         return name;
     }

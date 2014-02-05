@@ -55,7 +55,7 @@ public class SmaliClassElementType extends IStubElementType<SmaliClassStub, Smal
 
     @Override
     public SmaliClassStub createStub(@NotNull SmaliClass psi, StubElement parentStub) {
-        return new SmaliClassStub(parentStub, this, psi.getName());
+        return new SmaliClassStub(parentStub, this, psi.getQualifiedName());
     }
 
     @Override
@@ -77,6 +77,6 @@ public class SmaliClassElementType extends IStubElementType<SmaliClassStub, Smal
     }
 
     public void indexStub(SmaliClassStub stub, IndexSink sink) {
-        sink.occurrence(SmaliClassNameIndex.KEY, stub.getName());
+        sink.occurrence(SmaliClassNameIndex.KEY, stub.getQualifiedName());
     }
 }

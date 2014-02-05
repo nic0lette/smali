@@ -38,4 +38,5 @@ import com.sun.jdi.ReferenceType;
 
 public interface SmaliClass extends PsiClass {
     Location getLocationForSourcePosition(ReferenceType type, SourcePosition position);
+    String getPackageName();
 }
