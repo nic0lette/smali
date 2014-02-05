@@ -46,6 +46,7 @@ import com.sun.jdi.ReferenceType;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jf.smalidea.SmaliIcons;
 import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.iface.SmaliClass;
 import org.jf.smalidea.psi.iface.SmaliMethod;
@@ -60,6 +61,10 @@ import java.util.List;
 public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
         implements SmaliClass, StubBasedPsiElement<SmaliClassStub>, ItemPresentation {
     private String name;
+
+    @Nullable @Override public Icon getIcon(int flags) {
+        return SmaliIcons.SmaliIcon;
+    }
 
     public static SmaliClassImpl make(@NotNull ASTNode node) {
         ASTNode classDeclNode = node.findChildByType(ElementTypes.CLASS_SPEC);
