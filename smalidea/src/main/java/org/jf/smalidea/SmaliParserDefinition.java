@@ -33,6 +33,7 @@ package org.jf.smalidea;
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
+import com.intellij.lang.LanguageUtil;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.PsiParser;
 import com.intellij.lexer.Lexer;
@@ -107,6 +108,8 @@ public class SmaliParserDefinition implements ParserDefinition {
             return new SmaliClassTypeElementImpl(node);
         } else if (node.getElementType() == ElementTypes.METHOD_PARAM_LIST) {
             return new SmaliParamList(node);
+        } else if (node.getElementType() == ElementTypes.MODIFIER_LIST) {
+            return new SmaliModifierListImpl(node);
         }
         return new ASTWrapperPsiElement(node);
     }
@@ -116,7 +119,6 @@ public class SmaliParserDefinition implements ParserDefinition {
     }
 
     public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
-        //TODO: implement this
-        return SpaceRequirements.MUST;
+        return LanguageUtil.canStickTokensTogetherByLexer(left, right, new SmaliLexer());
     }
 }

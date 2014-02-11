@@ -138,6 +138,7 @@ sync[boolean toEof]
 
 
 smali_file
+  @init { mark().done(ElementTypes.MODIFIER_LIST); }
   : (class_element sync[true])+ EOF;
 
 class_element

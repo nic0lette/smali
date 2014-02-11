@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, Google Inc.
+ * Copyright 2014, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,15 +29,22 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea.psi.iface;
+package org.jf.smalidea.psi.stub;
 
-import com.intellij.debugger.SourcePosition;
-import com.intellij.psi.PsiAnnotationOwner;
-import com.intellij.psi.PsiClass;
-import com.sun.jdi.Location;
-import com.sun.jdi.ReferenceType;
+import com.intellij.psi.PsiModifierList;
+import com.intellij.psi.stubs.StubBase;
+import com.intellij.psi.stubs.StubElement;
+import org.jf.smalidea.psi.stub.element.SmaliModifierListElementType;
 
-public interface SmaliClass extends PsiClass, PsiAnnotationOwner {
-    Location getLocationForSourcePosition(ReferenceType type, SourcePosition position);
-    String getPackageName();
+public class SmaliModifierListStub extends StubBase<PsiModifierList> {
+    private final int accessFlags;
+
+    public SmaliModifierListStub(StubElement parent, int accessFlags) {
+        super(parent, SmaliModifierListElementType.INSTANCE);
+        this.accessFlags = accessFlags;
+    }
+
+    public int getAccessFlags() {
+        return accessFlags;
+    }
 }

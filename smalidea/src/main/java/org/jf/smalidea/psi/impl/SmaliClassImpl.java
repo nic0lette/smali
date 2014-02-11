@@ -37,6 +37,7 @@ import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.openapi.util.Pair;
 import com.intellij.psi.*;
+import com.intellij.psi.PsiModifier.ModifierConstant;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.stubs.IStubElementType;
 import com.intellij.util.IncorrectOperationException;
@@ -50,6 +51,7 @@ import org.jf.smalidea.SmaliIcons;
 import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.iface.SmaliClass;
 import org.jf.smalidea.psi.iface.SmaliMethod;
+import org.jf.smalidea.psi.iface.SmaliModifierList;
 import org.jf.smalidea.psi.stub.SmaliClassStub;
 
 import javax.annotation.Nonnull;
@@ -321,12 +323,16 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
         return new PsiTypeParameter[0];
     }
 
-    public PsiModifierList getModifierList() {
-        return null;
+    public SmaliModifierList getModifierList() {
+        return (SmaliModifierList)findChildByType(ElementTypes.MODIFIER_LIST);
     }
 
-    public boolean hasModifierProperty(@PsiModifier.ModifierConstant @NonNls @NotNull String name) {
-        return false;
+    @Override public boolean hasModifierProperty(@ModifierConstant @NonNls @NotNull String name) {
+        PsiModifierList modifierList = getModifierList();
+        if (modifierList == null) {
+            return false;
+        }
+        return modifierList.hasModifierProperty(name);
     }
 
     public String getPresentableText() {
@@ -338,6 +344,22 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
     }
 
     public Icon getIcon(boolean open) {
+        return null;
+    }
+
+    @NotNull @Override public PsiAnnotation[] getAnnotations() {
+        return new PsiAnnotation[0];
+    }
+
+    @NotNull @Override public PsiAnnotation[] getApplicableAnnotations() {
+        return new PsiAnnotation[0];
+    }
+
+    @Nullable @Override public PsiAnnotation findAnnotation(@NotNull @NonNls String qualifiedName) {
+        return null;
+    }
+
+    @NotNull @Override public PsiAnnotation addAnnotation(@NotNull @NonNls String qualifiedName) {
         return null;
     }
 }
