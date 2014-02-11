@@ -146,15 +146,27 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
     }
 
     public boolean isInterface() {
-        return false;
+        SmaliModifierList modifierList = getModifierList();
+        if (modifierList == null) {
+            return false;
+        }
+        return modifierList.hasModifierProperty("interface");
     }
 
     public boolean isAnnotationType() {
-        return false;
+        SmaliModifierList modifierList = getModifierList();
+        if (modifierList == null) {
+            return false;
+        }
+        return modifierList.hasModifierProperty("annotation");
     }
 
     public boolean isEnum() {
-        return false;
+        SmaliModifierList modifierList = getModifierList();
+        if (modifierList == null) {
+            return false;
+        }
+        return modifierList.hasModifierProperty("enum");
     }
 
     public PsiReferenceList getExtendsList() {
