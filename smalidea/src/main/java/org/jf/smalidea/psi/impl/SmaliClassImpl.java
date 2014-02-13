@@ -52,6 +52,7 @@ import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.iface.SmaliClass;
 import org.jf.smalidea.psi.iface.SmaliMethod;
 import org.jf.smalidea.psi.iface.SmaliModifierList;
+import org.jf.smalidea.psi.iface.SmaliReferenceList;
 import org.jf.smalidea.psi.stub.SmaliClassStub;
 
 import javax.annotation.Nonnull;
@@ -169,12 +170,12 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
         return modifierList.hasModifierProperty("enum");
     }
 
-    public PsiReferenceList getExtendsList() {
-        return null;
+    public SmaliReferenceList getExtendsList() {
+        return (SmaliReferenceList)findChildByType(ElementTypes.EXTENDS_LIST);
     }
 
-    public PsiReferenceList getImplementsList() {
-        return null;
+    public SmaliReferenceList getImplementsList() {
+        return (SmaliReferenceList)findChildByType(ElementTypes.IMPLEMENTS_LIST);
     }
 
     @NotNull

@@ -33,16 +33,15 @@ package org.jf.smalidea.psi;
 
 import com.intellij.psi.tree.IElementType;
 import org.jf.smalidea.SmaliLanguage;
-import org.jf.smalidea.psi.stub.element.SmaliClassElementType;
-import org.jf.smalidea.psi.stub.element.SmaliFileElementType;
-import org.jf.smalidea.psi.stub.element.SmaliMethodElementType;
-import org.jf.smalidea.psi.stub.element.SmaliModifierListElementType;
+import org.jf.smalidea.psi.stub.element.*;
 
 public class ElementTypes {
     public static final IElementType SMALI_FILE = SmaliFileElementType.INSTANCE;
     public static final IElementType SMALI_CLASS = SmaliClassElementType.INSTANCE;
 
     public static final IElementType MODIFIER_LIST = SmaliModifierListElementType.INSTANCE;
+    public static final IElementType EXTENDS_LIST = SmaliExtendsListElementType.INSTANCE;
+    public static final IElementType IMPLEMENTS_LIST = SmaliImplementsListElementType.INSTANCE;
 
     public static final IElementType CLASS_SPEC = new IElementType("class spec", SmaliLanguage.INSTANCE);
     public static final IElementType SUPER_SPEC = new IElementType("super spec", SmaliLanguage.INSTANCE);
