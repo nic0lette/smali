@@ -31,6 +31,7 @@
 
 package org.jf.smalidea.psi.impl;
 
+import com.google.common.collect.Lists;
 import com.intellij.debugger.SourcePosition;
 import com.intellij.extapi.psi.StubBasedPsiElementBase;
 import com.intellij.lang.ASTNode;
@@ -180,30 +181,101 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
 
     @NotNull
     public PsiClassType[] getExtendsListTypes() {
-        return new PsiClassType[0];
+        SmaliReferenceList extendsList = getExtendsList();
+        if (extendsList == null) {
+            return PsiClassType.EMPTY_ARRAY;
+        }
+        return extendsList.getReferencedTypes();
     }
 
     @NotNull
     public PsiClassType[] getImplementsListTypes() {
-        return new PsiClassType[0];
+        SmaliReferenceList implementsList = getImplementsList();
+        if (implementsList == null) {
+            return PsiClassType.EMPTY_ARRAY;
+        }
+        return implementsList.getReferencedTypes();
+    }
+
+    public PsiClassType getSuperClassType() {
+        PsiElement parent = getParent();
+
+        ASTNode superSpec = parent.getNode().findChildByType(ElementTypes.SUPER_SPEC);
+
+        if (superSpec != null) {
+            ASTNode superType = superSpec.findChildByType(ElementTypes.CLASS_TYPE);
+            if (superType != null) {
+                return ((SmaliClassTypeElementImpl)superType).getType();
+            }
+        }
+
+        if (isEnum()) {
+            PsiElementFactory factory = JavaPsiFacade.getInstance(getProject()).getElementFactory();
+            return factory.createTypeByFQClassName(CommonClassNames.JAVA_LANG_ENUM, getResolveScope());
+        }
+
+        if (getQualifiedName().equals(CommonClassNames.JAVA_LANG_OBJECT)) {
+            return null;
+        }
+        return PsiType.getJavaLangObject(getManager(), getResolveScope());
     }
 
     public PsiClass getSuperClass() {
-        return null;
+        return getSuperClassType().resolve();
     }
 
     public PsiClass[] getInterfaces() {
-        return new PsiClass[0];
+        PsiClassType[] interfaceTypes;
+        if (isInterface()) {
+            interfaceTypes = getExtendsListTypes();
+        } else {
+            interfaceTypes = getImplementsListTypes();
+        }
+
+        List<PsiClass> resolvedTypes = Lists.newArrayList();
+
+        for (PsiClassType classType: interfaceTypes) {
+            PsiClass resolvedType = classType.resolve();
+            if (resolvedType != null) {
+                resolvedTypes.add(resolvedType);
+            }
+        }
+
+        return resolvedTypes.toArray(new PsiClass[resolvedTypes.size()]);
     }
 
     @NotNull
     public PsiClass[] getSupers() {
-        return new PsiClass[0];
+        List<PsiClass> resolvedTypes = Lists.newArrayList();
+
+        for (PsiClassType classType: getSuperTypes()) {
+            PsiClass resolvedType = classType.resolve();
+            if (resolvedType != null) {
+                resolvedTypes.add(resolvedType);
+            }
+        }
+        return resolvedTypes.toArray(new PsiClass[resolvedTypes.size()]);
     }
 
     @NotNull
     public PsiClassType[] getSuperTypes() {
-        return new PsiClassType[0];
+        PsiClassType superclass = getSuperClassType();
+        PsiClassType[] interfaces;
+
+        if (isInterface()) {
+            interfaces = getExtendsListTypes();
+        } else {
+            interfaces = getImplementsListTypes();
+        }
+
+        if (superclass == null) {
+            return interfaces;
+        }
+
+        PsiClassType[] combined = new PsiClassType[interfaces.length + 1];
+        combined[0] = superclass;
+        System.arraycopy(interfaces, 0, combined, 1 , interfaces.length);
+        return combined;
     }
 
     @NotNull
