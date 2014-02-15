@@ -45,7 +45,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jf.dexlib2.AccessFlags;
 import org.jf.smalidea.SmaliTokens;
-import org.jf.smalidea.psi.ElementTypes;
+import org.jf.smalidea.psi.iface.SmaliAccessFlagsOwner;
 import org.jf.smalidea.psi.iface.SmaliModifierList;
 import org.jf.smalidea.psi.stub.SmaliModifierListStub;
 import org.jf.smalidea.psi.stub.element.SmaliModifierListElementType;
@@ -67,12 +67,7 @@ public class SmaliModifierListImpl extends StubBasedPsiElementBase<SmaliModifier
     }
 
     private ASTNode findAccessListNode() {
-        ASTNode classSpecNode = getParent().getNode().findChildByType(ElementTypes.CLASS_SPEC);
-        if (classSpecNode == null) {
-            return null;
-        }
-
-        return classSpecNode.findChildByType(ElementTypes.ACCESS_LIST);
+        return ((SmaliAccessFlagsOwner)getParent()).getAccessFlagsNode();
     }
 
     @Override public boolean hasExplicitModifier(@ModifierConstant @NotNull @NonNls String name) {

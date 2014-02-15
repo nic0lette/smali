@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, Google Inc.
+ * Copyright 2014, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,13 +31,9 @@
 
 package org.jf.smalidea.psi.iface;
 
-import com.intellij.debugger.SourcePosition;
-import com.intellij.psi.PsiAnnotationOwner;
-import com.intellij.psi.PsiClass;
-import com.sun.jdi.Location;
-import com.sun.jdi.ReferenceType;
+import com.intellij.lang.ASTNode;
+import org.jetbrains.annotations.Nullable;
 
-public interface SmaliClass extends PsiClass, PsiAnnotationOwner, SmaliAccessFlagsOwner {
-    Location getLocationForSourcePosition(ReferenceType type, SourcePosition position);
-    String getPackageName();
+public interface SmaliAccessFlagsOwner {
+    @Nullable ASTNode getAccessFlagsNode();
 }

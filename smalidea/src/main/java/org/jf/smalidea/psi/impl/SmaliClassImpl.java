@@ -408,6 +408,15 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
         return new PsiTypeParameter[0];
     }
 
+    @Nullable @Override public ASTNode getAccessFlagsNode() {
+        PsiElement classSpecElement = findChildByType(ElementTypes.CLASS_SPEC);
+        if (classSpecElement == null) {
+            return null;
+        }
+
+        return classSpecElement.getNode().findChildByType(ElementTypes.ACCESS_LIST);
+    }
+
     public SmaliModifierList getModifierList() {
         return (SmaliModifierList)findChildByType(ElementTypes.MODIFIER_LIST);
     }
