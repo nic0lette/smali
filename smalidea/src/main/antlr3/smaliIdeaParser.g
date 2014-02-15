@@ -188,6 +188,7 @@ add them to the $smali_file::classAnnotations list*/
 field
   @init {
     Marker marker = mark();
+    mark().done(ElementTypes.MODIFIER_LIST);
     Marker annotationsMarker = null;
     boolean classAnnotations = true;
   }

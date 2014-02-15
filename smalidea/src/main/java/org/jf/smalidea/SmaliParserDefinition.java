@@ -94,6 +94,8 @@ public class SmaliParserDefinition implements ParserDefinition {
             }
         } else if (node.getElementType() == ElementTypes.METHOD) {
             return new SmaliMethodImpl(node);
+        } else if (node.getElementType() == ElementTypes.FIELD) {
+            return new SmaliFieldImpl(node);
         } else if (node.getElementType() == ElementTypes.INSTRUCTION) {
             return new SmaliInstructionImpl(node, opcodes);
         } else if (node.getElementType() == ElementTypes.LITERAL) {

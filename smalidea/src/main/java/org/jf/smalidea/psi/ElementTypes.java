@@ -48,7 +48,7 @@ public class ElementTypes {
     public static final IElementType IMPLEMENTS_SPEC = new IElementType("implements spec", SmaliLanguage.INSTANCE);
     public static final IElementType SOURCE_SPEC = new IElementType("source spec", SmaliLanguage.INSTANCE);
     public static final IElementType ACCESS_LIST = new IElementType("access list", SmaliLanguage.INSTANCE);
-    public static final IElementType FIELD = new IElementType("field", SmaliLanguage.INSTANCE);
+    public static final IElementType FIELD = SmaliFieldElementType.INSTANCE;
     public static final IElementType ANNOTATION = new IElementType("annotation", SmaliLanguage.INSTANCE);
     public static final IElementType METHOD = SmaliMethodElementType.INSTANCE;
 
