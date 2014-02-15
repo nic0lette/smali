@@ -31,11 +31,11 @@
 
 package org.jf.smalidea.psi.iface;
 
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiType;
+import com.intellij.psi.PsiTypeElement;
 import org.jetbrains.annotations.NotNull;
 
-public interface SmaliTypeElement extends PsiElement {
+public interface SmaliTypeElement extends PsiTypeElement {
     @NotNull
     PsiType getType();
 }
