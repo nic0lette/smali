@@ -39,6 +39,7 @@ import com.intellij.navigation.ItemPresentation;
 import com.intellij.openapi.util.Pair;
 import com.intellij.psi.*;
 import com.intellij.psi.PsiModifier.ModifierConstant;
+import com.intellij.psi.impl.PsiClassImplUtil;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.stubs.IStubElementType;
 import com.intellij.util.IncorrectOperationException;
@@ -50,10 +51,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jf.smalidea.SmaliIcons;
 import org.jf.smalidea.psi.ElementTypes;
-import org.jf.smalidea.psi.iface.SmaliClass;
-import org.jf.smalidea.psi.iface.SmaliMethod;
-import org.jf.smalidea.psi.iface.SmaliModifierList;
-import org.jf.smalidea.psi.iface.SmaliReferenceList;
+import org.jf.smalidea.psi.iface.*;
 import org.jf.smalidea.psi.stub.SmaliClassStub;
 
 import javax.annotation.Nonnull;
@@ -280,7 +278,7 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
 
     @NotNull
     public PsiField[] getFields() {
-        return new PsiField[0];
+        return findChildrenByClass(SmaliField.class);
     }
 
     @NotNull
@@ -305,7 +303,7 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
 
     @NotNull
     public PsiField[] getAllFields() {
-        return new PsiField[0];
+        return PsiClassImplUtil.getAllFields(this);
     }
 
     @NotNull
@@ -319,7 +317,7 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
     }
 
     public PsiField findFieldByName(@NonNls String name, boolean checkBases) {
-        return null;
+        return PsiClassImplUtil.findFieldByName(this, name, checkBases);
     }
 
     public PsiMethod findMethodBySignature(PsiMethod patternMethod, boolean checkBases) {
