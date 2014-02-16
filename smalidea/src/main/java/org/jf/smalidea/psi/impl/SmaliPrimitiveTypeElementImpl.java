@@ -31,24 +31,19 @@
 
 package org.jf.smalidea.psi.impl;
 
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiType;
-import com.intellij.psi.impl.source.tree.LeafPsiElement;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.iface.SmaliTypeElement;
 
-public class SmaliPrimitiveTypeElementImpl extends LeafPsiElement implements SmaliTypeElement {
+public class SmaliPrimitiveTypeElementImpl extends ASTWrapperPsiElement implements SmaliTypeElement {
     public SmaliPrimitiveTypeElementImpl(@NotNull ASTNode node) {
-        super(node.getElementType(), node.getText());
-    }
-
-    public SmaliPrimitiveTypeElementImpl(@NotNull CharSequence text) {
-        super(ElementTypes.PRIMITIVE_TYPE, text);
+        super(node);
     }
 
     @NotNull

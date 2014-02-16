@@ -1,23 +1,18 @@
 package org.jf.smalidea.psi.impl;
 
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiType;
-import com.intellij.psi.impl.source.tree.LeafPsiElement;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.iface.SmaliTypeElement;
 
-public class SmaliVoidTypeElementImpl extends LeafPsiElement implements SmaliTypeElement {
+public class SmaliVoidTypeElementImpl extends ASTWrapperPsiElement implements SmaliTypeElement {
     public SmaliVoidTypeElementImpl(@NotNull ASTNode node) {
-        super(node.getElementType(), node.getText());
-    }
-
-    public SmaliVoidTypeElementImpl(@NotNull CharSequence text) {
-        super(ElementTypes.VOID_TYPE, text);
+        super(node);
     }
 
     @NotNull
