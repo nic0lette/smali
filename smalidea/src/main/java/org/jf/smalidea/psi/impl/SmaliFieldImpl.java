@@ -92,7 +92,9 @@ public class SmaliFieldImpl extends StubBasedPsiElementBase<SmaliFieldStub>
     }
 
     @NotNull @Override public PsiIdentifier getNameIdentifier() {
-        return null;
+        PsiElement element = findChildByType(ElementTypes.MEMBER_NAME);
+        assert element != null;
+        return (PsiIdentifier)element;
     }
 
     @Nullable @Override public PsiDocComment getDocComment() {
