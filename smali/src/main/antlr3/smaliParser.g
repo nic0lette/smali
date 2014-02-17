@@ -41,17 +41,6 @@ tokens {
   ARRAY_DATA_DIRECTIVE;
   ARRAY_DESCRIPTOR;
   ARROW;
-  BASE_ARRAY_DESCRIPTOR;
-  BASE_CHAR_LITERAL;
-  BASE_CLASS_DESCRIPTOR;
-  BASE_FLOAT;
-  BASE_FLOAT_OR_ID;
-  BASE_INTEGER;
-  BASE_PRIMITIVE_TYPE;
-  BASE_SIMPLE_NAME;
-  BASE_STRING_LITERAL;
-  BASE_TYPE;
-  BINARY_EXPONENT;
   BOOL_LITERAL;
   BYTE_LITERAL;
   CATCH_DIRECTIVE;
@@ -63,7 +52,6 @@ tokens {
   CLOSE_PAREN;
   COLON;
   COMMA;
-  DECIMAL_EXPONENT;
   DOTDOT;
   DOUBLE_LITERAL;
   DOUBLE_LITERAL_OR_ID;
@@ -79,14 +67,10 @@ tokens {
   ENUM_DIRECTIVE;
   EPILOGUE_DIRECTIVE;
   EQUAL;
-  ESCAPE_SEQUENCE;
   FIELD_DIRECTIVE;
   FIELD_OFFSET;
   FLOAT_LITERAL;
   FLOAT_LITERAL_OR_ID;
-  HEX_DIGIT;
-  HEX_DIGITS;
-  HEX_PREFIX;
   IMPLEMENTS_DIRECTIVE;
   INLINE_INDEX;
   INSTRUCTION_FORMAT10t;
@@ -133,7 +117,6 @@ tokens {
   INSTRUCTION_FORMAT3rmi_METHOD;
   INSTRUCTION_FORMAT3rms_METHOD;
   INSTRUCTION_FORMAT51l;
-  INVALID_TOKEN;
   LINE_COMMENT;
   LINE_DIRECTIVE;
   LOCAL_DIRECTIVE;
@@ -146,8 +129,10 @@ tokens {
   OPEN_BRACE;
   OPEN_PAREN;
   PACKED_SWITCH_DIRECTIVE;
-  PARAM_LIST;
-  PARAM_LIST_OR_ID;
+  PARAM_LIST_END;
+  PARAM_LIST_START;
+  PARAM_LIST_OR_ID_END;
+  PARAM_LIST_OR_ID_START;
   PARAMETER_DIRECTIVE;
   POSITIVE_INTEGER_LITERAL;
   PRIMITIVE_TYPE;
@@ -167,9 +152,9 @@ tokens {
   VTABLE_INDEX;
   WHITE_SPACE;
 
-  //A couple of generated types that we remap other tokens to, to simplify the generated AST
-  LABEL;
+  // misc non-lexer tokens
   INTEGER_LITERAL;
+  INVALID_TOKEN;
 
   //I_* tokens are imaginary tokens used as parent AST nodes
   I_CLASS_DEF;
@@ -547,6 +532,9 @@ registers_directive
       $statements_and_directives::hasRegistersDirective=true;
     };
 
+param_list_or_id
+  : PARAM_LIST_OR_ID_START PRIMITIVE_TYPE+ PARAM_LIST_OR_ID_END;
+
 /*identifiers are much more general than most languages. Any of the below can either be
 the indicated type OR an identifier, depending on the context*/
 simple_name
@@ -560,7 +548,7 @@ simple_name
   | BOOL_LITERAL -> SIMPLE_NAME[$BOOL_LITERAL]
   | NULL_LITERAL -> SIMPLE_NAME[$NULL_LITERAL]
   | REGISTER -> SIMPLE_NAME[$REGISTER]
-  | PARAM_LIST_OR_ID -> SIMPLE_NAME[$PARAM_LIST_OR_ID]
+  | param_list_or_id -> { adaptor.create(SIMPLE_NAME, $param_list_or_id.text) }
   | PRIMITIVE_TYPE -> SIMPLE_NAME[$PRIMITIVE_TYPE]
   | VOID_TYPE -> SIMPLE_NAME[$VOID_TYPE]
   | ANNOTATION_VISIBILITY -> SIMPLE_NAME[$ANNOTATION_VISIBILITY]
@@ -599,8 +587,8 @@ method_prototype
     -> ^(I_METHOD_PROTOTYPE[$start, "I_METHOD_PROTOTYPE"] ^(I_METHOD_RETURN_TYPE type_descriptor) param_list?);
 
 param_list
-  : PARAM_LIST -> { parseParamList((CommonToken)$PARAM_LIST) }
-  | PARAM_LIST_OR_ID -> { parseParamList((CommonToken)$PARAM_LIST_OR_ID) }
+  : PARAM_LIST_START nonvoid_type_descriptor* PARAM_LIST_END -> nonvoid_type_descriptor*
+  | PARAM_LIST_OR_ID_START PRIMITIVE_TYPE* PARAM_LIST_OR_ID_END -> PRIMITIVE_TYPE*
   | nonvoid_type_descriptor*;
 
 type_descriptor
