@@ -216,8 +216,10 @@ public class SmaliTokens {
     public static final IElementType VOID_TYPE;
     public static final IElementType CLASS_DESCRIPTOR;
     public static final IElementType ARRAY_DESCRIPTOR;
-    public static final IElementType PARAM_LIST_OR_ID;
-    public static final IElementType PARAM_LIST;
+    public static final IElementType PARAM_LIST_OR_ID_START;
+    public static final IElementType PARAM_LIST_OR_ID_END;
+    public static final IElementType PARAM_LIST_START;
+    public static final IElementType PARAM_LIST_END;
     public static final IElementType SIMPLE_NAME;
     public static final IElementType MEMBER_NAME;
     public static final IElementType DOTDOT;
@@ -356,8 +358,10 @@ public class SmaliTokens {
         VOID_TYPE = tokenRegisterer.register("VOID_TYPE", Attributes.TYPE);
         CLASS_DESCRIPTOR = tokenRegisterer.register("CLASS_DESCRIPTOR", Attributes.TYPE);
         ARRAY_DESCRIPTOR = tokenRegisterer.register("ARRAY_DESCRIPTOR", Attributes.TYPE);
-        PARAM_LIST_OR_ID = tokenRegisterer.register("PARAM_LIST_OR_ID", Attributes.TYPE);
-        PARAM_LIST = tokenRegisterer.register("PARAM_LIST", Attributes.TYPE);
+        PARAM_LIST_OR_ID_START = tokenRegisterer.register("PARAM_LIST_OR_ID_START", Attributes.TYPE);
+        PARAM_LIST_OR_ID_END = tokenRegisterer.register("PARAM_LIST_OR_ID_END", Attributes.TYPE);
+        PARAM_LIST_START = tokenRegisterer.register("PARAM_LIST_START", Attributes.TYPE);
+        PARAM_LIST_END = tokenRegisterer.register("PARAM_LIST_END", Attributes.TYPE);
         SIMPLE_NAME = tokenRegisterer.register("SIMPLE_NAME", Attributes.IDENTIFIER);
         MEMBER_NAME = tokenRegisterer.register("MEMBER_NAME", Attributes.IDENTIFIER);
         DOTDOT = tokenRegisterer.register("DOTDOT", Attributes.DOTDOT);

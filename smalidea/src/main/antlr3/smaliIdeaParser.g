@@ -247,7 +247,7 @@ registers_directive
 the indicated type OR an identifier, depending on the context*/
 simple_name
   @init { Marker marker = mark(); }
-  @after { marker.done(ElementTypes.SIMPLE_NAME); }
+  @after { marker.collapse(ElementTypes.SIMPLE_NAME); }
   : SIMPLE_NAME
   | ACCESS_SPEC
   | VERIFICATION_ERROR_TYPE
@@ -258,7 +258,7 @@ simple_name
   | BOOL_LITERAL
   | NULL_LITERAL
   | REGISTER
-  | PARAM_LIST_OR_ID
+  | PARAM_LIST_OR_ID_START PRIMITIVE_TYPE+ PARAM_LIST_OR_ID_END
   | PRIMITIVE_TYPE
   | VOID_TYPE
   | ANNOTATION_VISIBILITY
@@ -302,8 +302,8 @@ method_prototype
 
 param_list
   @init { Marker marker = mark(); }
-  : PARAM_LIST
-  | PARAM_LIST_OR_ID
+  : PARAM_LIST_START nonvoid_type_descriptor* PARAM_LIST_END
+  | PARAM_LIST_OR_ID_START primitive_type* PARAM_LIST_OR_ID_END
   | nonvoid_type_descriptor*;
   finally { marker.done(ElementTypes.METHOD_PARAM_LIST); }
 
