@@ -67,7 +67,7 @@ import static com.intellij.lang.PsiBuilder.Marker;
                     if (acceptEof) {
                         break;
                     }
-                    input.rewind();
+                    input.rewind(mark);
                     mark = -1;
                     marker = null;
                     return;
