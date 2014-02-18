@@ -66,8 +66,13 @@ public class SmaliModifierListImpl extends StubBasedPsiElementBase<SmaliModifier
         return hasExplicitModifier(name);
     }
 
+    @Nullable
     private ASTNode findAccessListNode() {
-        return ((SmaliAccessFlagsOwner)getParent()).getAccessFlagsNode();
+        PsiElement parent = getParent();
+        if (parent instanceof SmaliAccessFlagsOwner) {
+            return ((SmaliAccessFlagsOwner)getParent()).getAccessFlagsNode();
+        }
+        return null;
     }
 
     @Override public boolean hasExplicitModifier(@ModifierConstant @NotNull @NonNls String name) {

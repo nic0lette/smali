@@ -285,12 +285,19 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
 
     @NotNull
     public PsiMethod[] getMethods() {
-        return new PsiMethod[0];
+        return findChildrenByClass(SmaliMethod.class);
     }
 
     @NotNull
     public PsiMethod[] getConstructors() {
-        return new PsiMethod[0];
+        PsiMethod[] methods = getMethods();
+        List<PsiMethod> constructors = Lists.newArrayList();
+        for (PsiMethod method: methods) {
+            if (method.isConstructor()) {
+                constructors.add(method);
+            }
+        }
+        return constructors.toArray(new PsiMethod[constructors.size()]);
     }
 
     @NotNull
@@ -310,7 +317,7 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
 
     @NotNull
     public PsiMethod[] getAllMethods() {
-        return new PsiMethod[0];
+        return PsiClassImplUtil.getAllMethods(this);
     }
 
     @NotNull

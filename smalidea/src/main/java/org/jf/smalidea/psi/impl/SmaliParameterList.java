@@ -33,10 +33,26 @@ package org.jf.smalidea.psi.impl;
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiParameter;
+import com.intellij.psi.PsiParameterList;
 import org.jetbrains.annotations.NotNull;
 
-public class SmaliParamList extends ASTWrapperPsiElement {
-    public SmaliParamList(@NotNull ASTNode node) {
+import java.util.Arrays;
+
+public class SmaliParameterList extends ASTWrapperPsiElement implements PsiParameterList {
+    public SmaliParameterList(@NotNull ASTNode node) {
         super(node);
+    }
+
+    @NotNull @Override public PsiParameter[] getParameters() {
+        return findChildrenByClass(SmaliParameter.class);
+    }
+
+    @Override public int getParameterIndex(PsiParameter parameter) {
+        return Arrays.asList(getParameters()).indexOf(parameter);
+    }
+
+    @Override public int getParametersCount() {
+        return getParameters().length;
     }
 }

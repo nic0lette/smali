@@ -188,11 +188,12 @@ add them to the $smali_file::classAnnotations list*/
 field
   @init {
     Marker marker = mark();
-    mark().done(ElementTypes.MODIFIER_LIST);
     Marker annotationsMarker = null;
     boolean classAnnotations = true;
   }
-  : FIELD_DIRECTIVE access_list member_name COLON nonvoid_type_descriptor (EQUAL literal)?
+  : FIELD_DIRECTIVE
+    { mark().done(ElementTypes.MODIFIER_LIST);} access_list
+    member_name COLON nonvoid_type_descriptor (EQUAL literal)?
     ( END_FIELD_DIRECTIVE
     | (ANNOTATION_DIRECTIVE)=> ( {annotationsMarker = mark();}
                                  ((ANNOTATION_DIRECTIVE)=> annotation)+
@@ -216,7 +217,9 @@ field
 
 method
   @init { Marker marker = mark(); }
-  : METHOD_DIRECTIVE access_list member_name method_prototype statements_and_directives END_METHOD_DIRECTIVE;
+  : METHOD_DIRECTIVE
+  { mark().done(ElementTypes.MODIFIER_LIST); } access_list
+  member_name method_decl_prototype statements_and_directives END_METHOD_DIRECTIVE;
   finally { marker.done(ElementTypes.METHOD); }
 
 statements_and_directives
@@ -295,10 +298,30 @@ member_name
   | MEMBER_NAME;
   finally { marker.done(ElementTypes.MEMBER_NAME); }
 
+method_decl_prototype
+  @init { Marker marker = mark(); }
+  : OPEN_PAREN param_decl_list CLOSE_PAREN type_descriptor;
+  finally { marker.done(ElementTypes.METHOD_PROTOTYPE); }
+
 method_prototype
   @init { Marker marker = mark(); }
   : OPEN_PAREN param_list CLOSE_PAREN type_descriptor;
   finally { marker.done(ElementTypes.METHOD_PROTOTYPE); }
+
+param_decl
+  @init {
+    Marker marker = mark();
+    mark().done(ElementTypes.MODIFIER_LIST);
+  }
+  : nonvoid_type_descriptor;
+  finally { marker.done(ElementTypes.METHOD_PARAM); }
+
+param_decl_list
+  @init { Marker marker = mark(); }
+  : PARAM_LIST_START param_decl* PARAM_LIST_END
+  | PARAM_LIST_OR_ID_START param_decl* PARAM_LIST_OR_ID_END
+  | param_decl*;
+  finally { marker.done(ElementTypes.METHOD_PARAM_LIST); }
 
 param_list
   @init { Marker marker = mark(); }

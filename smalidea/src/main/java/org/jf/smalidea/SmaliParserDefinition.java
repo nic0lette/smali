@@ -109,7 +109,9 @@ public class SmaliParserDefinition implements ParserDefinition {
         } else if (node.getElementType() == ElementTypes.CLASS_TYPE) {
             return new SmaliClassTypeElementImpl(node);
         } else if (node.getElementType() == ElementTypes.METHOD_PARAM_LIST) {
-            return new SmaliParamList(node);
+            return new SmaliParameterList(node);
+        } else if (node.getElementType() == ElementTypes.METHOD_PARAM) {
+            return new SmaliParameter(node);
         } else if (node.getElementType() == ElementTypes.MODIFIER_LIST) {
             return new SmaliModifierListImpl(node);
         } else if (node.getElementType() == ElementTypes.EXTENDS_LIST) {
