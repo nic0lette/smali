@@ -35,9 +35,8 @@ import com.intellij.debugger.SourcePosition;
 import com.intellij.psi.PsiAnnotationOwner;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.util.MethodSignature;
 
-public interface SmaliMethod extends PsiElement, PsiMethod, SmaliAccessFlagsOwner, MethodSignature, PsiAnnotationOwner {
+public interface SmaliMethod extends PsiElement, PsiMethod, SmaliAccessFlagsOwner, PsiAnnotationOwner {
     String getMethodNameAndProto();
     String getProto();
     SourcePosition getSourcePositionForAddress(int address);

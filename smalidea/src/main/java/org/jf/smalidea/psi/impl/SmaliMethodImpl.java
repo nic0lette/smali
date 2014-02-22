@@ -38,6 +38,7 @@ import com.intellij.lang.ASTNode;
 import com.intellij.openapi.editor.Document;
 import com.intellij.psi.*;
 import com.intellij.psi.PsiModifier.ModifierConstant;
+import com.intellij.psi.impl.PsiSuperMethodImplUtil;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.stubs.IStubElementType;
 import com.intellij.psi.util.MethodSignature;
@@ -196,24 +197,7 @@ public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
     }
 
     @NotNull @Override public MethodSignature getSignature(@NotNull PsiSubstitutor substitutor) {
-        return this;
-    }
-
-    @NotNull @Override public PsiSubstitutor getSubstitutor() {
-        return PsiSubstitutor.EMPTY;
-    }
-
-    @NotNull @Override public PsiType[] getParameterTypes() {
-        PsiParameter[] parameters = SmaliMethodImpl.this.getParameterList().getParameters();
-        PsiType[] parameterTypes = new PsiType[parameters.length];
-        for (int i=0; i<parameters.length; i++) {
-            parameterTypes[i] = parameters[i].getType();
-        }
-        return parameterTypes;
-    }
-
-    @Override public boolean isRaw() {
-        return false;
+        return MethodSignatureBackedByPsiMethod.create(this, substitutor);
     }
 
     @Nullable @Override public PsiIdentifier getNameIdentifier() {
@@ -223,28 +207,32 @@ public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
     }
 
     @NotNull @Override public PsiMethod[] findSuperMethods() {
-        return new PsiMethod[0];
+        return PsiSuperMethodImplUtil.findSuperMethods(this);
     }
 
     @NotNull @Override public PsiMethod[] findSuperMethods(boolean checkAccess) {
-        return new PsiMethod[0];
+        return PsiSuperMethodImplUtil.findSuperMethods(this, checkAccess);
     }
 
     @NotNull @Override public PsiMethod[] findSuperMethods(PsiClass parentClass) {
-        return new PsiMethod[0];
+        return PsiSuperMethodImplUtil.findSuperMethods(this, parentClass);
     }
 
     @NotNull @Override
     public List<MethodSignatureBackedByPsiMethod> findSuperMethodSignaturesIncludingStatic(boolean checkAccess) {
-        return null;
+        return PsiSuperMethodImplUtil.findSuperMethodSignaturesIncludingStatic(this, checkAccess);
     }
 
     @Nullable @Override public PsiMethod findDeepestSuperMethod() {
-        return null;
+        final PsiMethod[] methods = findDeepestSuperMethods();
+        if (methods.length == 0) {
+            return null;
+        }
+        return methods[0];
     }
 
     @NotNull @Override public PsiMethod[] findDeepestSuperMethods() {
-        return new PsiMethod[0];
+        return PsiSuperMethodImplUtil.findDeepestSuperMethods(this);
     }
 
     @NotNull @Override public PsiModifierList getModifierList() {
@@ -258,7 +246,7 @@ public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
     }
 
     @NotNull @Override public HierarchicalMethodSignature getHierarchicalMethodSignature() {
-        return null;
+        return PsiSuperMethodImplUtil.getHierarchicalMethodSignature(this);
     }
 
     @Nullable @Override public PsiDocComment getDocComment() {
