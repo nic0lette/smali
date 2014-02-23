@@ -104,7 +104,12 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
         return name.substring(0, lastDot);
     }
 
-    public static String shortNameFromQualifiedName(String qualifiedName) {
+    @Nullable
+    public static String shortNameFromQualifiedName(@Nullable String qualifiedName) {
+        if (qualifiedName == null) {
+            return null;
+        }
+
         int index = qualifiedName.lastIndexOf('.');
         if (index == -1) {
             return qualifiedName;

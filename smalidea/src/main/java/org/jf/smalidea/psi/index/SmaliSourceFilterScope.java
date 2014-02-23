@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, Google Inc.
+ * Copyright 2014, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,33 +29,26 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea.psi.stub;
+package org.jf.smalidea.psi.index;
 
-import com.intellij.psi.stubs.IStubElementType;
-import com.intellij.psi.stubs.NamedStub;
-import com.intellij.psi.stubs.StubBase;
-import com.intellij.psi.stubs.StubElement;
-import org.jetbrains.annotations.Nullable;
-import org.jf.smalidea.psi.iface.SmaliClass;
-import org.jf.smalidea.psi.impl.SmaliClassImpl;
+import com.intellij.openapi.roots.ProjectFileIndex;
+import com.intellij.openapi.roots.ProjectRootManager;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.search.DelegatingGlobalSearchScope;
+import com.intellij.psi.search.GlobalSearchScope;
+import org.jetbrains.annotations.NotNull;
+import org.jf.smalidea.SmaliFileType;
 
-public class SmaliClassStub extends StubBase<SmaliClass> implements NamedStub<SmaliClass> {
-    @Nullable private String qualifiedName;
-    @Nullable private String shortName;
+public class SmaliSourceFilterScope extends DelegatingGlobalSearchScope {
+    private final ProjectFileIndex fileIndex;
 
-    public SmaliClassStub(StubElement parent, IStubElementType elementType, @Nullable String qualifiedName) {
-        super(parent, elementType);
-        this.qualifiedName = qualifiedName;
-        this.shortName = SmaliClassImpl.shortNameFromQualifiedName(qualifiedName);
+    public SmaliSourceFilterScope(@NotNull final GlobalSearchScope scope) {
+        super(scope, "smali.sourceFilter");
+        this.fileIndex = ProjectRootManager.getInstance(getProject()).getFileIndex();
     }
 
-    @Nullable
-    public String getQualifiedName() {
-        return qualifiedName;
-    }
-
-    @Nullable
-    public String getName() {
-        return shortName;
+    @Override public boolean contains(@NotNull VirtualFile file) {
+        return super.contains(file) && fileIndex.isInSourceContent(file) &&
+                file.getFileType() == SmaliFileType.INSTANCE;
     }
 }

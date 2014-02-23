@@ -36,6 +36,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jf.smalidea.psi.iface.SmaliClass;
 import org.jf.smalidea.SmaliLanguage;
 import org.jf.smalidea.psi.impl.SmaliClassImpl;
+import org.jf.smalidea.psi.index.SmaliShortClassNameIndex;
 import org.jf.smalidea.psi.stub.SmaliClassStub;
 import org.jf.smalidea.psi.index.SmaliClassNameIndex;
 
@@ -77,6 +78,13 @@ public class SmaliClassElementType extends IStubElementType<SmaliClassStub, Smal
     }
 
     public void indexStub(SmaliClassStub stub, IndexSink sink) {
-        sink.occurrence(SmaliClassNameIndex.KEY, stub.getQualifiedName());
+        String name = stub.getQualifiedName();
+        if (name != null) {
+            sink.occurrence(SmaliClassNameIndex.KEY, stub.getQualifiedName());
+        }
+        name = stub.getName();
+        if (name != null) {
+            sink.occurrence(SmaliShortClassNameIndex.KEY, stub.getName());
+        }
     }
 }

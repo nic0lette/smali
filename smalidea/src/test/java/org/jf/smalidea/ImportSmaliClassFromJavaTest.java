@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, Google Inc.
+ * Copyright 2014, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,33 +29,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea.psi.stub;
+package org.jf.smalidea;
 
-import com.intellij.psi.stubs.IStubElementType;
-import com.intellij.psi.stubs.NamedStub;
-import com.intellij.psi.stubs.StubBase;
-import com.intellij.psi.stubs.StubElement;
-import org.jetbrains.annotations.Nullable;
-import org.jf.smalidea.psi.iface.SmaliClass;
-import org.jf.smalidea.psi.impl.SmaliClassImpl;
+import com.intellij.psi.PsiFile;
+import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 
-public class SmaliClassStub extends StubBase<SmaliClass> implements NamedStub<SmaliClass> {
-    @Nullable private String qualifiedName;
-    @Nullable private String shortName;
-
-    public SmaliClassStub(StubElement parent, IStubElementType elementType, @Nullable String qualifiedName) {
-        super(parent, elementType);
-        this.qualifiedName = qualifiedName;
-        this.shortName = SmaliClassImpl.shortNameFromQualifiedName(qualifiedName);
-    }
-
-    @Nullable
-    public String getQualifiedName() {
-        return qualifiedName;
-    }
-
-    @Nullable
-    public String getName() {
-        return shortName;
+public class ImportSmaliClassFromJavaTest extends LightCodeInsightFixtureTestCase {
+    public void testImportSmaliClass() {
+        PsiFile file = myFixture.addFileToProject("my/pkg/blah.smali", ".class public Lmy/pkg/blah; .super Ljava/lang/Object;");
+        myFixture.configureFromExistingVirtualFile(file.getVirtualFile());
+        myFixture.configureByText("a.java", "public class Foo extends bla<caret>h { }");
+        myFixture.launchAction(myFixture.findSingleIntention("Import Class"));
+        myFixture.checkResult("import my.pkg.blah;\n\npublic class Foo extends bla<caret>h { }");
     }
 }
