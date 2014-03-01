@@ -1,5 +1,5 @@
 /*
- * Copyright 2014, Google Inc.
+ * Copyright 2012, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,40 +29,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea.psi.stub;
+package org.jf.smalidea.psi.index;
 
-import com.intellij.psi.stubs.NamedStub;
-import com.intellij.psi.stubs.StubBase;
-import com.intellij.psi.stubs.StubElement;
+import com.intellij.psi.stubs.StringStubIndexExtension;
+import com.intellij.psi.stubs.StubIndexKey;
+import org.jetbrains.annotations.NotNull;
 import org.jf.smalidea.psi.iface.SmaliField;
-import org.jf.smalidea.psi.stub.element.SmaliFieldElementType;
 
-import javax.annotation.Nonnull;
+public class SmaliShortFieldNameIndex extends StringStubIndexExtension<SmaliField> {
+    public static final StubIndexKey<String, SmaliField> KEY =
+            StubIndexKey.createIndexKey("smali.field.shortname");
 
-public class SmaliFieldStub extends StubBase<SmaliField> implements NamedStub<SmaliField> {
+    public static final SmaliShortFieldNameIndex INSTANCE = new SmaliShortFieldNameIndex();
 
-    private final int accessFlags;
-    @Nonnull
-    private final String name;
-    @Nonnull
-    private final String type;
-
-    public SmaliFieldStub(StubElement parent, int accessFlags, @Nonnull String name, @Nonnull String type) {
-        super(parent, SmaliFieldElementType.INSTANCE);
-        this.accessFlags = accessFlags;
-        this.name = name;
-        this.type = type;
+    private SmaliShortFieldNameIndex() {
     }
 
-    @Nonnull @Override public String getName() {
-        return name;
-    }
-
-    public int getAccessFlags() {
-        return accessFlags;
-    }
-
-    @Nonnull public String getType() {
-        return type;
+    @NotNull
+    public StubIndexKey<String, SmaliField> getKey() {
+        return KEY;
     }
 }

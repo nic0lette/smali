@@ -32,11 +32,11 @@
 package org.jf.smalidea.psi.stub.element;
 
 import com.intellij.psi.stubs.*;
-import com.intellij.util.io.StringRef;
 import org.jetbrains.annotations.NotNull;
 import org.jf.smalidea.SmaliLanguage;
 import org.jf.smalidea.psi.iface.SmaliField;
 import org.jf.smalidea.psi.impl.SmaliFieldImpl;
+import org.jf.smalidea.psi.index.SmaliShortFieldNameIndex;
 import org.jf.smalidea.psi.stub.SmaliFieldStub;
 
 import java.io.IOException;
@@ -69,24 +69,14 @@ public class SmaliFieldElementType extends IStubElementType<SmaliFieldStub, Smal
 
     @NotNull @Override
     public SmaliFieldStub deserialize(@NotNull StubInputStream dataStream, StubElement parentStub) throws IOException {
-        StringRef nameRef = dataStream.readName();
-        String name = null;
-        if (nameRef != null) {
-            name = nameRef.getString();
-        }
-
-        StringRef typeRef = dataStream.readName();
-        String type = null;
-        if (typeRef != null) {
-            type = typeRef.getString();
-        }
-
+        String name = dataStream.readName().getString();
+        String type = dataStream.readName().getString();
         int accessFlags = dataStream.readInt();
-
         return new SmaliFieldStub(parentStub, accessFlags, name, type);
     }
 
     @Override public void indexStub(@NotNull SmaliFieldStub stub, @NotNull IndexSink sink) {
+        sink.occurrence(SmaliShortFieldNameIndex.KEY, stub.getName());
         // TODO: need to index in JavaStubIndexKeys.JVM_STATIC_MEMBERS_NAMES and JavaStubIndexKeys.JVM_STATIC_MEMBERS_TYPES?
     }
 }

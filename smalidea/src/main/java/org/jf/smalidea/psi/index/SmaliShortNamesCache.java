@@ -45,6 +45,7 @@ import com.intellij.util.containers.HashSet;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jf.smalidea.psi.iface.SmaliClass;
+import org.jf.smalidea.psi.iface.SmaliField;
 import org.jf.smalidea.psi.iface.SmaliMethod;
 
 import java.util.Collection;
@@ -99,8 +100,19 @@ public class SmaliShortNamesCache extends PsiShortNamesCache {
 
     @NotNull @Override
     public PsiField[] getFieldsByNameIfNotMoreThan(@NonNls @NotNull String name, @NotNull GlobalSearchScope scope,
-                                                   int maxCount) {
-        return new PsiField[0];
+                                                   final int maxCount) {
+        final List<SmaliField> fields = new SmartList<SmaliField>();
+        StubIndex.getInstance().process(SmaliShortFieldNameIndex.KEY, name, project, scope,
+                new CommonProcessors.CollectProcessor<SmaliField>(fields){
+                    @Override
+                    public boolean process(SmaliField field) {
+                        if (fields.size() < maxCount) {
+                            return super.process(field);
+                        }
+                        return false;
+                    }
+                });
+        return fields.toArray(new SmaliField[fields.size()]);
     }
 
     @Override
@@ -120,13 +132,17 @@ public class SmaliShortNamesCache extends PsiShortNamesCache {
 
     @NotNull @Override
     public PsiField[] getFieldsByName(@NotNull @NonNls String name, @NotNull GlobalSearchScope scope) {
-        return new PsiField[0];
+        Collection<SmaliField> fields = StubIndex.getInstance().get(SmaliShortFieldNameIndex.KEY, name, project,
+                new SmaliSourceFilterScope(scope));
+        return fields.toArray(new SmaliField[fields.size()]);
     }
 
     @NotNull @Override public String[] getAllFieldNames() {
-        return new String[0];
+        Collection<String> fields = SmaliShortFieldNameIndex.INSTANCE.getAllKeys(project);
+        return fields.toArray(new String[fields.size()]);
     }
 
     @Override public void getAllFieldNames(@NotNull HashSet<String> set) {
+        SmaliShortFieldNameIndex.INSTANCE.processAllKeys(project, new CommonProcessors.CollectProcessor<String>(set));
     }
 }

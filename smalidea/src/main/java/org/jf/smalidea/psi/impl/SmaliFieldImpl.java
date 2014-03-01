@@ -47,6 +47,8 @@ import org.jf.smalidea.psi.iface.SmaliTypeElement;
 import org.jf.smalidea.psi.stub.SmaliFieldStub;
 import org.jf.smalidea.psi.stub.element.SmaliFieldElementType;
 
+import javax.annotation.Nonnull;
+
 public class SmaliFieldImpl extends StubBasedPsiElementBase<SmaliFieldStub>
         implements SmaliField, StubBasedPsiElement<SmaliFieldStub> {
     public SmaliFieldImpl(@NotNull ASTNode node) {
@@ -57,7 +59,7 @@ public class SmaliFieldImpl extends StubBasedPsiElementBase<SmaliFieldStub>
         super(stub, SmaliFieldElementType.INSTANCE);
     }
 
-    @Override public String getName() {
+    @Nonnull @Override public String getName() {
         SmaliFieldStub stub = getStub();
         if (stub != null) {
             return stub.getName();
@@ -67,7 +69,7 @@ public class SmaliFieldImpl extends StubBasedPsiElementBase<SmaliFieldStub>
         if (name != null) {
             return name.getText();
         }
-        return null;
+        return "";
     }
 
     @Override public int getAccessFlags() {
@@ -113,10 +115,8 @@ public class SmaliFieldImpl extends StubBasedPsiElementBase<SmaliFieldStub>
         SmaliFieldStub stub = getStub();
         if (stub != null) {
             String type = stub.getType();
-            if (type != null) {
-                PsiElementFactory factory = JavaPsiFacade.getInstance(getProject()).getElementFactory();
-                return factory.createTypeByFQClassName(type, getResolveScope());
-            }
+            PsiElementFactory factory = JavaPsiFacade.getInstance(getProject()).getElementFactory();
+            return factory.createTypeByFQClassName(type, getResolveScope());
         } else {
             PsiTypeElement typeElement = getTypeElement();
             if (typeElement != null) {
