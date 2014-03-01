@@ -29,33 +29,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea.psi.stub;
+package org.jf.smalidea.psi.index;
 
-import com.intellij.psi.stubs.IStubElementType;
-import com.intellij.psi.stubs.StubBase;
-import com.intellij.psi.stubs.StubElement;
+import com.intellij.psi.stubs.StringStubIndexExtension;
+import com.intellij.psi.stubs.StubIndexKey;
+import org.jetbrains.annotations.NotNull;
 import org.jf.smalidea.psi.iface.SmaliMethod;
 
-import javax.annotation.Nonnull;
+public class SmaliShortMethodNameIndex extends StringStubIndexExtension<SmaliMethod> {
+    public static final StubIndexKey<String, SmaliMethod> KEY =
+            StubIndexKey.createIndexKey("smali.method.shortname");
 
-public class SmaliMethodStub extends StubBase<SmaliMethod> {
-    @Nonnull private final String name;
-    @Nonnull private final String proto;
+    public static final SmaliShortMethodNameIndex INSTANCE = new SmaliShortMethodNameIndex();
 
-    public SmaliMethodStub(StubElement parent, IStubElementType elementType, @Nonnull String name,
-                           @Nonnull String proto) {
-        super(parent, elementType);
-        this.name = name;
-        this.proto = proto;
+    private SmaliShortMethodNameIndex() {
     }
 
-    @Nonnull
-    public String getProto() {
-        return proto;
-    }
-
-    @Nonnull
-    public String getName() {
-        return name;
+    @NotNull
+    public StubIndexKey<String, SmaliMethod> getKey() {
+        return KEY;
     }
 }

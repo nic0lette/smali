@@ -38,13 +38,17 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.PsiShortNamesCache;
 import com.intellij.psi.stubs.StubIndex;
+import com.intellij.util.CommonProcessors;
 import com.intellij.util.Processor;
+import com.intellij.util.SmartList;
 import com.intellij.util.containers.HashSet;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jf.smalidea.psi.iface.SmaliClass;
+import org.jf.smalidea.psi.iface.SmaliMethod;
 
 import java.util.Collection;
+import java.util.List;
 
 public class SmaliShortNamesCache extends PsiShortNamesCache {
     private final Project project;
@@ -71,30 +75,47 @@ public class SmaliShortNamesCache extends PsiShortNamesCache {
 
     @NotNull @Override
     public PsiMethod[] getMethodsByName(@NonNls @NotNull String name, @NotNull GlobalSearchScope scope) {
-        return new PsiMethod[0];
+        Collection<SmaliMethod> methods = StubIndex.getInstance().get(SmaliShortMethodNameIndex.KEY, name, project,
+                new SmaliSourceFilterScope(scope));
+        return methods.toArray(new SmaliMethod[methods.size()]);
     }
 
     @NotNull @Override
-    public PsiMethod[] getMethodsByNameIfNotMoreThan(@NonNls @NotNull String name, @NotNull GlobalSearchScope scope, int maxCount) {
-        return new PsiMethod[0];
+    public PsiMethod[] getMethodsByNameIfNotMoreThan(@NonNls @NotNull String name, @NotNull GlobalSearchScope scope,
+                                                     final int maxCount) {
+        final List<SmaliMethod> methods = new SmartList<SmaliMethod>();
+        StubIndex.getInstance().process(SmaliShortMethodNameIndex.KEY, name, project, scope,
+                new CommonProcessors.CollectProcessor<SmaliMethod>(methods){
+                    @Override
+                    public boolean process(SmaliMethod method) {
+                        if (methods.size() < maxCount) {
+                            return super.process(method);
+                        }
+                        return false;
+                    }
+                });
+        return methods.toArray(new SmaliMethod[methods.size()]);
     }
 
     @NotNull @Override
-    public PsiField[] getFieldsByNameIfNotMoreThan(@NonNls @NotNull String name, @NotNull GlobalSearchScope scope, int maxCount) {
+    public PsiField[] getFieldsByNameIfNotMoreThan(@NonNls @NotNull String name, @NotNull GlobalSearchScope scope,
+                                                   int maxCount) {
         return new PsiField[0];
     }
 
     @Override
-    public boolean processMethodsWithName(@NonNls @NotNull String name, @NotNull GlobalSearchScope scope, @NotNull Processor<PsiMethod> processor) {
-        return false;
+    public boolean processMethodsWithName(@NonNls @NotNull String name, @NotNull GlobalSearchScope scope,
+                                          @NotNull Processor<PsiMethod> processor) {
+        return StubIndex.getInstance().process(SmaliShortMethodNameIndex.KEY, name, project, scope, processor);
     }
 
     @NotNull @Override public String[] getAllMethodNames() {
-        return new String[0];
+        Collection<String> methods = SmaliShortMethodNameIndex.INSTANCE.getAllKeys(project);
+        return methods.toArray(new String[methods.size()]);
     }
 
     @Override public void getAllMethodNames(@NotNull HashSet<String> set) {
-
+        SmaliShortMethodNameIndex.INSTANCE.processAllKeys(project, new CommonProcessors.CollectProcessor<String>(set));
     }
 
     @NotNull @Override

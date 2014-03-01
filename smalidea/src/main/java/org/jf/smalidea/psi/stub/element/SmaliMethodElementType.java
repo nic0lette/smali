@@ -31,18 +31,16 @@
 
 package org.jf.smalidea.psi.stub.element;
 
-import com.intellij.lang.Language;
 import com.intellij.psi.stubs.*;
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.jf.smalidea.SmaliLanguage;
 import org.jf.smalidea.psi.iface.SmaliMethod;
 import org.jf.smalidea.psi.impl.SmaliMethodImpl;
-import org.jf.smalidea.psi.stub.SmaliClassStub;
-import org.jf.smalidea.psi.stub.SmaliMethodStub;
 import org.jf.smalidea.psi.index.SmaliMethodNameAndProtoIndex;
+import org.jf.smalidea.psi.index.SmaliShortMethodNameIndex;
+import org.jf.smalidea.psi.stub.SmaliMethodStub;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 
 public class SmaliMethodElementType extends IStubElementType<SmaliMethodStub, SmaliMethod> {
@@ -59,23 +57,28 @@ public class SmaliMethodElementType extends IStubElementType<SmaliMethodStub, Sm
 
     @Override
     public SmaliMethodStub createStub(@NotNull SmaliMethod psi, StubElement parentStub) {
-        return new SmaliMethodStub(parentStub, this, psi.getMethodNameAndProto());
+        return new SmaliMethodStub(parentStub, this, psi.getName(), psi.getProto());
     }
 
+    @Nonnull
     public String getExternalId() {
         return "smali.method";
     }
 
-    public void serialize(SmaliMethodStub stub, StubOutputStream dataStream) throws IOException {
-        dataStream.writeName(stub.getNameAndProto());
+    public void serialize(@Nonnull SmaliMethodStub stub, @Nonnull StubOutputStream dataStream) throws IOException {
+        dataStream.writeName(stub.getName());
+        dataStream.writeName(stub.getProto());
     }
 
-    public SmaliMethodStub deserialize(StubInputStream dataStream, StubElement parentStub) throws IOException {
-        String nameAndProto = dataStream.readName().getString();
-        return new SmaliMethodStub(parentStub, this, nameAndProto);
+    @Nonnull
+    public SmaliMethodStub deserialize(@Nonnull StubInputStream dataStream, StubElement parentStub) throws IOException {
+        String name = dataStream.readName().getString();
+        String proto = dataStream.readName().getString();
+        return new SmaliMethodStub(parentStub, this, name, proto);
     }
 
-    public void indexStub(SmaliMethodStub stub, IndexSink sink) {
-        sink.occurrence(SmaliMethodNameAndProtoIndex.KEY, stub.getNameAndProto());
+    public void indexStub(@Nonnull SmaliMethodStub stub, @Nonnull IndexSink sink) {
+        sink.occurrence(SmaliMethodNameAndProtoIndex.KEY, stub.getName() + stub.getProto());
+        sink.occurrence(SmaliShortMethodNameIndex.KEY, stub.getName());
     }
 }

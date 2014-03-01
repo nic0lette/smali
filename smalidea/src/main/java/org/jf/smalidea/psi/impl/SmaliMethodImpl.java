@@ -75,6 +75,11 @@ public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
 
     @Nonnull
     public String getName() {
+        SmaliMethodStub stub = getStub();
+        if (stub != null) {
+            return stub.getName();
+        }
+
         ASTNode nameElement = getNode().findChildByType(ElementTypes.MEMBER_NAME);
         if (nameElement != null) {
             return nameElement.getText();
@@ -82,12 +87,18 @@ public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
         return "";
     }
 
+    @Nonnull
     public String getProto() {
+        SmaliMethodStub stub = getStub();
+        if (stub != null) {
+            return stub.getProto();
+        }
+
         ASTNode protoElement = getNode().findChildByType(ElementTypes.METHOD_PROTOTYPE);
         if (protoElement != null) {
             return protoElement.getText();
         }
-        return null;
+        return "()V";
     }
 
 
