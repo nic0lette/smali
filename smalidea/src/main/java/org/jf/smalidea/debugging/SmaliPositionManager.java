@@ -45,6 +45,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jf.smalidea.psi.iface.SmaliClass;
 import org.jf.smalidea.psi.iface.SmaliMethod;
+import org.jf.smalidea.psi.impl.SmaliFileImpl;
 import org.jf.smalidea.psi.index.SmaliClassNameIndex;
 import org.jf.smalidea.psi.index.SmaliMethodNameAndProtoIndex;
 
@@ -64,9 +65,9 @@ public class SmaliPositionManager implements PositionManager {
             throw new NoDataException();
         }
 
-        String sig = location.declaringType().signature();
-        Collection<SmaliClass> classes = SmaliClassNameIndex.INSTANCE.get(sig, debugProcess.getProject(),
-                GlobalSearchScope.projectScope(debugProcess.getProject()));
+        Collection<SmaliClass> classes = SmaliClassNameIndex.INSTANCE.get(location.declaringType().name(),
+                debugProcess.getProject(), GlobalSearchScope.projectScope(debugProcess.getProject()));
+
 
         if (classes.size() > 0) {
             SmaliClass smaliClass = classes.iterator().next();
@@ -86,19 +87,18 @@ public class SmaliPositionManager implements PositionManager {
 
     @NotNull
     public List<ReferenceType> getAllClasses(SourcePosition classPosition) throws NoDataException {
-        if (!(classPosition.getElementAt().getContainingFile() instanceof SmaliClass)) {
+        if (!(classPosition.getElementAt().getContainingFile() instanceof SmaliFileImpl)) {
             throw new NoDataException();
         }
 
-        List<ReferenceType> list = new ArrayList<ReferenceType>();
-        String className = ((SmaliClass)classPosition.getElementAt().getContainingFile().getFirstChild()).getName();
-        className = className.substring(1, className.length()-1);
+        String className = ((SmaliClass)classPosition.getElementAt()
+                .getContainingFile().getFirstChild()).getQualifiedName();
         return debugProcess.getVirtualMachineProxy().classesByName(className);
     }
 
     @NotNull
     public List<Location> locationsOfLine(final ReferenceType type, final SourcePosition position) throws NoDataException {
-        if (!(position.getElementAt().getContainingFile() instanceof SmaliClass)) {
+        if (!(position.getElementAt().getContainingFile() instanceof SmaliFileImpl)) {
             throw new NoDataException();
         }
 
@@ -106,8 +106,8 @@ public class SmaliPositionManager implements PositionManager {
 
         ApplicationManager.getApplication().runReadAction(new Runnable() {
             public void run() {
-                String sig = type.signature();
-                Collection<SmaliClass> classes = SmaliClassNameIndex.INSTANCE.get(sig, debugProcess.getProject(),
+                String typeName = type.name();
+                Collection<SmaliClass> classes = SmaliClassNameIndex.INSTANCE.get(typeName, debugProcess.getProject(),
                         GlobalSearchScope.projectScope(debugProcess.getProject()));
 
                 if (classes.size() > 0) {
@@ -126,11 +126,11 @@ public class SmaliPositionManager implements PositionManager {
 
     public ClassPrepareRequest createPrepareRequest(final ClassPrepareRequestor requestor,
                                                     final SourcePosition position) throws NoDataException {
-        if (!(position.getElementAt().getContainingFile() instanceof SmaliClass)) {
+        if (!(position.getElementAt().getContainingFile() instanceof SmaliFileImpl)) {
             throw new NoDataException();
         }
 
-        String className = ((SmaliClass)position.getElementAt().getContainingFile().getFirstChild()).getName();
+        String className = ((SmaliClass)position.getElementAt().getContainingFile().getFirstChild()).getQualifiedName();
 
         return debugProcess.getRequestsManager().createClassPrepareRequest(new ClassPrepareRequestor() {
             public void processClassPrepare(DebugProcess debuggerProcess, ReferenceType referenceType) {
