@@ -47,4 +47,5 @@ public interface SmaliMethod extends PsiElement, PsiMethod, SmaliAccessFlagsOwne
     int getOffsetForLine(int line);
     @Nonnull Method getDexlib2Method();
     @Nonnull List<SmaliInstruction> getInstructions();
+    public int getRegisters();
 }
