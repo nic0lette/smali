@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, Google Inc.
+ * Copyright 2014, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,33 +29,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea.psi.impl;
+package org.jf.smalidea.util;
 
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiParameter;
-import com.intellij.psi.PsiParameterList;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
-import java.util.Arrays;
-
-public class SmaliParameterList extends ASTWrapperPsiElement implements PsiParameterList {
-    public SmaliParameterList(@NotNull ASTNode node) {
-        super(node);
+public class NameUtils {
+    @Nonnull
+    public static String javaToSmaliType(@Nonnull String javaType) {
+        return 'L' + javaType.replace('.', '/') + ';';
     }
 
-    @NotNull @Override public SmaliParameter[] getParameters() {
-        return findChildrenByClass(SmaliParameter.class);
-    }
-
-    @Override public int getParameterIndex(PsiParameter parameter) {
-        if (!(parameter instanceof SmaliParameter)) {
-            return -1;
-        }
-        return Arrays.asList(getParameters()).indexOf(parameter);
-    }
-
-    @Override public int getParametersCount() {
-        return getParameters().length;
+    @Nonnull
+    public static String smaliToJavaType(@Nonnull String smaliType) {
+        return smaliType.replace('/', '.').substring(1, smaliType.length()-1);
     }
 }

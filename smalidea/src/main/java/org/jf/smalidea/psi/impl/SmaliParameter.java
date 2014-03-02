@@ -31,6 +31,7 @@
 
 package org.jf.smalidea.psi.impl;
 
+import com.google.common.collect.ImmutableSet;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.*;
@@ -39,9 +40,15 @@ import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jf.dexlib2.base.BaseMethodParameter;
+import org.jf.dexlib2.iface.Annotation;
+import org.jf.dexlib2.iface.MethodParameter;
 import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.iface.SmaliModifierList;
 import org.jf.smalidea.psi.iface.SmaliTypeElement;
+
+import javax.annotation.Nonnull;
+import java.util.Set;
 
 public class SmaliParameter extends ASTWrapperPsiElement implements PsiParameter, PsiAnnotationOwner {
     public SmaliParameter(@NotNull ASTNode node) {
@@ -125,5 +132,24 @@ public class SmaliParameter extends ASTWrapperPsiElement implements PsiParameter
 
     @NotNull @Override public PsiAnnotation addAnnotation(@NotNull @NonNls String qualifiedName) {
         return null;
+    }
+
+    @Nonnull public MethodParameter getDexlib2MethodParameter() {
+        return new BaseMethodParameter() {
+            @Nonnull @Override public Set<? extends Annotation> getAnnotations() {
+                // TODO: implement this
+                return ImmutableSet.of();
+            }
+
+            @Nullable @Override public String getName() {
+                return SmaliParameter.this.getName();
+            }
+
+            @Nonnull @Override public String getType() {
+                PsiTypeElement typeElement = SmaliParameter.this.getTypeElement();
+                assert typeElement != null;
+                return typeElement.getText();
+            }
+        };
     }
 }

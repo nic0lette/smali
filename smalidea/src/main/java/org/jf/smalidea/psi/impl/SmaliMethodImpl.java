@@ -31,7 +31,10 @@
 
 package org.jf.smalidea.psi.impl;
 
+import com.google.common.base.Function;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.intellij.debugger.SourcePosition;
 import com.intellij.extapi.psi.StubBasedPsiElementBase;
 import com.intellij.lang.ASTNode;
@@ -47,12 +50,19 @@ import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jf.dexlib2.base.reference.BaseMethodReference;
+import org.jf.dexlib2.iface.Annotation;
+import org.jf.dexlib2.iface.Method;
+import org.jf.dexlib2.iface.MethodImplementation;
+import org.jf.dexlib2.iface.MethodParameter;
 import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.iface.*;
 import org.jf.smalidea.psi.stub.SmaliMethodStub;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
         implements SmaliMethod, StubBasedPsiElement<SmaliMethodStub> {
@@ -178,14 +188,14 @@ public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
         return returnTypeElement;
     }
 
-    @NotNull @Override public PsiParameterList getParameterList() {
+    @NotNull @Override public SmaliParameterList getParameterList() {
         PsiElement methodPrototype = findChildByType(ElementTypes.METHOD_PROTOTYPE);
         assert methodPrototype != null;
 
         ASTNode paramListNode = methodPrototype.getNode().findChildByType(ElementTypes.METHOD_PARAM_LIST);
         assert paramListNode != null;
 
-        return (PsiParameterList)paramListNode.getPsi();
+        return (SmaliParameterList)paramListNode.getPsi();
     }
 
     @NotNull @Override public PsiReferenceList getThrowsList() {
@@ -246,7 +256,7 @@ public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
         return PsiSuperMethodImplUtil.findDeepestSuperMethods(this);
     }
 
-    @NotNull @Override public PsiModifierList getModifierList() {
+    @NotNull @Override public SmaliModifierList getModifierList() {
         SmaliModifierList modifierList = (SmaliModifierList)findChildByType(ElementTypes.MODIFIER_LIST);
         assert modifierList != null;
         return modifierList;
@@ -298,5 +308,68 @@ public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
 
     @NotNull @Override public PsiAnnotation addAnnotation(@NotNull @NonNls String qualifiedName) {
         return null;
+    }
+
+    @Override public Method getDexlib2Method() {
+        return new SmalideaMethod();
+    }
+
+    private class SmalideaMethod extends BaseMethodReference implements Method {
+        @Nonnull @Override public String getDefiningClass() {
+            PsiClass cls = getContainingClass();
+            assert cls != null;
+            return cls.getText();
+        }
+
+        @Nonnull @Override public List<? extends MethodParameter> getParameters() {
+            SmaliParameter[] parameters = getParameterList().getParameters();
+
+            return Lists.transform(Arrays.asList(parameters), new Function<SmaliParameter, MethodParameter>() {
+                @Nullable @Override
+                public MethodParameter apply(@Nullable SmaliParameter smaliParameter) {
+                    if (smaliParameter == null) {
+                        return null;
+                    }
+                    return smaliParameter.getDexlib2MethodParameter();
+                }
+            });
+        }
+
+        @Override public int getAccessFlags() {
+            return getModifierList().getAccessFlags();
+        }
+
+        @Nonnull @Override public Set<? extends Annotation> getAnnotations() {
+            // TODO: implement this
+            return ImmutableSet.of();
+        }
+
+        @Nullable @Override public MethodImplementation getImplementation() {
+            return null;
+        }
+
+        @Nonnull @Override public String getName() {
+            return SmaliMethodImpl.this.getName();
+        }
+
+        @Nonnull @Override public List<? extends CharSequence> getParameterTypes() {
+            PsiParameter[] parameters = getParameterList().getParameters();
+
+            return Lists.transform(Arrays.asList(parameters), new Function<PsiParameter, CharSequence>() {
+                @Nullable @Override
+                public CharSequence apply(@Nullable PsiParameter psiParameter) {
+                    if (psiParameter == null) {
+                        return null;
+                    }
+                    return psiParameter.getText();
+                }
+            });
+        }
+
+        @Nonnull @Override public String getReturnType() {
+            PsiTypeElement element = SmaliMethodImpl.this.getReturnTypeElement();
+            assert element != null;
+            return element.getText();
+        }
     }
 }

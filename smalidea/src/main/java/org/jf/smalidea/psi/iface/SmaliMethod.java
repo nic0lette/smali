@@ -35,10 +35,13 @@ import com.intellij.debugger.SourcePosition;
 import com.intellij.psi.PsiAnnotationOwner;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
+import org.jf.dexlib2.iface.Method;
 
 public interface SmaliMethod extends PsiElement, PsiMethod, SmaliAccessFlagsOwner, PsiAnnotationOwner {
     String getMethodNameAndProto();
     String getProto();
     SourcePosition getSourcePositionForAddress(int address);
     int getAddressForLine(int line);
+
+    Method getDexlib2Method();
 }

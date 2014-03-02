@@ -55,6 +55,7 @@ import org.jf.smalidea.SmaliIcons;
 import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.iface.*;
 import org.jf.smalidea.psi.stub.SmaliClassStub;
+import org.jf.smalidea.util.NameUtils;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -75,9 +76,7 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
         if (classDeclNode != null) {
             ASTNode classDescNode = classDeclNode.findChildByType(ElementTypes.CLASS_TYPE);
             if (classDescNode != null) {
-                String name = classDescNode.getText();
-                name = name.substring(1, name.length()-1).replace('/', '.');
-                return new SmaliClassImpl(node, name);
+                return new SmaliClassImpl(node, NameUtils.smaliToJavaType(classDescNode.getText()));
             }
         }
         return null;
