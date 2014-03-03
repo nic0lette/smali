@@ -55,6 +55,6 @@ public class SmaliRegistersSpecImpl extends ASTWrapperPsiElement implements Smal
         if (element != null) {
             return (Integer)((SmaliLiteral)element).getValue();
         }
-        return -1;
+        return 0;
     }
 }

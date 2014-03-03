@@ -66,5 +66,6 @@ public class ElementTypes {
     public static final IElementType PRIMITIVE_TYPE = new IElementType("primitive type", SmaliLanguage.INSTANCE);
     public static final IElementType CLASS_TYPE = new IElementType("class type", SmaliLanguage.INSTANCE);
 
-
+    public static final IElementType LABEL = new IElementType("label", SmaliLanguage.INSTANCE);
+    public static final IElementType LABEL_REF = new IElementType("label ref", SmaliLanguage.INSTANCE);
 }

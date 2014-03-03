@@ -32,9 +32,9 @@
 package org.jf.smalidea.psi.impl;
 
 import com.google.common.base.Function;
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.intellij.debugger.SourcePosition;
 import com.intellij.extapi.psi.StubBasedPsiElementBase;
 import com.intellij.lang.ASTNode;
@@ -51,10 +51,10 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jf.dexlib2.base.reference.BaseMethodReference;
-import org.jf.dexlib2.iface.Annotation;
-import org.jf.dexlib2.iface.Method;
-import org.jf.dexlib2.iface.MethodImplementation;
-import org.jf.dexlib2.iface.MethodParameter;
+import org.jf.dexlib2.iface.*;
+import org.jf.dexlib2.iface.debug.DebugItem;
+import org.jf.dexlib2.iface.instruction.Instruction;
+import org.jf.dexlib2.util.MethodUtil;
 import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.iface.*;
 import org.jf.smalidea.psi.stub.SmaliMethodStub;
@@ -62,10 +62,14 @@ import org.jf.smalidea.psi.stub.SmaliMethodStub;
 import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
         implements SmaliMethod, StubBasedPsiElement<SmaliMethodStub> {
+    private Method dexlib2Method = null;
+    private Map<String, SmaliLabelImpl> labelMap = null;
+
     public SmaliMethodImpl(@NotNull ASTNode node) {
         super(node);
     }
@@ -74,13 +78,13 @@ public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
         super(stub, nodeType);
     }
 
-    public String getMethodNameAndProto() {
-        String name = getName();
-        String proto = getProto();
-        if (!Strings.isNullOrEmpty(name) && proto != null) {
-           return name + proto;
+    @Override public void subtreeChanged() {
+        super.subtreeChanged();
+        dexlib2Method = null;
+        labelMap = null;
+        for (SmaliInstruction instruction: getInstructions()) {
+            instruction.setOffset(-1);
         }
-        return null;
     }
 
     @Nonnull
@@ -113,51 +117,56 @@ public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
 
 
     public int getRegisters() {
-        PsiElement element = findChildByType(ElementTypes.REGISTERS_SPEC);
-        if (element != null) {
-            return ((SmaliRegistersSpec)element).getRegistersCount();
-            //TODO: correctly process .locals directive
+        MethodImplementation implementation = getDexlib2Method().getImplementation();
+        if (implementation == null) {
+            return 0;
         }
-        return -1;
+        return implementation.getRegisterCount();
     }
 
-    public SourcePosition getSourcePositionForAddress(int address) {
-        SmaliInstruction[] instructions = findChildrenByType(ElementTypes.INSTRUCTION, SmaliInstruction.class);
+    @Nonnull @Override public List<SmaliInstruction> getInstructions() {
+        return Arrays.asList(findChildrenByType(ElementTypes.INSTRUCTION, SmaliInstruction.class));
+    }
 
-        address *= 2;
-
-        int curAddress = 0;
-        for (SmaliInstruction instruction: instructions) {
-            if (curAddress >= address) {
+    @Nullable
+    public SourcePosition getSourcePositionForOffset(int offset) {
+        for (SmaliInstruction instruction: getInstructions()) {
+            if (instruction.getOffset() >= offset) {
                 return SourcePosition.createFromElement(instruction);
             }
-            curAddress += instruction.getOpcode().format.size;
-            //TODO: add support for variable size instructions
         }
         return null;
     }
 
-    public int getAddressForLine(int line) {
-        SmaliInstruction[] instructions = findChildrenByType(ElementTypes.INSTRUCTION, SmaliInstruction.class);
+    public int getOffsetForLine(int line) {
         PsiDocumentManager documentManager = PsiDocumentManager.getInstance(getProject());
         final Document document = documentManager.getDocument(getContainingFile());
         if (document == null) {
             return -1;
         }
 
-        int curAddress = 0;
-        int prevAddress;
-        for (final SmaliInstruction instruction: instructions) {
-            prevAddress = curAddress;
-            curAddress += instruction.getOpcode().format.size;
-
+        for (final SmaliInstruction instruction: getInstructions()) {
             int curLine = document.getLineNumber(instruction.getTextOffset());
             if (curLine >= line) {
-                return prevAddress;
+                return instruction.getOffset();
             }
-            //TODO: add support for variable size instructions
         }
         return -1;
+    }
+
+    private Map<String, SmaliLabelImpl> getLabelMap() {
+        if (labelMap == null) {
+            labelMap = Maps.newHashMap();
+            for (SmaliLabelImpl label: findChildrenByClass(SmaliLabelImpl.class)) {
+                labelMap.put(label.getText(), label);
+            }
+        }
+        return labelMap;
+    }
+
+    @Nullable public SmaliLabelImpl getLabel(String name) {
+        // TODO: how to handle duplicate labels
+        return getLabelMap().get(name);
     }
 
     @Nullable @Override public ASTNode getAccessFlagsNode() {
@@ -310,8 +319,11 @@ public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
         return null;
     }
 
-    @Override public Method getDexlib2Method() {
-        return new SmalideaMethod();
+    @NotNull @Override public Method getDexlib2Method() {
+        if (dexlib2Method == null) {
+            dexlib2Method = new SmalideaMethod();
+        }
+        return dexlib2Method;
     }
 
     private class SmalideaMethod extends BaseMethodReference implements Method {
@@ -345,7 +357,47 @@ public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
         }
 
         @Nullable @Override public MethodImplementation getImplementation() {
-            return null;
+            List<SmaliInstruction> instructions = getInstructions();
+            if (instructions.size() == 0) {
+                return null;
+            }
+
+            // TODO: cache this?
+            return new MethodImplementation() {
+                @Override public int getRegisterCount() {
+                    SmaliRegistersSpec registersSpec = (SmaliRegistersSpec)findChildByType(ElementTypes.REGISTERS_SPEC);
+                    if (registersSpec != null) {
+                        if (registersSpec.isLocals()) {
+                            int locals = registersSpec.getRegistersCount();
+                            return locals + MethodUtil.getParameterRegisterCount(SmalideaMethod.this);
+                        } else {
+                            return registersSpec.getRegistersCount();
+                        }
+                    }
+                    return 0;
+                }
+
+                @Nonnull @Override public Iterable<? extends Instruction> getInstructions() {
+                    return Lists.transform(SmaliMethodImpl.this.getInstructions(),
+                            new Function<SmaliInstruction, Instruction>() {
+                        @javax.annotation.Nullable @Override
+                        public Instruction apply(@javax.annotation.Nullable SmaliInstruction smaliInstruction) {
+                            if (smaliInstruction == null) {
+                                return null;
+                            }
+                            return smaliInstruction.getDexlib2Instruction();
+                        }
+                    });
+                }
+
+                @Nonnull @Override public List<? extends TryBlock<? extends ExceptionHandler>> getTryBlocks() {
+                    return null;
+                }
+
+                @Nonnull @Override public Iterable<? extends DebugItem> getDebugItems() {
+                    return null;
+                }
+            };
         }
 
         @Nonnull @Override public String getName() {

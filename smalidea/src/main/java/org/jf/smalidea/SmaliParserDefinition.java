@@ -120,6 +120,10 @@ public class SmaliParserDefinition implements ParserDefinition {
             return new SmaliImplementsListImpl(node);
         } else if (node.getElementType() == ElementTypes.MEMBER_NAME) {
             return new SmaliMemberName(node);
+        } else if (node.getElementType() == ElementTypes.LABEL) {
+            return new SmaliLabelImpl(node);
+        } else if (node.getElementType() == ElementTypes.LABEL_REF) {
+            return new SmaliLabelReferenceImpl(node);
         }
         return new ASTWrapperPsiElement(node);
     }

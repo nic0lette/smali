@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, Google Inc.
+ * Copyright 2014, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,58 +35,52 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
-import org.jf.dexlib2.Opcode;
-import org.jf.dexlib2.Opcodes;
-import org.jf.dexlib2.iface.instruction.Instruction;
-import org.jf.smalidea.SmaliTokens;
+import org.jetbrains.annotations.Nullable;
 import org.jf.smalidea.psi.iface.SmaliInstruction;
 
-import javax.annotation.Nonnull;
-
-public class SmaliInstructionImpl extends ASTWrapperPsiElement implements SmaliInstruction {
-    @Nonnull
-    private Opcode opcode;
-    private int offset = -1;
-
-    public SmaliInstructionImpl(@NotNull ASTNode node, @NotNull Opcodes opcodes) {
+public class SmaliLabelImpl extends ASTWrapperPsiElement {
+    public SmaliLabelImpl(@NotNull ASTNode node) {
         super(node);
-
-        ASTNode instrNode = node.findChildByType(SmaliTokens.INSTRUCTION_TOKENS);
-        // TODO: need to handle switch/array payloads
-        assert instrNode != null;
-        Opcode opcode = opcodes.getOpcodeByName(instrNode.getText());
-        assert opcode != null;
-        this.opcode = opcode;
     }
 
-    @Nonnull
-    public Opcode getOpcode() {
-        return opcode;
-    }
-
-    @Override public int getOffset() {
-        if (offset == -1) {
-            PsiElement previous = getPrevSibling();
-            while (true) {
-                if (previous == null) {
-                    offset = 0;
-                    break;
-                } else if (previous instanceof SmaliInstruction) {
-                    // TODO: handle variable size instructions
-                    offset = ((SmaliInstruction)previous).getOffset() + opcode.format.size;
-                    break;
-                }
-                previous = previous.getPrevSibling();
+    @Nullable
+    public SmaliInstruction getInstruction() {
+        PsiElement next = getNextSibling();
+        while (true) {
+            if (next == null) {
+                return null;
             }
+            if (next instanceof SmaliInstruction) {
+                return (SmaliInstruction)next;
+            }
+            next = next.getNextSibling();
         }
-        return offset;
     }
 
-    @Override public void setOffset(int offset) {
-        this.offset = offset;
+    @Nullable
+    private SmaliInstruction getPreviousInstruction() {
+        PsiElement prev = getPrevSibling();
+        while (true) {
+            if (prev == null) {
+                return null;
+            }
+            if (prev instanceof SmaliInstruction) {
+                return (SmaliInstruction)prev;
+            }
+            prev = prev.getPrevSibling();
+        }
     }
 
-    @Nonnull @Override public Instruction getDexlib2Instruction() {
-        return null;
+    public int getOffset() {
+        SmaliInstruction instruction = getInstruction();
+        if (instruction == null) {
+            instruction = getPreviousInstruction();
+            if (instruction == null) {
+                return 0;
+            }
+            // TODO: handle variable size instructions
+            return instruction.getOffset() + instruction.getOpcode().format.size;
+        }
+        return instruction.getOffset();
     }
 }

@@ -121,11 +121,11 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
 
         for (SmaliMethod smaliMethod: smaliMethods) {
             //TODO: check the start line+end line of the method
-            int address = smaliMethod.getAddressForLine(position.getLine());
-            if (address != -1) {
+            int offset = smaliMethod.getOffsetForLine(position.getLine());
+            if (offset != -1) {
                 List<Method> methods = type.methodsByName(smaliMethod.getName(), smaliMethod.getProto());
                 if (methods.size() > 0) {
-                    return methods.get(0).locationOfCodeIndex(address/2);
+                    return methods.get(0).locationOfCodeIndex(offset/2);
                 }
             }
         }

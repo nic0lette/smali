@@ -455,11 +455,14 @@ fully_qualified_field
   : reference_type_descriptor ARROW member_name COLON nonvoid_type_descriptor;
 
 label
+  @init { Marker marker = mark(); }
   : COLON simple_name;
+  finally { marker.done(ElementTypes.LABEL); }
 
 label_ref
-  : COLON simple_name
-  | NEGATIVE_INTEGER_LITERAL;
+  @init { Marker marker = mark(); }
+  : COLON simple_name;
+  finally { marker.done(ElementTypes.LABEL_REF); }
 
 register_list
   : (REGISTER (COMMA REGISTER)*)?;

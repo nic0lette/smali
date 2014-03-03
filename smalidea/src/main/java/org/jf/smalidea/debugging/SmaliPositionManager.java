@@ -78,7 +78,7 @@ public class SmaliPositionManager implements PositionManager {
                     debugProcess.getProject(), GlobalSearchScope.fileScope(smaliClass.getContainingFile()));
             if (methods.size() > 0) {
                 SmaliMethod smaliMethod = methods.iterator().next();
-                return smaliMethod.getSourcePositionForAddress((int)location.codeIndex());
+                return smaliMethod.getSourcePositionForOffset((int)location.codeIndex()*2);
             }
         }
 

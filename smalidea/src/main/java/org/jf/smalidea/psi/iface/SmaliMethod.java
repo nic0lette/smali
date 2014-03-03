@@ -35,13 +35,16 @@ import com.intellij.debugger.SourcePosition;
 import com.intellij.psi.PsiAnnotationOwner;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
+import org.jetbrains.annotations.Nullable;
 import org.jf.dexlib2.iface.Method;
 
-public interface SmaliMethod extends PsiElement, PsiMethod, SmaliAccessFlagsOwner, PsiAnnotationOwner {
-    String getMethodNameAndProto();
-    String getProto();
-    SourcePosition getSourcePositionForAddress(int address);
-    int getAddressForLine(int line);
+import javax.annotation.Nonnull;
+import java.util.List;
 
-    Method getDexlib2Method();
+public interface SmaliMethod extends PsiElement, PsiMethod, SmaliAccessFlagsOwner, PsiAnnotationOwner {
+    String getProto();
+    @Nullable SourcePosition getSourcePositionForOffset(int offset);
+    int getOffsetForLine(int line);
+    @Nonnull Method getDexlib2Method();
+    @Nonnull List<SmaliInstruction> getInstructions();
 }

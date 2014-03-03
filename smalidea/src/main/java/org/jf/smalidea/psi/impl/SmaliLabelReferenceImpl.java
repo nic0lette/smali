@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, Google Inc.
+ * Copyright 2014, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,60 +33,67 @@ package org.jf.smalidea.psi.impl;
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiReference;
+import com.intellij.util.ArrayUtil;
+import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
-import org.jf.dexlib2.Opcode;
-import org.jf.dexlib2.Opcodes;
-import org.jf.dexlib2.iface.instruction.Instruction;
-import org.jf.smalidea.SmaliTokens;
-import org.jf.smalidea.psi.iface.SmaliInstruction;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-
-public class SmaliInstructionImpl extends ASTWrapperPsiElement implements SmaliInstruction {
-    @Nonnull
-    private Opcode opcode;
-    private int offset = -1;
-
-    public SmaliInstructionImpl(@NotNull ASTNode node, @NotNull Opcodes opcodes) {
+public class SmaliLabelReferenceImpl extends ASTWrapperPsiElement implements PsiReference {
+    public SmaliLabelReferenceImpl(@NotNull ASTNode node) {
         super(node);
-
-        ASTNode instrNode = node.findChildByType(SmaliTokens.INSTRUCTION_TOKENS);
-        // TODO: need to handle switch/array payloads
-        assert instrNode != null;
-        Opcode opcode = opcodes.getOpcodeByName(instrNode.getText());
-        assert opcode != null;
-        this.opcode = opcode;
     }
 
-    @Nonnull
-    public Opcode getOpcode() {
-        return opcode;
+    @Override public PsiReference getReference() {
+        return this;
     }
 
-    @Override public int getOffset() {
-        if (offset == -1) {
-            PsiElement previous = getPrevSibling();
-            while (true) {
-                if (previous == null) {
-                    offset = 0;
-                    break;
-                } else if (previous instanceof SmaliInstruction) {
-                    // TODO: handle variable size instructions
-                    offset = ((SmaliInstruction)previous).getOffset() + opcode.format.size;
-                    break;
-                }
-                previous = previous.getPrevSibling();
+    @Override public PsiElement getElement() {
+        return this;
+    }
+
+    @Override public TextRange getRangeInElement() {
+        return new TextRange(0, getTextLength());
+    }
+
+    @Nullable @Override public SmaliLabelImpl resolve() {
+        PsiElement parent = getParent();
+        while (true) {
+            if (parent == null) {
+                return null;
             }
+            if (parent instanceof SmaliMethodImpl) {
+                return ((SmaliMethodImpl)parent).getLabel(getText());
+            }
+            parent = parent.getParent();
         }
-        return offset;
     }
 
-    @Override public void setOffset(int offset) {
-        this.offset = offset;
+    @NotNull @Override public String getCanonicalText() {
+        return getText();
     }
 
-    @Nonnull @Override public Instruction getDexlib2Instruction() {
-        return null;
+    @Override public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
+        //TODO: implement this
+        throw new IncorrectOperationException();
+    }
+
+    @Override public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException {
+        //TODO: implement this
+        throw new IncorrectOperationException();
+    }
+
+    @Override public boolean isReferenceTo(PsiElement element) {
+        return resolve() == element;
+    }
+
+    @NotNull @Override public Object[] getVariants() {
+        return ArrayUtil.EMPTY_OBJECT_ARRAY;
+    }
+
+    @Override public boolean isSoft() {
+        return false;
     }
 }

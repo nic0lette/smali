@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, Google Inc.
+ * Copyright 2014, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,64 +29,36 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea.psi.impl;
+package org.jf.smalidea.psi.impl.instruction;
 
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
 import org.jf.dexlib2.Opcode;
-import org.jf.dexlib2.Opcodes;
 import org.jf.dexlib2.iface.instruction.Instruction;
-import org.jf.smalidea.SmaliTokens;
 import org.jf.smalidea.psi.iface.SmaliInstruction;
 
 import javax.annotation.Nonnull;
 
-public class SmaliInstructionImpl extends ASTWrapperPsiElement implements SmaliInstruction {
-    @Nonnull
-    private Opcode opcode;
-    private int offset = -1;
+public abstract class SmalideaInstruction implements Instruction {
+    @Nonnull protected final SmaliInstruction psiInstruction;
 
-    public SmaliInstructionImpl(@NotNull ASTNode node, @NotNull Opcodes opcodes) {
-        super(node);
-
-        ASTNode instrNode = node.findChildByType(SmaliTokens.INSTRUCTION_TOKENS);
-        // TODO: need to handle switch/array payloads
-        assert instrNode != null;
-        Opcode opcode = opcodes.getOpcodeByName(instrNode.getText());
-        assert opcode != null;
-        this.opcode = opcode;
+    protected SmalideaInstruction(@Nonnull SmaliInstruction instruction) {
+        this.psiInstruction = instruction;
     }
 
     @Nonnull
-    public Opcode getOpcode() {
-        return opcode;
-    }
-
-    @Override public int getOffset() {
-        if (offset == -1) {
-            PsiElement previous = getPrevSibling();
-            while (true) {
-                if (previous == null) {
-                    offset = 0;
-                    break;
-                } else if (previous instanceof SmaliInstruction) {
-                    // TODO: handle variable size instructions
-                    offset = ((SmaliInstruction)previous).getOffset() + opcode.format.size;
-                    break;
-                }
-                previous = previous.getPrevSibling();
-            }
+    public static SmalideaInstruction of(SmaliInstruction instruction) {
+        switch (instruction.getOpcode().format) {
+            case Format10t:
+                return new SmalideaInstruction10t(instruction);
+            default:
+                throw new RuntimeException("Unexpected instruction type");
         }
-        return offset;
     }
 
-    @Override public void setOffset(int offset) {
-        this.offset = offset;
+    @Nonnull public Opcode getOpcode() {
+        return psiInstruction.getOpcode();
     }
 
-    @Nonnull @Override public Instruction getDexlib2Instruction() {
-        return null;
+    public int getCodeUnits() {
+        return getOpcode().format.size / 2;
     }
 }

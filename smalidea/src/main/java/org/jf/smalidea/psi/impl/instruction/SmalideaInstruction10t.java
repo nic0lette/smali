@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, Google Inc.
+ * Copyright 2014, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,17 +29,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea.psi.iface;
+package org.jf.smalidea.psi.impl.instruction;
 
-import com.intellij.psi.PsiElement;
-import org.jf.dexlib2.Opcode;
-import org.jf.dexlib2.iface.instruction.Instruction;
+import org.jf.dexlib2.iface.instruction.formats.Instruction10t;
+import org.jf.smalidea.psi.ElementTypes;
+import org.jf.smalidea.psi.iface.SmaliInstruction;
+import org.jf.smalidea.psi.impl.SmaliLabelImpl;
+import org.jf.smalidea.psi.impl.SmaliLabelReferenceImpl;
 
 import javax.annotation.Nonnull;
 
-public interface SmaliInstruction extends PsiElement {
-    @Nonnull Opcode getOpcode();
-    int getOffset();
-    void setOffset(int offset);
-    @Nonnull Instruction getDexlib2Instruction();
+public class SmalideaInstruction10t extends SmalideaInstruction implements Instruction10t {
+    public SmalideaInstruction10t(@Nonnull SmaliInstruction instruction) {
+        super(instruction);
+    }
+
+    @Override public int getCodeOffset() {
+        SmaliLabelReferenceImpl labelReference =
+                (SmaliLabelReferenceImpl)psiInstruction.getNode().findChildByType(ElementTypes.LABEL_REF);
+
+        if (labelReference == null) {
+            return -1;
+        }
+        SmaliLabelImpl label = labelReference.resolve();
+        if (label == null) {
+            return -1;
+        }
+        return label.getOffset();
+    }
 }
