@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, Google Inc.
+ * Copyright 2014, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,98 +34,72 @@ package org.jf.smalidea.psi.impl;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiReference;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.IncorrectOperationException;
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jf.smalidea.psi.iface.SmaliTypeElement;
 
-public class SmaliClassTypeElementImpl extends ASTWrapperPsiElement implements SmaliTypeElement, PsiReference {
-    public SmaliClassTypeElementImpl(@NotNull ASTNode node) {
+public class SmaliFieldReference extends ASTWrapperPsiElement implements PsiReference {
+    public SmaliFieldReference(@NotNull ASTNode node) {
         super(node);
     }
 
-    @NotNull
-    @Override
-    public SmaliClassType getType() {
-        return new SmaliClassType(this);
-    }
-
-    @Override
-    public PsiReference getReference() {
+    @Override public PsiReference getReference() {
         return this;
     }
 
-    @Override
-    public PsiElement getElement() {
+    @Override public PsiElement getElement() {
         return this;
     }
 
-    @Override
-    public TextRange getRangeInElement() {
+    @Override public TextRange getRangeInElement() {
         return new TextRange(0, getTextLength());
     }
 
-    @Override
-    public PsiClass resolve() {
-        JavaPsiFacade facade = JavaPsiFacade.getInstance(getProject());
-        return facade.findClass(getCanonicalText(), getResolveScope());
+    @Nullable @Override public PsiElement resolve() {
+        SmaliClassTypeElementImpl containingClassReference = findChildByClass(SmaliClassTypeElementImpl.class);
+        if (containingClassReference == null) {
+            return null;
+        }
+        PsiClass containingClass = containingClassReference.resolve();
+        if (containingClass == null) {
+            return null;
+        }
+
+        SmaliMemberName memberName = findChildByClass(SmaliMemberName.class);
+        if (memberName == null) {
+            return null;
+        }
+
+        return containingClass.findFieldByName(memberName.getText(), true);
     }
 
-    @NotNull
-    @Override
-    public String getCanonicalText() {
-        String text = getText();
-        return text.substring(1, text.length()-1).replace('/', '.');
+    @NotNull @Override public String getCanonicalText() {
+        return getText();
     }
 
-    @Override
-    public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
+    @Override public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
         //TODO: implement this
         throw new IncorrectOperationException();
     }
 
-    @Override
-    public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException {
+    @Override public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException {
         //TODO: implement this
         throw new IncorrectOperationException();
     }
 
-    @Override
-    public boolean isReferenceTo(PsiElement element) {
+    @Override public boolean isReferenceTo(PsiElement element) {
         return resolve() == element;
     }
 
-    @NotNull
-    @Override
-    public Object[] getVariants() {
+    @NotNull @Override public Object[] getVariants() {
         return ArrayUtil.EMPTY_OBJECT_ARRAY;
     }
 
-    @Override
-    public boolean isSoft() {
+    @Override public boolean isSoft() {
         return false;
-    }
-
-    @NotNull @Override public PsiAnnotation[] getAnnotations() {
-        return new PsiAnnotation[0];
-    }
-
-    @Nullable @Override public PsiJavaCodeReferenceElement getInnermostComponentReferenceElement() {
-        return null;
-    }
-
-    @NotNull @Override public PsiAnnotation[] getApplicableAnnotations() {
-        return new PsiAnnotation[0];
-    }
-
-    @Nullable @Override public PsiAnnotation findAnnotation(@NotNull @NonNls String qualifiedName) {
-        return null;
-    }
-
-    @NotNull @Override public PsiAnnotation addAnnotation(@NotNull @NonNls String qualifiedName) {
-        throw new UnsupportedOperationException();
     }
 }

@@ -452,7 +452,9 @@ fully_qualified_method
   : reference_type_descriptor ARROW member_name method_prototype;
 
 fully_qualified_field
+  @init { Marker marker = mark(); }
   : reference_type_descriptor ARROW member_name COLON nonvoid_type_descriptor;
+  finally { marker.done(ElementTypes.FIELD_REFERENCE); }
 
 label
   @init { Marker marker = mark(); }

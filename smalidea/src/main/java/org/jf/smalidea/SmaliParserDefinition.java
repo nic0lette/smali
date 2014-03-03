@@ -124,6 +124,8 @@ public class SmaliParserDefinition implements ParserDefinition {
             return new SmaliLabelImpl(node);
         } else if (node.getElementType() == ElementTypes.LABEL_REF) {
             return new SmaliLabelReferenceImpl(node);
+        } else if (node.getElementType() == ElementTypes.FIELD_REFERENCE) {
+            return new SmaliFieldReference(node);
         }
         return new ASTWrapperPsiElement(node);
     }

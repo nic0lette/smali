@@ -52,6 +52,8 @@ public class ElementTypes {
     public static final IElementType ANNOTATION = new IElementType("annotation", SmaliLanguage.INSTANCE);
     public static final IElementType METHOD = SmaliMethodElementType.INSTANCE;
 
+    public static final IElementType FIELD_REFERENCE = new IElementType("field reference", SmaliLanguage.INSTANCE);
+
     public static final IElementType REGISTERS_SPEC = new IElementType("registers spec", SmaliLanguage.INSTANCE);
     public static final IElementType SIMPLE_NAME = new IElementType("simple name", SmaliLanguage.INSTANCE);
     public static final IElementType MEMBER_NAME = new IElementType("member name", SmaliLanguage.INSTANCE);
