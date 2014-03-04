@@ -40,6 +40,7 @@ import com.intellij.openapi.util.Pair;
 import com.intellij.psi.*;
 import com.intellij.psi.PsiModifier.ModifierConstant;
 import com.intellij.psi.impl.PsiClassImplUtil;
+import com.intellij.psi.impl.PsiClassImplUtil.MemberType;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.stubs.IStubElementType;
@@ -334,27 +335,28 @@ public class SmaliClassImpl extends StubBasedPsiElementBase<SmaliClassStub>
     }
 
     public PsiMethod findMethodBySignature(PsiMethod patternMethod, boolean checkBases) {
-        return null;
+        return PsiClassImplUtil.findMethodBySignature(this, patternMethod, checkBases);
     }
 
     @NotNull
     public PsiMethod[] findMethodsBySignature(PsiMethod patternMethod, boolean checkBases) {
-        return new PsiMethod[0];
+        return PsiClassImplUtil.findMethodsBySignature(this, patternMethod, checkBases);
     }
 
     @NotNull
     public PsiMethod[] findMethodsByName(@NonNls String name, boolean checkBases) {
-        return new PsiMethod[0];
+        return PsiClassImplUtil.findMethodsByName(this, name, checkBases);
     }
 
     @NotNull
-    public List<Pair<PsiMethod, PsiSubstitutor>> findMethodsAndTheirSubstitutorsByName(@NonNls String name, boolean checkBases) {
-        return new ArrayList<Pair<PsiMethod, PsiSubstitutor>>(0);
+    public List<Pair<PsiMethod, PsiSubstitutor>> findMethodsAndTheirSubstitutorsByName(
+            @NonNls String name, boolean checkBases) {
+        return PsiClassImplUtil.findMethodsAndTheirSubstitutorsByName(this, name, checkBases);
     }
 
     @NotNull
     public List<Pair<PsiMethod, PsiSubstitutor>> getAllMethodsAndTheirSubstitutors() {
-        return new ArrayList<Pair<PsiMethod, PsiSubstitutor>>(0);
+        return PsiClassImplUtil.getAllWithSubstitutorsByMap(this, MemberType.METHOD);
     }
 
     public PsiClass findInnerClassByName(@NonNls String name, boolean checkBases) {

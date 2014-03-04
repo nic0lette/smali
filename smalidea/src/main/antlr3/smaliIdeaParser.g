@@ -328,7 +328,7 @@ param_list
   : PARAM_LIST_START nonvoid_type_descriptor* PARAM_LIST_END
   | PARAM_LIST_OR_ID_START primitive_type* PARAM_LIST_OR_ID_END
   | nonvoid_type_descriptor*;
-  finally { marker.done(ElementTypes.METHOD_PARAM_LIST); }
+  finally { marker.done(ElementTypes.METHOD_REF_PARAM_LIST); }
 
 void_type
   @init { Marker marker = mark(); }
@@ -424,7 +424,6 @@ array_literal
 annotation_element
   : simple_name EQUAL literal;
 
-
 annotation
   @init { Marker marker = mark(); }
   : ANNOTATION_DIRECTIVE ANNOTATION_VISIBILITY class_descriptor
@@ -449,7 +448,9 @@ type_field_method_literal
   | void_type;
 
 fully_qualified_method
+  @init { Marker marker = mark(); }
   : reference_type_descriptor ARROW member_name method_prototype;
+  finally { marker.done(ElementTypes.METHOD_REFERENCE); }
 
 fully_qualified_field
   @init { Marker marker = mark(); }

@@ -32,7 +32,9 @@
 package org.jf.smalidea.psi;
 
 import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.tree.TokenSet;
 import org.jf.smalidea.SmaliLanguage;
+import org.jf.smalidea.SmaliTokens;
 import org.jf.smalidea.psi.stub.element.*;
 
 public class ElementTypes {
@@ -52,6 +54,8 @@ public class ElementTypes {
     public static final IElementType ANNOTATION = new IElementType("annotation", SmaliLanguage.INSTANCE);
     public static final IElementType METHOD = SmaliMethodElementType.INSTANCE;
 
+    public static final IElementType METHOD_REFERENCE = new IElementType("method reference", SmaliLanguage.INSTANCE);
+    public static final IElementType METHOD_REF_PARAM_LIST = new IElementType("method param list", SmaliLanguage.INSTANCE);
     public static final IElementType FIELD_REFERENCE = new IElementType("field reference", SmaliLanguage.INSTANCE);
 
     public static final IElementType REGISTERS_SPEC = new IElementType("registers spec", SmaliLanguage.INSTANCE);
@@ -70,4 +74,9 @@ public class ElementTypes {
 
     public static final IElementType LABEL = new IElementType("label", SmaliLanguage.INSTANCE);
     public static final IElementType LABEL_REF = new IElementType("label ref", SmaliLanguage.INSTANCE);
+
+    public static final TokenSet NONVOID_TYPE_TOKENS = TokenSet.create(
+            PRIMITIVE_TYPE,
+            CLASS_TYPE,
+            SmaliTokens.ARRAY_DESCRIPTOR);
 }

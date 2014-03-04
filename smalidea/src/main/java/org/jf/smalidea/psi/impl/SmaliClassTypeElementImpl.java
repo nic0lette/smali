@@ -41,10 +41,21 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jf.smalidea.psi.iface.SmaliTypeElement;
+import org.jf.smalidea.util.NameUtils;
 
 public class SmaliClassTypeElementImpl extends ASTWrapperPsiElement implements SmaliTypeElement, PsiReference {
     public SmaliClassTypeElementImpl(@NotNull ASTNode node) {
         super(node);
+    }
+
+    @Override public String getName() {
+        String fullName = NameUtils.smaliToJavaType(getText());
+
+        int lastDot = fullName.lastIndexOf('.');
+        if (lastDot < 0) {
+            return fullName;
+        }
+        return fullName.substring(lastDot + 1);
     }
 
     @NotNull

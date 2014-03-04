@@ -126,6 +126,8 @@ public class SmaliParserDefinition implements ParserDefinition {
             return new SmaliLabelReferenceImpl(node);
         } else if (node.getElementType() == ElementTypes.FIELD_REFERENCE) {
             return new SmaliFieldReference(node);
+        } else if (node.getElementType() == ElementTypes.METHOD_REFERENCE) {
+            return new SmaliMethodReference(node);
         }
         return new ASTWrapperPsiElement(node);
     }
