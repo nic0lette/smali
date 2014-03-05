@@ -419,6 +419,9 @@ public class SmaliTokens {
             INSTRUCTION_FORMAT3rc_TYPE,
             INSTRUCTION_FORMAT3rmi_METHOD,
             INSTRUCTION_FORMAT3rms_METHOD,
-            INSTRUCTION_FORMAT51l
+            INSTRUCTION_FORMAT51l,
+            ARRAY_DATA_DIRECTIVE,
+            PACKED_SWITCH_DIRECTIVE,
+            SPARSE_SWITCH_DIRECTIVE
     );
 }

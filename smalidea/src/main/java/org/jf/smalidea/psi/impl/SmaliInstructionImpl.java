@@ -52,11 +52,19 @@ public class SmaliInstructionImpl extends ASTWrapperPsiElement implements SmaliI
         super(node);
 
         ASTNode instrNode = node.findChildByType(SmaliTokens.INSTRUCTION_TOKENS);
-        // TODO: need to handle switch/array payloads
         assert instrNode != null;
-        Opcode opcode = opcodes.getOpcodeByName(instrNode.getText());
-        assert opcode != null;
-        this.opcode = opcode;
+
+        if (instrNode.getElementType() == SmaliTokens.ARRAY_DATA_DIRECTIVE) {
+            opcode = Opcode.ARRAY_PAYLOAD;
+        } else if (instrNode.getElementType() == SmaliTokens.PACKED_SWITCH_DIRECTIVE) {
+            opcode = Opcode.PACKED_SWITCH_PAYLOAD;
+        } else if (instrNode.getElementType() == SmaliTokens.SPARSE_SWITCH_DIRECTIVE) {
+            opcode = Opcode.SPARSE_SWITCH_PAYLOAD;
+        } else {
+            Opcode opcode = opcodes.getOpcodeByName(instrNode.getText());
+            assert opcode != null;
+            this.opcode = opcode;
+        }
     }
 
     @Nonnull
