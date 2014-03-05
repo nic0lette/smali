@@ -83,7 +83,7 @@ public class PsiUtils {
         while (true) {
             if (next == null) {
                 return null;
-            } else if (tokenSet.contains(element.getNode().getElementType())) {
+            } else if (tokenSet.contains(next.getNode().getElementType())) {
                 return next;
             }
             next = next.getNextSibling();

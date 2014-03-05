@@ -138,12 +138,7 @@ public class SmaliMethodReference extends ASTWrapperPsiElement implements PsiRef
             return null;
         }
 
-        ASTNode paramListNode = prototype.getNode().findChildByType(ElementTypes.METHOD_REF_PARAM_LIST);
-        if (paramListNode == null) {
-            return null;
-        }
-
-        return paramListNode.findChildByType(ElementTypes.VOID_TYPE_TOKENS);
+        return prototype.getNode().findChildByType(ElementTypes.VOID_TYPE_TOKENS);
     }
 
     @Nullable @Override public PsiElement resolve() {

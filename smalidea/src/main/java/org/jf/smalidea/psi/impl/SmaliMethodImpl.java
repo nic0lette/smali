@@ -59,6 +59,7 @@ import org.jf.dexlib2.util.MethodUtil;
 import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.iface.*;
 import org.jf.smalidea.psi.stub.SmaliMethodStub;
+import org.jf.smalidea.util.NameUtils;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
@@ -331,7 +332,7 @@ public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
         @Nonnull @Override public String getDefiningClass() {
             PsiClass cls = getContainingClass();
             assert cls != null;
-            return cls.getText();
+            return NameUtils.javaToSmaliType(cls.getQualifiedName());
         }
 
         @Nonnull @Override public List<? extends MethodParameter> getParameters() {

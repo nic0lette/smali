@@ -84,5 +84,5 @@ public class ElementTypes {
             PRIMITIVE_TYPE,
             CLASS_TYPE,
             SmaliTokens.ARRAY_DESCRIPTOR,
-            SmaliTokens.VOID_TYPE);
+            VOID_TYPE);
 }

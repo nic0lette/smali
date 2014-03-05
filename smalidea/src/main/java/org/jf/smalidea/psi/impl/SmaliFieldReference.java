@@ -41,7 +41,6 @@ import com.intellij.util.ArrayUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jf.smalidea.SmaliTokens;
 import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.util.PsiUtils;
 
@@ -91,8 +90,8 @@ public class SmaliFieldReference extends ASTWrapperPsiElement implements PsiRefe
 
     @Nullable
     public ASTNode getFieldType() {
-        PsiElement colonElement = findChildByType(SmaliTokens.COLON);
-        return PsiUtils.findNextSibling(colonElement, ElementTypes.NONVOID_TYPE_TOKENS).getNode();
+        PsiElement nameElement = findChildByType(ElementTypes.MEMBER_NAME);
+        return PsiUtils.findNextSibling(nameElement, ElementTypes.NONVOID_TYPE_TOKENS).getNode();
     }
 
     @Nullable @Override public PsiElement resolve() {

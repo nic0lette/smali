@@ -31,10 +31,13 @@
 
 package org.jf.smalidea.debugging;
 
+import com.google.common.collect.Maps;
 import com.intellij.debugger.DebuggerManagerEx;
 import com.intellij.debugger.SourcePosition;
+import com.intellij.debugger.engine.DebugProcessImpl;
 import com.intellij.debugger.engine.evaluation.*;
 import com.intellij.debugger.engine.evaluation.expression.EvaluatorBuilder;
+import com.intellij.debugger.engine.events.DebuggerCommandImpl;
 import com.intellij.debugger.impl.DebuggerContextImpl;
 import com.intellij.debugger.jdi.StackFrameProxyImpl;
 import com.intellij.openapi.fileTypes.LanguageFileType;
@@ -46,10 +49,14 @@ import com.intellij.psi.PsiLocalVariable;
 import com.sun.jdi.*;
 import com.sun.tools.jdi.LocalVariableImpl;
 import com.sun.tools.jdi.LocationImpl;
+import org.jf.dexlib2.analysis.AnalyzedInstruction;
+import org.jf.dexlib2.analysis.RegisterType;
 import org.jf.smalidea.psi.iface.SmaliMethod;
+import org.jf.smalidea.psi.impl.SmaliInstructionImpl;
+import org.jf.smalidea.psi.impl.SmaliMethodImpl;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 public class SmaliCodeFragmentFactory extends CodeFragmentFactory {
     private final CodeFragmentFactory myDelegate;
@@ -92,21 +99,89 @@ public class SmaliCodeFragmentFactory extends CodeFragmentFactory {
             currentMethod = currentMethod.getParent();
         }
 
-        String variablesText = "java.lang.Object v18; ";
+
+        AnalyzedInstruction analyzedInstruction = ((SmaliInstructionImpl)currentInstruction).getAnalyzedInstruction();
+
+        final Map<String, String> registerMap = Maps.newHashMap();
+        StringBuilder variablesText = new StringBuilder();
+        for (int i=0; i<((SmaliMethodImpl)currentMethod).getRegisters(); i++) {
+            RegisterType registerType = analyzedInstruction.getPreInstructionRegisterType(i);
+            switch (registerType.category) {
+                case RegisterType.UNKNOWN:
+                case RegisterType.UNINIT:
+                case RegisterType.CONFLICTED:
+                case RegisterType.LONG_HI:
+                case RegisterType.DOUBLE_HI:
+                    continue;
+                case RegisterType.NULL:
+                case RegisterType.ONE:
+                case RegisterType.INTEGER:
+                    variablesText.append("int v").append(i).append(";\n");
+                    registerMap.put("v" + i, "I");
+                    break;
+                case RegisterType.BOOLEAN:
+                    variablesText.append("boolean v").append(i).append(";\n");
+                    registerMap.put("v" + i, "Z");
+                    break;
+                case RegisterType.BYTE:
+                case RegisterType.POS_BYTE:
+                    variablesText.append("byte v").append(i).append(";\n");
+                    registerMap.put("v" + i, "B");
+                    break;
+                case RegisterType.SHORT:
+                case RegisterType.POS_SHORT:
+                    variablesText.append("short v").append(i).append(";\n");
+                    registerMap.put("v" + i, "S");
+                    break;
+                case RegisterType.CHAR:
+                    variablesText.append("char v").append(i).append(";\n");
+                    registerMap.put("v" + i, "C");
+                    break;
+                case RegisterType.FLOAT:
+                    variablesText.append("float v").append(i).append(";\n");
+                    registerMap.put("v" + i, "F");
+                    break;
+                case RegisterType.LONG_LO:
+                    variablesText.append("long v").append(i).append(";\n");
+                    registerMap.put("v" + i, "J");
+                    break;
+                case RegisterType.DOUBLE_LO:
+                    variablesText.append("double v").append(i).append(";\n");
+                    registerMap.put("v" + i, "D");
+                    break;
+                case RegisterType.UNINIT_REF:
+                case RegisterType.UNINIT_THIS:
+                case RegisterType.REFERENCE:
+                    variablesText.append("Object v").append(i).append(";\n");
+                    registerMap.put("v" + i, "Ljava/lang/Object;");
+                    break;
+            }
+        }
         final TextWithImportsImpl textWithImports = new TextWithImportsImpl(CodeFragmentKind.CODE_BLOCK,
-                variablesText, "", myDelegate.getFileType());
+                variablesText.toString(), "", myDelegate.getFileType());
 
         final JavaCodeFragment codeFragment = myDelegate.createCodeFragment(textWithImports, originalContext, project);
 
+
         codeFragment.accept(new JavaRecursiveElementVisitor() {
-            public void visitLocalVariable(PsiLocalVariable variable) {
+            public void visitLocalVariable(final PsiLocalVariable variable) {
                 final String name = variable.getName();
-                if (name.equals("v18")) {
-                    Value value = evaluateRegister(debuggerContext.createEvaluationContext(), 18);
-                    variable.putUserData(CodeFragmentFactoryContextWrapper.LABEL_VARIABLE_VALUE_KEY, value);
+                if (registerMap.containsKey(name)) {
+                    debuggerContext.getDebugProcess().getManagerThread().invoke(new DebuggerCommandImpl() {
+                        @Override protected void action() throws Exception {
+                            Value value = evaluateRegister(debuggerContext.createEvaluationContext(),
+                                    Integer.parseInt(name.substring(1)),
+                                    registerMap.get(name));
+                            variable.putUserData(CodeFragmentFactoryContextWrapper.LABEL_VARIABLE_VALUE_KEY, value);
+                        }
+                    });
+
+
                 }
             }
         });
+
+
 
         int offset = variablesText.length() - 1;
 
@@ -117,47 +192,48 @@ public class SmaliCodeFragmentFactory extends CodeFragmentFactory {
         return originalContext;
     }
 
-    public Value evaluateRegister(EvaluationContextImpl context, int registerNum) {
-        StackFrameProxyImpl frameProxy = context.getFrameProxy();
+    public Value evaluateRegister(EvaluationContextImpl context, final int registerNum, final String type) {
+        final StackFrameProxyImpl frameProxy = context.getFrameProxy();
         if (frameProxy == null) {
             return null;
         }
 
-        try {
-            // the jdi apis don't provide any way to get the value of an arbitrary register, so we use reflection
-            // to create a LocalVariable instance for the register
-            VirtualMachine vm = frameProxy.getVirtualMachine().getVirtualMachine();
-            Method method = frameProxy.location().method();
+        // the jdi apis don't provide any way to get the value of an arbitrary register, so we use reflection
+        // to create a LocalVariable instance for the register
+        final Value[] ret = new Value[1];
 
-            Constructor<LocalVariableImpl> localVariableConstructor = LocalVariableImpl.class.getDeclaredConstructor(
-                    VirtualMachine.class, Method.class, Integer.TYPE, Location.class, Location.class, String.class,
-                    String.class, String.class);
-            localVariableConstructor.setAccessible(true);
+        DebugProcessImpl debugProcess = context.getDebugProcess();
+        debugProcess.getManagerThread().invoke(
+                new DebuggerCommandImpl() {
 
-            Constructor<LocationImpl> locationConstructor = LocationImpl.class.getDeclaredConstructor(
-                    VirtualMachine.class, Method.class, Long.TYPE);
-            locationConstructor.setAccessible(true);
+                    @Override protected void action() throws Exception {
+                        VirtualMachine vm = frameProxy.getVirtualMachine().getVirtualMachine();
+                        Method method = frameProxy.location().method();
 
-            // TODO: use frameProxy.location().method().locationOfCodeIndex() here
-            Location endLocation = locationConstructor.newInstance(vm, method, Integer.MAX_VALUE);
+                        final Constructor<LocalVariableImpl> localVariableConstructor = LocalVariableImpl.class.getDeclaredConstructor(
+                                VirtualMachine.class, Method.class, Integer.TYPE, Location.class, Location.class, String.class,
+                                String.class, String.class);
+                        localVariableConstructor.setAccessible(true);
 
-            LocalVariable localVariable = localVariableConstructor.newInstance(vm,
-                    method,
-                    registerNum,
-                    frameProxy.location().method().locationOfCodeIndex(0),
-                    endLocation,
-                    String.format("v%d", registerNum), "Ljava/lang/Object;", null);
-            return frameProxy.getStackFrame().getValue(localVariable);
-        } catch (NoSuchMethodException ex) {
-            return null;
-        } catch (IllegalAccessException ex) {
-            return null;
-        } catch (InstantiationException ex) {
-            return null;
-        } catch (InvocationTargetException ex) {
-            return null;
-        } catch (EvaluateException e) {
-            return null;
-        }
+                        Constructor<LocationImpl> locationConstructor = LocationImpl.class.getDeclaredConstructor(
+                                VirtualMachine.class, Method.class, Long.TYPE);
+                        locationConstructor.setAccessible(true);
+
+                        // TODO: use frameProxy.location().method().locationOfCodeIndex() here
+                        Location endLocation = locationConstructor.newInstance(vm, method, Integer.MAX_VALUE);
+
+                        LocalVariable localVariable = localVariableConstructor.newInstance(vm,
+                                method,
+                                registerNum,
+                                frameProxy.location().method().locationOfCodeIndex(0),
+                                endLocation,
+                                String.format("v%d", registerNum), type, null);
+
+                        ret[0] = frameProxy.getStackFrame().getValue(localVariable);
+                    }
+                }
+        );
+
+        return ret[0];
     }
 }

@@ -137,7 +137,7 @@ public abstract class SmalideaInstruction implements Instruction {
 
     public int getCodeOffset() {
         SmaliLabelReferenceImpl labelReference =
-                (SmaliLabelReferenceImpl)psiInstruction.getNode().findChildByType(ElementTypes.LABEL_REF);
+                (SmaliLabelReferenceImpl)psiInstruction.getNode().findChildByType(ElementTypes.LABEL_REF).getPsi();
 
         if (labelReference == null) {
             return -1;
@@ -146,7 +146,7 @@ public abstract class SmalideaInstruction implements Instruction {
         if (label == null) {
             return -1;
         }
-        return label.getOffset();
+        return (label.getOffset() - psiInstruction.getOffset())/2;
     }
 
     public int getRegisterCount() {

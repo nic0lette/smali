@@ -123,12 +123,13 @@ public class SmaliInstructionImpl extends ASTWrapperPsiElement implements SmaliI
 
         MethodAnalyzer analyzer = new MethodAnalyzer(classPath, method, null);
 
+        int thisOffset = this.getOffset() / 2;
         int codeOffset = 0;
         for (AnalyzedInstruction instruction: analyzer.getAnalyzedInstructions()) {
-            if (codeOffset == this.getCodeOffset()) {
+            if (codeOffset == thisOffset) {
                 return instruction;
             }
-            assert codeOffset < this.getCodeOffset();
+            assert codeOffset < thisOffset;
 
             codeOffset += instruction.getOriginalInstruction().getCodeUnits();
         }
