@@ -31,17 +31,31 @@
 
 package org.jf.smalidea.psi.impl;
 
+import com.google.common.base.Preconditions;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jf.dexlib2.Opcode;
 import org.jf.dexlib2.Opcodes;
+import org.jf.dexlib2.analysis.AnalyzedInstruction;
+import org.jf.dexlib2.analysis.ClassPath;
+import org.jf.dexlib2.analysis.MethodAnalyzer;
+import org.jf.dexlib2.iface.Method;
 import org.jf.dexlib2.iface.instruction.Instruction;
+import org.jf.dexlib2.util.MethodUtil;
 import org.jf.smalidea.SmaliTokens;
+import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.iface.SmaliInstruction;
+import org.jf.smalidea.psi.iface.SmaliLiteral;
+import org.jf.smalidea.psi.iface.SmaliTypeElement;
+import org.jf.smalidea.psi.impl.instruction.SmalideaInstruction;
+import org.jf.smalidea.util.PsiUtils;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
+import java.util.List;
 
 public class SmaliInstructionImpl extends ASTWrapperPsiElement implements SmaliInstruction {
     @Nonnull
@@ -67,6 +81,11 @@ public class SmaliInstructionImpl extends ASTWrapperPsiElement implements SmaliI
         }
     }
 
+    @Nullable
+    protected SmaliMethodImpl getMethod() {
+        return PsiUtils.findParentByClass(this, SmaliMethodImpl.class);
+    }
+
     @Nonnull
     public Opcode getOpcode() {
         return opcode;
@@ -74,17 +93,12 @@ public class SmaliInstructionImpl extends ASTWrapperPsiElement implements SmaliI
 
     @Override public int getOffset() {
         if (offset == -1) {
-            PsiElement previous = getPrevSibling();
-            while (true) {
-                if (previous == null) {
-                    offset = 0;
-                    break;
-                } else if (previous instanceof SmaliInstruction) {
-                    // TODO: handle variable size instructions
-                    offset = ((SmaliInstruction)previous).getOffset() + opcode.format.size;
-                    break;
-                }
-                previous = previous.getPrevSibling();
+            SmaliInstruction previousInstruction = PsiUtils.findPrevSiblingByClass(this, SmaliInstruction.class);
+            if (previousInstruction == null) {
+                offset = 0;
+            } else {
+                // TODO: handle variable size instructions
+                offset = previousInstruction.getOffset() + previousInstruction.getOpcode().format.size;
             }
         }
         return offset;
@@ -95,6 +109,90 @@ public class SmaliInstructionImpl extends ASTWrapperPsiElement implements SmaliI
     }
 
     @Nonnull @Override public Instruction getDexlib2Instruction() {
+        return SmalideaInstruction.of(this);
+    }
+
+    @Nullable public AnalyzedInstruction getAnalyzedInstruction() {
+        Method method = getMethod().getDexlib2Method();
+        ClassPath classPath;
+        try {
+            classPath = new ClassPath();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        MethodAnalyzer analyzer = new MethodAnalyzer(classPath, method, null);
+
+        int codeOffset = 0;
+        for (AnalyzedInstruction instruction: analyzer.getAnalyzedInstructions()) {
+            if (codeOffset == this.getCodeOffset()) {
+                return instruction;
+            }
+            assert codeOffset < this.getCodeOffset();
+
+            codeOffset += instruction.getOriginalInstruction().getCodeUnits();
+        }
         return null;
+    }
+
+    public int getCodeOffset() {
+        SmaliLabelReferenceImpl labelReference =
+                (SmaliLabelReferenceImpl)getNode().findChildByType(ElementTypes.LABEL_REF);
+
+        if (labelReference == null) {
+            return -1;
+        }
+        SmaliLabelImpl label = labelReference.resolve();
+        if (label == null) {
+            return -1;
+        }
+        return label.getOffset();
+    }
+
+    @Override
+    public int getRegister(int registerIndex) {
+        Preconditions.checkArgument(registerIndex >= 0);
+        List<PsiElement> registers = findChildrenByType(SmaliTokens.REGISTER);
+        if (registerIndex >= registers.size()) {
+            return -1;
+        }
+
+        String registerText = registers.get(registerIndex).getText();
+        if (registerText.startsWith("v")) {
+            return Integer.parseInt(registerText.substring(1));
+        } else {
+            SmaliMethodImpl method = getMethod();
+            if (method == null) {
+                return -1;
+            }
+
+            return Integer.parseInt(registerText.substring(1)) +
+                    MethodUtil.getParameterRegisterCount(method.getDexlib2Method());
+        }
+    }
+
+    @Override
+    public int getRegisterCount() {
+        return findChildrenByType(SmaliTokens.REGISTER).size();
+    }
+
+    @Nullable @Override
+    public SmaliLiteral getLiteral() {
+        return findChildByClass(SmaliLiteral.class);
+    }
+
+    @Nullable @Override
+    public SmaliTypeElement getTypeReference() {
+        return findChildByClass(SmaliTypeElement.class);
+    }
+
+    @Nullable @Override
+    public SmaliFieldReference getFieldReference() {
+        return findChildByClass(SmaliFieldReference.class);
+    }
+
+    @Nullable @Override
+    public SmaliMethodReference getMethodReference() {
+        return findChildByClass(SmaliMethodReference.class);
     }
 }

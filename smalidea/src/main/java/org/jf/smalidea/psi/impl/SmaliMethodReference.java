@@ -31,6 +31,8 @@
 
 package org.jf.smalidea.psi.impl;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
@@ -46,9 +48,21 @@ import org.jetbrains.annotations.Nullable;
 import org.jf.smalidea.SmaliLanguage;
 import org.jf.smalidea.psi.ElementTypes;
 
+import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.List;
+
 public class SmaliMethodReference extends ASTWrapperPsiElement implements PsiReference {
     public SmaliMethodReference(@NotNull ASTNode node) {
         super(node);
+    }
+
+    @Override public String getName() {
+        PsiElement memberName = getMemberName();
+        if (memberName == null) {
+            return null;
+        }
+        return memberName.getText();
     }
 
     @Override public PsiReference getReference() {
@@ -63,7 +77,8 @@ public class SmaliMethodReference extends ASTWrapperPsiElement implements PsiRef
         return new TextRange(0, getTextLength());
     }
 
-    @Nullable @Override public PsiElement resolve() {
+    @Nullable
+    public PsiClass getContainingClass() {
         SmaliClassTypeElementImpl containingClassReference = findChildByClass(SmaliClassTypeElementImpl.class);
         if (containingClassReference == null) {
             return null;
@@ -73,11 +88,16 @@ public class SmaliMethodReference extends ASTWrapperPsiElement implements PsiRef
             return null;
         }
 
-        SmaliMemberName memberName = findChildByClass(SmaliMemberName.class);
-        if (memberName == null) {
-            return null;
-        }
+        return containingClass;
+    }
 
+    @Nullable
+    public SmaliMemberName getMemberName() {
+        return findChildByClass(SmaliMemberName.class);
+    }
+
+    @Nonnull
+    public List<PsiType> getParameterTypes() {
         PsiElement prototype = findChildByType(ElementTypes.METHOD_PROTOTYPE);
         if (prototype == null) {
             return null;
@@ -90,23 +110,58 @@ public class SmaliMethodReference extends ASTWrapperPsiElement implements PsiRef
 
         ASTNode[] types = paramListNode.getChildren(ElementTypes.NONVOID_TYPE_TOKENS);
 
-        LightParameterListBuilder paramList = new LightParameterListBuilder(getManager(), SmaliLanguage.INSTANCE);
-        for (ASTNode type: types) {
-            PsiElement typeElement = type.getPsi();
-
-            PsiType psiType;
-            if (typeElement instanceof SmaliPrimitiveTypeElementImpl) {
-                psiType = ((SmaliPrimitiveTypeElementImpl)typeElement).getType();
-            } else if (typeElement instanceof SmaliClassTypeElementImpl) {
-                psiType = ((SmaliClassTypeElementImpl)typeElement).getType();
-            } else {
-                PsiElementFactory factory = JavaPsiFacade.getInstance(getProject()).getElementFactory();
-                // TODO: handle array types
-                psiType = factory.createPrimitiveType("int");
-                assert psiType != null;
+        return Lists.transform(Arrays.asList(types), new Function<ASTNode, PsiType>() {
+            @Nullable @Override public PsiType apply(@javax.annotation.Nullable ASTNode typeNode) {
+                if (typeNode == null) {
+                    return null;
+                }
+                PsiElement typeElement = typeNode.getPsi();
+                if (typeElement instanceof SmaliPrimitiveTypeElementImpl) {
+                    return ((SmaliPrimitiveTypeElementImpl)typeElement).getType();
+                } else if (typeElement instanceof SmaliClassTypeElementImpl) {
+                    return ((SmaliClassTypeElementImpl)typeElement).getType();
+                } else {
+                    PsiElementFactory factory = JavaPsiFacade.getInstance(getProject()).getElementFactory();
+                    // TODO: handle array types
+                    PsiType psiType = factory.createPrimitiveType("int");
+                    assert psiType != null;
+                    return psiType;
+                }
             }
+        });
+    }
 
-            paramList.addParameter(new LightParameter("", psiType, prototype, SmaliLanguage.INSTANCE));
+    @Nullable
+    public ASTNode getReturnType() {
+        PsiElement prototype = findChildByType(ElementTypes.METHOD_PROTOTYPE);
+        if (prototype == null) {
+            return null;
+        }
+
+        ASTNode paramListNode = prototype.getNode().findChildByType(ElementTypes.METHOD_REF_PARAM_LIST);
+        if (paramListNode == null) {
+            return null;
+        }
+
+        return paramListNode.findChildByType(ElementTypes.VOID_TYPE_TOKENS);
+    }
+
+    @Nullable @Override public PsiElement resolve() {
+        PsiClass containingClass = getContainingClass();
+        if (containingClass == null) {
+            return null;
+        }
+
+        SmaliMemberName memberName = getMemberName();
+        if (memberName == null) {
+            return null;
+        }
+
+        LightParameterListBuilder paramList = new LightParameterListBuilder(getManager(), SmaliLanguage.INSTANCE);
+        PsiElement prototype = findChildByType(ElementTypes.METHOD_PROTOTYPE);
+
+        for (PsiType type: getParameterTypes()) {
+            paramList.addParameter(new LightParameter("", type, prototype, SmaliLanguage.INSTANCE));
         }
 
         LightMethodBuilder pattern = new LightMethodBuilder(getManager(), SmaliLanguage.INSTANCE,

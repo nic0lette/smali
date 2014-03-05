@@ -80,4 +80,62 @@ public class SmaliLiteralImpl extends ASTWrapperPsiElement implements SmaliLiter
         //TODO: array, annotation, type, field, method, enum
         return null;
     }
+
+    public int getNarrowNumericValue() {
+        ASTNode valueNode = getNode().getFirstChildNode();
+        String text = valueNode.getText();
+
+        IElementType elementType = valueNode.getElementType();
+
+        if (elementType instanceof SmaliLexicalElementType) {
+            switch (((SmaliLexicalElementType)valueNode.getElementType()).tokenId) {
+                case smaliIdeaParser.INTEGER_LITERAL:
+                case smaliIdeaParser.POSITIVE_INTEGER_LITERAL:
+                case smaliIdeaParser.NEGATIVE_INTEGER_LITERAL:
+                    return LiteralTools.parseInt(text);
+                case smaliIdeaParser.LONG_LITERAL:
+                    return (int)LiteralTools.parseLong(text);
+                case smaliIdeaParser.SHORT_LITERAL:
+                    return LiteralTools.parseShort(text);
+                case smaliIdeaParser.BYTE_LITERAL:
+                    return LiteralTools.parseByte(text);
+                case smaliIdeaParser.FLOAT_LITERAL:
+                case smaliIdeaParser.FLOAT_LITERAL_OR_ID:
+                    return Float.floatToRawIntBits(LiteralTools.parseFloat(text));
+                case smaliIdeaParser.DOUBLE_LITERAL:
+                case smaliIdeaParser.DOUBLE_LITERAL_OR_ID:
+                    return (int)Double.doubleToRawLongBits(LiteralTools.parseDouble(text));
+            }
+        }
+        throw new RuntimeException("Unexpected literal type");
+    }
+
+    public long getWideNumericValue() {
+        ASTNode valueNode = getNode().getFirstChildNode();
+        String text = valueNode.getText();
+
+        IElementType elementType = valueNode.getElementType();
+
+        if (elementType instanceof SmaliLexicalElementType) {
+            switch (((SmaliLexicalElementType)valueNode.getElementType()).tokenId) {
+                case smaliIdeaParser.INTEGER_LITERAL:
+                case smaliIdeaParser.POSITIVE_INTEGER_LITERAL:
+                case smaliIdeaParser.NEGATIVE_INTEGER_LITERAL:
+                    return LiteralTools.parseInt(text);
+                case smaliIdeaParser.LONG_LITERAL:
+                    return LiteralTools.parseLong(text);
+                case smaliIdeaParser.SHORT_LITERAL:
+                    return LiteralTools.parseShort(text);
+                case smaliIdeaParser.BYTE_LITERAL:
+                    return LiteralTools.parseByte(text);
+                case smaliIdeaParser.FLOAT_LITERAL:
+                case smaliIdeaParser.FLOAT_LITERAL_OR_ID:
+                    return Float.floatToRawIntBits(LiteralTools.parseFloat(text));
+                case smaliIdeaParser.DOUBLE_LITERAL:
+                case smaliIdeaParser.DOUBLE_LITERAL_OR_ID:
+                    return Double.doubleToRawLongBits(LiteralTools.parseDouble(text));
+            }
+        }
+        throw new RuntimeException("Unexpected literal type");
+    }
 }

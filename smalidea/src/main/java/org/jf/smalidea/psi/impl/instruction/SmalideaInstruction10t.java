@@ -32,29 +32,12 @@
 package org.jf.smalidea.psi.impl.instruction;
 
 import org.jf.dexlib2.iface.instruction.formats.Instruction10t;
-import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.iface.SmaliInstruction;
-import org.jf.smalidea.psi.impl.SmaliLabelImpl;
-import org.jf.smalidea.psi.impl.SmaliLabelReferenceImpl;
 
 import javax.annotation.Nonnull;
 
 public class SmalideaInstruction10t extends SmalideaInstruction implements Instruction10t {
     public SmalideaInstruction10t(@Nonnull SmaliInstruction instruction) {
         super(instruction);
-    }
-
-    @Override public int getCodeOffset() {
-        SmaliLabelReferenceImpl labelReference =
-                (SmaliLabelReferenceImpl)psiInstruction.getNode().findChildByType(ElementTypes.LABEL_REF);
-
-        if (labelReference == null) {
-            return -1;
-        }
-        SmaliLabelImpl label = labelReference.resolve();
-        if (label == null) {
-            return -1;
-        }
-        return label.getOffset();
     }
 }

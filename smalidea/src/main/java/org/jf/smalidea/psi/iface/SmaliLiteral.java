@@ -34,4 +34,7 @@ package org.jf.smalidea.psi.iface;
 import com.intellij.psi.PsiLiteral;
 
 public interface SmaliLiteral extends PsiLiteral {
+    Object getValue();
+    int getNarrowNumericValue();
+    long getWideNumericValue();
 }

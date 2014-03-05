@@ -32,6 +32,7 @@
 package org.jf.smalidea.psi.impl;
 
 import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -391,11 +392,13 @@ public class SmaliMethodImpl extends StubBasedPsiElementBase<SmaliMethodStub>
                 }
 
                 @Nonnull @Override public List<? extends TryBlock<? extends ExceptionHandler>> getTryBlocks() {
-                    return null;
+                    // TODO: implement this
+                    return ImmutableList.of();
                 }
 
                 @Nonnull @Override public Iterable<? extends DebugItem> getDebugItems() {
-                    return null;
+                    // TODO: implement this
+                    return ImmutableList.of();
                 }
             };
         }

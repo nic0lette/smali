@@ -41,10 +41,21 @@ import com.intellij.util.ArrayUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jf.smalidea.SmaliTokens;
+import org.jf.smalidea.psi.ElementTypes;
+import org.jf.smalidea.util.PsiUtils;
 
 public class SmaliFieldReference extends ASTWrapperPsiElement implements PsiReference {
     public SmaliFieldReference(@NotNull ASTNode node) {
         super(node);
+    }
+
+    @Override public String getName() {
+        PsiElement memberName = getMemberName();
+        if (memberName == null) {
+            return null;
+        }
+        return memberName.getText();
     }
 
     @Override public PsiReference getReference() {
@@ -57,6 +68,31 @@ public class SmaliFieldReference extends ASTWrapperPsiElement implements PsiRefe
 
     @Override public TextRange getRangeInElement() {
         return new TextRange(0, getTextLength());
+    }
+
+    @Nullable
+    public PsiClass getContainingClass() {
+        SmaliClassTypeElementImpl containingClassReference = findChildByClass(SmaliClassTypeElementImpl.class);
+        if (containingClassReference == null) {
+            return null;
+        }
+        PsiClass containingClass = containingClassReference.resolve();
+        if (containingClass == null) {
+            return null;
+        }
+
+        return containingClass;
+    }
+
+    @Nullable
+    public SmaliMemberName getMemberName() {
+        return findChildByClass(SmaliMemberName.class);
+    }
+
+    @Nullable
+    public ASTNode getFieldType() {
+        PsiElement colonElement = findChildByType(SmaliTokens.COLON);
+        return PsiUtils.findNextSibling(colonElement, ElementTypes.NONVOID_TYPE_TOKENS).getNode();
     }
 
     @Nullable @Override public PsiElement resolve() {

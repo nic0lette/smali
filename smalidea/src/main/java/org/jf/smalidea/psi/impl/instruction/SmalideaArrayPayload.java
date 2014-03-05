@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, Google Inc.
+ * Copyright 2014, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,26 +29,27 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea.psi.iface;
+package org.jf.smalidea.psi.impl.instruction;
 
-import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.Nullable;
-import org.jf.dexlib2.Opcode;
-import org.jf.dexlib2.iface.instruction.Instruction;
-import org.jf.smalidea.psi.impl.SmaliFieldReference;
-import org.jf.smalidea.psi.impl.SmaliMethodReference;
+import com.google.common.collect.ImmutableList;
+import org.jf.dexlib2.iface.instruction.formats.ArrayPayload;
+import org.jf.smalidea.psi.iface.SmaliInstruction;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
-public interface SmaliInstruction extends PsiElement {
-    @Nonnull Opcode getOpcode();
-    int getOffset();
-    void setOffset(int offset);
-    @Nonnull Instruction getDexlib2Instruction();
-    int getRegisterCount();
-    int getRegister(int registerIndex);
-    @Nullable public SmaliLiteral getLiteral();
-    @Nullable SmaliTypeElement getTypeReference();
-    @Nullable SmaliFieldReference getFieldReference();
-    @Nullable SmaliMethodReference getMethodReference();
+public class SmalideaArrayPayload extends SmalideaInstruction implements ArrayPayload {
+    public SmalideaArrayPayload(@Nonnull SmaliInstruction instruction) {
+        super(instruction);
+    }
+
+    @Override public int getElementWidth() {
+        // TODO: implement this
+        return 4;
+    }
+
+    @Nonnull @Override public List<Number> getArrayElements() {
+        // TODO: implement this
+        return ImmutableList.of();
+    }
 }

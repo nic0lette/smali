@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, Google Inc.
+ * Copyright 2014, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,26 +29,36 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.smalidea.psi.iface;
+package org.jf.smalidea.psi.impl.instruction;
 
-import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.Nullable;
-import org.jf.dexlib2.Opcode;
-import org.jf.dexlib2.iface.instruction.Instruction;
-import org.jf.smalidea.psi.impl.SmaliFieldReference;
-import org.jf.smalidea.psi.impl.SmaliMethodReference;
+import org.jf.dexlib2.iface.instruction.formats.Instruction35c;
+import org.jf.smalidea.psi.iface.SmaliInstruction;
 
 import javax.annotation.Nonnull;
 
-public interface SmaliInstruction extends PsiElement {
-    @Nonnull Opcode getOpcode();
-    int getOffset();
-    void setOffset(int offset);
-    @Nonnull Instruction getDexlib2Instruction();
-    int getRegisterCount();
-    int getRegister(int registerIndex);
-    @Nullable public SmaliLiteral getLiteral();
-    @Nullable SmaliTypeElement getTypeReference();
-    @Nullable SmaliFieldReference getFieldReference();
-    @Nullable SmaliMethodReference getMethodReference();
+public class SmalideaInstruction35c extends SmalideaInstruction implements Instruction35c {
+    public SmalideaInstruction35c(@Nonnull SmaliInstruction instruction) {
+        super(instruction);
+    }
+
+
+    @Override public int getRegisterC() {
+        return psiInstruction.getRegister(0);
+    }
+
+    @Override public int getRegisterD() {
+        return psiInstruction.getRegister(1);
+    }
+
+    @Override public int getRegisterE() {
+        return psiInstruction.getRegister(2);
+    }
+
+    @Override public int getRegisterF() {
+        return psiInstruction.getRegister(3);
+    }
+
+    @Override public int getRegisterG() {
+        return psiInstruction.getRegister(4);
+    }
 }

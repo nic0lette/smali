@@ -31,11 +31,30 @@
 
 package org.jf.smalidea.psi.impl.instruction;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+import com.intellij.psi.PsiType;
 import org.jf.dexlib2.Opcode;
+import org.jf.dexlib2.ReferenceType;
 import org.jf.dexlib2.iface.instruction.Instruction;
+import org.jf.dexlib2.iface.reference.Reference;
+import org.jf.dexlib2.immutable.reference.ImmutableFieldReference;
+import org.jf.dexlib2.immutable.reference.ImmutableMethodReference;
+import org.jf.dexlib2.immutable.reference.ImmutableStringReference;
+import org.jf.dexlib2.immutable.reference.ImmutableTypeReference;
+import org.jf.smalidea.psi.ElementTypes;
 import org.jf.smalidea.psi.iface.SmaliInstruction;
+import org.jf.smalidea.psi.iface.SmaliLiteral;
+import org.jf.smalidea.psi.iface.SmaliTypeElement;
+import org.jf.smalidea.psi.impl.SmaliFieldReference;
+import org.jf.smalidea.psi.impl.SmaliLabelImpl;
+import org.jf.smalidea.psi.impl.SmaliLabelReferenceImpl;
+import org.jf.smalidea.psi.impl.SmaliMethodReference;
+import org.jf.smalidea.util.NameUtils;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public abstract class SmalideaInstruction implements Instruction {
     @Nonnull protected final SmaliInstruction psiInstruction;
@@ -49,6 +68,60 @@ public abstract class SmalideaInstruction implements Instruction {
         switch (instruction.getOpcode().format) {
             case Format10t:
                 return new SmalideaInstruction10t(instruction);
+            case Format10x:
+                return new SmalideaInstruction10x(instruction);
+            case Format11n:
+                return new SmalideaInstruction11n(instruction);
+            case Format11x:
+                return new SmalideaInstruction11x(instruction);
+            case Format12x:
+                return new SmalideaInstruction12x(instruction);
+            case Format20t:
+                return new SmalideaInstruction20t(instruction);
+            case Format21c:
+                return new SmalideaInstruction21c(instruction);
+            case Format21ih:
+                return new SmalideaInstruction21ih(instruction);
+            case Format21lh:
+                return new SmalideaInstruction21lh(instruction);
+            case Format21s:
+                return new SmalideaInstruction21s(instruction);
+            case Format21t:
+                return new SmalideaInstruction21t(instruction);
+            case Format22b:
+                return new SmalideaInstruction22b(instruction);
+            case Format22c:
+                return new SmalideaInstruction22c(instruction);
+            case Format22s:
+                return new SmalideaInstruction22s(instruction);
+            case Format22t:
+                return new SmalideaInstruction22t(instruction);
+            case Format22x:
+                return new SmalideaInstruction22x(instruction);
+            case Format23x:
+                return new SmalideaInstruction23x(instruction);
+            case Format30t:
+                return new SmalideaInstruction30t(instruction);
+            case Format31c:
+                return new SmalideaInstruction31c(instruction);
+            case Format31i:
+                return new SmalideaInstruction31i(instruction);
+            case Format31t:
+                return new SmalideaInstruction31t(instruction);
+            case Format32x:
+                return new SmalideaInstruction32x(instruction);
+            case Format35c:
+                return new SmalideaInstruction35c(instruction);
+            case Format3rc:
+                return new SmalideaInstruction3rc(instruction);
+            case Format51l:
+                return new SmalideaInstruction51l(instruction);
+            case PackedSwitchPayload:
+                return new SmalideaPackedSwitchPayload( instruction);
+            case SparseSwitchPayload:
+                return new SmalideaSparseSwitchPayload( instruction);
+            case ArrayPayload:
+                return new SmalideaArrayPayload( instruction);
             default:
                 throw new RuntimeException("Unexpected instruction type");
         }
@@ -60,5 +133,94 @@ public abstract class SmalideaInstruction implements Instruction {
 
     public int getCodeUnits() {
         return getOpcode().format.size / 2;
+    }
+
+    public int getCodeOffset() {
+        SmaliLabelReferenceImpl labelReference =
+                (SmaliLabelReferenceImpl)psiInstruction.getNode().findChildByType(ElementTypes.LABEL_REF);
+
+        if (labelReference == null) {
+            return -1;
+        }
+        SmaliLabelImpl label = labelReference.resolve();
+        if (label == null) {
+            return -1;
+        }
+        return label.getOffset();
+    }
+
+    public int getRegisterCount() {
+        return psiInstruction.getRegisterCount();
+    }
+
+    public int getRegisterA() {
+        return psiInstruction.getRegister(0);
+    }
+
+    public int getRegisterB() {
+        return psiInstruction.getRegister(1);
+    }
+
+    public int getRegisterC() {
+        return psiInstruction.getRegister(2);
+    }
+
+    public int getNarrowLiteral() {
+        SmaliLiteral literal = psiInstruction.getLiteral();
+        if (literal == null) {
+            return 0;
+        }
+        return literal.getNarrowNumericValue();
+    }
+
+    public long getWideLiteral() {
+        SmaliLiteral literal = psiInstruction.getLiteral();
+        if (literal == null) {
+            return 0;
+        }
+        return literal.getWideNumericValue();
+    }
+
+    @Nonnull public Reference getReference() {
+        switch (getReferenceType()) {
+            case ReferenceType.STRING:
+                // TODO: get the actual string value
+                return new ImmutableStringReference("");
+            case ReferenceType.TYPE:
+                SmaliTypeElement typeReference = psiInstruction.getTypeReference();
+                assert typeReference != null;
+                return new ImmutableTypeReference(typeReference.getText());
+            case ReferenceType.METHOD:
+                SmaliMethodReference methodReference = psiInstruction.getMethodReference();
+                assert methodReference != null;
+                String containingClass = NameUtils.javaToSmaliType(methodReference.getContainingClass().getQualifiedName());
+                List<String> paramTypes =
+                        Lists.transform(methodReference.getParameterTypes(), new Function<PsiType, String>() {
+                            @Nullable @Override public String apply(@Nullable PsiType psiType) {
+                                if (psiType == null) {
+                                    return null;
+                                }
+                                return NameUtils.javaToSmaliType(psiType.getCanonicalText());
+                            }
+                        });
+
+                return new ImmutableMethodReference(containingClass,
+                        methodReference.getName(),
+                        paramTypes,
+                        methodReference.getReturnType().getText());
+            case ReferenceType.FIELD:
+                SmaliFieldReference fieldReference = psiInstruction.getFieldReference();
+                assert fieldReference != null;
+                containingClass = NameUtils.javaToSmaliType(fieldReference.getContainingClass().getQualifiedName());
+                return new ImmutableFieldReference(containingClass,
+                        fieldReference.getName(),
+                        fieldReference.getFieldType().getText());
+        }
+        assert false;
+        return null;
+    }
+
+    public int getReferenceType() {
+        return psiInstruction.getOpcode().referenceType;
     }
 }
