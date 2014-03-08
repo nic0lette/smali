@@ -40,13 +40,30 @@ import com.intellij.xdebugger.impl.actions.DebuggerActionHandler;
 import com.sun.jdi.request.StepRequest;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Method;
+
 public class SmaliDebuggerSupport extends JavaDebuggerSupport {
+    private static boolean useModifiedMethod;
+
+    {
+        try {
+            Method method = DebuggerSession.class.getMethod("stepOver", boolean.class, int.class);
+            useModifiedMethod = true;
+        } catch (NoSuchMethodException ex) {
+        }
+    }
+
     private final StepOverActionHandler myStepOverActionHandler = new StepOverActionHandler() {
         @Override
         public void perform(@NotNull final Project project, AnActionEvent e) {
             final DebuggerSession session = getSession(project);
+
             if (session != null) {
-                session.stepOver(false, StepRequest.STEP_MIN);
+                if (useModifiedMethod) {
+                    session.stepOver(false, StepRequest.STEP_MIN);
+                } else {
+                    session.stepOver(false);
+                }
             }
         }
     };
