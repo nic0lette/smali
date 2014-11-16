@@ -37,6 +37,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import org.jf.dexlib2.AccessFlags;
 import org.jf.dexlib2.Opcode;
+import org.jf.dexlib2.Opcodes;
 import org.jf.dexlib2.ReferenceType;
 import org.jf.dexlib2.base.BaseAnnotation;
 import org.jf.dexlib2.base.BaseAnnotationElement;
@@ -93,7 +94,7 @@ public abstract class DexWriter<
     public static final int NO_INDEX = -1;
     public static final int NO_OFFSET = 0;
 
-    protected final int api;
+    protected final Opcodes opcodes;
 
     protected int stringIndexSectionOffset = NO_OFFSET;
     protected int typeSectionOffset = NO_OFFSET;
@@ -145,7 +146,8 @@ public abstract class DexWriter<
                         AnnotationSection<StringKey, TypeKey, AnnotationKey, AnnotationElement,
                                 EncodedValue> annotationSection,
                         AnnotationSetSection<AnnotationKey, AnnotationSetKey> annotationSetSection) {
-        this.api = api;
+        this.opcodes = new Opcodes(api);
+
         this.stringSection = stringSection;
         this.typeSection = typeSection;
         this.protoSection = protoSection;
@@ -911,7 +913,7 @@ public abstract class DexWriter<
             writer.writeInt(debugItemOffset);
 
             InstructionWriter instructionWriter =
-                    InstructionWriter.makeInstructionWriter(writer, stringSection, typeSection, fieldSection,
+                    InstructionWriter.makeInstructionWriter(opcodes, writer, stringSection, typeSection, fieldSection,
                             methodSection);
 
             writer.writeInt(codeUnitCount);

@@ -496,7 +496,8 @@ Type = {PrimitiveType} | {ClassDescriptor} | {ArrayDescriptor}
         return newToken(INSTRUCTION_FORMAT22c_TYPE);
     }
 
-    "iget-quick" | "iget-wide-quick" | "iget-object-quick" | "iput-quick" | "iput-wide-quick" | "iput-object-quick" {
+    "iget-quick" | "iget-wide-quick" | "iget-object-quick" | "iput-quick" | "iput-wide-quick" | "iput-object-quick" |
+    "iput-boolean-quick" | "iput-byte-quick" | "iput-char-quick" | "iput-short-quick" {
         return newToken(INSTRUCTION_FORMAT22cs_FIELD);
     }
 

@@ -128,6 +128,10 @@ iget-object-quick
 iput-quick
 iput-wide-quick
 iput-object-quick
+iput-boolean-quick
+iput-byte-quick
+iput-char-quick
+iput-short-quick
 rsub-int
 add-int/lit16
 mul-int/lit16

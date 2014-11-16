@@ -33,21 +33,28 @@ package org.jf.dexlib2;
 
 import com.google.common.collect.Maps;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.EnumMap;
 import java.util.HashMap;
 
 public class Opcodes {
-    private final Opcode[] opcodesByValue;
+    public final int api;
+    private final Opcode[] opcodesByValue = new Opcode[255];
+    private final EnumMap<Opcode, Short> opcodeValues;
     private final HashMap<String, Opcode> opcodesByName;
 
     public Opcodes(int api) {
-        opcodesByValue = new Opcode[256];
+        this.api = api;
+        opcodeValues = new EnumMap<Opcode, Short>(Opcode.class);
         opcodesByName = Maps.newHashMap();
 
         for (Opcode opcode: Opcode.values()) {
             if (!opcode.format.isPayloadFormat) {
-                if (api <= opcode.getMaxApi() && api >= opcode.getMinApi()) {
-                    opcodesByValue[opcode.value] = opcode;
+                Short opcodeValue = opcode.apiToValueMap.get(api);
+                if (opcodeValue != null) {
+                    opcodesByValue[opcodeValue] = opcode;
+                    opcodeValues.put(opcode, opcodeValue);
                     opcodesByName.put(opcode.name.toLowerCase(), opcode);
                 }
             }
@@ -74,5 +81,10 @@ public class Opcodes {
                 }
                 return null;
         }
+    }
+
+    @Nullable
+    public Short getOpcodeValue(@Nonnull Opcode opcode) {
+        return opcodeValues.get(opcode);
     }
 }

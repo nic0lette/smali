@@ -955,6 +955,10 @@ public class MethodAnalyzer {
             case IPUT_QUICK:
             case IPUT_WIDE_QUICK:
             case IPUT_OBJECT_QUICK:
+            case IPUT_BOOLEAN_QUICK:
+            case IPUT_BYTE_QUICK:
+            case IPUT_CHAR_QUICK:
+            case IPUT_SHORT_QUICK:
                 return analyzeIputIgetQuick(analyzedInstruction);
             case INVOKE_VIRTUAL_QUICK:
                 return analyzeInvokeVirtualQuick(analyzedInstruction, false, false);

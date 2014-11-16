@@ -47,8 +47,9 @@ public class OatFile extends BaseDexBuffer {
     private static final byte[] OAT_MAGIC = new byte[] { 'o', 'a', 't', '\n' };
     private static final int ELF_HEADER_SIZE = 52;
 
-    // These are the "known working" versions.
-    // Earlier and later versions are likely working too, but unknown how far back/forward is working.
+    // These are the "known working" versions that I have manually inspected the source for.
+    // Earlier versions are likely working too, but it's unknown how far back it will work.
+    // Newer versions will probably work as well.. until they don't.
     private static final int MIN_OAT_VERSION = 35;
     private static final int MAX_OAT_VERSION = 46;
 
