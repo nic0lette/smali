@@ -31,12 +31,16 @@
 
 package org.jf.dexlib2.dexbacked;
 
+import com.google.common.io.ByteStreams;
 import org.jf.dexlib2.Opcodes;
 import org.jf.dexlib2.dexbacked.OatFile.SymbolTable.Symbol;
 import org.jf.dexlib2.dexbacked.raw.HeaderItem;
 import org.jf.util.AbstractForwardSequentialList;
 
 import javax.annotation.Nonnull;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.AbstractList;
 import java.util.Iterator;
@@ -63,11 +67,7 @@ public class OatFile extends BaseDexBuffer {
             throw new NotAnOatFileException();
         }
 
-        for (int i = 0; i < ELF_MAGIC.length; i++) {
-            if (buf[i] != ELF_MAGIC[i]) {
-                throw new NotAnOatFileException();
-            }
-        }
+        verifyMagic(buf);
 
         this.opcodes = opcodes;
 
@@ -88,6 +88,37 @@ public class OatFile extends BaseDexBuffer {
         if (!oatHeader.isValid()) {
             throw new InvalidOatFileException("Invalid oat magic value");
         }
+    }
+
+    private static void verifyMagic(byte[] buf) {
+        for (int i = 0; i < ELF_MAGIC.length; i++) {
+            if (buf[i] != ELF_MAGIC[i]) {
+                throw new NotAnOatFileException();
+            }
+        }
+    }
+
+    public static OatFile fromInputStream(@Nonnull Opcodes opcodes, @Nonnull InputStream is)
+            throws IOException {
+        if (!is.markSupported()) {
+            throw new IllegalArgumentException("InputStream must support mark");
+        }
+        is.mark(4);
+        byte[] partialHeader = new byte[4];
+        try {
+            ByteStreams.readFully(is, partialHeader);
+        } catch (EOFException ex) {
+            throw new NotAnOatFileException();
+        } finally {
+            is.reset();
+        }
+
+        verifyMagic(partialHeader);
+
+        is.reset();
+
+        byte[] buf = ByteStreams.toByteArray(is);
+        return new OatFile(opcodes, buf);
     }
 
     public boolean isKnownGoodVersion() {
@@ -145,6 +176,10 @@ public class OatFile extends BaseDexBuffer {
         public OatDexFile(int offset, String filename) {
             super(opcodes, OatFile.this.buf, offset);
             this.filename = filename;
+        }
+
+        @Override public boolean hasOdexOpcodes() {
+            return true;
         }
     }
 

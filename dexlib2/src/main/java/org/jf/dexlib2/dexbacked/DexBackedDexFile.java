@@ -62,7 +62,7 @@ public class DexBackedDexFile extends BaseDexBuffer implements DexFile {
     private final int classStartOffset;
 
     private DexBackedDexFile(Opcodes opcodes, @Nonnull byte[] buf, int offset, boolean verifyMagic) {
-        super(buf);
+        super(buf, offset);
 
         this.opcodes = opcodes;
 
@@ -75,13 +75,13 @@ public class DexBackedDexFile extends BaseDexBuffer implements DexFile {
         typeCount = readSmallUint(HeaderItem.TYPE_COUNT_OFFSET);
         typeStartOffset = readSmallUint(HeaderItem.TYPE_START_OFFSET);
         protoCount = readSmallUint(HeaderItem.PROTO_COUNT_OFFSET);
-        protoStartOffset = readSmallUint(HeaderItem.PROTO_START_OFFSET);
+        protoStartOffset =  readSmallUint(HeaderItem.PROTO_START_OFFSET);
         fieldCount = readSmallUint(HeaderItem.FIELD_COUNT_OFFSET);
-        fieldStartOffset = readSmallUint(HeaderItem.FIELD_START_OFFSET);
+        fieldStartOffset =  readSmallUint(HeaderItem.FIELD_START_OFFSET);
         methodCount = readSmallUint(HeaderItem.METHOD_COUNT_OFFSET);
-        methodStartOffset = readSmallUint(HeaderItem.METHOD_START_OFFSET);
+        methodStartOffset =  readSmallUint(HeaderItem.METHOD_START_OFFSET);
         classCount = readSmallUint(HeaderItem.CLASS_COUNT_OFFSET);
-        classStartOffset = readSmallUint(HeaderItem.CLASS_START_OFFSET);
+        classStartOffset =  readSmallUint(HeaderItem.CLASS_START_OFFSET);
     }
 
     public DexBackedDexFile(@Nonnull Opcodes opcodes, @Nonnull BaseDexBuffer buf) {
@@ -121,7 +121,13 @@ public class DexBackedDexFile extends BaseDexBuffer implements DexFile {
         return opcodes;
     }
 
+    // Will only be true for a dalvik-style odex file
     public boolean isOdexFile() {
+        return false;
+    }
+
+    // Will be true for both a dalvik-style odex file, and an art-style odex file embedded in an oat file
+    public boolean hasOdexOpcodes() {
         return false;
     }
 

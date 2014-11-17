@@ -39,6 +39,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.jf.dexlib2.DexFileFactory;
+import org.jf.dexlib2.DexFileFactory.DexFileNotFound;
 import org.jf.dexlib2.analysis.reflection.ReflectionClassDef;
 import org.jf.dexlib2.iface.ClassDef;
 import org.jf.dexlib2.iface.DexFile;
@@ -204,7 +205,7 @@ public class ClassPath {
                     } else {
                         try {
                             return DexFileFactory.loadDexFile(file, api);
-                        } catch (DexFileFactory.NoClassesDexException ex) {
+                        } catch (DexFileNotFound ex) {
                             // ignore and continue
                         } catch (Exception ex) {
                             throw ExceptionWithContext.withContext(ex,

@@ -31,9 +31,11 @@ package org.jf.baksmali;
 import com.google.common.collect.Lists;
 import org.apache.commons.cli.*;
 import org.jf.dexlib2.DexFileFactory;
+import org.jf.dexlib2.DexFileFactory.MultipleDexFilesException;
 import org.jf.dexlib2.analysis.InlineMethodResolver;
 import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 import org.jf.dexlib2.dexbacked.DexBackedOdexFile;
+import org.jf.dexlib2.dexbacked.OatFile.OatDexFile;
 import org.jf.util.ConsoleUtil;
 import org.jf.util.SmaliHelpFormatter;
 
@@ -254,9 +256,20 @@ public class main {
         }
 
         //Read in and parse the dex file
-        DexBackedDexFile dexFile = DexFileFactory.loadDexFile(dexFileFile, options.dexEntry, options.apiLevel);
+        DexBackedDexFile dexFile = null;
+        try {
+            dexFile = DexFileFactory.loadDexFile(dexFileFile, options.dexEntry, options.apiLevel);
+        } catch (MultipleDexFilesException ex) {
+            System.err.println(String.format("%s contains multiple dex files. You must specify which one to " +
+                    "disassemble with the -e option", dexFileFile.getName()));
+            System.err.println("Valid entries include:");
+            for (OatDexFile oatDexFile: ex.oatFile.getDexFiles()) {
+                System.err.println(oatDexFile.filename);
+            }
+            System.exit(1);
+        }
 
-        if (dexFile.isOdexFile()) {
+        if (dexFile.hasOdexOpcodes()) {
             if (!options.deodex) {
                 System.err.println("Warning: You are disassembling an odex file without deodexing it. You");
                 System.err.println("won't be able to re-assemble the results unless you deodex it with the -x");
@@ -430,6 +443,12 @@ public class main {
                 .withDescription("Don't use implicit (type-less) method and field references")
                 .create("t");
 
+        Option dexEntryOption = OptionBuilder.withLongOpt("dex-file")
+                .withDescription("looks for dex file named DEX_FILE, defaults to classes.dex")
+                .withArgName("DEX_FILE")
+                .hasArg()
+                .create("e");
+
         Option dumpOption = OptionBuilder.withLongOpt("dump-to")
                 .withDescription("dumps the given dex file into a single annotated dump file named FILE" +
                         " (<dexfile>.dump by default), along with the normal disassembly")
@@ -452,12 +471,6 @@ public class main {
                 .hasArg()
                 .withArgName("FILE")
                 .create("T");
-
-        Option dexEntryOption = OptionBuilder.withLongOpt("dex-file")
-                .withDescription("looks for dex file named DEX_FILE, defaults to classes.dex")
-                .withArgName("DEX_FILE")
-                .hasArg()
-                .create("e");
 
         basicOptions.addOption(versionOption);
         basicOptions.addOption(helpOption);
@@ -531,7 +544,7 @@ public class main {
                     "/system/framework/apache-xml.jar",
                     "/system/framework/filterfw.jar");
 
-        } else {
+        } else if (apiLevel < 21) {
             // this is correct as of api 17/4.2.2
             return Lists.newArrayList(
                     "/system/framework/core.jar",
@@ -543,6 +556,21 @@ public class main {
                     "/system/framework/mms-common.jar",
                     "/system/framework/android.policy.jar",
                     "/system/framework/services.jar",
+                    "/system/framework/apache-xml.jar");
+        } else { // api >= 21
+            return Lists.newArrayList(
+                    "/system/framework/core-libart.jar",
+                    "/system/framework/conscrypt.jar",
+                    "/system/framework/okhttp.jar",
+                    "/system/framework/core-junit.jar",
+                    "/system/framework/bouncycastle.jar",
+                    "/system/framework/ext.jar",
+                    "/system/framework/framework.jar",
+                    "/system/framework/telephony-common.jar",
+                    "/system/framework/voip-common.jar",
+                    "/system/framework/ims-common.jar",
+                    "/system/framework/mms-common.jar",
+                    "/system/framework/android.policy.jar",
                     "/system/framework/apache-xml.jar");
         }
     }

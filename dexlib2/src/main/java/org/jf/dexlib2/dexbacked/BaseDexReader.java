@@ -50,7 +50,7 @@ public class BaseDexReader<T extends BaseDexBuffer> {
 
     /** {@inheritDoc} */
     public int readSleb128() {
-        int end = offset;
+        int end = dexBuf.baseOffset + offset;
         int currentByteValue;
         int result;
         byte[] buf = dexBuf.buf;
@@ -85,7 +85,7 @@ public class BaseDexReader<T extends BaseDexBuffer> {
             }
         }
 
-        offset = end;
+        offset = end - dexBuf.baseOffset;
         return result;
     }
 
@@ -94,7 +94,7 @@ public class BaseDexReader<T extends BaseDexBuffer> {
     }
 
     private int readUleb128(boolean allowLarge) {
-        int end = offset;
+        int end = dexBuf.baseOffset + offset;
         int currentByteValue;
         int result;
         byte[] buf = dexBuf.buf;
@@ -130,7 +130,7 @@ public class BaseDexReader<T extends BaseDexBuffer> {
             }
         }
 
-        offset = end;
+        offset = end - dexBuf.baseOffset;
         return result;
     }
 
@@ -151,7 +151,7 @@ public class BaseDexReader<T extends BaseDexBuffer> {
      * @return The unsigned value, reinterpreted as a signed int
      */
     public int readBigUleb128() {
-        int end = offset;
+        int end = dexBuf.baseOffset + offset;
         int currentByteValue;
         int result;
         byte[] buf = dexBuf.buf;
@@ -180,12 +180,12 @@ public class BaseDexReader<T extends BaseDexBuffer> {
             }
         }
 
-        offset = end;
+        offset = end - dexBuf.baseOffset;
         return result;
     }
 
     public void skipUleb128() {
-        int end = offset;
+        int end = dexBuf.baseOffset + offset;
         byte currentByteValue;
         byte[] buf = dexBuf.buf;
 
@@ -207,7 +207,7 @@ public class BaseDexReader<T extends BaseDexBuffer> {
             }
         }
 
-        offset = end;
+        offset = end - dexBuf.baseOffset;
     }
 
     public int readSmallUint() {
@@ -286,7 +286,7 @@ public class BaseDexReader<T extends BaseDexBuffer> {
     public int readByte(int offset) { return dexBuf.readByte(offset); }
 
     public int readSizedInt(int bytes) {
-        int o = offset;
+        int o = dexBuf.baseOffset + offset;
         byte[] buf = dexBuf.buf;
 
         int result;
@@ -312,12 +312,12 @@ public class BaseDexReader<T extends BaseDexBuffer> {
             default:
                 throw new ExceptionWithContext("Invalid size %d for sized int at offset 0x%x", bytes, offset);
         }
-        offset = o + bytes;
+        offset = o + bytes - dexBuf.baseOffset;
         return result;
     }
 
     public int readSizedSmallUint(int bytes) {
-        int o = offset;
+        int o = dexBuf.baseOffset + offset;
         byte[] buf = dexBuf.buf;
 
         int result = 0;
@@ -342,12 +342,12 @@ public class BaseDexReader<T extends BaseDexBuffer> {
             default:
                 throw new ExceptionWithContext("Invalid size %d for sized uint at offset 0x%x", bytes, offset);
         }
-        offset = o + bytes;
+        offset = o + bytes - dexBuf.baseOffset;
         return result;
     }
 
     public int readSizedRightExtendedInt(int bytes) {
-        int o = offset;
+        int o = dexBuf.baseOffset + offset;
         byte[] buf = dexBuf.buf;
 
         int result;
@@ -374,12 +374,12 @@ public class BaseDexReader<T extends BaseDexBuffer> {
                 throw new ExceptionWithContext(
                         "Invalid size %d for sized, right extended int at offset 0x%x", bytes, offset);
         }
-        offset = o + bytes;
+        offset = o + bytes - dexBuf.baseOffset;
         return result;
     }
 
     public long readSizedRightExtendedLong(int bytes) {
-        int o = offset;
+        int o = dexBuf.baseOffset + offset;
         byte[] buf = dexBuf.buf;
 
         long result;
@@ -440,12 +440,12 @@ public class BaseDexReader<T extends BaseDexBuffer> {
                 throw new ExceptionWithContext(
                         "Invalid size %d for sized, right extended long at offset 0x%x", bytes, offset);
         }
-        offset = o + bytes;
+        offset = o + bytes - dexBuf.baseOffset;
         return result;
     }
 
     public long readSizedLong(int bytes) {
-        int o = offset;
+        int o = dexBuf.baseOffset + offset;
         byte[] buf = dexBuf.buf;
 
         long result;
@@ -506,13 +506,14 @@ public class BaseDexReader<T extends BaseDexBuffer> {
                 throw new ExceptionWithContext("Invalid size %d for sized long at offset 0x%x", bytes, offset);
         }
 
-        offset = o + bytes;
+        offset = o + bytes - dexBuf.baseOffset;
         return result;
     }
 
     public String readString(int utf16Length) {
         int[] ret = new int[1];
-        String value = Utf8Utils.utf8BytesWithUtf16LengthToString(dexBuf.buf, offset, utf16Length, ret);
+        String value = Utf8Utils.utf8BytesWithUtf16LengthToString(
+                dexBuf.buf, dexBuf.baseOffset + offset, utf16Length, ret);
         offset += ret[0];
         return value;
     }
