@@ -34,12 +34,10 @@ package org.jf.dexlib2.analysis;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.google.common.collect.*;
 import org.jf.dexlib2.DexFileFactory;
 import org.jf.dexlib2.DexFileFactory.DexFileNotFound;
+import org.jf.dexlib2.DexFileFactory.MultipleDexFilesException;
 import org.jf.dexlib2.analysis.reflection.ReflectionClassDef;
 import org.jf.dexlib2.iface.ClassDef;
 import org.jf.dexlib2.iface.DexFile;
@@ -52,6 +50,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -159,7 +158,7 @@ public class ClassPath {
         ArrayList<DexFile> dexFiles = Lists.newArrayList();
 
         for (String classPathEntry: classPath) {
-            dexFiles.add(loadClassPathEntry(classPathDirs, classPathEntry, api));
+            dexFiles.addAll(loadClassPathEntry(classPathDirs, classPathEntry, api));
         }
         dexFiles.add(dexFile);
         return new ClassPath(dexFiles, api);
@@ -168,8 +167,8 @@ public class ClassPath {
     private static final Pattern dalvikCacheOdexPattern = Pattern.compile("@([^@]+)@classes.dex$");
 
     @Nonnull
-    private static DexFile loadClassPathEntry(@Nonnull Iterable<String> classPathDirs,
-                                              @Nonnull String bootClassPathEntry, int api) {
+    private static List<? extends DexFile> loadClassPathEntry(@Nonnull Iterable<String> classPathDirs,
+                                                              @Nonnull String bootClassPathEntry, int api) {
         File rawEntry = new File(bootClassPathEntry);
         // strip off the path - we only care about the filename
         String entryName = rawEntry.getName();
@@ -195,7 +194,15 @@ public class ClassPath {
         }
 
         for (String classPathDir: classPathDirs) {
-            for (String ext: new String[]{"", ".odex", ".jar", ".apk", ".zip"}) {
+            String[] extensions;
+
+            if (entryName.endsWith(".oat")) {
+                extensions = new String[] { ".oat" };
+            } else {
+                extensions = new String[] { "", ".odex", ".jar", ".apk", ".zip" };
+            }
+
+            for (String ext: extensions) {
                 File file = new File(classPathDir, baseEntryName + ext);
 
                 if (file.exists() && file.isFile()) {
@@ -204,9 +211,11 @@ public class ClassPath {
                                 "warning: cannot open %s for reading. Will continue looking.", file.getPath()));
                     } else {
                         try {
-                            return DexFileFactory.loadDexFile(file, api);
+                            return ImmutableList.of(DexFileFactory.loadDexFile(file, api));
                         } catch (DexFileNotFound ex) {
                             // ignore and continue
+                        } catch (MultipleDexFilesException ex) {
+                            return ex.oatFile.getDexFiles();
                         } catch (Exception ex) {
                             throw ExceptionWithContext.withContext(ex,
                                     "Error while reading boot class path entry \"%s\"", bootClassPathEntry);
