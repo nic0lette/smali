@@ -45,12 +45,12 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/smali/smali-smali.iml" filepath="$PROJECT_DIR$/smali/smali-smali.iml"/>
-      <module fileurl="file://$PROJECT_DIR$/smali.iml" filepath="$PROJECT_DIR$/smali.iml"/>
-      <module fileurl="file://$PROJECT_DIR$/baksmali/baksmali.iml" filepath="$PROJECT_DIR$/baksmali/baksmali.iml"/>
-      <module fileurl="file://$PROJECT_DIR$/dexlib2/accessorTestGenerator/accessorTestGenerator.iml" filepath="$PROJECT_DIR$/dexlib2/accessorTestGenerator/accessorTestGenerator.iml"/>
-      <module fileurl="file://$PROJECT_DIR$/dexlib2/dexlib2.iml" filepath="$PROJECT_DIR$/dexlib2/dexlib2.iml"/>
       <module fileurl="file://$PROJECT_DIR$/util/util.iml" filepath="$PROJECT_DIR$/util/util.iml"/>
+      <module fileurl="file://$PROJECT_DIR$/baksmali/baksmali.iml" filepath="$PROJECT_DIR$/baksmali/baksmali.iml"/>
+      <module fileurl="file://$PROJECT_DIR$/dexlib2/dexlib2.iml" filepath="$PROJECT_DIR$/dexlib2/dexlib2.iml"/>
+      <module fileurl="file://$PROJECT_DIR$/smali/smali-smali.iml" filepath="$PROJECT_DIR$/smali/smali-smali.iml"/>
+      <module fileurl="file://$PROJECT_DIR$/dexlib2/accessorTestGenerator/accessorTestGenerator.iml" filepath="$PROJECT_DIR$/dexlib2/accessorTestGenerator/accessorTestGenerator.iml"/>
+      <module fileurl="file://$PROJECT_DIR$/smali.iml" filepath="$PROJECT_DIR$/smali.iml"/>
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-type="JavaSDK" assert-jdk-15="true" project-jdk-name="1.7">
