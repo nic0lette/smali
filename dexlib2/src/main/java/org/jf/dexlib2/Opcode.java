@@ -285,7 +285,10 @@ public enum Opcode
 
     PACKED_SWITCH_PAYLOAD((short)0x100, "packed-switch-payload", ReferenceType.NONE, Format.PackedSwitchPayload, 0),
     SPARSE_SWITCH_PAYLOAD((short)0x200, "sparse-switch-payload", ReferenceType.NONE, Format.SparseSwitchPayload, 0),
-    ARRAY_PAYLOAD((short)0x300, "array-payload", ReferenceType.NONE, Format.ArrayPayload, 0);
+    ARRAY_PAYLOAD((short)0x300, "array-payload", ReferenceType.NONE, Format.ArrayPayload, 0),
+
+    /* Synthetic instruction for simulating framework callbacks */
+    INVOKE_SYNTHETIC((short)0xf0ff, "invoke-synthetic", ReferenceType.NONE, Format.ArrayPayload, 0);
 
     //if the instruction can throw an exception
     public static final int CAN_THROW = 0x1;
